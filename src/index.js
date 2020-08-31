@@ -1,24 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.scss';
+import './index.css';
 import App from './App';
-import store, { persistor } from './services/Redux';
+import { Provider } from "react-redux";
 import * as serviceWorker from './serviceWorker';
-import {
-  MetronicLayoutProvider,
-  MetronicSplashScreenProvider,
-  MetronicSubheaderProvider
-} from "./theme/layouts";
+import store from "./store";
+
 ReactDOM.render(
-  
-    <MetronicLayoutProvider>
-      <MetronicSubheaderProvider>
-        <MetronicSplashScreenProvider>
-          <App store={store} persistor={persistor} />
-        </MetronicSplashScreenProvider>
-      </MetronicSubheaderProvider>
-    </MetronicLayoutProvider>
-  ,
+  <Provider store={store}>
+    <App />
+  </Provider>,
   document.getElementById('root')
 );
 

@@ -1,7 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import {  useMediaQuery } from "../theme/helpers";
-import Login from "../container/Auth/LoginContainer";
+// import Login from "../container/Auth/LoginContainer";
+import Login from "../components/Auth/NewLogin";
 import brandLogo from '../theme/assets/image/logo-new.png';
 export function AuthPage() {
   const isMobile = useMediaQuery("(max-width: 600px)");

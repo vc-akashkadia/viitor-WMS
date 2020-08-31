@@ -8,19 +8,19 @@ const theme = createMuiTheme(
   {
     // direction: "rtl",
     typography: {
-      fontFamily: ["Poppins"].join(",")
+      fontFamily: "Varela Round"
     },
 
     palette: {
       primary: {
         // light: will be calculated from palette.primary.main,
-        main: "#17c191",
+        main: "#007bff",
         // dark: will be calculated from palette.primary.main,
         // contrastText: "#fff" //will be calculated to contrast with palette.primary.main
       },
       secondary: {
         // light: will be calculated from palette.primary.main,
-        main: "#3783e7",
+        main: "#E5EAEE",
         // dark: will be calculated from palette.primary.main,
         // contrastText: "#fff" //will be calculated to contrast with palette.primary.main
       },

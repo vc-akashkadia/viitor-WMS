@@ -10,7 +10,7 @@ import Logout from "../page/Logout";
 export function Routes() {
   const { isAuthorized } = useSelector(
     ({ auth }) => ({
-      isAuthorized: true//(auth.user != null),
+      isAuthorized: false//(auth.user != null),
     }),
     shallowEqual
   );
