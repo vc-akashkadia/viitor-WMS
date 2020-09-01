@@ -4,54 +4,56 @@ import brandLogo from "@assests/img/logo.png";
 import bottomImage from "@assests/img/pattern.svg";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import { makeStyles,withStyles,fade } from "@material-ui/core/styles";
+import { makeStyles, withStyles, fade } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import Checkbox from "@material-ui/core/Checkbox";
 import Typography from "@material-ui/core/Typography";
 import FormControl from "@material-ui/core/FormControl";
-import InputBase from '@material-ui/core/InputBase';
+import InputBase from "@material-ui/core/InputBase";
 import InputLabel from "@material-ui/core/InputLabel";
 import { LoginApi } from "../../apicalls/authCall";
-import {  useDispatch } from "react-redux";
-import clsx from 'clsx';
+import { useDispatch } from "react-redux";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import clsx from "clsx";
+import Alert from "@material-ui/lab/Alert";
 
 const BootstrapInput = withStyles((theme) => ({
   root: {
-    'label + &': {
+    "label + &": {
       marginTop: theme.spacing(2),
     },
   },
   input: {
     borderRadius: 4,
-    position: 'relative',
-    backgroundColor: '#eff0f3',
-    border: 'none',
+    position: "relative",
+    backgroundColor: "#eff0f3",
+    border: "none",
     fontSize: 13,
     fontFamily: "Roboto",
     fontWeight: 400,
-    width: '100%',
-    padding: '8px 12px',
-    transition: theme.transitions.create(['border-color', 'box-shadow']),
+    width: "100%",
+    padding: "8px 12px",
+    transition: theme.transitions.create(["border-color", "box-shadow"]),
   },
 }))(InputBase);
 
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: "500px",
-    marginTop:"15px",
+    marginTop: "15px",
     margin: "auto",
     position: "relative",
     paddingBottom: 12,
-    "@media (min-width:241px)":{
-      paddingBottom: 40
+    "@media (min-width:241px)": {
+      paddingBottom: 40,
     },
-    "@media (min-width:768px)":{
-      paddingBottom: 100
+    "@media (min-width:768px)": {
+      paddingBottom: 100,
     },
   },
-  logo:{
+  logo: {
     display: "block",
     height: "100%",
     width: 100,
@@ -68,13 +70,14 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 3,
     width: 16,
     height: 16,
-    boxShadow: 'inset 0 0 0 1px rgba(16,22,26,.2), inset 0 -1px 0 rgba(16,22,26,.1)',
-    backgroundColor: '#f5f8fa',
+    boxShadow:
+      "inset 0 0 0 1px rgba(16,22,26,.2), inset 0 -1px 0 rgba(16,22,26,.1)",
+    backgroundColor: "#f5f8fa",
   },
   checkedIcon: {
-    backgroundColor: '#007bff',
-    '&:before': {
-      display: 'block',
+    backgroundColor: "#007bff",
+    "&:before": {
+      display: "block",
       width: 15,
       height: 15,
       backgroundImage:
@@ -86,27 +89,27 @@ const useStyles = makeStyles((theme) => ({
   },
   paddingRemove: {
     paddingLeft: 0,
-    paddingTop : 8
+    paddingTop: 8,
   },
-  field:{
-    display: "flex" 
+  field: {
+    display: "flex",
   },
-  card:{
-    padding: 20
+  card: {
+    padding: 20,
   },
-  label :{
+  label: {
     fontSize: 14,
     color: "#707070",
     fontWeight: 500,
     fontFamily: "Roboto",
   },
-  rememberText:{
+  rememberText: {
     fontSize: 12,
     color: "#707070",
     fontWeight: 500,
-    fontFamily: "Roboto"
+    fontFamily: "Roboto",
   },
-  button:{
+  button: {
     fontSize: 13,
     color: "#ffffff",
     fontWeight: 500,
@@ -114,83 +117,149 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     height: 30,
     backgroundColor: "#0c79c1",
-    textTransform: "inherit"
+    textTransform: "inherit",
   },
-  bottomImage:{
+  bottomImage: {
     position: "absolute",
     bottom: 0,
     width: "100%",
     left: 0,
-  }
+  },
 }));
-let errors = {
-  email: "",
-  password: "",
+// let errors = {
+//   email: "",
+//   password: "",
+// };
+let toasterOption = {
+  option: "error",
+  message: "Invalid Login",
 };
+
 export default function Login() {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const dispatch = useDispatch();
+  const [remember_me, setCheckbox] = useState(false);
+  const [alert, setAlert] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState({
+    email: "",
+    password: "",
+  });
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log("Email:", email, "Password: ", password);
-    if (email !== "") {
-      errors.email = "User Name is required";
+    let error = { email: "", password: "" };
+    if (email === "") {
+      error.email = "User Name is required";
     }
-    if (password !== "") {
-      errors.email = "Password is required";
+    if (password === "") {
+      error.password = "Password is required";
     }
-    let data = {
-      username: email,
-      password: password,
-    };
-    dispatch(LoginApi(data, handleCallback));
+    setErrors(error);
+    if (email !== "" && password !== "") {
+      setLoading(true);
+      let data = {
+        username: email,
+        password: password,
+      };
+      dispatch(LoginApi(data, remember_me, handleCallback));
+    }
   };
-  
 
   const handleCallback = (response) => {
+    const {
+      data: { status },
+    } = response;
+    if (status) {
+      toasterOption = {
+        option: "success",
+        message: "Login Successfull",
+      };
+    }
+    setAlert(true);
+    setLoading(false);
+  };
+console.log("email",errors.email)
+// console.log("Passoww",password)
 
-  }
   return (
     <>
       <div>
         <Link to="/" className="brand-logo">
-          <img
-            src={brandLogo}
-            alt="Logo"
-            className= {classes.logo}
-          />
+          <img src={brandLogo} alt="Logo" className={classes.logo} />
         </Link>
       </div>
 
       <Card className={classes.root}>
         <CardContent className={classes.card}>
+        {alert && (
+            <Alert severity={toasterOption.option}>
+              {toasterOption.message}
+            </Alert>
+          )}
           <form onSubmit={handleSubmit}>
             <Grid item xs={12} className={classes.listItemsChild}>
-            <FormControl className={classes.field}>
-                <InputLabel shrink htmlFor="bootstrap-input" className={classes.label}>
+              <FormControl className={classes.field}>
+                <InputLabel
+                  shrink
+                  htmlFor="bootstrap-input"
+                  className={classes.label}
+                >
                   User Name
                 </InputLabel>
-                <BootstrapInput placeholder="Enter User Name" id="bootstrap-input" />
+                {/* <BootstrapInput
+                  error
+                  id="username"
+                  placeholder="Enter User Name"
+                  helperText={errors.email}
+                  value={email}
+                  onInput={(e) => setEmail(e.target.value)}
+                /> */}
+                <TextField 
+                error={errors.email !== ""}
+                  id="username" 
+                  label=""
+                  variant="outlined"
+                  placeholder="Enter User Name"
+                  helperText={errors.email}
+                  value={email}
+                  size="small"
+                  onInput={(e) => setEmail(e.target.value)}
+                  />
               </FormControl>
             </Grid>
             <Grid item xs={12} className={classes.listItemsChild}>
               <FormControl className={classes.field}>
-                <InputLabel shrink htmlFor="bootstrap-input" className={classes.label}>
+                <InputLabel
+                  shrink
+                  htmlFor="bootstrap-input"
+                  className={classes.label}
+                >
                   Password
                 </InputLabel>
-                <BootstrapInput placeholder="Enter Password" id="bootstrap-input"/>
+                 <TextField 
+                  error={errors.password !== ""}
+                  type="password"
+                  variant="outlined"
+                  size="small"
+                  id="password"
+                  helperText={errors.password}
+                  onInput={(e) => setPassword(e.target.value)}
+                  placeholder="Enter Password"
+                  />
               </FormControl>
             </Grid>
 
-            <Grid item xs={12} className={classes.listItemsChild} >
-              <Checkbox                
+            <Grid item xs={12} className={classes.listItemsChild}>
+              <Checkbox
                 className={clsx(classes.checkBox, classes.paddingRemove)}
                 color="primary"
                 name="rememberme"
                 icon={<span className={classes.icon} />}
-                checkedIcon={<span className={clsx(classes.icon, classes.checkedIcon)} />}
+                checkedIcon={
+                  <span className={clsx(classes.icon, classes.checkedIcon)} />
+                }
               />
               <Typography
                 variant="body1"
@@ -201,20 +270,21 @@ export default function Login() {
               </Typography>
             </Grid>
             <Grid item xs={12} className={classes.listItemsChild}>
-              <Button 
+              <Button
                 type="submit"
                 variant="contained"
                 size="small"
                 className={classes.button}
+                disabled={loading}
               >
-                Sign in
+                Sign in {loading && <CircularProgress size={24} />}
               </Button>
             </Grid>
           </form>
           <img
             src={bottomImage}
             alt="bottom-image"
-            className= {classes.bottomImage}
+            className={classes.bottomImage}
           />
         </CardContent>
       </Card>
