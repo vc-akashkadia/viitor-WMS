@@ -110,6 +110,7 @@ const theme = createMuiTheme({
     },
     body1: {
       fontSize: "1.125rem",
+      color: "grey",
       "@media (max-width:767px)": {
         fontSize: "1rem"
       }
@@ -135,6 +136,10 @@ const theme = createMuiTheme({
           color: "#ffffff",
           backgroundColor: "#252f6a"
         }
+      },
+      contained:{
+        backgroundColor:"#0d79c1",
+        color:"#ffffff"
       },
       outlined: {
         padding: "6px 30px",
@@ -212,7 +217,7 @@ const theme = createMuiTheme({
         marginTop: "19px !important"
       }
     }
-  }
+  },
 });
 
 export default theme;
