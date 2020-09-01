@@ -5,11 +5,12 @@ import Login from "../pages/Auth/Login";
 import YardOperation from "../pages/yard/YardOperation"
 import Facility from "../pages/Facility";
 import Operations from "../pages/Operations";
+import Dashboard from '../pages/Dashboard'
 export function Routes() {
   const { isAuthorized } = useSelector(
     ({ auth }) => ({
       // isAuthorized: auth.user != null,
-      isAuthorized: true,
+      isAuthorized: false,
     }),
     shallowEqual
   );
@@ -25,6 +26,7 @@ export function Routes() {
       )}
       {isAuthorized ? (
         <>
+          <Route path="/dashboard" component={Dashboard} />
           <Route exact path="/facility" component={Facility} />
           <Route exact path="/operations" component={Operations} />
         </>

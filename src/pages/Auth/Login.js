@@ -15,16 +15,26 @@ import FormControl from "@material-ui/core/FormControl";
 import InputBase from '@material-ui/core/InputBase';
 import InputLabel from "@material-ui/core/InputLabel";
 import clsx from 'clsx';
+<<<<<<< HEAD
 import { useDispatch } from "react-redux";
 import Alert from "@material-ui/lab/Alert";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
 import { LoginApi } from "../../apicalls/authCall";
+=======
+import Alert from "@material-ui/lab/Alert";
+import CircularProgress from "@material-ui/core/CircularProgress";
+
+
+>>>>>>> a1349d77046c4de8153c24718c6b82ba50f69c98
 let toasterOption = {
   option: "error",
   message: "Invalid Login",
 };
+<<<<<<< HEAD
 
+=======
+>>>>>>> a1349d77046c4de8153c24718c6b82ba50f69c98
 
 const BootstrapInput = withStyles((theme) => ({
   root: {
@@ -42,6 +52,10 @@ const BootstrapInput = withStyles((theme) => ({
     padding: '10px 12px',
   },
 }))(InputBase);
+<<<<<<< HEAD
+=======
+
+>>>>>>> a1349d77046c4de8153c24718c6b82ba50f69c98
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: "100%",
@@ -123,9 +137,13 @@ const useStyles = makeStyles((theme) => ({
     width: "90%"
   }
 }));
+<<<<<<< HEAD
+=======
+
+>>>>>>> a1349d77046c4de8153c24718c6b82ba50f69c98
 let errors = {
   email: "",
-  password: "",
+  password: ""
 };
 export default function Login() {
   const classes = useStyles();
@@ -199,7 +217,13 @@ export default function Login() {
                 <InputLabel shrink htmlFor="bootstrap-input" className={classes.label}>
                   User Name
                 </InputLabel>
-                <BootstrapInput placeholder="Enter User Name" id="bootstrap-input" className={classes.input}/>
+                <BootstrapInput 
+                error={errors.email !== ""}
+                value={email}
+                helperText={errors.email}
+                onInput={(e) => setEmail(e.target.value)}
+                placeholder="Enter User Name" id="bootstrap-input" className={classes.input}/>
+
               </FormControl>
             </Grid>
             <Grid item xs={12} className={classes.listItemsChild}>
@@ -207,8 +231,14 @@ export default function Login() {
                 <InputLabel shrink htmlFor="bootstrap-input" className={classes.label}>
                   Password
                 </InputLabel>
-                <BootstrapInput placeholder="Enter Password" id="bootstrap-input" />
+                <BootstrapInput 
+                error={errors.password !== ""}
+                 value={password}
+                 helperText={errors.password}
+                 onInput={(e) => setPassword(e.target.value)}
+                placeholder="Enter Password" id="bootstrap-input" />
               </FormControl>
+<<<<<<< HEAD
               <TextField
                 error={errors.email !== ""}
                 id="username"
@@ -232,6 +262,8 @@ export default function Login() {
                 helperText={errors.password}
                 onInput={(e) => setPassword(e.target.value)}
               />
+=======
+>>>>>>> a1349d77046c4de8153c24718c6b82ba50f69c98
             </Grid>
 
             <Grid item xs={12} className={classes.listItemsChild} >
@@ -267,11 +299,7 @@ export default function Login() {
               </Button>
             </Grid>
           </form>
-          <img
-            src={bottomImage}
-            alt="bottom-image"
-            className= {classes.bottomImage}
-          />
+          
         </CardContent>
       </Card>
     </>
