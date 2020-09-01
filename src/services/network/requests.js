@@ -19,7 +19,7 @@ const servicesForData = axios.create({
   },
 });
 
-export const get = (url, useToken ) => {
+export const get = (url, useToken) => {
   const headers = tokenHeaders(useToken);
   return services.get(url,headers);
 };
