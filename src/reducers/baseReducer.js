@@ -18,70 +18,70 @@ const initialstate = {
   groundContainer: {},
 };
 const base = persistReducer(
-  { storage, key: "base-wms", whitelist: ["facility"] },(state = initialstate, action) => {
+  { storage, key: "base-wms", whitelist: ["facility","facilityList"] },(state = initialstate, action) => {
   switch (action.type) {
-    case actionTypes.facilty: {
+    case actionTypes.FACILITY_SELECTED: {
       return {
         ...state,
         facility: action.data,
       };
     }
-    case actionTypes.damageCodeList: {
+    case actionTypes.DAMAGE_CODE_LIST: {
       return {
         ...state,
         damageCodeList: action.data,
       };
     }
 
-    case actionTypes.facilityList: {
+    case actionTypes.FACILITY_LIST: {
       return {
         ...state,
         facilityList: action.data,
       };
     }
 
-    case actionTypes.yardCraneList: {
+    case actionTypes.YARD_CRANE_LIST: {
       return {
         ...state,
         yardCraneList: action.data,
       };
     }
 
-    case actionTypes.yardCrane: {
+    case actionTypes.YARD_CRANE: {
       return {
         ...state,
         yardCrane: action.data,
       };
     }
 
-    case actionTypes.blockList: {
+    case actionTypes.BLOCK_LIST: {
       return {
         ...state,
         blockList: action.data,
       };
     }
 
-    case actionTypes.yardOperation: {
+    case actionTypes.YARD_OPERATIONS: {
       return {
         ...state,
         yardOperation: action.data,
       };
     }
 
-    case actionTypes.yardJobOption: {
+    case actionTypes.YARD_JOB_OPTIONS: {
       return {
         ...state,
         yardJobOption: action.data,
       };
     }
 
-    case actionTypes.gateInOperationOpations: {
+    case actionTypes.GATE_IN_OPERATION_OPTIONS: {
       return {
         ...state,
         gateInOperation: action.data,
       };
     }
-    case actionTypes.groundContainer: {
+    case actionTypes.GROUND_CONTAINER: {
       return {
         ...state,
         groundContainer: action.data,

@@ -1,11 +1,11 @@
 import { getUrl } from "../services/network/urls";
 import { post } from "../services/network/requests";
-import { login } from "../actions/authActions";
-export const LoginApi = (data, callback) => {
+import { login,remember } from "../actions/authActions";
+export const LoginApi = (userData,remember_me ,callback) => {
   let url = getUrl("signin");
 
   return (dispatch) => {
-    post(url, data, {})
+    post(url, userData, {})
       .then((response) => {
         const {
           data: { status, data },
@@ -14,6 +14,9 @@ export const LoginApi = (data, callback) => {
         if (status) {
           callback(response);
           setTimeout(() => {
+            if(remember_me){
+              dispatch(remember({remember_username : userData}));
+            }
             dispatch(
               login({
                 authToken: data.token,
@@ -23,11 +26,14 @@ export const LoginApi = (data, callback) => {
                 },
               })
             );
-          }, 1000);
+          }, 2000);
         }
       })
       .catch((err) => {
         console.log("error", err);
       });
   };
+
 };
+
+
