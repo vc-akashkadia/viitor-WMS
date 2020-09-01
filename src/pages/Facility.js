@@ -75,7 +75,7 @@ const useStyles = makeStyles((theme) => ({
   },
   listItemsChild: {
     marginBottom: 20,
-    marginTop: 20,
+    // marginTop: 20,
   },
   formControl: {
     minWidth: 120,
@@ -87,6 +87,7 @@ const useStyles = makeStyles((theme) => ({
     bottom: 0,
     width: "100%",
     left: 0,
+    display: 'block'
   },
   // label: {
   //   fontSize: 14,
@@ -177,9 +178,8 @@ export default function Facility() {
               {!loading && (
                 <>
                   <Typography
-                    variant="h6"
                     className={classes.formControl}
-                    style={{ textAlign: "center", paddingBottom: "10px" }}
+                    style={{ textAlign: "center", paddingBottom: 5 }}
                   >
                     Facility
                   </Typography>
