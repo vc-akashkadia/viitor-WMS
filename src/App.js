@@ -1,24 +1,30 @@
 import React from "react";
+import { Provider } from "react-redux";
 import { MuiThemeProvider } from "@material-ui/core/styles";
-import { Router, Route, Switch } from "react-router-dom";
-import { createBrowserHistory } from "history";
+import {
+  BrowserRouter,
+} from "react-router-dom";
 import theme from "@config/theme";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import Login from "./pages/Auth/Login"
+import { PersistGate } from "redux-persist/integration/react";
+import { Routes } from "./routes/index";
 import "./App.css";
 
-const history = createBrowserHistory();
 
-function App() {
+function App({ store, persistor }) {
   return (
-    <MuiThemeProvider theme={theme}>
-      <CssBaseline />
-      <Router history={history}>
-        <Switch>
-        <Route exact path="/login" component={Login}  />
-        </Switch>
-      </Router>
-    </MuiThemeProvider>
+    <Provider store={store}>
+      <PersistGate persistor={persistor} loading={<div>Loading</div>}>
+        <React.Suspense fallback={<div>Loading</div>}>
+          <BrowserRouter>
+            <MuiThemeProvider theme={theme}>
+              <CssBaseline />
+              <Routes />
+            </MuiThemeProvider>
+          </BrowserRouter>
+        </React.Suspense>
+      </PersistGate>
+    </Provider>
   );
 }
 

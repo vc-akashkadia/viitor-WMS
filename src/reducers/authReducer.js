@@ -2,7 +2,7 @@ import { actionTypes } from "../actions/actionTypes";
 import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 const initialAuthState = {
-  user:{fullname : 'test'},
+  user:undefined,//{fullname : 'test'},
   authToken: undefined,
 };
 const auth = persistReducer(

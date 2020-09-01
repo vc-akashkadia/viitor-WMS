@@ -20,8 +20,8 @@ const servicesForData = axios.create({
 });
 
 export const get = (url, useToken = true) => {
-  //const headers = tokenHeaders(useToken);
-  return services.get(url);
+  const headers = tokenHeaders(useToken);
+  return services.get(url,headers);
 };
 
 const tokenHeaders = (useToken) =>{
@@ -29,8 +29,7 @@ const tokenHeaders = (useToken) =>{
   if (typeof(useToken) === 'string'){
     token = {
       headers: {
-        'Authorization': useToken,
-      
+        'Authorization': 'Bearer '+ useToken,
       }
     }
   }else{

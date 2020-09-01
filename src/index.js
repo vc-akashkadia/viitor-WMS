@@ -4,11 +4,11 @@ import './index.css';
 import App from './App';
 import { Provider } from "react-redux";
 import * as serviceWorker from './serviceWorker';
-import store from "./store";
+import store, { persistor } from './store';
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <App store={store} persistor={persistor} />
   </Provider>,
   document.getElementById('root')
 );

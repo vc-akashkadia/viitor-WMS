@@ -1,6 +1,12 @@
 import { actionTypes } from "../actions/actionTypes";
+import { persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage";
 const initialstate = {
   facility: {},
+  damageCodeList:[],
+  facilityList:[],
+  yardCraneList:[],
+  blockList:[],
   yardCrane: {},
   yardOperation: {},
   yardJobOption: {},
@@ -11,7 +17,8 @@ const initialstate = {
   },
   groundContainer: {},
 };
-const base = (state = initialstate, action) => {
+const base = persistReducer(
+  { storage, key: "base-wms", whitelist: ["facility"] },(state = initialstate, action) => {
   switch (action.type) {
     case actionTypes.facilty: {
       return {
@@ -19,18 +26,48 @@ const base = (state = initialstate, action) => {
         facility: action.data,
       };
     }
+    case actionTypes.damageCodeList: {
+      return {
+        ...state,
+        damageCodeList: action.data,
+      };
+    }
+
+    case actionTypes.facilityList: {
+      return {
+        ...state,
+        facilityList: action.data,
+      };
+    }
+
+    case actionTypes.yardCraneList: {
+      return {
+        ...state,
+        yardCraneList: action.data,
+      };
+    }
+
     case actionTypes.yardCrane: {
       return {
         ...state,
         yardCrane: action.data,
       };
     }
+
+    case actionTypes.blockList: {
+      return {
+        ...state,
+        blockList: action.data,
+      };
+    }
+
     case actionTypes.yardOperation: {
       return {
         ...state,
         yardOperation: action.data,
       };
     }
+
     case actionTypes.yardJobOption: {
       return {
         ...state,
@@ -53,6 +90,6 @@ const base = (state = initialstate, action) => {
     default:
       return state;
   }
-};
+});
 
 export default base;

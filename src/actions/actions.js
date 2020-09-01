@@ -4,6 +4,25 @@ export const selectFacility = (data) => ({
   type: actionTypes.facilty,
   data: data,
 });
+export const DamageCodeList = (data) => ({
+  type: actionTypes.damageCodeList,
+  data: data,
+});
+
+export const FacilityList = (data) => ({
+  type: actionTypes.facilityList,
+  data: data,
+});
+
+export const yardCraneList = (data) => ({
+  type: actionTypes.yardCraneList,
+  data: data,
+});
+
+export const blockList = (data) => ({
+  type: actionTypes.blockList,
+  data: data,
+});
 
 export const selectYardCrane = (data) => ({
   type: actionTypes.yardCrane,

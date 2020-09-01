@@ -7,12 +7,18 @@ const getBaseUrl = () => {
 export const getUrl = (type) => {
   const baseUrl = getBaseUrl();
   switch (type) {
-    case 'signup':
-      return `${baseUrl}/user/signup`;
     case 'signin':
       return `${baseUrl}/login`;
     case 'authVerification':
       return `${baseUrl}/user/auth-verification`;
+    case 'facilityList':
+      return `${baseUrl}/facilitynames`;
+    case 'damageCodeList':
+      return `${baseUrl}/damage/showdamagecodes`;
+    case 'craneList':
+      return `${baseUrl}/cranedetails?facilityId=`;
+    case 'yardBlockList':
+      return `${baseUrl}/yardBlockdetails?facilityId=`;
     case 'addRole':
       return `${baseUrl}/addRole`;
     default:

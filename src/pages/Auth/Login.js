@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import brandLogo from "@assests/img/logo.png";
 import Card from "@material-ui/core/Card";
@@ -9,23 +9,50 @@ import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import Checkbox from "@material-ui/core/Checkbox";
 import Typography from "@material-ui/core/Typography";
+import { LoginApi } from "../../apicalls/authCall";
+import {  useDispatch } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: 345,
+    maxWidth: 240,
     marginTop:"15px"
   },
   listItemsChild: {
     marginBottom: 20,
   },
-  cardContent:{
-    paddingBottom:"5px",
-    marginTop:"25px"
-  }
+  cardContent: {
+    paddingBottom: "5px",
+    marginTop: "25px",
+  },
 }));
-
+let errors = {
+  email: "",
+  password: "",
+};
 export default function Login() {
   const classes = useStyles();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    console.log("Email:", email, "Password: ", password);
+    if (email !== "") {
+      errors.email = "User Name is required";
+    }
+    if (password !== "") {
+      errors.email = "Password is required";
+    }
+    let data = {
+      username: email,
+      password: password,
+    };
+    dispatch(LoginApi(data, handleCallback));
+  };
+
+  const handleCallback = (response) => {
+
+  }
   return (
     <>
       <div>
@@ -36,8 +63,8 @@ export default function Login() {
             style={{
               display: "block",
               height: "100%",
-              width: "59%",
-              marginLeft: "48px",
+              width: "56%",
+              marginLeft: "52px",
               marginTop: "10px",
             }}
           />
@@ -45,14 +72,16 @@ export default function Login() {
       </div>
 
       <Card className={classes.root}>
-        <CardContent >
-          <form>
+        <CardContent>
+          <form onSubmit={handleSubmit}>
             <Grid item xs={12} className={classes.listItemsChild}>
               <TextField
                 id="filled-basic"
                 label="User Name"
                 variant="filled"
                 size="small"
+                value={email}
+                onInput={(e) => setEmail(e.target.value)}
               />
             </Grid>
             <Grid item xs={12} className={classes.listItemsChild}>
@@ -62,10 +91,12 @@ export default function Login() {
                 label="Password"
                 variant="filled"
                 size="small"
+                value={password}
+                onInput={(e) => setPassword(e.target.value)}
               />
             </Grid>
 
-            <Grid item xs={12} className={classes.listItemsChild}>
+            <Grid item xs={12}>
               <Checkbox
                 className={classes.checkBox}
                 color="primary"
@@ -79,8 +110,14 @@ export default function Login() {
                 Remember Me
               </Typography>
             </Grid>
-            <Grid item xs={12} className={classes.listItemsChild} >
-              <Button variant="contained" color="primary" size="small" style={{width:"208px"}}>
+            <Grid item xs={12} className={classes.listItemsChild}>
+              <Button
+                type="submit"
+                variant="contained"
+                color="primary"
+                size="small"
+                style={{ width: "208px" }}
+              >
                 Sign in
               </Button>
             </Grid>
