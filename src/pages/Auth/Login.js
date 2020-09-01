@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import brandLogo from "@assests/img/logo.png";
-import logo from "@assests/img/Layer_1.svg";
 import bottomImage from "@assests/img/bottom.svg";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
@@ -14,27 +13,9 @@ import Typography from "@material-ui/core/Typography";
 import FormControl from "@material-ui/core/FormControl";
 import InputBase from '@material-ui/core/InputBase';
 import InputLabel from "@material-ui/core/InputLabel";
-import clsx from 'clsx';
-<<<<<<< HEAD
-import { useDispatch } from "react-redux";
-import Alert from "@material-ui/lab/Alert";
-import CircularProgress from "@material-ui/core/CircularProgress";
-
 import { LoginApi } from "../../apicalls/authCall";
-=======
-import Alert from "@material-ui/lab/Alert";
-import CircularProgress from "@material-ui/core/CircularProgress";
-
-
->>>>>>> a1349d77046c4de8153c24718c6b82ba50f69c98
-let toasterOption = {
-  option: "error",
-  message: "Invalid Login",
-};
-<<<<<<< HEAD
-
-=======
->>>>>>> a1349d77046c4de8153c24718c6b82ba50f69c98
+import {  useDispatch } from "react-redux";
+import clsx from 'clsx';
 
 const BootstrapInput = withStyles((theme) => ({
   root: {
@@ -47,33 +28,45 @@ const BootstrapInput = withStyles((theme) => ({
     position: 'relative',
     backgroundColor: '#eff0f3',
     border: 'none',
-    fontSize: 16,
+    fontSize: 13,
+    fontFamily: "Roboto",
+    fontWeight: 400,
     width: '100%',
-    padding: '10px 12px',
+    padding: '8px 12px',
+    transition: theme.transitions.create(['border-color', 'box-shadow']),
   },
 }))(InputBase);
-<<<<<<< HEAD
-=======
 
->>>>>>> a1349d77046c4de8153c24718c6b82ba50f69c98
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: "100%",
     marginTop:"15px",
-    paddingBottom: "40px",
-    position: "relative"
+    position: "relative",
+    paddingBottom: 12,
+    "@media (min-width:241px)":{
+      paddingBottom: 40
+    },
+    "@media (min-width:768px)":{
+      paddingBottom: 140
+    },
+    "@media (min-width:1240px)":{
+      paddingBottom: 220
+    },
+    "@media (min-width:1600px)":{
+      paddingBottom: 300
+    }
   },
   logo:{
     display: "block",
     height: "100%",
     width: "45%",
-    margin: "auto",
+    margin: "10px auto",
   "@media (min-width:768px)":{
       width: "30%",
   }
   },
   listItemsChild: {
-    marginBottom: 8,
+    marginBottom: 15,
   },
   cardContent: {
     paddingBottom: "5px",
@@ -106,17 +99,14 @@ const useStyles = makeStyles((theme) => ({
   field:{
     display: "flex" 
   },
+  card:{
+    padding: 20
+  },
   label :{
     fontSize: 14,
     color: "#707070",
     fontWeight: 500,
     fontFamily: "Roboto",
-  },
-  input:{
-    fontFamily: "Roboto",
-    fontSize: 13,
-    fontWeight: 400,
-    color: "#707070"
   },
   rememberText:{
     fontSize: 12,
@@ -129,75 +119,53 @@ const useStyles = makeStyles((theme) => ({
     color: "#ffffff",
     fontWeight: 500,
     fontFamily: "Roboto",
-    width: "100%"
+    width: "100%",
+    height: 30,
+    backgroundColor: "#0c79c1",
+    textTransform: "inherit"
   },
   bottomImage:{
     position: "absolute",
     bottom: 0,
-    width: "90%"
+    width: "100%",
+    left: 0,
   }
 }));
-<<<<<<< HEAD
-=======
-
->>>>>>> a1349d77046c4de8153c24718c6b82ba50f69c98
 let errors = {
   email: "",
-  password: ""
+  password: "",
 };
 export default function Login() {
   const classes = useStyles();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [remember_me, setCheckbox] = useState(false);
-  const [alert, setAlert] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [errors, setErrors] = useState({
-    email: "",
-    password: "",
-  });
   const dispatch = useDispatch();
   const handleSubmit = (event) => {
     event.preventDefault();
-    let error = { email: "", password: "" };
-    if (email === "") {
-      error.email = "User Name is required";
+    console.log("Email:", email, "Password: ", password);
+    if (email !== "") {
+      errors.email = "User Name is required";
     }
-    if (password === "") {
-      error.password = "Password is required";
+    if (password !== "") {
+      errors.email = "Password is required";
     }
-    setErrors(error);
-    if (email !== "" && password !== "") {
-      setLoading(true);
-      let data = {
-        username: email,
-        password: password,
-      };
-      dispatch(LoginApi(data,remember_me, handleCallback));
-    }
+    let data = {
+      username: email,
+      password: password,
+    };
+    dispatch(LoginApi(data, handleCallback));
   };
   
 
   const handleCallback = (response) => {
-    const {
-      data: { status },
-    } = response;
-    if (status) {
-      toasterOption = {
-        option: "success",
-        message: "Login Successfull",
-      };
-      
-    }
-    setAlert(true);
-    setLoading(false);
-  };
+
+  }
   return (
     <>
       <div>
         <Link to="/" className="brand-logo">
           <img
-            src={logo}
+            src={brandLogo}
             alt="Logo"
             className= {classes.logo}
           />
@@ -205,25 +173,14 @@ export default function Login() {
       </div>
 
       <Card className={classes.root}>
-        <CardContent>
-          {alert && (
-            <Alert severity={toasterOption.option}>
-              {toasterOption.message}
-            </Alert>
-          )}
+        <CardContent className={classes.card}>
           <form onSubmit={handleSubmit}>
             <Grid item xs={12} className={classes.listItemsChild}>
             <FormControl className={classes.field}>
                 <InputLabel shrink htmlFor="bootstrap-input" className={classes.label}>
                   User Name
                 </InputLabel>
-                <BootstrapInput 
-                error={errors.email !== ""}
-                value={email}
-                helperText={errors.email}
-                onInput={(e) => setEmail(e.target.value)}
-                placeholder="Enter User Name" id="bootstrap-input" className={classes.input}/>
-
+                <BootstrapInput placeholder="Enter User Name" id="bootstrap-input" />
               </FormControl>
             </Grid>
             <Grid item xs={12} className={classes.listItemsChild}>
@@ -231,39 +188,8 @@ export default function Login() {
                 <InputLabel shrink htmlFor="bootstrap-input" className={classes.label}>
                   Password
                 </InputLabel>
-                <BootstrapInput 
-                error={errors.password !== ""}
-                 value={password}
-                 helperText={errors.password}
-                 onInput={(e) => setPassword(e.target.value)}
-                placeholder="Enter Password" id="bootstrap-input" />
+                <BootstrapInput placeholder="Enter Password" id="bootstrap-input"/>
               </FormControl>
-<<<<<<< HEAD
-              <TextField
-                error={errors.email !== ""}
-                id="username"
-                label="User Name"
-                variant="outlined"
-                size="small"
-                value={email}
-                helperText={errors.email}
-                onInput={(e) => setEmail(e.target.value)}
-              />
-            </Grid>
-            <Grid item xs={12} className={classes.listItemsChild}>
-              <TextField
-               error={errors.password !== ""}
-                type="password"
-                id="password"
-                label="Password"
-                variant="outlined"
-                size="small"
-                value={password}
-                helperText={errors.password}
-                onInput={(e) => setPassword(e.target.value)}
-              />
-=======
->>>>>>> a1349d77046c4de8153c24718c6b82ba50f69c98
             </Grid>
 
             <Grid item xs={12} className={classes.listItemsChild} >
@@ -273,14 +199,11 @@ export default function Login() {
                 name="rememberme"
                 icon={<span className={classes.icon} />}
                 checkedIcon={<span className={clsx(classes.icon, classes.checkedIcon)} />}
-                id="rememberme"
-                onClick={(e) => setCheckbox(e.target.checked)}
               />
               <Typography
                 variant="body1"
                 component="span"
                 className={classes.rememberText}
-                htmlFor="rememberme"
               >
                 Remember Me
               </Typography>
@@ -289,17 +212,18 @@ export default function Login() {
               <Button 
                 type="submit"
                 variant="contained"
-                color="background"
                 size="small"
                 className={classes.button}
-                style={{ width: "208px" }}
-                disabled={loading}
               >
-                Sign in {loading && <CircularProgress size={24} />}
+                Sign in
               </Button>
             </Grid>
           </form>
-          
+          <img
+            src={bottomImage}
+            alt="bottom-image"
+            className= {classes.bottomImage}
+          />
         </CardContent>
       </Card>
     </>
