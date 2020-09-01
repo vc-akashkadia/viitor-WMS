@@ -7,7 +7,10 @@ const theme = createMuiTheme({
     },
     secondary: {
       main: "#ffffff"
-    }
+    },
+    default: {
+      main: '#173a64'
+    },
   },
   status: {
     danger: "orange"
@@ -64,6 +67,17 @@ const theme = createMuiTheme({
         fontWeight: 400,
         lineHeight: '16px',
         textTransform: 'uppercase',
+      }
+    },
+    MuiChip: {
+      root: {
+        backgroundColor: '#f6f6f6',
+        borderRadius: 4,
+        height: 26,
+        fontSize: 14,
+        fontWeight: 500,
+        lineHeight: '26px',
+        fontFamily: 'Roboto',
       }
     },
     MuiInputLabel: {
