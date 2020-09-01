@@ -60,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
     margin: "10px auto",
   },
   listItemsChild: {
-    marginBottom: 15,
+    marginBottom: 10,
   },
   cardContent: {
     paddingBottom: "5px",
@@ -98,10 +98,12 @@ const useStyles = makeStyles((theme) => ({
     padding: 20,
   },
   label: {
-    fontSize: 14,
+    fontSize: 16,
     color: "#707070",
     fontWeight: 500,
     fontFamily: "Roboto",
+    lineHeight: '16px',
+    marginBottom: 5
   },
   rememberText: {
     fontSize: 12,
@@ -124,6 +126,7 @@ const useStyles = makeStyles((theme) => ({
     bottom: 0,
     width: "100%",
     left: 0,
+    display: 'block'
   },
 }));
 // let errors = {
@@ -200,7 +203,7 @@ console.log("email",errors.email)
           )}
           <form onSubmit={handleSubmit}>
             <Grid item xs={12} className={classes.listItemsChild}>
-              <FormControl className={classes.field}>
+              {/* <FormControl className={classes.field}> */}
                 <InputLabel
                   shrink
                   htmlFor="bootstrap-input"
@@ -224,13 +227,12 @@ console.log("email",errors.email)
                   placeholder="Enter User Name"
                   helperText={errors.email}
                   value={email}
-                  size="small"
                   onInput={(e) => setEmail(e.target.value)}
+                  style={{width: '100%'}}
                   />
-              </FormControl>
+              {/* </FormControl> */}
             </Grid>
             <Grid item xs={12} className={classes.listItemsChild}>
-              <FormControl className={classes.field}>
                 <InputLabel
                   shrink
                   htmlFor="bootstrap-input"
@@ -242,13 +244,12 @@ console.log("email",errors.email)
                   error={errors.password !== ""}
                   type="password"
                   variant="outlined"
-                  size="small"
                   id="password"
                   helperText={errors.password}
                   onInput={(e) => setPassword(e.target.value)}
                   placeholder="Enter Password"
+                  style={{width: '100%'}}
                   />
-              </FormControl>
             </Grid>
 
             <Grid item xs={12} className={classes.listItemsChild}>
