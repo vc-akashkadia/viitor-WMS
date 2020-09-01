@@ -11,12 +11,24 @@ import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import Checkbox from "@material-ui/core/Checkbox";
 import Typography from "@material-ui/core/Typography";
+<<<<<<< HEAD
 import FormControl from "@material-ui/core/FormControl";
 import InputBase from '@material-ui/core/InputBase';
 import InputLabel from "@material-ui/core/InputLabel";
 import { LoginApi } from "../../apicalls/authCall";
 import {  useDispatch } from "react-redux";
 import clsx from 'clsx';
+=======
+import { useDispatch } from "react-redux";
+import Alert from "@material-ui/lab/Alert";
+import CircularProgress from "@material-ui/core/CircularProgress";
+
+import { LoginApi } from "../../apicalls/authCall";
+let toasterOption = {
+  option: "error",
+  message: "Invalid Login",
+};
+>>>>>>> 97ba4a4e27e501ad84b31da16255ff3dd9dc4b8a
 
 
 const BootstrapInput = withStyles((theme) => ({
@@ -117,35 +129,60 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
+<<<<<<< HEAD
 let errors = {
   email: "",
   password: "",
 };
+=======
+>>>>>>> 97ba4a4e27e501ad84b31da16255ff3dd9dc4b8a
 export default function Login() {
   const classes = useStyles();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [remember_me, setCheckbox] = useState(false);
+  const [alert, setAlert] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState({
+    email: "",
+    password: "",
+  });
   const dispatch = useDispatch();
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log("Email:", email, "Password: ", password);
-    if (email !== "") {
-      errors.email = "User Name is required";
+    let error = { email: "", password: "" };
+    if (email === "") {
+      error.email = "User Name is required";
     }
-    if (password !== "") {
-      errors.email = "Password is required";
+    if (password === "") {
+      error.password = "Password is required";
     }
-    let data = {
-      username: email,
-      password: password,
-    };
-    dispatch(LoginApi(data, handleCallback));
+    setErrors(error);
+    if (email !== "" && password !== "") {
+      setLoading(true);
+      let data = {
+        username: email,
+        password: password,
+      };
+      dispatch(LoginApi(data,remember_me, handleCallback));
+    }
   };
   
 
   const handleCallback = (response) => {
-
-  }
+    const {
+      data: { status },
+    } = response;
+    if (status) {
+      toasterOption = {
+        option: "success",
+        message: "Login Successfull",
+      };
+      
+    }
+    setAlert(true);
+    setLoading(false);
+  };
   return (
     <>
       <div>
@@ -160,8 +197,14 @@ export default function Login() {
 
       <Card className={classes.root}>
         <CardContent>
+          {alert && (
+            <Alert severity={toasterOption.option}>
+              {toasterOption.message}
+            </Alert>
+          )}
           <form onSubmit={handleSubmit}>
             <Grid item xs={12} className={classes.listItemsChild}>
+<<<<<<< HEAD
             <FormControl className={classes.field}>
                 <InputLabel shrink htmlFor="bootstrap-input" className={classes.label}>
                   User Name
@@ -176,6 +219,31 @@ export default function Login() {
                 </InputLabel>
                 <BootstrapInput placeholder="Enter Password" id="bootstrap-input" />
               </FormControl>
+=======
+              <TextField
+                error={errors.email !== ""}
+                id="username"
+                label="User Name"
+                variant="outlined"
+                size="small"
+                value={email}
+                helperText={errors.email}
+                onInput={(e) => setEmail(e.target.value)}
+              />
+            </Grid>
+            <Grid item xs={12} className={classes.listItemsChild}>
+              <TextField
+               error={errors.password !== ""}
+                type="password"
+                id="password"
+                label="Password"
+                variant="outlined"
+                size="small"
+                value={password}
+                helperText={errors.password}
+                onInput={(e) => setPassword(e.target.value)}
+              />
+>>>>>>> 97ba4a4e27e501ad84b31da16255ff3dd9dc4b8a
             </Grid>
 
             <Grid item xs={12} className={classes.listItemsChild} >
@@ -183,13 +251,19 @@ export default function Login() {
                 className={clsx(classes.checkBox, classes.paddingRemove)}
                 color="primary"
                 name="rememberme"
+<<<<<<< HEAD
                 icon={<span className={classes.icon} />}
                 checkedIcon={<span className={clsx(classes.icon, classes.checkedIcon)} />}
+=======
+                id="rememberme"
+                onClick={(e) => setCheckbox(e.target.checked)}
+>>>>>>> 97ba4a4e27e501ad84b31da16255ff3dd9dc4b8a
               />
               <Typography
                 variant="body1"
                 component="span"
                 className={classes.rememberText}
+                htmlFor="rememberme"
               >
                 Remember Me
               </Typography>
@@ -200,9 +274,14 @@ export default function Login() {
                 variant="contained"
                 color="background"
                 size="small"
+<<<<<<< HEAD
                 className={classes.button}
+=======
+                style={{ width: "208px" }}
+                disabled={loading}
+>>>>>>> 97ba4a4e27e501ad84b31da16255ff3dd9dc4b8a
               >
-                Sign in
+                Sign in {loading && <CircularProgress size={24} />}
               </Button>
             </Grid>
           </form>
