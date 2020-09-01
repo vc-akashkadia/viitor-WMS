@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import brandLogo from "@assests/img/logo.png";
+import logo from "@assests/img/Layer_1.svg";
+import bottomImage from "@assests/img/bottom.svg";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import { makeStyles,withStyles,fade } from "@material-ui/core/styles";
@@ -30,14 +32,15 @@ const BootstrapInput = withStyles((theme) => ({
     fontSize: 16,
     width: '100%',
     padding: '10px 12px',
-    transition: theme.transitions.create(['border-color', 'box-shadow']),
   },
 }))(InputBase);
 
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: "100%",
-    marginTop:"15px"
+    marginTop:"15px",
+    paddingBottom: "40px",
+    position: "relative"
   },
   logo:{
     display: "block",
@@ -49,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
   }
   },
   listItemsChild: {
-    marginBottom: 20,
+    marginBottom: 8,
   },
   cardContent: {
     paddingBottom: "5px",
@@ -81,8 +84,39 @@ const useStyles = makeStyles((theme) => ({
   },
   field:{
     display: "flex" 
+  },
+  label :{
+    fontSize: 14,
+    color: "#707070",
+    fontWeight: 500,
+    fontFamily: "Roboto",
+  },
+  input:{
+    fontFamily: "Roboto",
+    fontSize: 13,
+    fontWeight: 400,
+    color: "#707070"
+  },
+  rememberText:{
+    fontSize: 12,
+    color: "#707070",
+    fontWeight: 500,
+    fontFamily: "Roboto"
+  },
+  button:{
+    fontSize: 13,
+    color: "#ffffff",
+    fontWeight: 500,
+    fontFamily: "Roboto",
+    width: "100%"
+  },
+  bottomImage:{
+    position: "absolute",
+    bottom: 0,
+    width: "90%"
   }
 }));
+
 let errors = {
   email: "",
   password: "",
@@ -117,7 +151,7 @@ export default function Login() {
       <div>
         <Link to="/" className="brand-logo">
           <img
-            src={brandLogo}
+            src={logo}
             alt="Logo"
             className= {classes.logo}
           />
@@ -129,15 +163,15 @@ export default function Login() {
           <form onSubmit={handleSubmit}>
             <Grid item xs={12} className={classes.listItemsChild}>
             <FormControl className={classes.field}>
-                <InputLabel shrink htmlFor="bootstrap-input">
+                <InputLabel shrink htmlFor="bootstrap-input" className={classes.label}>
                   User Name
                 </InputLabel>
-                <BootstrapInput placeholder="Enter User Name" id="bootstrap-input" />
+                <BootstrapInput placeholder="Enter User Name" id="bootstrap-input" className={classes.input}/>
               </FormControl>
             </Grid>
             <Grid item xs={12} className={classes.listItemsChild}>
               <FormControl className={classes.field}>
-                <InputLabel shrink htmlFor="bootstrap-input">
+                <InputLabel shrink htmlFor="bootstrap-input" className={classes.label}>
                   Password
                 </InputLabel>
                 <BootstrapInput placeholder="Enter Password" id="bootstrap-input" />
@@ -166,12 +200,17 @@ export default function Login() {
                 variant="contained"
                 color="background"
                 size="small"
-                style={{ width: "100%"}}
+                className={classes.button}
               >
                 Sign in
               </Button>
             </Grid>
           </form>
+          <img
+            src={bottomImage}
+            alt="bottom-image"
+            className= {classes.bottomImage}
+          />
         </CardContent>
       </Card>
     </>

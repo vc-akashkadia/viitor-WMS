@@ -217,7 +217,7 @@ const theme = createMuiTheme({
         marginTop: "19px !important"
       }
     }
-  },
+  }
 });
 
 export default theme;
