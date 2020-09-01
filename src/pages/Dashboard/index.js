@@ -13,6 +13,7 @@ import Select from '@material-ui/core/Select';
 import InputBase from '@material-ui/core/InputBase';
 import Button from '@material-ui/core/Button';
 import OperationIcon from './../../@assests/img/dashboard1.svg';
+import Header from './../../components/Header';
 
 const BootstrapInput = withStyles((theme) => ({
     root: {
@@ -23,7 +24,7 @@ const BootstrapInput = withStyles((theme) => ({
     input: {
         borderRadius: 4,
         position: 'relative',
-        backgroundColor: theme.palette.background.paper,
+        backgroundColor: '#f6f6f6',
         border: '1px solid #ced4da',
         fontSize: 16,
         padding: '10px 26px 10px 12px',
@@ -43,7 +44,7 @@ const BootstrapInput = withStyles((theme) => ({
 
 const useStyles = makeStyles({
     mainContainer: {
-        margin: '20px 10px'
+        margin: '65px 10px'
     },
     mainTitle: {
         paddingLeft: 14
@@ -72,6 +73,7 @@ export default function Dashboard() {
     };
     return (
         <>
+            <Header />
             <div className={classes.mainContainer}>
                 <Card className={classes.operationCard}>
                     <Accordion>
