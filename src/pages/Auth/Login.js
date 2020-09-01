@@ -9,8 +9,15 @@ import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import Checkbox from "@material-ui/core/Checkbox";
 import Typography from "@material-ui/core/Typography";
+import { useDispatch } from "react-redux";
+import Alert from "@material-ui/lab/Alert";
+import CircularProgress from "@material-ui/core/CircularProgress";
+
 import { LoginApi } from "../../apicalls/authCall";
-import {  useDispatch } from "react-redux";
+let toasterOption = {
+  option: "error",
+  message: "Invalid Login",
+};
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -25,34 +32,53 @@ const useStyles = makeStyles((theme) => ({
     marginTop: "25px",
   },
 }));
-let errors = {
-  email: "",
-  password: "",
-};
+
 export default function Login() {
   const classes = useStyles();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [remember_me, setCheckbox] = useState(false);
+  const [alert, setAlert] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState({
+    email: "",
+    password: "",
+  });
   const dispatch = useDispatch();
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log("Email:", email, "Password: ", password);
-    if (email !== "") {
-      errors.email = "User Name is required";
+    let error = { email: "", password: "" };
+    if (email === "") {
+      error.email = "User Name is required";
     }
-    if (password !== "") {
-      errors.email = "Password is required";
+    if (password === "") {
+      error.password = "Password is required";
     }
-    let data = {
-      username: email,
-      password: password,
-    };
-    dispatch(LoginApi(data, handleCallback));
+    setErrors(error);
+    if (email !== "" && password !== "") {
+      setLoading(true);
+      let data = {
+        username: email,
+        password: password,
+      };
+      dispatch(LoginApi(data,remember_me, handleCallback));
+    }
   };
 
   const handleCallback = (response) => {
-
-  }
+    const {
+      data: { status },
+    } = response;
+    if (status) {
+      toasterOption = {
+        option: "success",
+        message: "Login Successfull",
+      };
+      
+    }
+    setAlert(true);
+    setLoading(false);
+  };
   return (
     <>
       <div>
@@ -73,25 +99,34 @@ export default function Login() {
 
       <Card className={classes.root}>
         <CardContent>
+          {alert && (
+            <Alert severity={toasterOption.option}>
+              {toasterOption.message}
+            </Alert>
+          )}
           <form onSubmit={handleSubmit}>
             <Grid item xs={12} className={classes.listItemsChild}>
               <TextField
-                id="filled-basic"
+                error={errors.email !== ""}
+                id="username"
                 label="User Name"
-                variant="filled"
+                variant="outlined"
                 size="small"
                 value={email}
+                helperText={errors.email}
                 onInput={(e) => setEmail(e.target.value)}
               />
             </Grid>
             <Grid item xs={12} className={classes.listItemsChild}>
               <TextField
+               error={errors.password !== ""}
                 type="password"
-                id="filled-basic"
+                id="password"
                 label="Password"
-                variant="filled"
+                variant="outlined"
                 size="small"
                 value={password}
+                helperText={errors.password}
                 onInput={(e) => setPassword(e.target.value)}
               />
             </Grid>
@@ -101,11 +136,14 @@ export default function Login() {
                 className={classes.checkBox}
                 color="primary"
                 name="rememberme"
+                id="rememberme"
+                onClick={(e) => setCheckbox(e.target.checked)}
               />
               <Typography
                 variant="body1"
                 component="span"
                 className={classes.rememberText}
+                htmlFor="rememberme"
               >
                 Remember Me
               </Typography>
@@ -117,8 +155,9 @@ export default function Login() {
                 color="primary"
                 size="small"
                 style={{ width: "208px" }}
+                disabled={loading}
               >
-                Sign in
+                Sign in {loading && <CircularProgress size={24} />}
               </Button>
             </Grid>
           </form>
