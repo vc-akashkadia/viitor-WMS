@@ -5,7 +5,8 @@ import Login from "../pages/Auth/Login";
 import YardOperation from "../pages/yard/YardOperation"
 import Facility from "../pages/Facility";
 import Operations from "../pages/Operations";
-import Dashboard from '../pages/Dashboard'
+import Dashboard from '../pages/Dashboard';
+import Popup from "../components/popup";
 export function Routes() {
   const { isAuthorized } = useSelector(
     ({ auth }) => ({
@@ -29,6 +30,7 @@ export function Routes() {
           <Route path="/dashboard" component={Dashboard} />
           <Route exact path="/facility" component={Facility} />
           <Route exact path="/operations" component={Operations} />
+          <Route exact path="/components" component={Popup} />
         </>
       ) : (
         <Redirect to="/login" />

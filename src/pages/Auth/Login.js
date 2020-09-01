@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import brandLogo from "@assests/img/logo.png";
-import bottomImage from "@assests/img/bottom.svg";
+import bottomImage from "@assests/img/pattern.svg";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import { makeStyles,withStyles,fade } from "@material-ui/core/styles";
@@ -39,31 +39,23 @@ const BootstrapInput = withStyles((theme) => ({
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: "100%",
+    maxWidth: "500px",
     marginTop:"15px",
+    margin: "auto",
     position: "relative",
     paddingBottom: 12,
     "@media (min-width:241px)":{
       paddingBottom: 40
     },
     "@media (min-width:768px)":{
-      paddingBottom: 140
+      paddingBottom: 100
     },
-    "@media (min-width:1240px)":{
-      paddingBottom: 220
-    },
-    "@media (min-width:1600px)":{
-      paddingBottom: 300
-    }
   },
   logo:{
     display: "block",
     height: "100%",
-    width: "45%",
+    width: 100,
     margin: "10px auto",
-  "@media (min-width:768px)":{
-      width: "30%",
-  }
   },
   listItemsChild: {
     marginBottom: 15,
