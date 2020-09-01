@@ -86,6 +86,28 @@ const theme = createMuiTheme({
           color: "#707070"
         }
       }
+    },
+    MuiOutlinedInput: {
+      input: {
+        padding: '0px 14px',
+        height: 28,
+        backgroundColor: '#f6f6f6',
+        borderRadius: 4
+      }
+    },
+    MuiAppBar: {
+      root: {
+        boxShadow: 'none'
+      }
+    },
+    MuiToolbar: {
+      root: {
+        minHeight: '40px !important'
+      },
+      gutters: {
+        paddingLeft: 10,
+        paddingRight: 10
+      }
     }
   }
 });

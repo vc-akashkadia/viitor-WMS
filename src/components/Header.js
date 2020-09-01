@@ -4,7 +4,7 @@ import AppBar from "@material-ui/core/AppBar";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
-import brandLogo from "@assests/img/logo.png";
+import brandLogo from "@assests/img/logo-new.svg";
 import IconButton from "@material-ui/core/IconButton";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import Popper from '@material-ui/core/Popper';
@@ -13,6 +13,8 @@ import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
 import Paper from '@material-ui/core/Paper';
+import Box from '@material-ui/core/Box';
+import MenuIcon from '@material-ui/icons/Menu';
 
 const useStyles = makeStyles((theme) => ({
   colorPrimary: {
@@ -52,22 +54,20 @@ export default function Header() {
     <>
       <CssBaseline />
       <AppBar className={classes.colorPrimary}>
-        <Toolbar style={{ minHeight: "40px" }}>
-          <Link to="/">
-            <img
-              src={brandLogo}
-              alt="Logo"
-              style={{
-                display: "block",
-                height: "100%",
-                width: "48%",
-                marginLeft: "56px",
-                marginBottom: "6px",
-              }}
-            />
-          </Link>
-
-          <div>
+        <Toolbar>
+          <Box display="flex" justifyContent="space-between" alignItems="center" style={{ width: '100%' }}>
+            <IconButton aria-label="delete" className={classes.margin} size="small" color="primary">
+              <MenuIcon fontSize="" />
+            </IconButton>
+            <Link to="/">
+              <img
+                src={brandLogo}
+                alt="Logo"
+                style={{
+                  display: "block",
+                }}
+              />
+            </Link>
             <IconButton
               aria-haspopup="true"
               onClick={handleToggle}
@@ -75,23 +75,23 @@ export default function Header() {
             >
               <AccountCircle />
             </IconButton>
-          </div>
+          </Box>
           <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
-          {({ TransitionProps, placement }) => (
-            <Grow
-              {...TransitionProps}
-              style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
-            >
-              <Paper>
-                <ClickAwayListener onClickAway={handleClose}>
-                  <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
-                    <MenuItem onClick={handleClose}>Logout</MenuItem>
-                  </MenuList>
-                </ClickAwayListener>
-              </Paper>
-            </Grow>
-          )}
-            </Popper>
+            {({ TransitionProps, placement }) => (
+              <Grow
+                {...TransitionProps}
+                style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
+              >
+                <Paper>
+                  <ClickAwayListener onClickAway={handleClose}>
+                    <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
+                      <MenuItem onClick={handleClose}>Logout</MenuItem>
+                    </MenuList>
+                  </ClickAwayListener>
+                </Paper>
+              </Grow>
+            )}
+          </Popper>
         </Toolbar>
       </AppBar>
     </>
