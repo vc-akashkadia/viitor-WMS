@@ -14,6 +14,7 @@ import InputLabel from "@material-ui/core/InputLabel";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
+import bottomImage from "@assests/img/pattern.svg";
 
 import {
   facilityListApiCall,
@@ -27,8 +28,23 @@ let toasterOption = {
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: 240,
+    maxWidth: "500px",
     marginTop: "15px",
+    margin: "auto",
+    position: "relative",
+    paddingBottom: 12,
+    "@media (min-width:241px)": {
+      paddingBottom: 40,
+    },
+    "@media (min-width:768px)": {
+      paddingBottom: 100,
+    },
+  },
+  logo: {
+    display: "block",
+    height: "100%",
+    width: 100,
+    margin: "10px auto",
   },
   listItemsChild: {
     marginBottom: 20,
@@ -37,6 +53,23 @@ const useStyles = makeStyles((theme) => ({
   formControl: {
     minWidth: 120,
     width: "100%",
+    display: "flex",
+  },
+  bottomImage: {
+    position: "absolute",
+    bottom: 0,
+    width: "100%",
+    left: 0,
+  },
+  button: {
+    fontSize: 13,
+    color: "#ffffff",
+    fontWeight: 500,
+    fontFamily: "Roboto",
+    width: "100%",
+    height: 30,
+    backgroundColor: "#0c79c1",
+    textTransform: "inherit",
   },
   cardContent: {
     paddingBottom: "5px",
@@ -60,7 +93,7 @@ export default function Facility() {
     setLoading(true);
     if(facility !== ''){
         dispatch(selectedFacility(facility));
-        history.push("/operations");
+        history.push("/dashboard");
     }else{
         setErrors('Please select facility')
         //setAlert(true)
@@ -94,17 +127,7 @@ export default function Facility() {
     <>
       <div>
         <Link to="/" className="brand-logo">
-          <img
-            src={brandLogo}
-            alt="Logo"
-            style={{
-              display: "block",
-              height: "100%",
-              width: "56%",
-              marginLeft: "52px",
-              marginTop: "10px",
-            }}
-          />
+          <img src={brandLogo} alt="Logo" className={classes.logo} />
         </Link>
       </div>
 
@@ -149,15 +172,19 @@ export default function Facility() {
               <Button
                 type="submit"
                 variant="contained"
-                color="primary"
                 size="small"
-                style={{ width: "208px" }}
+                className={classes.button}
                 disabled={loading}
               >
-                Ok
+               Ok {loading && <CircularProgress size={24} />}
               </Button>
             </Grid>
           </form>
+          <img
+            src={bottomImage}
+            alt="bottom-image"
+            className={classes.bottomImage}
+          />
         </CardContent>
       </Card>
     </>
