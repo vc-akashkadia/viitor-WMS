@@ -18,10 +18,11 @@ import { LoginApi } from "../../apicalls/authCall";
 import {  useDispatch } from "react-redux";
 import clsx from 'clsx';
 
+
 const BootstrapInput = withStyles((theme) => ({
   root: {
     'label + &': {
-      marginTop: theme.spacing(3),
+      marginTop: theme.spacing(2),
     },
   },
   input: {
@@ -34,7 +35,6 @@ const BootstrapInput = withStyles((theme) => ({
     padding: '10px 12px',
   },
 }))(InputBase);
-
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: "100%",
