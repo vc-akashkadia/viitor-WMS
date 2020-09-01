@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState} from "react";
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -19,6 +19,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import InputBase from '@material-ui/core/InputBase';
 import TextField from '@material-ui/core/TextField';
+// import Modal from "../../components/modal"
 
 const BootstrapInput = withStyles((theme) => ({
     root: {
@@ -115,10 +116,14 @@ const useStyles = makeStyles({
 
 export default function YardOperation() {
     const classes = useStyles();
-    const [age, setAge] = React.useState('');
+    const [age, setAge] = useState('');
+    const [open,setOpen] =useState(false)
     const handleChange = (event) => {
         setAge(event.target.value);
     };
+    const handleOpen =()=>{
+      setOpen(!open)
+    }
     return (
         <>
             <AppBar position="static" color="secondary">
@@ -128,9 +133,9 @@ export default function YardOperation() {
                             <IconButton aria-label="back" className={classes.backIcon} size="small">
                                 <ArrowBackIcon fontSize="" />
                             </IconButton>
-                            <Typography className={classes.backText}>Yard Operation</Typography>
+                            <Typography className={classes.backText}>Position Update</Typography>
                         </Box>
-                        <Box display="flex" alignItems="center">
+                        <Box display="flex" alignItems="center" onClick={handleOpen}>
                             <IconButton aria-label="back" className={classes.backIcon} size="small" style={{ paddingRight: 10 }}>
                                 <SearchIcon fontSize="" />
                             </IconButton>
@@ -141,7 +146,8 @@ export default function YardOperation() {
                     </Box>
                 </Toolbar>
             </AppBar>
-            <Card className={classes.filterSearch}>
+          {open &&(
+              <Card className={classes.filterSearch}>
                 <Grid container spacing={1} alignItems="center">
                     <Grid item xs={6}>
                         <Typography className={classes.searchTitle}>Search Here</Typography>
@@ -214,6 +220,7 @@ export default function YardOperation() {
                     </Grid>
                 </Grid>
             </Card>
+            )}
             <div className={classes.yardMain}>
                 <Typography className={classes.yardTitle}>Work Order</Typography>
                 <Card className={classes.yardCard}>
@@ -262,6 +269,7 @@ export default function YardOperation() {
                     </Box>
                 </Card>
             </div>
+            {/* <Modal /> */}
         </>
     );
 }
