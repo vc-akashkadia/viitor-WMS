@@ -29,7 +29,7 @@ export function Routes() {
       {isAuthorized ? (
         <>
           <Route path="/dashboard" component={Dashboard} />
-          <Route path="/yard/operation" component={YardOperation} />
+          <Route path="/yard-operation" component={YardOperation} />
           <Route exact path="/facility" component={Facility} />
           <Route exact path="/operations" component={Operations} />
           <Route exact path="/position/update" component={PositionUpdate} />
