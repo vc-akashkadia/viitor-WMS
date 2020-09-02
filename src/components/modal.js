@@ -9,6 +9,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import container from "@assests/img/popup-container.svg";
 import license from "@assests/img/popup-licence.svg";
+import InputLabel from '@material-ui/core/InputLabel';
 
 const useStyles = makeStyles((theme) => ({
   title:{
@@ -29,8 +30,30 @@ const useStyles = makeStyles((theme) => ({
       textAlign: "center",
       paddingLeft: 10,
       paddingRight: 10,
-      backgroundColor: "#f6f6f6"
+      backgroundColor: "#f6f6f6",
+      position: "relative"
   },
+  licenseLabel:{
+    position: "absolute",
+    bottom: "26%",
+    right: "2%",
+    fontSize: 15,
+    fontWeight: 900,
+    color: "#000000"
+  },
+
+  containerLabel:{
+    position: "absolute",
+    bottom: "33%",
+    right: "9%",
+    fontSize: 15,
+    fontWeight: 900,
+    color: "#000000",
+    padding : "8px 10px",
+    backgroundColor: "#ffffff"
+  },
+
+
   actionbutton:{
     paddingBottom: 15,
     justifyContent: "center"
@@ -91,6 +114,13 @@ export default function AlertDialog(props) {
         <DialogTitle id="alert-dialog-title" className={classes.title}>CONTAINER NO.</DialogTitle>
         <DialogContent className={classes.content}>
           <img src={container} alt="container-popup" />
+          <InputLabel
+                  shrink
+                  htmlFor="bootstrap-input"
+                  className={classes.containerLabel}
+                >
+                  1420 1100 1234
+                </InputLabel>
         </DialogContent>
         <DialogActions className={classes.actionbutton}>
           <Button onClick={handleClose}variant="contained"
@@ -114,6 +144,13 @@ export default function AlertDialog(props) {
         <DialogTitle id="alert-dialog-title" className={classes.title}>TRUCK LICENCE</DialogTitle>
         <DialogContent className={classes.content}>
           <img src={license} alt="container-popup" />
+          <InputLabel
+                  shrink
+                  htmlFor="bootstrap-input"
+                  className={classes.licenseLabel}
+                >
+                  1420 1100 1234
+                </InputLabel>
         </DialogContent>
         <DialogActions className={classes.actionbutton}>
           <Button onClick={handleClose}variant="contained"

@@ -15,6 +15,7 @@ import MenuList from '@material-ui/core/MenuList';
 import Paper from '@material-ui/core/Paper';
 import Box from '@material-ui/core/Box';
 import MenuIcon from '@material-ui/icons/Menu';
+import menu from '@assests/img/menu.svg'
 
 const useStyles = makeStyles((theme) => ({
   colorPrimary: {
@@ -56,8 +57,8 @@ export default function Header() {
       <AppBar className={classes.colorPrimary}>
         <Toolbar>
           <Box display="flex" justifyContent="space-between" alignItems="center" style={{ width: '100%' }}>
-            <IconButton aria-label="delete" className={classes.margin} size="small" color="primary">
-              <MenuIcon fontSize="" />
+            <IconButton aria-label="delete" className={classes.margin} size="small" >
+            <img src={menu} alt="menu" />
             </IconButton>
             <Link to="/">
               <img
