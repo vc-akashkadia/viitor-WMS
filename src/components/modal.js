@@ -7,6 +7,9 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { makeStyles } from '@material-ui/core/styles';
 
+import container from "@assests/img/popup-container.svg";
+import license from "@assests/img/popup-licence.svg";
+
 const useStyles = makeStyles((theme) => ({
   title:{
       fontSize: 16,
@@ -15,17 +18,18 @@ const useStyles = makeStyles((theme) => ({
       fontFamily: "Roboto",
       textTransform: "uppercase",
       paddingTop: 12,
-      paddingLeft: 0,
-      paddingRight: 0,
-      paddingBottom: 0,
+      paddingLeft: 10,
+      paddingRight: 10,
+      paddingBottom: 5,
       margin: "auto"
   },
   content:{
       color: "#5c5c5c",
       fontFamily: "Roboto",
-      paddingLeft: 0,
-      paddingRight: 0,
-      textAlign: "center"
+      textAlign: "center",
+      paddingLeft: 10,
+      paddingRight: 10,
+      backgroundColor: "#f6f6f6"
   },
   actionbutton:{
     paddingBottom: 15,
@@ -54,7 +58,7 @@ export default function AlertDialog(props) {
 
   return (
     <div>
-      <Dialog
+      {/* <Dialog
         open={open}
         onClose={handleClose}
         aria-labelledby="alert-dialog-title"
@@ -74,6 +78,51 @@ export default function AlertDialog(props) {
           <Button onClick={handleClose} variant="contained"
                 size="small" color="primary" autoFocus className={classes.button}>
             Confirm
+          </Button>
+        </DialogActions>
+      </Dialog> */}
+
+      {/* <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title" className={classes.title}>CONTAINER NO.</DialogTitle>
+        <DialogContent className={classes.content}>
+          <img src={container} alt="container-popup" />
+        </DialogContent>
+        <DialogActions className={classes.actionbutton}>
+          <Button onClick={handleClose}variant="contained"
+                size="small"  color="secondary" className={classes.button}>
+            Back
+          </Button>
+          <Button onClick={handleClose} variant="contained"
+                size="small" color="primary" autoFocus className={classes.button}>
+            Ok
+          </Button>
+        </DialogActions>
+      </Dialog> */}
+
+
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title" className={classes.title}>TRUCK LICENCE</DialogTitle>
+        <DialogContent className={classes.content}>
+          <img src={license} alt="container-popup" />
+        </DialogContent>
+        <DialogActions className={classes.actionbutton}>
+          <Button onClick={handleClose}variant="contained"
+                size="small"  color="secondary" className={classes.button}>
+            Back
+          </Button>
+          <Button onClick={handleClose} variant="contained"
+                size="small" color="primary" autoFocus className={classes.button}>
+            Ok
           </Button>
         </DialogActions>
       </Dialog>

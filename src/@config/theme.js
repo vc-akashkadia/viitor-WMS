@@ -112,13 +112,23 @@ const theme = createMuiTheme({
         paddingRight: 10
       }
     },
+
+
     MuiDialog:{
       paper:{
         margin: 15,
-        paddingLeft: 10,
-        paddingRight: 10
       }
-    }
+    },
+    MuiTypography:{
+      h6 :{
+        fontSize: 16
+      }
+    },
+    // MuiOutlinedInput:{
+    //   notchedOutline:{
+    //     borderColor: '#f6f6f6'
+    //   }
+    // }
   }
 });
 
