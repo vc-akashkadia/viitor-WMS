@@ -50,8 +50,11 @@ const theme = createMuiTheme({
       expandIcon: {
         backgroundColor: '#f6f6f6',
         padding: 0,
-        marginRight: 0
-      }
+        marginRight: 0,
+        "&$expanded":{
+          transform: 'rotate(90deg)'
+        }
+      },
     },
     MuiAccordionDetails: {
       root: {
@@ -84,8 +87,8 @@ const theme = createMuiTheme({
       }
     },
     MuiInputLabel: {
-      root: { 
-        "&$focused": { 
+      root: {
+        "&$focused": {
           color: "#707070"
         }
       }

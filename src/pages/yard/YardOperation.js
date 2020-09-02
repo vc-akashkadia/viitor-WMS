@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -9,7 +9,7 @@ import Card from '@material-ui/core/Card';
 import Chip from '@material-ui/core/Chip';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import SearchIcon from '@material-ui/icons/Search';
-import FilterListIcon from '@material-ui/icons/FilterList';
+import FilterListIcon from '@assests/img/filter-icon.svg';
 import Button from "@material-ui/core/Button";
 import Grid from '@material-ui/core/Grid';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
@@ -56,6 +56,9 @@ const BootstrapInput = withStyles((theme) => ({
 const useStyles = makeStyles({
     backIcon: {
         color: '#173a64'
+    },
+    searchIcon: {
+        color: '#000'
     },
     backText: {
         color: '#173a64',
@@ -118,48 +121,48 @@ const useStyles = makeStyles({
 
 export default function YardOperation() {
     const classes = useStyles();
-    const history=useHistory()
-    const [open,setOpen] =useState(false)
+    const history = useHistory()
+    const [open, setOpen] = useState(false)
     const [age, setAge] = React.useState('');
     const [openModal, setOpenMdal] = React.useState(false);
-    const [openGrounding,setOpenGrounding] =React.useState(false)
+    const [openGrounding, setOpenGrounding] = React.useState(false)
     const handleChange = (event) => {
         setAge(event.target.value);
     };
 
-    const handleFilterOpen =()=>{
+    const handleFilterOpen = () => {
         setOpen(!open)
     }
 
-    const handleOpenModal =()=>{
+    const handleOpenModal = () => {
         setOpenMdal(true)
     }
-    const handleOpenGroundingModal =()=>{
+    const handleOpenGroundingModal = () => {
         setOpenGrounding(true)
     }
     return (
         <>
             <AppBar position="static" color="secondary">
                 <Toolbar>
-                    <Box display="flex" alignItems="center" justifyContent="space-between" style={{ width: '100%' }} > 
+                    <Box display="flex" alignItems="center" justifyContent="space-between" style={{ width: '100%' }} >
                         <Box display="flex" alignItems="center" >
-                            <IconButton aria-label="back" className={classes.backIcon} size="small" onClick={()=>history.push("/facility")}>
+                            <IconButton aria-label="back" className={classes.backIcon} size="small" onClick={() => history.push("/facility")}>
                                 <ArrowBackIcon fontSize="" />
                             </IconButton>
                             <Typography className={classes.backText}>Yard Operation</Typography>
                         </Box>
                         <Box display="flex" alignItems="center" onClick={handleFilterOpen}>
-                            <IconButton aria-label="back" className={classes.backIcon} size="small" style={{ paddingRight: 10 }}>
+                            <IconButton aria-label="back" className={classes.searchIcon} size="small" style={{ paddingRight: 10 }}>
                                 <SearchIcon fontSize="" />
                             </IconButton>
                             <IconButton aria-label="back" className={classes.backIcon} size="small">
-                                <FilterListIcon fontSize="" />
+                                <img src={FilterListIcon} alt="" />
                             </IconButton>
                         </Box>
                     </Box>
                 </Toolbar>
             </AppBar>
-           {open &&( <Card className={classes.filterSearch}>
+            {open && (<Card className={classes.filterSearch}>
                 <Grid container spacing={1} alignItems="center">
                     <Grid item xs={6}>
                         <Typography className={classes.searchTitle}>Search Here</Typography>
@@ -231,18 +234,23 @@ export default function YardOperation() {
                         <Button variant="contained" color="primary" className={classes.searchBtn}>Search</Button>
                     </Grid>
                 </Grid>
-           </Card> )}
+            </Card>)}
             <div className={classes.yardMain}>
                 <Typography className={classes.yardTitle}>Work Order</Typography>
                 <Card className={classes.yardCard}>
                     <Box display="flex" alignItems="center" justifyContent="space-between">
-                        <Box className={classes.chipMain}>
-                            <Chip label="1234" />
-                            <Chip label="1234" />
-                            <Chip label="ABCD" />
-                            <Chip label="Lorem Ipsu.." />
-                            <Chip label="40" />
-                            <Button className={classes.confirmBtn}>F</Button>
+                        <Box display="flex" flexDirection="column">
+                            <Box className={classes.chipMain}>
+                                <Chip label="1234" />
+                                <Chip label="1234" />
+                                <Chip label="ABCD" />
+                            </Box>
+                            <Box className={classes.chipMain}>
+                                <Chip label="Lorem Ipsu.." />
+                                <Chip label="40" />
+                                <Button className={classes.confirmBtn}>F</Button>
+
+                            </Box>
                         </Box>
                         <Box>
                             <Button className={classes.rightBoxArrow} onClick={handleOpenModal}><ArrowDownwardIcon color="secondary" /></Button>
@@ -251,13 +259,18 @@ export default function YardOperation() {
                 </Card>
                 <Card className={classes.yardCard}>
                     <Box display="flex" alignItems="center" justifyContent="space-between">
-                        <Box className={classes.chipMain}>
-                            <Chip label="1234" />
-                            <Chip label="1234" />
-                            <Chip label="ABCD" />
-                            <Chip label="Lorem Ipsu.." />
-                            <Chip label="40" />
-                            <Button className={classes.confirmBtn}>F</Button>
+                        <Box display="flex" flexDirection="column">
+                            <Box className={classes.chipMain}>
+                                <Chip label="1234" />
+                                <Chip label="1234" />
+                                <Chip label="ABCD" />
+                            </Box>
+                            <Box className={classes.chipMain}>
+                                <Chip label="Lorem Ipsu.." />
+                                <Chip label="40" />
+                                <Button className={classes.confirmBtn}>F</Button>
+
+                            </Box>
                         </Box>
                         <Box>
                             <Button className={classes.rightBoxArrow} onClick={handleOpenGroundingModal}><ArrowUpwardIcon color="secondary" /></Button>
@@ -266,13 +279,18 @@ export default function YardOperation() {
                 </Card>
                 <Card className={classes.yardCard}>
                     <Box display="flex" alignItems="center" justifyContent="space-between">
-                        <Box className={classes.chipMain}>
-                            <Chip label="1234" />
-                            <Chip label="1234" />
-                            <Chip label="ABCD" />
-                            <Chip label="Lorem Ipsu.." />
-                            <Chip label="40" />
-                            <Button className={classes.confirmBtn}>F</Button>
+                        <Box display="flex" flexDirection="column">
+                            <Box className={classes.chipMain}>
+                                <Chip label="1234" />
+                                <Chip label="1234" />
+                                <Chip label="ABCD" />
+                            </Box>
+                            <Box className={classes.chipMain}>
+                                <Chip label="Lorem Ipsu.." />
+                                <Chip label="40" />
+                                <Button className={classes.confirmBtn}>F</Button>
+
+                            </Box>
                         </Box>
                         <Box>
                             <Button className={classes.rightBoxArrow}><ArrowUpwardIcon color="secondary" /></Button>
@@ -280,11 +298,11 @@ export default function YardOperation() {
                     </Box>
                 </Card>
             </div>
-            {openModal &&(
-                <Modal  open={openModal} setOpen={setOpenMdal}/>
+            {openModal && (
+                <Modal open={openModal} setOpen={setOpenMdal} />
             )}
-            {openGrounding &&(
-                <GroundingModal  open={openGrounding} setOpen={setOpenGrounding}/>
+            {openGrounding && (
+                <GroundingModal open={openGrounding} setOpen={setOpenGrounding} />
             )}
         </>
     );

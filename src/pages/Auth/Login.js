@@ -124,9 +124,11 @@ const useStyles = makeStyles((theme) => ({
   bottomImage: {
     position: "absolute",
     bottom: 0,
-    width: "100%",
+    maxWidth: "100%",
     left: 0,
-    display: 'block'
+    display: 'block',
+    right: 0,
+    margin: '0 auto'
   },
 }));
 // let errors = {
