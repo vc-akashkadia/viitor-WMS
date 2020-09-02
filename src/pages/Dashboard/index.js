@@ -29,9 +29,12 @@ const BootstrapInput = withStyles((theme) => ({
     backgroundColor: "#f6f6f6",
     border: "1px solid #ced4da",
     fontSize: 16,
-    padding: "10px 26px 10px 12px",
+    padding: "0px 26px 0px 12px",
     transition: theme.transitions.create(["border-color", "box-shadow"]),
     width: "100%",
+    height: 28,
+    display: 'flex',
+    alignItems: 'center',
     // Use the system font instead of the default Roboto font.
     fontFamily: ["Roboto"].join(","),
     "&:focus": {
@@ -94,7 +97,7 @@ export default function Dashboard() {
         <Card className={classes.operationCard}>
           <Accordion>
             <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
+              expandIcon={<ArrowRightIcon />}
               aria-label="Expand"
               aria-controls="additional-actions1-content"
               id="additional-actions1-header"
