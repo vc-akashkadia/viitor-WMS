@@ -241,15 +241,11 @@ export default function YardOperation() {
                     <Box display="flex" alignItems="center" justifyContent="space-between">
                         <Box display="flex" flexDirection="column">
                             <Box className={classes.chipMain}>
-                                <Chip label="1234" />
-                                <Chip label="1234" />
-                                <Chip label="ABCD" />
+                                <Chip label="1234" size="medium" style={{ width: 80 }} />
+                                <Chip label="1234" style={{ width: 80 }} />
                             </Box>
                             <Box className={classes.chipMain}>
-                                <Chip label="Lorem Ipsu.." />
-                                <Chip label="40" />
-                                <Button className={classes.confirmBtn}>F</Button>
-
+                                <Chip label="Lorem Ipsu.." style={{ width: '100%' }} />
                             </Box>
                         </Box>
                         <Box>
@@ -260,16 +256,14 @@ export default function YardOperation() {
                 <Card className={classes.yardCard}>
                     <Box display="flex" alignItems="center" justifyContent="space-between">
                         <Box display="flex" flexDirection="column">
-                            <Box className={classes.chipMain}>
-                                <Chip label="1234" />
-                                <Chip label="1234" />
-                                <Chip label="ABCD" />
-                            </Box>
-                            <Box className={classes.chipMain}>
-                                <Chip label="Lorem Ipsu.." />
-                                <Chip label="40" />
-                                <Button className={classes.confirmBtn}>F</Button>
-
+                            <Box display="flex" flexDirection="column">
+                                <Box className={classes.chipMain}>
+                                    <Chip label="1234" size="medium" style={{ width: 80 }} />
+                                    <Chip label="1234" style={{ width: 80 }} />
+                                </Box>
+                                <Box className={classes.chipMain}>
+                                    <Chip label="Lorem Ipsu.." style={{ width: '100%' }} />
+                                </Box>
                             </Box>
                         </Box>
                         <Box>
@@ -280,16 +274,14 @@ export default function YardOperation() {
                 <Card className={classes.yardCard}>
                     <Box display="flex" alignItems="center" justifyContent="space-between">
                         <Box display="flex" flexDirection="column">
-                            <Box className={classes.chipMain}>
-                                <Chip label="1234" />
-                                <Chip label="1234" />
-                                <Chip label="ABCD" />
-                            </Box>
-                            <Box className={classes.chipMain}>
-                                <Chip label="Lorem Ipsu.." />
-                                <Chip label="40" />
-                                <Button className={classes.confirmBtn}>F</Button>
-
+                            <Box display="flex" flexDirection="column">
+                                <Box className={classes.chipMain}>
+                                    <Chip label="1234" size="medium" style={{ width: 80 }} />
+                                    <Chip label="1234" style={{ width: 80 }} />
+                                </Box>
+                                <Box className={classes.chipMain}>
+                                    <Chip label="Lorem Ipsu.." style={{ width: '100%' }} />
+                                </Box>
                             </Box>
                         </Box>
                         <Box>
