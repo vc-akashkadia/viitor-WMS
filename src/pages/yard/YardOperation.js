@@ -22,6 +22,7 @@ import TextField from '@material-ui/core/TextField';
 import Modal from "../../components/modal"
 import { useHistory } from "react-router-dom";
 import GroundingModal from "../../components/GroundingModal"
+import DamageModal from "../../components/DamageContainer"
 
 const BootstrapInput = withStyles((theme) => ({
     root: {
@@ -302,7 +303,7 @@ export default function YardOperation() {
                 <Modal open={openModal} setOpen={setOpenMdal} />
             )}
             {openGrounding && (
-                <GroundingModal open={openGrounding} setOpen={setOpenGrounding} />
+                <DamageModal open={openGrounding} setOpen={setOpenGrounding} />
             )}
         </>
     );
