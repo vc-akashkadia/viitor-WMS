@@ -21,6 +21,7 @@ import InputBase from '@material-ui/core/InputBase';
 import TextField from '@material-ui/core/TextField';
 import Modal from "../../components/modal"
 import { useHistory } from "react-router-dom";
+import GroundingModal from "../../components/GroundingModal"
 
 const BootstrapInput = withStyles((theme) => ({
     root: {
@@ -120,8 +121,8 @@ export default function YardOperation() {
     const history=useHistory()
     const [open,setOpen] =useState(false)
     const [age, setAge] = React.useState('');
-
     const [openModal, setOpenMdal] = React.useState(false);
+    const [openGrounding,setOpenGrounding] =React.useState(false)
     const handleChange = (event) => {
         setAge(event.target.value);
     };
@@ -132,6 +133,9 @@ export default function YardOperation() {
 
     const handleOpenModal =()=>{
         setOpenMdal(true)
+    }
+    const handleOpenGroundingModal =()=>{
+        setOpenGrounding(true)
     }
     return (
         <>
@@ -256,7 +260,7 @@ export default function YardOperation() {
                             <Button className={classes.confirmBtn}>F</Button>
                         </Box>
                         <Box>
-                            <Button className={classes.rightBoxArrow}><ArrowUpwardIcon color="secondary" /></Button>
+                            <Button className={classes.rightBoxArrow} onClick={handleOpenGroundingModal}><ArrowUpwardIcon color="secondary" /></Button>
                         </Box>
                     </Box>
                 </Card>
@@ -278,6 +282,9 @@ export default function YardOperation() {
             </div>
             {openModal &&(
                 <Modal  open={openModal} setOpen={setOpenMdal}/>
+            )}
+            {openGrounding &&(
+                <GroundingModal  open={openGrounding} setOpen={setOpenGrounding}/>
             )}
         </>
     );
