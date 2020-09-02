@@ -30,6 +30,17 @@ const useStyles = makeStyles((theme) => ({
         paddingLeft: 0,
         paddingRight: 0,
         textAlign: "center"
+    },
+    button:{
+      height: 30,
+      paddingLeft: 15,
+      paddingRight: 15,
+      fontSize: 14,
+      fontWeight: 400,
+      color: "#000000",
+      fontFamily: "Roboto",
+      backgroundColor: "#c4c4c4",
+      border: "none"
     }
 }));
 
@@ -62,8 +73,8 @@ export default function Popup() {
                     <ListItemText >Are you sure want to confirm Work order?</ListItemText>
                 </ListItem>
                 <ListItem>
-                    <Button variant="outlined" color="primary" >Back</Button>
-                    <Button variant="outlined" color="primary" >Confirm</Button>
+                    <Button variant="outlined" className={classes.button}>Back</Button>
+                    <Button variant="outlined" color="primary" className={classes.button}>Confirm</Button>
                 </ListItem>
             </List>
         </Dialog>

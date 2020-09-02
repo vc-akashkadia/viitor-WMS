@@ -67,6 +67,9 @@ const theme = createMuiTheme({
         fontWeight: 400,
         lineHeight: '16px',
         textTransform: 'uppercase',
+      },
+      containedSecondary:{
+        backgroundColor: '#c4c4c4'
       }
     },
     MuiChip: {
@@ -105,6 +108,13 @@ const theme = createMuiTheme({
         minHeight: '40px !important'
       },
       gutters: {
+        paddingLeft: 10,
+        paddingRight: 10
+      }
+    },
+    MuiDialog:{
+      paper:{
+        margin: 15,
         paddingLeft: 10,
         paddingRight: 10
       }
