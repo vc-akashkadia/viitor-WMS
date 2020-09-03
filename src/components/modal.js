@@ -35,21 +35,36 @@ const useStyles = makeStyles((theme) => ({
   },
   licenseLabel:{
     position: "absolute",
-    bottom: "26%",
-    right: "2%",
+    bottom: 20,
+    left: "50%",
+    transform: "translateX(-50%)",
+    marginLeft: 40,
+    width: "auto",
+    overflow: "hidden",
+    textAlign: "center",
+    display: "flex",
+    justifyContent: "center",
+    whiteSpace: "nowrap"
+  },
+  label :{
     fontSize: 15,
     fontWeight: 900,
-    color: "#000000"
+    color: "#000000",
   },
 
   containerLabel:{
     position: "absolute",
-    bottom: "33%",
-    right: "9%",
-    fontSize: 15,
-    fontWeight: 900,
-    color: "#000000",
-    padding : "8px 10px",
+    bottom: 40,
+    left: "45%",
+    transform: "translateX(-50%)",
+    marginLeft: 15,
+    width: "auto",
+    overflow: "hidden",
+    textAlign: "center",
+    display: "flex",
+    justifyContent: "center",
+    whiteSpace: "nowrap",
+    paddingLeft: 15,
     backgroundColor: "#ffffff"
   },
 
@@ -105,7 +120,7 @@ export default function AlertDialog(props) {
         </DialogActions>
       </Dialog> */}
 
-      {/* <Dialog
+      <Dialog
         open={open}
         onClose={handleClose}
         aria-labelledby="alert-dialog-title"
@@ -114,43 +129,16 @@ export default function AlertDialog(props) {
         <DialogTitle id="alert-dialog-title" className={classes.title}>CONTAINER NO.</DialogTitle>
         <DialogContent className={classes.content}>
           <img src={container} alt="container-popup" />
+          <div className={classes.containerLabel}>
           <InputLabel
                   shrink
                   htmlFor="bootstrap-input"
-                  className={classes.containerLabel}
+                  className={classes.label}
                 >
                   1420 1100 1234
                 </InputLabel>
-        </DialogContent>
-        <DialogActions className={classes.actionbutton}>
-          <Button onClick={handleClose}variant="contained"
-                size="small"  color="secondary" className={classes.button}>
-            Back
-          </Button>
-          <Button onClick={handleClose} variant="contained"
-                size="small" color="primary" autoFocus className={classes.button}>
-            Ok
-          </Button>
-        </DialogActions>
-      </Dialog> */}
-
-
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title" className={classes.title}>TRUCK LICENCE</DialogTitle>
-        <DialogContent className={classes.content}>
-          <img src={license} alt="container-popup" />
-          <InputLabel
-                  shrink
-                  htmlFor="bootstrap-input"
-                  className={classes.licenseLabel}
-                >
-                  1420 1100 1234
-                </InputLabel>
+          </div>
+          
         </DialogContent>
         <DialogActions className={classes.actionbutton}>
           <Button onClick={handleClose}variant="contained"
@@ -163,6 +151,38 @@ export default function AlertDialog(props) {
           </Button>
         </DialogActions>
       </Dialog>
+
+
+      {/* <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title" className={classes.title}>TRUCK LICENCE</DialogTitle>
+        <DialogContent className={classes.content}>
+          <img src={license} alt="container-popup" />
+          <div className={classes.licenseLabel}>
+          <InputLabel
+                  shrink
+                  htmlFor="bootstrap-input"
+                  className={classes.label}
+                >
+                  1420 1100 1234
+                </InputLabel>
+          </div>
+        </DialogContent>
+        <DialogActions className={classes.actionbutton}>
+          <Button onClick={handleClose}variant="contained"
+                size="small"  color="secondary" className={classes.button}>
+            Back
+          </Button>
+          <Button onClick={handleClose} variant="contained"
+                size="small" color="primary" autoFocus className={classes.button}>
+            Ok
+          </Button>
+        </DialogActions>
+      </Dialog> */}
     </div>
   );
 }
