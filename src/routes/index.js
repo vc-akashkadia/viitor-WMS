@@ -2,12 +2,14 @@ import React from "react";
 import { Redirect, Switch, Route } from "react-router-dom";
 import { shallowEqual, useSelector } from "react-redux";
 import Login from "../pages/Auth/Login";
-import YardOperation from "../pages/yard/YardOperation"
+import Logout from "../pages/Auth/Logout";
 import Facility from "../pages/Facility";
 import Operations from "../pages/Operations";
-import Dashboard from '../pages/Dashboard';
-import Popup from "../components/popup";
+// import YardOperation from "../pages/yarn/YarnOperation"
 import PositionUpdate from "../pages/PositionUpdate"
+import YardOperations from "../pages/yard/YardOperation";
+import GateMovePage from "../pages/GateMove/GateMovePage";
+import DamageContainer from "../pages/GateMove/DamageContainer";
 export function Routes() {
   const { isAuthorized } = useSelector(
     ({ auth }) => ({
@@ -19,6 +21,9 @@ export function Routes() {
 
   return (
     <Switch>
+      {
+        <Redirect exact from="/" to="/login" />
+      }
       {!isAuthorized ? (
         /*Render auth page when user at `/auth` and not authorized.*/
         <Route path="/login" component={Login} />
@@ -26,14 +31,46 @@ export function Routes() {
         /*Otherwise redirect to root page (`/`)*/
         <Redirect from="/login" to="/facility" />
       )}
+      <Route path="/logout" component={Logout} />
       {isAuthorized ? (
         <>
-          <Route path="/dashboard" component={Dashboard} />
-          <Route path="/yard/operation" component={YardOperation} />
-          <Route exact path="/facility" component={Facility} />
-          <Route exact path="/operations" component={Operations} />
-          <Route exact path="/position/update" component={PositionUpdate} />
-          <Route exact path="/components" component={Popup} />
+          
+          <Route key="facility" exact path="/facility" component={Facility} />
+          <Route key="operations" exact path="/operations" component={Operations} />
+          <Route key="yard-operation" exact path="/yard/operation" component={YardOperations} />
+          <Route key="position-update" exact path="/position/update" component={PositionUpdate} />
+          <Route
+            exact
+            path="/new/gate/in"
+            render={(props) => <GateMovePage {...props} gateType="In" />}
+          />
+          <Route
+            exact
+            path="/gate/in"
+            render={(props) => <GateMovePage {...props} gateType="In" />}
+          />
+          <Route
+            exact
+            path="/gate/out"
+            render={(props) => <GateMovePage {...props} gateType="Out" />}
+          />
+          <Route
+            exact
+            path="/new/gate/out"
+            render={(props) => <GateMovePage {...props} gateType="Out" />}
+          />
+          <Route
+            exact
+            path="/container-damage/:container_id"
+            component={DamageContainer}
+          />
+
+          <Route
+            exact
+            path="/position"
+            component={PositionUpdate}
+          />
+          
         </>
       ) : (
         <Redirect to="/login" />

@@ -19,6 +19,14 @@ export const getUrl = (type) => {
       return `${baseUrl}/cranedetails?facilityId=`;
     case 'yardBlockList':
       return `${baseUrl}/yardBlockdetails?facilityId=`;
+    case 'yardContainerList':
+      return `${baseUrl}/yard/showcontainers`;
+    case 'gatemovecontainer':
+      return `${baseUrl}/container/showcontainerlist`;
+    case 'pickupConfirm':
+      return `${baseUrl}/addPickUpReq`;
+    case 'gatemoveapi':
+      return `${baseUrl}/gateoperation/getinconfirmation`;
     case 'addRole':
       return `${baseUrl}/addRole`;
     default:

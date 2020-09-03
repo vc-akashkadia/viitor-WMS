@@ -1,6 +1,10 @@
 import { getUrl } from "../services/network/urls";
 import { post, get } from "../services/network/requests";
-import { DamageCodeList } from "../actions/actions";
+import {
+  DamageCodeList,
+  GateMoveContainerList,
+  selectGateMoveOperationOption,
+} from "../actions/actions";
 
 export const DamageCodeListApi = (authToken, callback) => {
   let url = getUrl("damageCodeList");
@@ -13,7 +17,7 @@ export const DamageCodeListApi = (authToken, callback) => {
         if (status) {
           let damageCodeList = data.damageCodeList.map((code) => ({
             value: code.damageCode,
-            label: code.damageCode,
+            label: code.damageDescription,
           }));
           dispatch(DamageCodeList(damageCodeList));
         }
@@ -24,3 +28,48 @@ export const DamageCodeListApi = (authToken, callback) => {
       });
   };
 };
+
+export const getContainerListApi = (data, authToken, callback) => {
+  let url = getUrl("gatemovecontainer");
+  let querystring = `?facilityid=${data.facilityid}&operationtype=${data.operationtype}`;
+  if (data.vehical === "truck") {
+    querystring = querystring + `&trucknumber=${data.number}`;
+  }
+  if (data.vehical === "container") {
+    querystring = querystring + `&containernumber=${data.number}`;
+  }
+  url = url + querystring;
+  return (dispatch) => {
+    get(url, authToken)
+      .then((response) => {
+        const {
+          data: { status, data },
+        } = response;
+        if (status) {
+          dispatch(GateMoveContainerList(data));
+        }
+        callback(response);
+      })
+      .catch((err) => {
+        console.log("error", err);
+      });
+
+    dispatch(
+      selectGateMoveOperationOption({
+        vehical: data.vehical,
+        number: data.number,
+        gatetype: data.gatetype,
+      })
+    );
+  };
+
+};
+
+export const GateMoveContainerApi = (data,authToken,callback) => {
+  let url = getUrl("gatemoveapi");
+  return (dispatch) => {
+    post(url,data, authToken).then((response) => {
+      callback(response);
+    });
+  };
+}

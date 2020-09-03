@@ -12,7 +12,7 @@ export const facilityListApiCall = (authToken, callback) => {
         } = response;
         if (status) {
           let facilityListObject = data.facilityList.map((code) => ({
-            value: code.facilityName,
+            value: code.facilityCode,
             label: code.facilityName,
           }));
           dispatch(FacilityList(facilityListObject));

@@ -6,10 +6,9 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { makeStyles } from '@material-ui/core/styles';
-
+import InputLabel from '@material-ui/core/InputLabel';
 import container from "@assests/img/popup-container.svg";
 import license from "@assests/img/popup-licence.svg";
-import InputLabel from '@material-ui/core/InputLabel';
 
 const useStyles = makeStyles((theme) => ({
   title:{
@@ -46,7 +45,11 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     whiteSpace: "nowrap"
   },
+<<<<<<< HEAD
   label :{
+=======
+  label:{
+>>>>>>> 8e1dc19e601dcce6bc6483f5bfb916d2a6a8be6d
     fontSize: 15,
     fontWeight: 900,
     color: "#000000",
@@ -62,12 +65,20 @@ const useStyles = makeStyles((theme) => ({
     overflow: "hidden",
     textAlign: "center",
     display: "flex",
+<<<<<<< HEAD
     justifyContent: "center",
     whiteSpace: "nowrap",
     paddingLeft: 15,
     backgroundColor: "#ffffff"
   },
+=======
+    backgroundColor:"white",
+    paddingLeft:"15px",
+    justifyContent: "center",
+    whiteSpace: "nowrap"
+>>>>>>> 8e1dc19e601dcce6bc6483f5bfb916d2a6a8be6d
 
+  },
 
   actionbutton:{
     paddingBottom: 15,
@@ -88,7 +99,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function AlertDialog(props) {
   const classes = useStyles();
-    const {open,setOpen} =props
+    const {open,setOpen,modalData,data} =props
 
   const handleClose = () => {
     setOpen(false);
@@ -96,6 +107,7 @@ export default function AlertDialog(props) {
 
   return (
     <div>
+<<<<<<< HEAD
       {/* <Dialog
         open={open}
         onClose={handleClose}
@@ -151,8 +163,99 @@ export default function AlertDialog(props) {
           </Button>
         </DialogActions>
       </Dialog>
+=======
+      {modalData ==="truck" ?
+        ( <Dialog
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title" className={classes.title}>TRUCK LICENCE</DialogTitle>
+          <DialogContent className={classes.content}>
+            <img src={license} alt="container-popup" />
+            <div className={classes.licenseLabel}>
+            <InputLabel
+                    shrink
+                    htmlFor="bootstrap-input"
+                    className={classes.label}
+                  >
+                    {data}
+                  </InputLabel>
+                  </div>
+          </DialogContent>
+          <DialogActions className={classes.actionbutton}>
+            <Button onClick={handleClose}variant="contained"
+                  size="small"  color="secondary" className={classes.button}>
+              Back
+            </Button>
+            <Button onClick={handleClose} variant="contained"
+                  size="small" color="primary" autoFocus className={classes.button}>
+              Ok
+            </Button>
+          </DialogActions>
+        </Dialog>) :(
+         modalData ==="container" ?(
+>>>>>>> 8e1dc19e601dcce6bc6483f5bfb916d2a6a8be6d
 
+          <Dialog
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title" className={classes.title}>CONTAINER NO.</DialogTitle>
+          <DialogContent className={classes.content}>
+            <img src={container} alt="container-popup" />
+            <div className={classes.containerLabel}>
+            <InputLabel
+                    shrink
+                    htmlFor="bootstrap-input"
+                    className={classes.label}
+                  >
+                    {data}
+                  </InputLabel>
+                  </div>
+          </DialogContent>
+          <DialogActions className={classes.actionbutton}>
+            <Button onClick={handleClose}variant="contained"
+                  size="small"  color="secondary" className={classes.button}>
+              Back
+            </Button>
+            <Button onClick={handleClose} variant="contained"
+                  size="small" color="primary" autoFocus className={classes.button}>
+              Ok
+            </Button>
+          </DialogActions>
+        </Dialog> 
+         ):(
+          <Dialog
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title" className={classes.title}>CONFIRMATION</DialogTitle>
+          <DialogContent className={classes.content}>
+            <DialogContentText id="alert-dialog-description"  >
+            Are you sure you want to confirm Work Order For Container : <br />
+            {data}
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions className={classes.actionbutton}>
+            <Button onClick={handleClose}variant="contained"
+                  size="small"  color="secondary" className={classes.button}>
+              Back
+            </Button>
+            <Button onClick={handleClose} variant="contained"
+                  size="small" color="primary" autoFocus className={classes.button}>
+              Confirm
+            </Button>
+          </DialogActions>
+        </Dialog>
+         )
 
+<<<<<<< HEAD
       {/* <Dialog
         open={open}
         onClose={handleClose}
@@ -183,6 +286,10 @@ export default function AlertDialog(props) {
           </Button>
         </DialogActions>
       </Dialog> */}
+=======
+      )
+      }
+>>>>>>> 8e1dc19e601dcce6bc6483f5bfb916d2a6a8be6d
     </div>
   );
 }

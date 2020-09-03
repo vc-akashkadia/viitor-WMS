@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import brandLogo from "@assests/img/logo.png";
+// import brandLogo from "@assests/img/logo.png";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
@@ -10,7 +10,7 @@ import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import Alert from "@material-ui/lab/Alert";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import InputLabel from "@material-ui/core/InputLabel";
+// import InputLabel from "@material-ui/core/InputLabel";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
@@ -22,6 +22,8 @@ import {
   selectedFacility,
 } from "../apicalls/FacilityApiCalls";
 import { Typography } from "@material-ui/core";
+import Header from  "../components/Header"
+import Loader from  "../components/Loader"
 
 let toasterOption = {
   option: "error",
@@ -85,11 +87,9 @@ const useStyles = makeStyles((theme) => ({
   bottomImage: {
     position: "absolute",
     bottom: 0,
-    maxWidth: "100%",
+    width: "100%",
     left: 0,
-    display: 'block',
-    right: 0,
-    margin: '0 auto'
+    display: 'block'
   },
   // label: {
   //   fontSize: 14,
@@ -129,7 +129,7 @@ export default function Facility() {
     setLoading(true);
     if (facility !== "") {
       dispatch(selectedFacility(facility));
-      history.push("/dashboard");
+      history.push("/operations");
     } else {
       setErrors("Please select facility");
       //setAlert(true)
@@ -158,14 +158,10 @@ export default function Facility() {
       setLoading(false);
     }
   };
-
   return (
     <>
-      <div>
-        <Link to="/" className="brand-logo">
-          <img src={brandLogo} alt="Logo" className={classes.logo} />
-        </Link>
-      </div>
+      <Header />
+      <br /><br /><br />
 
       <Card className={classes.root}>
         <CardContent>
@@ -176,7 +172,7 @@ export default function Facility() {
           )}
           <form onSubmit={handleSubmit}>
             <Grid item xs={12} className={classes.listItemsChild}>
-              {loading && <CircularProgress size={24} />}
+              {loading && <Loader />}
               {!loading && (
                 <>
                   <Typography
@@ -199,12 +195,9 @@ export default function Facility() {
                       placeholder="Select Yard Crane"
                       style={{ width: "100%" }}
                     >
-                      {/* <MenuItem aria-label="None" value="" /> */}
-                      <MenuItem value={10}>Ten</MenuItem>
-                      <MenuItem value={20}>Twenty</MenuItem>
-                      <MenuItem value={30}>Thirty</MenuItem>
+                      <MenuItem  value="one">One</MenuItem>
                       {facilityList.map((item) => (
-                        <MenuItem value={item.value}>{item.lable}</MenuItem>
+                        <MenuItem key={item.value} value={item.value}>{item.label}</MenuItem>
                       ))}
                     </Select>
                     <FormHelperText>{errors}</FormHelperText>
@@ -227,7 +220,7 @@ export default function Facility() {
           </form>
           <img
             src={bottomImage}
-            alt="bottom-image"
+            alt="bottom"
             className={classes.bottomImage}
           />
         </CardContent>
