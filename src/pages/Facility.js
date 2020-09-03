@@ -22,8 +22,8 @@ import {
   selectedFacility,
 } from "../apicalls/FacilityApiCalls";
 import { Typography } from "@material-ui/core";
-import Header from  "../components/Header"
-import Loader from  "../components/Loader"
+import Header from "../components/Header"
+import Loader from "../components/Loader"
 
 let toasterOption = {
   option: "error",
@@ -87,9 +87,12 @@ const useStyles = makeStyles((theme) => ({
   bottomImage: {
     position: "absolute",
     bottom: 0,
-    width: "100%",
+    maxWidth: "100%",
     left: 0,
-    display: 'block'
+    display: 'block',
+    right: 0,
+    margin: '0 auto'
+
   },
   // label: {
   //   fontSize: 14,
@@ -195,7 +198,7 @@ export default function Facility() {
                       placeholder="Select Yard Crane"
                       style={{ width: "100%" }}
                     >
-                      <MenuItem  value="one">One</MenuItem>
+                      <MenuItem value="one">One</MenuItem>
                       {facilityList.map((item) => (
                         <MenuItem key={item.value} value={item.value}>{item.label}</MenuItem>
                       ))}
