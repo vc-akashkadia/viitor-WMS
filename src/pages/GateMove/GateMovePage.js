@@ -118,6 +118,7 @@ const useStyles = makeStyles({
   filterSearch: {
     margin: "12px 10px",
     padding: 10,
+    position: 'fixed'
   },
   searchTitle: {
     fontSize: 15,
