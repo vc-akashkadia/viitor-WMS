@@ -118,7 +118,7 @@ export default function AlertDialog(props) {
           <DialogActions className={classes.actionbutton}>
             <Button onClick={handleClose}variant="contained"
                   size="small"  color="secondary" className={classes.button}>
-              Back
+              Cancel
             </Button>
             <Button onClick={handleClose} variant="contained"
                   size="small" color="primary" autoFocus className={classes.button}>
@@ -150,7 +150,7 @@ export default function AlertDialog(props) {
           <DialogActions className={classes.actionbutton}>
             <Button onClick={handleClose}variant="contained"
                   size="small"  color="secondary" className={classes.button}>
-              Back
+              Cancel
             </Button>
             <Button onClick={handleClose} variant="contained"
                   size="small" color="primary" autoFocus className={classes.button}>
@@ -175,7 +175,7 @@ export default function AlertDialog(props) {
           <DialogActions className={classes.actionbutton}>
             <Button onClick={handleClose}variant="contained"
                   size="small"  color="secondary" className={classes.button}>
-              Back
+              Cancel
             </Button>
             <Button onClick={handleClose} variant="contained"
                   size="small" color="primary" autoFocus className={classes.button}>

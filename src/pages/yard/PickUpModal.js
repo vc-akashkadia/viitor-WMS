@@ -128,7 +128,7 @@ export default function PickUpModal(props) {
           <DialogActions className={classes.actionbutton}>
             <Button onClick={handleClose}variant="contained"
                   size="small"  color="secondary" className={classes.button}>
-              Back
+              Cancel
             </Button>
             <Button onClick={handleConfirm} variant="contained"
                   size="small" color="primary" autoFocus className={classes.button}>

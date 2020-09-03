@@ -97,7 +97,7 @@ export default function AlertDialog(props) {
 
   useEffect(() => {
     if (damageCodes.length === 0) {
-      enableLoading();
+      //enableLoading();
       dispatch(DamageCodeListApi(authToken, handleCallbackDamageCodeList));
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -308,7 +308,7 @@ export default function AlertDialog(props) {
             color="secondary"
             className={classes.button}
           >
-            Back
+            Cancel
           </Button>
           <Button
             onClick={handleConfirm}

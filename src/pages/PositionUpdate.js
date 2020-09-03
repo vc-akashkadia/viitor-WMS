@@ -144,7 +144,7 @@ export default function YardOperation(props) {
         </Toolbar>
       </AppBar>
       <Toolbar id="back-to-top-anchor" /> */}
-      <TitleHeader open={open} setOpen={setOpen} title={"Position Update"} backPath={"/operations"}/>
+      <TitleHeader open={open} setOpen={setOpen} title={"Location Update"} backPath={"/operations"}/>
       {open && (
         <Card className={classes.filterSearch}>
           <Grid container spacing={1} alignItems="center">

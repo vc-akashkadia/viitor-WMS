@@ -38,7 +38,7 @@ export function Routes() {
           <Route key="facility" exact path="/facility" component={Facility} />
           <Route key="operations" exact path="/operations" component={Operations} />
           <Route key="yard-operation" exact path="/yard/operation" component={YardOperations} />
-          <Route key="position-update" exact path="/position/update" component={PositionUpdate} />
+          <Route key="position-update" exact path="/location/update" component={PositionUpdate} />
           <Route
             exact
             path="/new/gate/in"

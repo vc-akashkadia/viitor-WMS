@@ -80,8 +80,8 @@ const useStyles = makeStyles({
 
 const content = [
   {
-    title: "Position Update",
-    route: "/position/update",
+    title: "Location Update",
+    route: "/location/update",
     img:PositionIcon
   },
   {
