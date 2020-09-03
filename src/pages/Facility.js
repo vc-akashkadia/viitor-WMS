@@ -45,6 +45,11 @@ const BootstrapInput = withStyles((theme) => ({
     padding: "10px 26px 10px 12px",
     transition: theme.transitions.create(["border-color", "box-shadow"]),
     width: "100%",
+    whiteSpace: "nowrap",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    display: "inline-block",
+    lineHeight: "28px",
     // Use the system font instead of the default Roboto font.
     fontFamily: ["Roboto"].join(","),
     "&:focus": {
