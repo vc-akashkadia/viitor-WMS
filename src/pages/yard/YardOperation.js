@@ -199,186 +199,162 @@ export default function YardOperation(props) {
         data.number = number;
       }
     }
-    setLoading(true);
-    getYardContainerList(data);
-  };
-
-  const getYardContainerList = (data) => {
-    dispatch(getYardOperationApiCall(data, authToken, handleCallbackList));
-  };
-  const handleCallbackList = (response) => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 1000);
-  };
-
-  const handleOpenPickUpModal = (container) => {
-    setselectedContainer(container);
-    setopenPickUpModal(true);
-  };
-
-  const handleClosePickUp = (status) => {
-    setopenPickUpModal(false);
-    setselectedContainer({});
-    if(status)
-    {
-        toasterOption = {
-            varient : 'success',
-            message : 'Container Pickup Successfully'
-        }
-        setToaster(true)
-        handleSearch()
-    }
-  };
-
-  return (
-    <>
-      <TitleHeader open={open} setOpen={setOpen} title={"Yard Operation"} backPath={"/operations"}/>
-      {open && (
-        <Card className={classes.filterSearch}>
-          <Grid container spacing={1} alignItems="center">
-            <Grid item xs={6}>
-              <Typography className={classes.searchTitle}>
-                Search Here
-              </Typography>
-            </Grid>
-            <Grid item xs={6}>
-              <FormControl fullWidth>
-                <Select
-                  labelId="demo-customized-select-label"
-                  id="demo-customized-select"
-                  value={block === "" ? "Block" : block}
-                  onChange={(e) => setBlock(e.target.value)}
-                  input={<BootstrapInput />}
-                  placeholder="Block"
-                  style={{ width: "100%" }}
-                  name="block"
-                >
-                  <MenuItem value="Block">
-                    <em>Block</em>
-                  </MenuItem>
-                  {blockList.map((item) => (
-                    <MenuItem key={item.value} value={item.value}>
-                      {item.label}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </Grid>
-            <Grid item xs={6}>
-              <FormControl fullWidth>
-                <Select
-                  labelId="demo-customized-select-label"
-                  id="demo-customized-select"
-                  value={gateType === "" ? "ALL" : gateType}
-                  onChange={(e) => setGetType(e.target.value)}
-                  input={<BootstrapInput />}
-                  placeholder="Gate Type"
-                  style={{ width: "100%" }}
-                  name="gateType"
-                >
-                  <MenuItem value="ALL">
-                    <em>Both</em>
-                  </MenuItem>
-                  <MenuItem value="GROUNDING">Ground</MenuItem>
-                  <MenuItem value="PICKUP">Pick Up</MenuItem>
-                </Select>
-              </FormControl>
-            </Grid>
-            <Grid item xs={6}>
-              <FormControl fullWidth>
-                <Select
-                  labelId="demo-customized-select-label"
-                  id="demo-customized-select"
-                  value={vehical === "" ? "Criteria" : vehical}
-                  onChange={(e) => {
-                    setVehical(e.target.value)
-                    if(e.target.value === 'Criteria'){
-                      setNumber('')
-                    }
-                  }}
-                  input={<BootstrapInput />}
-                  placeholder="Vehical"
-                  style={{ width: "100%" }}
-                >
-                  <MenuItem value="Criteria">
-                    <em>Criteria</em>
-                  </MenuItem>
-                  <MenuItem value="truck">Truck</MenuItem>
-                  <MenuItem value="container">Container</MenuItem>
-                </Select>
-              </FormControl>
-            </Grid>
-            <Grid item xs={8}>
-              <TextField
-                className={classes.searchInput}
-                onChange={(e) => setNumber(e.target.value)}
-                id="outlined-basic"
-                placeholder="Enter No."
-                label=""
-                value={number}
-                variant="outlined"
-              />
-            </Grid>
-            <Grid item xs={4}>
-              <Button
-                variant="contained"
-                color="primary"
-                className={classes.searchBtn}
-                onClick={handleSearch}
-              >
-                Search
-              </Button>
-            </Grid>
-          </Grid>
-        </Card>
-      )}
-      <div className={classes.yardMain}>
-        <Typography className={classes.yardTitle}>Work Order</Typography>
-        {loading &&  <Loader />}
-        {!loading && yardContainerList && yardContainerList.length === 0 && (
-          <Typography className={classes.yardTitle}>No record Found</Typography>
-        )}
-        {!loading &&
-          yardContainerList &&
-          yardContainerList.length > 0 &&
-          yardContainerList.map((item, key) => (
-            <CardGrid key={key} item={item} handleOpenModal={handleOpenModal}>
-              <Box>
-                  {item.containerStatus === "GROUNDING" ? (
-                    <Button
-                      className={classes.rightBoxArrow}
-                      onClick={() => handleOpenGroundingModal()}
-                    >
-                      <ArrowDownwardIcon color="secondary" />
-                    </Button>
-                  ) : (
-                    <Button
-                      className={classes.rightBoxArrow}
-                      onClick={() => handleOpenPickUpModal(item)}
-                      // onClick={() => handleOpenModal("pickup",item.containerNumber)}
-                    ><ArrowUpwardIcon color="secondary" />
-                      
-                    </Button>
-                  )}
-                </Box>
-            </CardGrid>
-          ))}
-      </div>
-      {openModal && <Modal open={openModal} setOpen={setOpenMdal} modalData={modalData} data={dataModal}/>}
-      {openPickUpModal && (
-        <PickUpModal
-          container={selectedContainer}
-          open={openPickUpModal}
-          setOpen={handleClosePickUp}
-        />
-      )}
-      <Snackbar open={toaster} anchorOrigin={{ vertical: 'top', horizontal: 'right' }} autoHideDuration={6000} onClose={() => setToaster(false)}>
-        <MuiAlert elevation={6} variant="filled" onClose={() => setToaster(false)} severity={toasterOption.varient}>
-          {toasterOption.message}
-        </MuiAlert>
-      </Snackbar>
-      <ScrollToTop />
-    </>
-  );
+    return (
+        <>
+            <AppBar position="static" color="secondary">
+                <Toolbar>
+                    <Box display="flex" alignItems="center" justifyContent="space-between" style={{ width: '100%' }} >
+                        <Box display="flex" alignItems="center" >
+                            <IconButton aria-label="back" className={classes.backIcon} size="small" onClick={() => history.push("/facility")}>
+                                <ArrowBackIcon fontSize="" />
+                            </IconButton>
+                            <Typography className={classes.backText}>Yard Operation</Typography>
+                        </Box>
+                        <Box display="flex" alignItems="center" onClick={handleFilterOpen}>
+                            <IconButton aria-label="back" className={classes.searchIcon} size="small" style={{ paddingRight: 10 }}>
+                                <SearchIcon fontSize="" />
+                            </IconButton>
+                            <IconButton aria-label="back" className={classes.backIcon} size="small">
+                                <img src={FilterListIcon} alt="" />
+                            </IconButton>
+                        </Box>
+                    </Box>
+                </Toolbar>
+            </AppBar>
+            {open && (<Card className={classes.filterSearch}>
+                <Grid container spacing={1} alignItems="center">
+                    <Grid item xs={6}>
+                        <Typography className={classes.searchTitle}>Search Here</Typography>
+                    </Grid>
+                    <Grid item xs={6}>
+                        <FormControl fullWidth>
+                            <Select
+                                labelId="demo-customized-select-label"
+                                id="demo-customized-select"
+                                value={age}
+                                onChange={handleChange}
+                                input={<BootstrapInput />}
+                                placeholder="Select Yard Crane"
+                                style={{ width: '100%' }}
+                            >
+                                <MenuItem value="">
+                                    <em>None</em>
+                                </MenuItem>
+                                <MenuItem value={10}>Ten</MenuItem>
+                                <MenuItem value={20}>Twenty</MenuItem>
+                                <MenuItem value={30}>Thirty</MenuItem>
+                            </Select>
+                        </FormControl>
+                    </Grid>
+                    <Grid item xs={6}>
+                        <FormControl fullWidth>
+                            <Select
+                                labelId="demo-customized-select-label"
+                                id="demo-customized-select"
+                                value={age}
+                                onChange={handleChange}
+                                input={<BootstrapInput />}
+                                placeholder="Select Yard Crane"
+                                style={{ width: '100%' }}
+                            >
+                                <MenuItem value="">
+                                    <em>None</em>
+                                </MenuItem>
+                                <MenuItem value={10}>Ten</MenuItem>
+                                <MenuItem value={20}>Twenty</MenuItem>
+                                <MenuItem value={30}>Thirty</MenuItem>
+                            </Select>
+                        </FormControl>
+                    </Grid>
+                    <Grid item xs={6}>
+                        <FormControl fullWidth>
+                            <Select
+                                labelId="demo-customized-select-label"
+                                id="demo-customized-select"
+                                value={age}
+                                onChange={handleChange}
+                                input={<BootstrapInput />}
+                                placeholder="Select Yard Crane"
+                                style={{ width: '100%' }}
+                            >
+                                <MenuItem value="">
+                                    <em>None</em>
+                                </MenuItem>
+                                <MenuItem value={10}>Ten</MenuItem>
+                                <MenuItem value={20}>Twenty</MenuItem>
+                                <MenuItem value={30}>Thirty</MenuItem>
+                            </Select>
+                        </FormControl>
+                    </Grid>
+                    <Grid item xs={8}>
+                        <TextField className={classes.searchInput} id="outlined-basic" placeholder="Enter No." label="" variant="outlined" />
+                    </Grid>
+                    <Grid item xs={4}>
+                        <Button variant="contained" color="primary" className={classes.searchBtn}>Search</Button>
+                    </Grid>
+                </Grid>
+            </Card>)}
+            <div className={classes.yardMain}>
+                <Typography className={classes.yardTitle}>Work Order</Typography>
+                <Card className={classes.yardCard}>
+                    <Box display="flex" alignItems="center" justifyContent="space-between">
+                        <Box display="flex" flexDirection="column">
+                            <Box className={classes.chipMain}>
+                                <Chip label="1234" size="medium" style={{ width: 80 }} />
+                                <Chip label="1234" style={{ width: 80 }} />
+                            </Box>
+                            <Box className={classes.chipMain}>
+                                <Chip label="Lorem Ipsu.." style={{ width: '100%' }} />
+                            </Box>
+                        </Box>
+                        <Box>
+                            <Button className={classes.rightBoxArrow} onClick={handleOpenModal}><ArrowDownwardIcon color="secondary" /></Button>
+                        </Box>
+                    </Box>
+                </Card>
+                <Card className={classes.yardCard}>
+                    <Box display="flex" alignItems="center" justifyContent="space-between">
+                        <Box display="flex" flexDirection="column">
+                            <Box display="flex" flexDirection="column">
+                                <Box className={classes.chipMain}>
+                                    <Chip label="1234" size="medium" style={{ width: 80 }} />
+                                    <Chip label="1234" style={{ width: 80 }} />
+                                </Box>
+                                <Box className={classes.chipMain}>
+                                    <Chip label="Lorem Ipsu.." style={{ width: '100%' }} />
+                                </Box>
+                            </Box>
+                        </Box>
+                        <Box>
+                            <Button className={classes.rightBoxArrow} onClick={handleOpenGroundingModal}><ArrowUpwardIcon color="secondary" /></Button>
+                        </Box>
+                    </Box>
+                </Card>
+                <Card className={classes.yardCard}>
+                    <Box display="flex" alignItems="center" justifyContent="space-between">
+                        <Box display="flex" flexDirection="column">
+                            <Box display="flex" flexDirection="column">
+                                <Box className={classes.chipMain}>
+                                    <Chip label="1234" size="medium" style={{ width: 80 }} />
+                                    <Chip label="1234" style={{ width: 80 }} />
+                                </Box>
+                                <Box className={classes.chipMain}>
+                                    <Chip label="Lorem Ipsu.." style={{ width: '100%' }} />
+                                </Box>
+                            </Box>
+                        </Box>
+                        <Box>
+                            <Button className={classes.rightBoxArrow}><ArrowUpwardIcon color="secondary" /></Button>
+                        </Box>
+                    </Box>
+                </Card>
+            </div>
+            {openModal && (
+                <Modal open={openModal} setOpen={setOpenMdal} />
+            )}
+            {openGrounding && (
+                <DamageModal open={openGrounding} setOpen={setOpenGrounding} />
+            )}
+        </>
+    );
 }
