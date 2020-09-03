@@ -7,18 +7,47 @@ const initialstate = {
   facilityList:[],
   yardCraneList:[],
   blockList:[],
+  
   yardCrane: {},
   yardOperation: {},
   yardJobOption: {},
-  gateInOperation: {
+  gateMoveOperation: {
     vehical: "",
     number: "",
-    tyep:""
+    gatetype:""
   },
   groundContainer: {},
+  gateMoveContainerList: [{
+    "containerId": 20081521,
+    "containerNumber": "1017659761900020",
+    "facilityId": 2008460,
+    "status": "40",
+    "location": "FG-B2-01-01",
+    "truckNumber": "STG3",
+    "gateInRemarks": "",
+    "gateInTime": "2020-08-28",
+    "gateOutTime": null,
+    "operationCode": "GATE_IN_INBOUND",
+    "containerStatus": "INBOUND"
+},
+{
+    "containerId": 20081534,
+    "containerNumber": "1017659761900020",
+    "facilityId": 2008460,
+    "status": "40",
+    "location": "FG-B2-01-03",
+    "truckNumber": "FTG3",
+    "gateInRemarks": "",
+    "gateInTime": "2020-08-28",
+    "gateOutTime": null,
+    "operationCode": "GATE_IN_OUTBOUND",
+    "containerStatus": "OUTBOUND"
+}],
+  yardContainerList: [],
+  containerListForLocation: [],
 };
 const base = persistReducer(
-  { storage, key: "base-wms", whitelist: ["facility","facilityList"] },(state = initialstate, action) => {
+  { storage, key: "base-wms", whitelist: ["facility","facilityList","yardCrane"] },(state = initialstate, action) => {
   switch (action.type) {
     case actionTypes.FACILITY_SELECTED: {
       return {
@@ -75,10 +104,10 @@ const base = persistReducer(
       };
     }
 
-    case actionTypes.GATE_IN_OPERATION_OPTIONS: {
+    case actionTypes.GATE_MOVE_OPERATION_OPTIONS: {
       return {
         ...state,
-        gateInOperation: action.data,
+        gateMoveOperation: action.data,
       };
     }
     case actionTypes.GROUND_CONTAINER: {
@@ -86,6 +115,28 @@ const base = persistReducer(
         ...state,
         groundContainer: action.data,
       };
+    }
+    case actionTypes.GATE_MOVE_CONTAINER_LIST: {
+      return {
+        ...state,
+        gateMoveContainerList: action.data,
+      };
+    }
+    case actionTypes.YARD_CONTAINER_LIST: {
+      return {
+        ...state,
+        yardContainerList: action.data,
+      };
+    }
+    case actionTypes.CONTAINER_LIST_LOCATION: {
+      return {
+        ...state,
+        containerListForLocation: action.data,
+      };
+    }
+    case actionTypes.LOGOUT: {
+      // TODO: Change this code. Actions in reducer aren't allowed.
+      return initialstate;
     }
     default:
       return state;

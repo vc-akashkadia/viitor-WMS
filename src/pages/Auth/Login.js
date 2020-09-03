@@ -4,40 +4,18 @@ import brandLogo from "@assests/img/logo-new.svg";
 import bottomImage from "@assests/img/pattern.svg";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import { makeStyles, withStyles, fade } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import Checkbox from "@material-ui/core/Checkbox";
 import Typography from "@material-ui/core/Typography";
-import FormControl from "@material-ui/core/FormControl";
-import InputBase from "@material-ui/core/InputBase";
 import InputLabel from "@material-ui/core/InputLabel";
 import { LoginApi } from "../../apicalls/authCall";
 import { useDispatch } from "react-redux";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import clsx from "clsx";
 import Alert from "@material-ui/lab/Alert";
-
-const BootstrapInput = withStyles((theme) => ({
-  root: {
-    "label + &": {
-      marginTop: theme.spacing(2),
-    },
-  },
-  input: {
-    borderRadius: 4,
-    position: "relative",
-    backgroundColor: "#eff0f3",
-    border: "none",
-    fontSize: 13,
-    fontFamily: "Roboto",
-    fontWeight: 400,
-    width: "100%",
-    padding: "8px 12px",
-    transition: theme.transitions.create(["border-color", "box-shadow"]),
-  },
-}))(InputBase);
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -124,11 +102,9 @@ const useStyles = makeStyles((theme) => ({
   bottomImage: {
     position: "absolute",
     bottom: 0,
-    maxWidth: "100%",
+    width: "100%",
     left: 0,
-    display: 'block',
-    right: 0,
-    margin: '0 auto'
+    display: 'block'
   },
 }));
 // let errors = {
@@ -185,8 +161,6 @@ export default function Login() {
     setAlert(true);
     setLoading(false);
   };
-console.log("email",errors.email)
-// console.log("Passoww",password)
 
   return (
     <>
@@ -286,7 +260,7 @@ console.log("email",errors.email)
           </form>
           <img
             src={bottomImage}
-            alt="bottom-image"
+            alt="bottom"
             className={classes.bottomImage}
           />
         </CardContent>

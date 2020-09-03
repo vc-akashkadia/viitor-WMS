@@ -37,11 +37,24 @@ export const selectYardJobOption = (data) => ({
   data: data,
 });
 
-export const selectGateInOperationOption = (data) => ({
-  type: actionTypes.GATE_IN_OPERATION_OPTIONS,
+export const selectGateMoveOperationOption = (data) => ({
+  type: actionTypes.GATE_MOVE_OPERATION_OPTIONS,
   data: data,
 });
 export const selectGroundContainer = (data) => ({
   type: actionTypes.GROUND_CONTAINER,
+  data: data,
+});
+export const GateMoveContainerList = (data) => ({
+  type: actionTypes.GATE_MOVE_CONTAINER_LIST,
+  data: data,
+});
+export const YardContainerList = (data) => ({
+  type: actionTypes.YARD_CONTAINER_LIST,
+  data: data,
+});
+
+export const ContainerListForLocation = (data) => ({
+  type: actionTypes.CONTAINER_LIST_LOCATION,
   data: data,
 });

@@ -1,6 +1,5 @@
 import axios from "axios";
-// import { typeOf } from "react-is";
-// axios.defaults.withCredentials = true;
+
 const services = axios.create({
   headers: {
     "Content-Type": "application/json",

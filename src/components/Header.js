@@ -2,20 +2,19 @@ import React from "react";
 import Toolbar from "@material-ui/core/Toolbar";
 import AppBar from "@material-ui/core/AppBar";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import brandLogo from "@assests/img/logo-new.svg";
 import IconButton from "@material-ui/core/IconButton";
 import AccountCircle from "@material-ui/icons/AccountCircle";
-import Popper from '@material-ui/core/Popper';
-import Grow from '@material-ui/core/Grow';
-import ClickAwayListener from '@material-ui/core/ClickAwayListener';
-import MenuItem from '@material-ui/core/MenuItem';
-import MenuList from '@material-ui/core/MenuList';
-import Paper from '@material-ui/core/Paper';
-import Box from '@material-ui/core/Box';
-import MenuIcon from '@material-ui/icons/Menu';
-import menu from '@assests/img/menu.svg'
+import Popper from "@material-ui/core/Popper";
+import Grow from "@material-ui/core/Grow";
+import ClickAwayListener from "@material-ui/core/ClickAwayListener";
+import MenuItem from "@material-ui/core/MenuItem";
+import MenuList from "@material-ui/core/MenuList";
+import Paper from "@material-ui/core/Paper";
+import Box from "@material-ui/core/Box";
+import MenuIcon from "@material-ui/icons/Menu";
 
 const useStyles = makeStyles((theme) => ({
   colorPrimary: {
@@ -27,6 +26,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 export default function Header() {
   const classes = useStyles();
+  const history = useHistory();
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
   const handleToggle = () => {
@@ -36,7 +36,12 @@ export default function Header() {
     if (anchorRef.current && anchorRef.current.contains(event.target)) {
       return;
     }
-  }
+  };
+
+  const handleLogout = (event) => {
+    history.push("/logout");
+  };
+
   function handleListKeyDown(event) {
     if (event.key === "Tab") {
       event.preventDefault();
@@ -56,9 +61,19 @@ export default function Header() {
       <CssBaseline />
       <AppBar className={classes.colorPrimary}>
         <Toolbar>
-          <Box display="flex" justifyContent="space-between" alignItems="center" style={{ width: '100%' }}>
-            <IconButton aria-label="delete" className={classes.margin} size="small" >
-            <img src={menu} alt="menu" />
+          <Box
+            display="flex"
+            justifyContent="space-between"
+            alignItems="center"
+            style={{ width: "100%" }}
+          >
+            <IconButton
+              aria-label="delete"
+              className={classes.margin}
+              size="small"
+              color="primary"
+            >
+              <MenuIcon />
             </IconButton>
             <Link to="/">
               <img
@@ -77,16 +92,29 @@ export default function Header() {
               <AccountCircle />
             </IconButton>
           </Box>
-          <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
+          <Popper
+            open={open}
+            anchorEl={anchorRef.current}
+            role={undefined}
+            transition
+            disablePortal
+          >
             {({ TransitionProps, placement }) => (
               <Grow
                 {...TransitionProps}
-                style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
+                style={{
+                  transformOrigin:
+                    placement === "bottom" ? "center top" : "center bottom",
+                }}
               >
                 <Paper>
                   <ClickAwayListener onClickAway={handleClose}>
-                    <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
-                      <MenuItem onClick={handleClose}>Logout</MenuItem>
+                    <MenuList
+                      autoFocusItem={open}
+                      id="menu-list-grow"
+                      onKeyDown={handleListKeyDown}
+                    >
+                      <MenuItem onClick={handleLogout}>Logout</MenuItem>
                     </MenuList>
                   </ClickAwayListener>
                 </Paper>
