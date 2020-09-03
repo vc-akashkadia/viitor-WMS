@@ -1,56 +1,104 @@
 import React, { useState, useEffect } from "react";
-// import { Link } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-// import brandLogo from "@assests/img/logo.png";
-import CardContent from "@material-ui/core/CardContent";
-import { makeStyles } from "@material-ui/core/styles";
-import Button from "@material-ui/core/Button";
-import Grid from "@material-ui/core/Grid";
-import SettingsIcon from "@material-ui/icons/Settings";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import InputLabel from "@material-ui/core/InputLabel";
-import FormHelperText from "@material-ui/core/FormHelperText";
+import { useSelector, useDispatch } from "react-redux";
+import { makeStyles, withStyles } from "@material-ui/core/styles";
+import Card from "@material-ui/core/Card";
+import Accordion from "@material-ui/core/Accordion";
+import AccordionSummary from "@material-ui/core/AccordionSummary";
+import AccordionDetails from "@material-ui/core/AccordionDetails";
+import Typography from "@material-ui/core/Typography";
+import Box from "@material-ui/core/Box";
+import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
-import Collapse from "@material-ui/core/Collapse";
-import Typography from "@material-ui/core/Typography";
-import Header from "../components/Header"
-import {
-  facilityListApiCall,
-  selectedFacility,
-} from "../apicalls/FacilityApiCalls";
+import InputBase from "@material-ui/core/InputBase";
+import Button from "@material-ui/core/Button";
+import OperationIcon from "@assests/img/dashboard1.svg";
+import GateInIcon from "@assests/img/gate-in.svg";
+import GateOutIcon from "@assests/img/gate-out.svg";
+import PositionIcon from "@assests/img/postion-update.svg";
+import Header from "../components/Header";
+import ArrowRightIcon from "@material-ui/icons/ArrowRight";
+import FormHelperText from "@material-ui/core/FormHelperText";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import ArrowBackIcon from "@material-ui/icons/ArrowBack";
+import IconButton from "@material-ui/core/IconButton";
+
+
 import { GetYardCraneList, selectYardCraneApi } from "../apicalls/YardApiCalls";
-let toasterOption = {
-  option: "error",
-  message: "Please select Facility",
-};
-
-const useStyles = makeStyles((theme) => ({
+const BootstrapInput = withStyles((theme) => ({
   root: {
-    maxWidth: 240,
-    marginTop: "15px",
+    "label + &": {
+      marginTop: theme.spacing(3),
+    },
   },
-  listItemsChild: {
-    marginBottom: 10,
-    marginTop: 10,
-    padding: "10px",
-    backgroundColor: "#ffffff",
-  },
-  lableContainer: {
-    textAlign: "center",
-  },
-  cardcontent: {
-    padding: "0px !important",
-  },
-  formControl: {
-    minWidth: 120,
+  input: {
+    borderRadius: 4,
+    position: "relative",
+    backgroundColor: "#f6f6f6",
+    border: "1px solid #ced4da",
+    fontSize: 16,
+    padding: "0px 26px 0px 12px",
+    transition: theme.transitions.create(["border-color", "box-shadow"]),
     width: "100%",
+    height: 28,
+    display: 'flex',
+    alignItems: 'center',
+    // Use the system font instead of the default Roboto font.
+    fontFamily: ["Roboto"].join(","),
+    "&:focus": {
+      borderRadius: 4,
+      borderColor: "#80bdff",
+      boxShadow: "0 0 0 0.2rem rgba(0,123,255,.25)",
+    },
   },
-}));
+}))(InputBase);
 
-export default function Facility() {
+const useStyles = makeStyles({
+  mainContainer: {
+    margin: "13px 10px 13px 10px",
+  },
+  mainTitle: {
+    paddingLeft: 14,
+  },
+  operationDetails: {
+    width: "100%",
+    display: "flex",
+  },
+  operationBtn: {
+    minWidth: 31,
+    marginLeft: 5,
+  },
+  operationCard: {
+    marginBottom: 10,
+    "&:last-child": {
+      marginBottom: 0,
+    },
+  },
+});
+
+const content = [
+  {
+    title: "Position Update",
+    route: "/position/update",
+    img:PositionIcon
+  },
+  {
+    title: "Gate In",
+    route: "/gate/in",
+    img:GateInIcon
+  },
+  {
+    title: "Gate Out",
+    route: "/gate/out",
+    img:GateOutIcon
+  },
+];
+
+export default function Dashboard() {
   const classes = useStyles();
+  const history = useHistory();
   const [errors, setErrors] = useState("");
   const [loading, setLoading] = useState(false);
   const [crane, setCrane] = useState("");
@@ -58,29 +106,21 @@ export default function Facility() {
   const facility = useSelector(({ base }) => base.facility);
   let yardCraneList = useSelector(({ base }) => base.yardCraneList);
   const dispatch = useDispatch();
-  const history = useHistory();
-  const [expanded, setExpanded] = useState(false);
+  
   const handleSubmit = (event) => {
     event.preventDefault();
     setLoading(true);
     if (crane !== "") {
       dispatch(selectYardCraneApi(crane));
-      history.push("/yard/operation");
+      setTimeout(() => {
+        history.push("/yard/operation");  
+      }, 500);
+      
     } else {
       setErrors("Please Select Crane");
       setLoading(false);
     }
   };
-  useEffect(() => {
-    console.log(yardCraneList.length);
-    if (yardCraneList.length === 0) {
-      dispatch(
-        GetYardCraneList(facility, authToken, handleCallBackYardCraneList)
-      );
-      setLoading(false);
-    }
-  }, [yardCraneList]);
-
   const handleCallBackYardCraneList = (response) => {
     const {
       data: { status },
@@ -91,105 +131,140 @@ export default function Facility() {
       setLoading(false);
     }
   };
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
-  };
 
+  useEffect(() => {
+    if (yardCraneList.length === 0) {
+      dispatch(
+        GetYardCraneList(facility, authToken, handleCallBackYardCraneList)
+      );
+      setLoading(false);
+    }
+  }, []);
+  
   return (
     <>
-    <Header />
-      {/* <div>
-        <Link to="/" className="brand-logo">
-          <img
-            src={brandLogo}
-            alt="Logo"
-            style={{
-              display: "block",
-              height: "100%",
-              width: "56%",
-              marginLeft: "52px",
-              marginTop: "10px",
-            }}
-          />
-        </Link>
-      </div> */}
-      {/* <div> */}
-        <Grid
-          item
-          xs={12}
-        >
-          <CardContent className={classes.cardcontent}>
-            <SettingsIcon />{" "}
-            <Typography
-              onClick={handleExpandClick}
-              className={classes.lableContainer}
-              variant="h6"
+      {/* <Header /> */}
+
+
+      <AppBar position="static" color="secondary">
+        <Toolbar>
+          <Box
+            display="flex"
+            alignItems="center"
+            justifyContent="space-between"
+            style={{ width: "100%" }}
+          >
+            <Box display="flex" alignItems="center">
+              <IconButton
+                aria-label="back"
+                className={classes.backIcon}
+                size="small"
+                onClick={() => history.push("/facility")}
+              >
+                <ArrowBackIcon />
+              </IconButton>
+              <Typography className={classes.backText}>
+                 Operations
+              </Typography>
+            </Box>
+            {/* <Box display="flex" alignItems="center" onClick={handleFilterOpen}>
+              <IconButton
+                aria-label="back"
+                className={classes.backIcon}
+                size="small"
+                style={{ paddingRight: 10 }}
+              >
+                {!open && <SearchIcon /> }
+                {open && <CloseIcon /> }
+              </IconButton>
+              {/* <IconButton
+                aria-label="back"
+                className={classes.backIcon}
+                size="small"
+              >
+                <FilterListIcon />
+              </IconButton> */}
+            {/* </Box> */} 
+          </Box>
+        </Toolbar>
+      </AppBar>
+
+      <div className={classes.mainContainer}>
+        <Card className={classes.operationCard}>
+          <Accordion>
+            <AccordionSummary
+              expandIcon={<ArrowRightIcon />}
+              aria-label="Expand"
+              aria-controls="additional-actions1-content"
+              id="additional-actions1-header"
             >
-              Yard Operation
-            </Typography>
-            <Collapse in={expanded} timeout="auto" unmountOnExit>
-              {loading && <CircularProgress size={24} />}
-              {!loading && (
-                <form onSubmit={handleSubmit}>
-                  <FormControl
-                    variant="filled"
-                    className={classes.formControl}
-                    error={errors !== ""}
-                  >
-                    <InputLabel htmlFor="filled-age-native-simple">
-                      Select Yard Crane
-                    </InputLabel>
-                    <Select
-                      native
-                      value={facility}
+              <Box display="flex" alignItems="center">
+                <img src={OperationIcon} alt="" />
+                <Typography color="primary" className={classes.mainTitle}>
+                  Yard Operation
+                </Typography>
+              </Box>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Box className={classes.operationDetails}>
+                <FormControl fullWidth error={errors !== ""}>
+                  <Select
+                    labelId="demo-customized-select-label"
+                    id="demo-customized-select"
+                    value={crane}
                       onChange={(e) => setCrane(e.target.value)}
-                      inputProps={{
-                        name: "crane",
-                        id: "crane",
-                      }}
-                    >
-                      <option aria-label="None" value="" />
-                      <option value={10}>Ten</option>
-                      <option value={20}>Twenty</option>
-                      <option value={30}>Thirty</option>
-                      {yardCraneList.map((item) => (
-                        <option value={item.value}>{item.lable}</option>
-                      ))}
-                    </Select>
-                    <FormHelperText>{errors}</FormHelperText>
-                  </FormControl>
-                  <Button
-                    type="submit"
-                    variant="contained"
-                    color="primary"
-                    size="small"
-                    style={{ width: "208px" }}
-                    disabled={loading}
+                    input={<BootstrapInput />}
+                    placeholder="Select Yard Crane"
+                    style={{ width: "100%" }}
                   >
-                    Ok
-                  </Button>
-                </form>
-              )}
-            </Collapse>
-          </CardContent>
-        </Grid>
-        <Grid item xs={12} className={classes.listItemsChild}>
-          <SettingsIcon />{" "}
-          <Typography className={classes.lableContainer} variant="h6">
-            Position Update{" "}
-          </Typography>
-        </Grid>
-        <Grid item xs={12} className={classes.listItemsChild}>
-          <Typography className={classes.lableContainer} variant="h6">
-            Gate In
-          </Typography>
-        </Grid>
-        <Grid item xs={12} className={classes.listItemsChild}>
-          <Typography className={classes.lableContainer} variant="h6">
-            Gate Out{" "}
-          </Typography>
-        </Grid>
-      {/* </div> */}
+                    <MenuItem value="">
+                      <em>None</em>
+                    </MenuItem>
+                    {yardCraneList.map((item) => (
+                        <MenuItem key={item.value} value={item.value}>{item.label}</MenuItem>
+                      ))}
+                    
+                  </Select>
+                  <FormHelperText>{errors}</FormHelperText>
+                </FormControl>
+                <Button
+                  className={classes.operationBtn}
+                  variant="contained"
+                  color="primary"
+                  onClick={handleSubmit}
+                >
+                  Ok
+                </Button>
+              </Box>
+            </AccordionDetails>
+          </Accordion>
+        </Card>
+        {content &&
+          content.map((item) => (
+            <Card 
+            key={item.title}
+              className={classes.operationCard}
+              onClick={() => history.push(item.route)}
+              style={{ cursor: "pointer" }}
+            >
+              <Accordion>
+                <AccordionSummary
+                  expandIcon={<ArrowRightIcon />}
+                  aria-label="Expand"
+                  aria-controls="additional-actions1-content"
+                  id="additional-actions1-header"
+                >
+                  <Box display="flex" alignItems="center">
+                    <img src={item.img} alt="" />
+                    <Typography color="primary" className={classes.mainTitle}>
+                      {item.title}
+                    </Typography>
+                  </Box>
+                </AccordionSummary>
+              </Accordion>
+            </Card>
+          ))}
+      </div>
     </>
   );
 }

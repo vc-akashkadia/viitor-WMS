@@ -25,7 +25,6 @@ function App({ store, persistor }) {
         </React.Suspense>
       </PersistGate>
     </Provider>
-    
   );
 }
 
