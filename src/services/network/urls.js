@@ -24,7 +24,7 @@ export const getUrl = (type) => {
     case 'gatemovecontainer':
       return `${baseUrl}/container/showcontainerlist`;
     case 'pickupConfirm':
-      return `${baseUrl}/addPickUpReq`;
+      return `${baseUrl}/yard/pickup`;
     case 'gatemoveapi':
       return `${baseUrl}/gateoperation/getinconfirmation`;
     case 'addRole':

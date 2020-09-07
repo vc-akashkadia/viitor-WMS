@@ -2,13 +2,13 @@ import { actionTypes } from "../actions/actionTypes";
 import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 const initialstate = {
-  facility: {},
+  facility: '',
   damageCodeList:[],
   facilityList:[],
   yardCraneList:[],
   blockList:[],
   
-  yardCrane: {},
+  yardCrane: '',
   yardOperation: {},
   yardJobOption: {},
   gateMoveOperation: {
@@ -17,32 +17,7 @@ const initialstate = {
     gatetype:""
   },
   groundContainer: {},
-  gateMoveContainerList: [{
-    "containerId": 20081521,
-    "containerNumber": "1017659761900020",
-    "facilityId": 2008460,
-    "status": "40",
-    "location": "FG-B2-01-01",
-    "truckNumber": "STG3",
-    "gateInRemarks": "",
-    "gateInTime": "2020-08-28",
-    "gateOutTime": null,
-    "operationCode": "GATE_IN_INBOUND",
-    "containerStatus": "INBOUND"
-},
-{
-    "containerId": 20081534,
-    "containerNumber": "1017659761900020",
-    "facilityId": 2008460,
-    "status": "40",
-    "location": "FG-B2-01-03",
-    "truckNumber": "FTG3",
-    "gateInRemarks": "",
-    "gateInTime": "2020-08-28",
-    "gateOutTime": null,
-    "operationCode": "GATE_IN_OUTBOUND",
-    "containerStatus": "OUTBOUND"
-}],
+  gateMoveContainerList: [],
   yardContainerList: [],
   containerListForLocation: [],
 };

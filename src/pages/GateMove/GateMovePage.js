@@ -1,38 +1,44 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import Card from "@material-ui/core/Card";
 
-import ArrowBackIcon from "@material-ui/icons/ArrowBack";
-import SearchIcon from "@material-ui/icons/Search";
-import CloseIcon from "@material-ui/icons/Close";
-
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
-import ArrowUpwardIcon from "@material-ui/icons/ArrowUpward";
-import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
-import MenuItem from "@material-ui/core/MenuItem";
+// import ArrowUpwardIcon from "@material-ui/icons/ArrowUpward";
+// import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
+import LocalPrintshopOutlinedIcon from '@material-ui/icons/LocalPrintshopOutlined';
 import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
+
 import InputBase from "@material-ui/core/InputBase";
 import TextField from "@material-ui/core/TextField";
-import DamageModal from "../../components/DamageModal";
+// import DamageModal from "../../components/DamageModal";
 import Modal from "../../components/modal";
 import { useHistory } from "react-router-dom";
+import NewDamageModal from "../../components/NewDamageCapture"
 // import CircularProgress from "@material-ui/core/CircularProgress";
 import {
   getContainerListApi,
   GateMoveContainerApi,
 } from "../../apicalls/GateApiCalls";
-import CradGrid from '../../components/Card'
-import TitleHeader from "../../components/TitleHeader"
-import ScrollToTop from "../../components/ScrollToTop"
-import Loader from "../../components/Loader"
+import CradGrid from "../../components/Card";
+import TitleHeader from "../../components/TitleHeader";
+import ScrollToTop from "../../components/ScrollToTop";
+import Loader from "../../components/Loader";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import Snackbar from "@material-ui/core/Snackbar";
+import MuiAlert from "@material-ui/lab/Alert";
+import GateInIcon from "@assests/img/gate-in1.svg";
+import GateOutIcon from "@assests/img/gate-out1.svg";
+import Select from "../../components/Select";
+import Divider from '@material-ui/core/Divider';
+
 const BootstrapInput = withStyles((theme) => ({
   root: {
     "label + &": {
@@ -49,8 +55,13 @@ const BootstrapInput = withStyles((theme) => ({
     transition: theme.transitions.create(["border-color", "box-shadow"]),
     width: "100%",
     height: 28,
-    display: "flex",
+    // display: "flex",
     alignItems: "center",
+    whiteSpace: "nowrap",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    display: "inline-block",
+    lineHeight: "28px",
     // Use the system font instead of the default Roboto font.
     fontFamily: ["Roboto"].join(","),
     "&:focus": {
@@ -70,9 +81,14 @@ const useStyles = makeStyles({
     fontSize: 15,
   },
   yardTitle: {
-    margin: "12px 10px",
+    margin: "10px 10px",
     fontSize: 15,
     color: "#173a64",
+  },
+  yardNoData: {
+    width:'100%',
+    marginTop:'93px',
+    paddingLeft:70
   },
   yardCard: {
     padding: 12,
@@ -109,8 +125,11 @@ const useStyles = makeStyles({
     padding: 0,
   },
   filterSearch: {
-    margin: "12px 10px",
+    margin: "1px 1px",
     padding: 10,
+    position: "fixed",
+    backgroundColor: "#ffff",
+    zIndex: "2",
   },
   searchTitle: {
     fontSize: 15,
@@ -125,19 +144,121 @@ const useStyles = makeStyles({
     padding: 0,
     height: 26,
   },
+  title: {
+    fontSize: 16,
+    color: "#0c79c1",
+    fontWeight: 900,
+    fontFamily: "Roboto",
+    textTransform: "uppercase",
+    paddingTop: 12,
+    paddingLeft: 10,
+    paddingRight: 10,
+    paddingBottom: 5,
+    margin: "auto",
+  },
+  content: {
+    color: "#5c5c5c",
+    fontFamily: "Roboto",
+    textAlign: "center",
+    paddingLeft: 10,
+    paddingRight: 10,
+    backgroundColor: "#f6f6f6",
+    position: "relative",
+  },
+  licenseLabel: {
+    position: "absolute",
+    bottom: 20,
+    left: "50%",
+    transform: "translateX(-50%)",
+    marginLeft: 40,
+    width: "auto",
+    overflow: "hidden",
+    textAlign: "center",
+    display: "flex",
+    justifyContent: "center",
+    whiteSpace: "nowrap",
+  },
+  label: {
+    fontSize: 15,
+    fontWeight: 900,
+    color: "#000000",
+  },
+
+  containerLabel: {
+    position: "absolute",
+    bottom: 40,
+    left: "45%",
+    transform: "translateX(-50%)",
+    marginLeft: 15,
+    width: "auto",
+    overflow: "hidden",
+    textAlign: "center",
+    display: "flex",
+    backgroundColor: "white",
+    paddingLeft: "15px",
+    justifyContent: "center",
+    whiteSpace: "nowrap",
+  },
+
+  actionbutton: {
+    paddingBottom: 15,
+    justifyContent: "center",
+  },
+  button: {
+    // paddingTop: 10,
+    // paddingBottom: 10,
+    // paddingLeft: 15,
+    // paddingRight: 15,
+    // fontSize: 14,
+    // fontWeight: 400,
+    // fontFamily: "Roboto",
+    // lineHeight: "16px",
+    // textTransform: "inherit",
+    textTransform: "capitalize",
+    padding: 0,
+    height: 26,
+  },
 });
+let toasterOption = {
+  varient: "success",
+  message: "",
+};
+
+const gateTypeOptions = [
+  { value: "Both", label: "Both" },
+  { value: "INBOUND", label: "Inbound" },
+  { value: "OUTBOUND", label: "Outbound" },
+];
+
+const vehicalOption = [
+  {
+    value: "Criteria",
+    label: "Criteria",
+  },
+  { value: "truck", label: "Truck" },
+  { value: "container", label: "Container" },
+];
 
 export default function GateMovePage(props) {
   const classes = useStyles();
   const history = useHistory();
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
+  const [toaster, setToaster] = useState(false);
+  const [containerIndex, setContainerIndex] = useState();
+  const [damageAdded, setDamage] = useState(false);
+  const [filterPopup, setFilterPopup] = useState(false);
+
   const [modalData, setModalData] = useState();
+  const [damagedContainer, setDamagedContainer] = useState();
   const [dataModal, setDataModal] = useState("");
   const [openModal, setOpenMdal] = useState(false);
+  const [openConfirmGateOperation, setopenConfirmGateOperation] = useState(
+    false
+  );
   const [openDamageModal, setOpenDamageModal] = useState(false);
   const [selectContainer, setSelectContainer] = useState({});
-  const [gatetype, setGateType] = useState("INBOUND");
+  const [gatetype, setGateType] = useState("Both");
   const [vehical, setVehical] = useState("Criteria");
   const [number, setNumber] = useState("");
   const dispatch = useDispatch();
@@ -146,13 +267,20 @@ export default function GateMovePage(props) {
   const gateMoveContainerList = useSelector(
     ({ base }) => base.gateMoveContainerList
   );
-  const handleFilterOpen = () => {
-    setOpen(!open);
-  };
+  // const handleFilterOpen = () => {
+  //   setOpen(!open);
+  // };
 
   useEffect(() => {
+    if (damageAdded) {
+      setModalData("filterPopup");
+      setFilterPopup(true);
+      setDataModal(damagedContainer)
+      return;
+    }
     getContainerList();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gatetype]);
 
   const getContainerList = () => {
@@ -160,16 +288,33 @@ export default function GateMovePage(props) {
       alert("Please enter Truck or Container No.");
       return;
     }
+    setOpen(false);
+    // operationtype: `Gate_${props.gateType}_${gatetype}`.toUpperCase(),
     let data = {
       vehical: vehical,
       number: number,
-      operationtype: `Gate_${props.gateType}_${gatetype}`.toUpperCase(),
       facilityid: facility,
+      ///operationtype: `Gate_${props.gateType}_${gatetype}`.toUpperCase(),
     };
+    if (gatetype === "Both") {
+      data.operationtype = `Gate_${props.gateType}`.toUpperCase();
+    } else {
+      data.operationtype = `Gate_${props.gateType}_${gatetype}`.toUpperCase();
+    }
+    setLoading(true);
+    // if(gatetype !== 'Both'){
+    //data.operationtype = `Gate_${props.gateType}_${gatetype}`.toUpperCase();
+    // }
     setLoading(true);
     dispatch(getContainerListApi(data, authToken, handleCallback));
   };
   const handleSearch = () => {
+    if (damageAdded) {
+      setModalData("filterPopup");
+      setFilterPopup(true);
+      setDataModal(damagedContainer)
+      return;
+    }
     getContainerList();
   };
   const handleCallback = (response) => {
@@ -178,17 +323,51 @@ export default function GateMovePage(props) {
     }, 1000);
   };
 
+  const handleCallbackGateOperation = (response) => {
+    const {
+      data: { status },
+    } = response;
+    if (status) {
+      toasterOption = {
+        varient: "success",
+        message:
+          "Gate " +
+          props.gateType.charAt(0).toUpperCase() +
+          props.gateType.slice(1) +
+          " Succesful",
+      };
+      setToaster(true);
+      setTimeout(() => {
+        setLoading(false);
+        getContainerList();
+      }, 1000);
+    } else {
+      toasterOption = {
+        varient: "error",
+        message: "Something went wrong try after sometime",
+      };
+      setToaster(true);
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000);
+    }
+    setDamage(false);
+  };
   const handleGateMove = (item) => {
     let data = {
       container_number: item.containerNumber,
       truck_number: item.truckNumber,
-      operation_type: `Gate_${props.gateType}_${gatetype}`.toUpperCase(),
+      operation_type: `Gate_${props.gateType}_${item.containerStatus}`.toUpperCase(),
       containter_status: item.containerStatus,
       facility_id: facility,
       damage: item.damage !== undefined ? item.damage : "",
-      shipment_id: item.shipment_id
+      shipment_id: item.shipmentId,
     };
-    dispatch(GateMoveContainerApi(data, authToken, handleCallback));
+    setLoading(true);
+
+    dispatch(
+      GateMoveContainerApi(data, authToken, handleCallbackGateOperation)
+    );
   };
 
   const handleOpenModal = (title, data) => {
@@ -196,56 +375,77 @@ export default function GateMovePage(props) {
     setModalData(title);
     setDataModal(data);
   };
-  const handleOpenDamageModal = (item) => {
+  const handleOpenDamageModal = (item, index) => {
     setSelectContainer(item);
+    if (damageAdded && index !== containerIndex) {
+      setModalData("newDamageAdd");
+      setDataModal(item.containerNumber);
+      setFilterPopup(true);
+      return;
+    }
     setOpenDamageModal(true);
   };
+  const handleFilterPopup = (status) => {
+    if (status) {
+      setDamage(false);
+      if (modalData === "newDamageAdd") {
+        gateMoveContainerList.map(function (item) {
+          delete item.damage;
+          return item;
+        });
+        setDamagedContainer('');
+        setOpenDamageModal(true);
+      } else if (modalData === "gateOperation") {
+        setopenConfirmGateOperation(true);
+      } else {
+        getContainerList();
+      }
+    }
+    setFilterPopup(false);
+  };
   const handleDamage = (damageCode) => {
-    let containerIndex = gateMoveContainerList.findIndex(
-      (item) => item.containerId === selectContainer.containerId
-    );
-    gateMoveContainerList[containerIndex].damage = damageCode;
-    setSelectContainer({});
+    if (damageCode !== "") {
+      setDamage(true);
+      let containerIndexDamage = gateMoveContainerList.findIndex(
+        (item) => item.containerId === selectContainer.containerId
+      );
+      gateMoveContainerList[containerIndexDamage].damage = damageCode;
+      setDamagedContainer(gateMoveContainerList[containerIndexDamage].containerNumber);
+      setContainerIndex(containerIndexDamage);
+    }
+
+    // setSelectContainer({});
+
     setOpenDamageModal(false);
+  };
+
+  const handleOpenModalGate = (container, index) => {
+    setSelectContainer(container);
+
+    if (damageAdded && index !== containerIndex) {
+      setModalData("gateOperation");
+      setFilterPopup(true);
+      setDataModal(damagedContainer)
+    } else {
+      setopenConfirmGateOperation(true);
+    }
+  };
+
+  const handleCloseGateModal = (status) => {
+    if (status) {
+      handleGateMove(selectContainer);
+    }
+    setSelectContainer({});
+    setopenConfirmGateOperation(false);
   };
   return (
     <>
-      {/* <AppBar position="static" color="secondary">
-        <Toolbar>
-          <Box
-            display="flex"
-            alignItems="center"
-            justifyContent="space-between"
-            style={{ width: "100%" }}
-          >
-            <Box display="flex" alignItems="center">
-              <IconButton
-                aria-label="back"
-                className={classes.backIcon}
-                size="small"
-                onClick={() => history.push("/operations")}
-              >
-                <ArrowBackIcon />
-              </IconButton>
-              <Typography
-                className={classes.backText}
-              >{`Gate ${props.gateType}`}</Typography>
-            </Box>
-            <Box display="flex" alignItems="center" onClick={handleFilterOpen}>
-              <IconButton
-                aria-label="back"
-                className={classes.backIcon}
-                size="small"
-                style={{ paddingRight: 10 }}
-              >
-                {!open && <SearchIcon />}
-                {open && <CloseIcon />}
-              </IconButton>
-            </Box>
-          </Box>
-        </Toolbar>
-      </AppBar> */}
-      <TitleHeader open={open} setOpen={setOpen} title={`Gate ${props.gateType}`} backPath={"/operations"}/>
+      <TitleHeader
+        open={open}
+        setOpen={setOpen}
+        title={`Gate ${props.gateType}`}
+        backPath={"/operations"}
+      />
       {open && (
         <Card className={classes.filterSearch}>
           <Grid container spacing={1} alignItems="center">
@@ -257,41 +457,29 @@ export default function GateMovePage(props) {
             <Grid item xs={6}>
               <FormControl fullWidth>
                 <Select
-                  labelId="demo-customized-select-label"
-                  id="demo-customized-select"
-                  value={gatetype}
-                  onChange={(e) => setGateType(e.target.value)}
-                  input={<BootstrapInput />}
-                  placeholder="Select Yard Crane"
-                  style={{ width: "100%" }}
-                >
-                  <MenuItem value={"INBOUND"}>In Bound</MenuItem>
-                  <MenuItem value={"OUTBOUND"}>Out Bound</MenuItem>
-                </Select>
+                  selectedValue={gatetype}
+                  handleChange={setGateType}
+                  options={gateTypeOptions}
+                  placeholder="Select Type"
+                  inputStyle={<BootstrapInput />}
+                />
               </FormControl>
             </Grid>
             <Grid item xs={6}>
               <FormControl fullWidth>
                 <Select
-                  labelId="demo-customized-select-label"
-                  id="demo-customized-select"
-                  value={vehical}
-                  onChange={(e) => {
-                    setVehical(e.target.value);
-                    if (e.target.value === "Criteria") {
+                  selectedValue={vehical}
+                  handleChange={(value) => {
+                    setVehical(value);
+                    if (value === "Criteria") {
                       setNumber("");
+                      handleSearch()
                     }
                   }}
-                  input={<BootstrapInput />}
-                  placeholder="Select Yard Crane"
-                  style={{ width: "100%" }}
-                >
-                  <MenuItem value="Criteria">
-                    <em>Criteria</em>
-                  </MenuItem>
-                  <MenuItem value={"truck"}>Truck</MenuItem>
-                  <MenuItem value={"container"}>Container</MenuItem>
-                </Select>
+                  options={vehicalOption}
+                  placeholder="Select Vehical"
+                  inputStyle={<BootstrapInput />}
+                />
               </FormControl>
             </Grid>
             <Grid item xs={8}>
@@ -318,49 +506,82 @@ export default function GateMovePage(props) {
           </Grid>
         </Card>
       )}
-      <div className={classes.yardMain}>
+      <div
+        className={classes.yardMain}
+        style={open ? { marginTop: "120px" } : { marginTop: "0px" }}
+      >
         <Typography className={classes.yardTitle}>Work Order</Typography>
+        <Divider style={{marginBottom:"7px"}}/>
+        {/* <hr /> */}
         {loading && <Loader />}
         {!loading &&
           gateMoveContainerList &&
           gateMoveContainerList.length === 0 && (
-            <Typography className={classes.yardTitle}>
-              No record Found
+            <Typography className={classes.yardNoData}>
+              No Data Found
             </Typography>
           )}
         {!loading &&
           gateMoveContainerList &&
           gateMoveContainerList.length > 0 &&
           gateMoveContainerList.map((item, key) => (
-            <CradGrid key={key} index={key} item={item} handleOpenModal={handleOpenModal}handleOpenDamageModal={handleOpenDamageModal}>
-              <Box>
-                {item.operationCode === "GATE_IN_INBOUND" ||
-                item.operationCode === "GATE_OUT_INBOUND" ? (
-                  <Button
-                    className={classes.rightBoxArrow}
-                    onClick={() => handleGateMove(item)}
-                  >
-                    <ArrowDownwardIcon color="secondary" />
-                  </Button>
-                ) : (
-                  <Button
-                    className={classes.rightBoxArrow}
-                    onClick={handleOpenModal}
-                  >
-                    <ArrowUpwardIcon color="secondary" />
-                  </Button>
-                )}
-              </Box>
+            <CradGrid
+              key={key}
+              index={key}
+              item={item}
+              handleOpenModal={handleOpenModal}
+              handleOpenDamageModal={handleOpenDamageModal}
+            >
+              {!item.gateOperationCompleted ? (
+                <Box style={{'marginLeft': '3px'}}>
+                  {item.operationCode === "GATE_IN_INBOUND" ||
+                  item.operationCode === "GATE_IN_OUTBOUND" ? (
+                    <Button
+                      className={classes.rightBoxArrow}
+                      onClick={() => handleOpenModalGate(item, key)}
+                    >
+                      {/* <ArrowDownwardIcon color="secondary" /> */}
+                      <img src={GateInIcon} alt="Gate In" />
+                    </Button>
+                  ) : (
+                    <Button
+                      className={classes.rightBoxArrow}
+                      onClick={() => handleOpenModalGate(item, key)}
+                    >
+                      {/* <ArrowUpwardIcon color="secondary" /> */}
+                      <img src={GateOutIcon} alt="Gate Out" />
+                    </Button>
+                  )}
+                </Box>
+              ) : (
+                <Box style={{'marginLeft': '3px'}}>
+                  
+                    <Button
+                      className={classes.rightBoxArrow}
+                      onClick={() => handleOpenModalGate(item, key)}
+                    >
+                      {/* <ArrowDownwardIcon color="secondary" /> */}
+                      <LocalPrintshopOutlinedIcon color="secondary"/>
+                    </Button>
+                 
+                </Box>
+              )}
             </CradGrid>
-            
           ))}
       </div>
       {openDamageModal && (
-        <DamageModal
-          container={selectContainer}
+        // <DamageModal
+          // container={selectContainer}
+          // open={openDamageModal}
+          // setOpen={setOpenDamageModal}
+          // addDamage={handleDamage}
+        // />
+        <NewDamageModal 
+        container={selectContainer}
           open={openDamageModal}
           setOpen={setOpenDamageModal}
           addDamage={handleDamage}
+        
         />
       )}
       {openModal && (
@@ -371,6 +592,70 @@ export default function GateMovePage(props) {
           data={dataModal}
         />
       )}
+      {filterPopup && (
+        <Modal
+          open={filterPopup}
+          setOpen={handleFilterPopup}
+          modalData={modalData}
+          data={dataModal}
+        />
+      )}
+      {openConfirmGateOperation && (
+        <Dialog
+          open={openConfirmGateOperation}
+          onClose={() => handleCloseGateModal(false)}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title" className={classes.title}>
+            CONFIRMATION
+          </DialogTitle>
+          <DialogContent className={classes.content}>
+            <DialogContentText id="alert-dialog-description">
+              Do you want to confirm Gate{" "}
+              {props.gateType.charAt(0).toUpperCase() + props.gateType.slice(1)}{" "}
+              for <b>{selectContainer.containerNumber}</b>?
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions className={classes.actionbutton}>
+            <Button
+              onClick={() => handleCloseGateModal(false)}
+              variant="contained"
+              size="small"
+              color="secondary"
+              className={classes.button}
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={() => handleCloseGateModal(true)}
+              variant="contained"
+              size="small"
+              color="primary"
+              autoFocus
+              className={classes.button}
+            >
+              Confirm
+            </Button>
+          </DialogActions>
+        </Dialog>
+      )}
+      <ScrollToTop />
+      <Snackbar
+        open={toaster}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+        autoHideDuration={6000}
+        onClose={() => setToaster(false)}
+      >
+        <MuiAlert
+          elevation={6}
+          variant="filled"
+          onClose={() => setToaster(false)}
+          severity={toasterOption.varient}
+        >
+          {toasterOption.message}
+        </MuiAlert>
+      </Snackbar>
       <ScrollToTop />
     </>
   );

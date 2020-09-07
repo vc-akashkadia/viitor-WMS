@@ -18,6 +18,7 @@ export const DamageCodeListApi = (authToken, callback) => {
           let damageCodeList = data.damageCodeList.map((code) => ({
             value: code.damageCode,
             label: code.damageDescription,
+            text : code.damageCode+'-'+ (code.damageType === "1") ? 'Min' : 'Max' 
           }));
           dispatch(DamageCodeList(damageCodeList));
         }
@@ -31,7 +32,11 @@ export const DamageCodeListApi = (authToken, callback) => {
 
 export const getContainerListApi = (data, authToken, callback) => {
   let url = getUrl("gatemovecontainer");
-  let querystring = `?facilityid=${data.facilityid}&operationtype=${data.operationtype}`;
+  let querystring = `?facilityid=${data.facilityid}`
+  if (data.operationtype !== undefined) {
+    querystring = querystring + `&operationtype=${data.operationtype}`;
+  }
+  
   if (data.vehical === "truck") {
     querystring = querystring + `&trucknumber=${data.number}`;
   }

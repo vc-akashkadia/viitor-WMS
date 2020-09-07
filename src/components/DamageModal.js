@@ -7,7 +7,8 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
-import SaveRoundedIcon from "@material-ui/icons/SaveRounded";
+// import SaveRoundedIcon from "@material-ui/icons/SaveRounded";
+import DialogTitle from "@material-ui/core/DialogTitle";
 // import Table from "./Table"
 import Card from "@material-ui/core/Card";
 import CancelIcon from "@material-ui/icons/Cancel";
@@ -15,12 +16,13 @@ import Select from "@material-ui/core/Select";
 import { makeStyles } from "@material-ui/core/styles";
 import { DamageCodeListApi } from "../apicalls/GateApiCalls";
 // import CircularProgress from "@material-ui/core/CircularProgress";
+// import Select from "../../components/Select";
 import Loader from "../components/Loader"
 const useStyles = makeStyles((theme) => ({
   title: {
-    color: "#0c79c1",
-    textTransform: "uppercase",
-    paddingTop: 12,
+    color: "#173a64",
+    // textTransform: "uppercase",
+    paddingTop: 0,
     paddingLeft: 10,
     paddingRight: 10,
     paddingBottom: 0,
@@ -30,6 +32,7 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: "Roboto",
     paddingLeft: 10,
     paddingRight: 10,
+    // backgroundColor: "white",
     backgroundColor: "#f6f6f6",
     paddingBottom: 0,
   },
@@ -50,15 +53,20 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
   },
   button: {
-    paddingTop: 10,
-    paddingBottom: 10,
-    paddingLeft: 15,
-    paddingRight: 15,
-    fontSize: 14,
-    fontWeight: 400,
-    fontFamily: "Roboto",
-    lineHeight: "16px",
-    textTransform: "inherit",
+    // paddingTop: 10,
+    // paddingBottom: 10,
+    // paddingLeft: 15,
+    // paddingRight: 15,
+    // fontSize: 14,
+    // fontWeight: 400,
+    // fontFamily: "Roboto",
+    // lineHeight: "16px",
+    // // textTransform: "inherit",
+    // minWidth: "100%",
+    textTransform: "capitalize",
+    padding: 0,
+    height: 26,
+    
   },
   notchedOutline: {
     borderColor: "#f6f6f6 !important",
@@ -70,19 +78,25 @@ const useStyles = makeStyles((theme) => ({
   },
   tableCard: {
     marginBottom: 10,
-    width:'100%'
+    width:'100%',
+    borderRadius:0
   },
   dataTable: {
-    // border: '1px solid #000'
-    width : '100%'
+    borderCollapse: 'collapse',
+    width : '100%',
+    boxSizing:"border-box"
   },
   tableTh: {
-    borderRight: "1px solid #000",
-    borderBottom: "1px solid #000",
-    borderLeft: "1px solid #000",
-    borderTop: "1px solid #000",
+    border: '1px solid #000',
     fontSize: 12,
+    textAlign: "left",
+    boxSizing:"border-box",
+    // padding: "11px"
+    padding:" 0px 0 0px 14px",
+    // paddingLeft:"15px",
+    // paddingTop:"0px",
   },
+  
 }));
 
 export default function AlertDialog(props) {
@@ -143,7 +157,7 @@ export default function AlertDialog(props) {
       },
     ];
     setDamage(newDamageList);
-    setAddButton(!showAdd);
+    
   };
   const handleOnChange = (event, valueFor, damageId) => {
     let newDamageList = [...damageList];
@@ -153,31 +167,37 @@ export default function AlertDialog(props) {
         let singleDamageCode = damageCodes.find(
           (item) => item.value === event.value
         );
-        item.description = singleDamageCode.label;
+        if(singleDamageCode !== undefined){
+          item.description = singleDamageCode.label;
+        }else{
+          item.description = '';
+        }
+        
       }
       return item;
     });
     setDamage(newDamageList);
   };
 
-  const handleSave = (damageId) => {
-    //let damage = damageList.find((item) => item.id === damageId);
-    let newDamageList = [...damageList];
-    newDamageList.map((item) => {
-      item.editable = false;
-      return item;
-    });
-    enableLoading();
-    setTimeout(() => {
-      setDamage(newDamageList);
-      setAddButton(!showAdd);
-      disableLoading();
-    }, 1000);
-  };
+  // const handleSave = (damageId) => {
+  //   //let damage = damageList.find((item) => item.id === damageId);
+  //   let newDamageList = [...damageList];
+  //   newDamageList.map((item) => {
+  //     item.editable = false;
+  //     return item;
+  //   });
+  //   enableLoading();
+  //   setTimeout(() => {
+  //     setDamage(newDamageList);
+  //     setAddButton(!showAdd);
+  //     disableLoading();
+  //   }, 1000);
+  // };
   const handleRemove = (damageId) => {
     let newDamageList = [...damageList];
     setDamage(newDamageList.filter((item) => item.id !== damageId));
     setLoading(true);
+    setAddButton(true);
     setTimeout(() => {
       setLoading(false);
     }, 1000);
@@ -196,19 +216,17 @@ export default function AlertDialog(props) {
 
   return (
     <div>
-      {/* <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-        Open alert dialog
-      </Button> */}
       <Dialog
         open={open}
+        fullScreen
         onClose={handleClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        {/* <DialogTitle id="alert-dialog-title"></DialogTitle> */}
-
+        <DialogTitle id="alert-dialog-title"className={classes.title}> Damage Capture</DialogTitle>
+      
         <DialogContent className={classes.content}>
-          <DialogContentText>
+          <DialogContentText style={{color:"#173a64"}}>
             Truck Number : {container.truckNumber}
           </DialogContentText>
           <Box
@@ -216,21 +234,23 @@ export default function AlertDialog(props) {
             alignItems="center"
             justifyContent="space-between"
           >
-            <DialogContentText>
-              Container: {container.containerNumber}
+            <DialogContentText style={{color:"#173a64"}}  >
+              Container: {<b>{container.containerNumber}</b>}
             </DialogContentText>
+            
+            
             {showAdd && <AddCircleIcon onClick={addDamageRow} />}
-          </Box>
-
+            </Box>
+         
           <Card className={classes.tableCard}>
             {loading && <Loader /> }
             {!loading && (
               <table className={classes.dataTable}>
-                <thead>
-                  <tr>
-                    <th className={classes.tableTh}>D.Code</th>
-                    <th className={classes.tableTh}>Description</th>
-                    <th className={classes.tableTh}>Actions</th>
+                <thead style={{backgroundColor:"#0c79c1"}} >
+                  <tr style={{color:"white"}}>
+                    <th className={classes.tableTh} >Code</th>
+                    <th className={classes.tableTh} >Description</th>
+                    <th className={classes.tableTh}> <CancelIcon fontSize="small" />  </th>
                   </tr>
                 </thead>
                 <tbody>
@@ -239,15 +259,17 @@ export default function AlertDialog(props) {
                       <tr key={damage.id}>
                         {!damage.editable ? (
                           <>
-                            <td className={classes.tableTh}>
+                            <td className={classes.tableTh} style={{color: "#707070"}}>
                               {damage.damageCode}
                             </td>
-                            <td className={classes.tableTh}>
+                            <td className={classes.tableTh} style={{color: "#707070"}}>
                               {damage.description}
                             </td>
                             <td className={classes.tableTh}>
                               <CancelIcon
                                 color="error"
+                                // style={{marginLeft:"-2px"}}
+                                fontSize="small"
                                 onClick={(e) => handleRemove(damage.id)}
                               />
                             </td>
@@ -271,8 +293,8 @@ export default function AlertDialog(props) {
                                 }}
                               >
                                 <option aria-label="None" value="" />
-                                {damageCodes.map((item) => (
-                                  <option key={item.value} value={item.value}>
+                                {damageCodes.map((item,key) => (
+                                  <option  key={item.value+'_'+key} value={item.value}>
                                     {item.value}
                                   </option>
                                 ))}
@@ -282,11 +304,12 @@ export default function AlertDialog(props) {
                               {damage.description}
                             </td>
                             <td className={classes.tableTh}>
-                              <SaveRoundedIcon
+                              {/* <SaveRoundedIcon
                                 onClick={(e) => handleSave(damage.id)}
-                              />
+                              /> */}
                               <CancelIcon
                                 color="error"
+                                fontSize="small"
                                 onClick={(e) => handleRemove(damage.id)}
                               />
                             </td>
@@ -308,7 +331,7 @@ export default function AlertDialog(props) {
             color="secondary"
             className={classes.button}
           >
-            Back
+            Cancel
           </Button>
           <Button
             onClick={handleConfirm}

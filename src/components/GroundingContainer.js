@@ -23,7 +23,6 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: "Roboto",
     paddingLeft: 10,
     paddingRight: 10,
-    backgroundColor: "#f6f6f6",
     paddingBottom: 0,
   },
   innerContent: {
@@ -37,21 +36,25 @@ const useStyles = makeStyles((theme) => ({
     paddingLeft: 10,
     paddingRight: 10,
     fontWeight: 400,
+    marginTop:"-15px"
   },
   actionbutton: {
     paddingBottom: 15,
     justifyContent: "center",
   },
   button: {
-    paddingTop: 10,
-    paddingBottom: 10,
-    paddingLeft: 15,
-    paddingRight: 15,
-    fontSize: 14,
-    fontWeight: 400,
-    fontFamily: "Roboto",
-    lineHeight: "16px",
-    textTransform: "inherit",
+    // paddingTop: 10,
+    // paddingBottom: 10,
+    // paddingLeft: 15,
+    // paddingRight: 15,
+    // fontSize: 14,
+    // fontWeight: 400,
+    // fontFamily: "Roboto",
+    // lineHeight: "16px",
+    // textTransform: "inherit",
+    textTransform: "capitalize",
+    padding: 0,
+    height: 26,
   },
   notchedOutline: {
     borderColor: "#f6f6f6 !important",
@@ -107,11 +110,11 @@ export default function GroundingContainers(props) {
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title" className={classes.title}>
-          {type !== "position" ? "Grounding Container" : "Position Update"}
+          {type !== "position" ? "Grounding Container" : "Location Update"}
         </DialogTitle>
         <DialogContent className={classes.content}>
           <Typography className={classes.innerContent}>
-            Con. no. <span style={{ color: "#000000" }}>1420 1100 1234</span>{" "}
+            Cont# <span style={{ color: "#000000" }}>1420 1100 1234</span>{" "}
           </Typography>
           {type !== "position" && (
             <Typography className={classes.innerContent}>
@@ -125,7 +128,7 @@ export default function GroundingContainers(props) {
         <form onSubmit={handleSubmit}>
           <DialogContent className={classes.content2}>
             <Typography style={{ fontWeight: "400" }}>
-              What to Add to new location ?
+              New Location:
             </Typography>
             <TextField
               error={error !== ""}
@@ -133,7 +136,7 @@ export default function GroundingContainers(props) {
               label=""
               variant="outlined"
               placeholder="Enter New Location"
-              style={{ width: "100%", marginTop: 10, border: "none" }}
+              style={{ width: "100%", marginTop: 10 }}
               value={location}
               onChange={handleChange}
               InputProps={{
@@ -152,7 +155,7 @@ export default function GroundingContainers(props) {
               color="secondary"
               className={classes.button}
             >
-              Back
+              Cancel
             </Button>
             <Button
               type="submit"

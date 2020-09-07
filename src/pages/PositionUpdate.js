@@ -2,25 +2,26 @@ import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import IconButton from "@material-ui/core/IconButton";
+// import AppBar from "@material-ui/core/AppBar";
+// import Toolbar from "@material-ui/core/Toolbar";
+// import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import Card from "@material-ui/core/Card";
 import Chip from "@material-ui/core/Chip";
-import ArrowBackIcon from "@material-ui/icons/ArrowBack";
-import SearchIcon from "@material-ui/icons/Search";
+// import ArrowBackIcon from "@material-ui/icons/ArrowBack";
+// import SearchIcon from "@material-ui/icons/Search";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
-import CloseIcon from "@material-ui/icons/Close";
+// import CloseIcon from "@material-ui/icons/Close";
 import EditIcon from '@material-ui/icons/Edit';
 import GroundingModal from "./../components/GroundingContainer"
 import { getContainerListForLocationUpdate } from "../apicalls/ModuleAccessApiCalls";
 import TitleHeader from "../components/TitleHeader"
 import ScrollToTop from "../components/ScrollToTop"
-
+import Modal from "../components/modal"
+import Divider from '@material-ui/core/Divider';
 // import Modal from "../../components/modal"
 
 
@@ -29,13 +30,13 @@ const useStyles = makeStyles((theme) => ({
     position: 'fixed',
   },
   yardTitle: {
-    margin: "12px 10px",
+    margin: "10px 10px",
     fontSize: 15,
     color: "#173a64",
   },
   yardCard: {
-    padding: 12,
-    marginBottom: 15,
+    padding: 5,
+    marginBottom: 5,
     "&:last-child": {
       marginBottom: 0,
     },
@@ -58,8 +59,11 @@ const useStyles = makeStyles((theme) => ({
     textTransform: "uppercase",
   },
   filterSearch: {
-    margin: "12px 10px",
+    margin: "1px 1px",
     padding: 10,
+    position: 'fixed',
+    backgroundColor:"#ffff",
+    zIndex:"2"
   },
  
   searchInput: {
@@ -85,6 +89,8 @@ export default function YardOperation(props) {
   const facility = useSelector(({ base }) => base.facility);
   const [open, setOpen] = useState(false);
   const [gModal, setGModal] = useState(false);
+  const [openModal, setModal] = useState(false);
+  const [data,setData]=useState()
   const [gType, setGType] = useState();
   // const handleFilterOpen =()=>{
   //   setOpen(!open)
@@ -104,47 +110,15 @@ export default function YardOperation(props) {
     setGModal(true)
     setGType("position")
   }
+
+  const handleOpenModal =()=>{
+    setModal(true)
+    setData("1234")
+  } 
   
   return (
     <>
-    {/* <CssBaseline />
-      <AppBar position="fixed" color="secondary">
-        <Toolbar  >
-          <Box
-            display="flex"
-            alignItems="center"
-            justifyContent="space-between"
-            style={{ width: "100%" }}
-          >
-            <Box display="flex" alignItems="center">
-              <IconButton
-                aria-label="back"
-                className={classes.backIcon}
-                size="small"
-                onClick={() => history.push("/operations")}
-              >
-                <ArrowBackIcon />
-              </IconButton>
-              <Typography className={classes.backText}>
-                Position Update
-              </Typography>
-            </Box>
-            <Box display="flex" alignItems="center" onClick={handleFilterOpen}>
-              <IconButton
-                aria-label="back"
-                className={classes.backIcon}
-                size="small"
-                style={{ paddingRight: 10 }}
-              >
-                {!open && <SearchIcon />}
-                {open && <CloseIcon />}
-              </IconButton>
-            </Box>
-          </Box>
-        </Toolbar>
-      </AppBar>
-      <Toolbar id="back-to-top-anchor" /> */}
-      <TitleHeader open={open} setOpen={setOpen} title={"Position Update"} backPath={"/operations"}/>
+      <TitleHeader open={open} setOpen={setOpen} title={"Location Update"} backPath={"/operations"}/>
       {open && (
         <Card className={classes.filterSearch}>
           <Grid container spacing={1} alignItems="center">
@@ -174,8 +148,9 @@ export default function YardOperation(props) {
           </Grid>
         </Card>
       )}
-      <div className={classes.yardMain}>
+      <div className={classes.yardMain} style={open ?{marginTop:"82px"}:{marginTop:"0px"}}>
         <Typography className={classes.yardTitle}>Work Order</Typography>
+        <Divider style={{marginBottom:"7px"}}/>
         <Card className={classes.yardCard}>
           <Box
             display="flex"
@@ -183,8 +158,8 @@ export default function YardOperation(props) {
             justifyContent="space-between"
           >
             <Box className={classes.chipMain}>
-              <Chip label="C1" size="medium" style={{ width: 85 }} />
-              <Chip label="LOC1234" size="medium" style={{ width:85 }} />
+              <Chip label="C1" size="small" style={{ width: "49px" }} onClick={handleOpenModal}/>
+              <Chip label="LOC1234"  style={{ width:"135px" }} />
               <Button
                 className={classes.confirmBtn}
                 onClick={handleGModal}
@@ -201,8 +176,8 @@ export default function YardOperation(props) {
             justifyContent="space-between"
           >
             <Box className={classes.chipMain}>
-              <Chip label="C1" size="medium" style={{ width: 85 }} />
-              <Chip label="LOC1234" size="medium" style={{ width:85 }} />
+              <Chip label="C1" size="small" style={{ width: "49px" }} />
+              <Chip label="LOC1234"  style={{ width:"135px" }} />
               <Button
                 className={classes.confirmBtn}
                 onClick={handleGModal}
@@ -211,16 +186,15 @@ export default function YardOperation(props) {
               </Button>
             </Box>
           </Box>
-        </Card>
-        <Card className={classes.yardCard}>
+        </Card><Card className={classes.yardCard}>
           <Box
             display="flex"
             alignItems="center"
             justifyContent="space-between"
           >
             <Box className={classes.chipMain}>
-              <Chip label="C1" size="medium" style={{ width: 85 }} />
-              <Chip label="LOC1234" size="medium" style={{ width:85 }} />
+              <Chip label="C1" size="small" style={{ width: "49px" }} />
+              <Chip label="LOC1234"  style={{ width:"135px" }} />
               <Button
                 className={classes.confirmBtn}
                 onClick={handleGModal}
@@ -229,16 +203,15 @@ export default function YardOperation(props) {
               </Button>
             </Box>
           </Box>
-        </Card>
-        <Card className={classes.yardCard}>
+        </Card><Card className={classes.yardCard}>
           <Box
             display="flex"
             alignItems="center"
             justifyContent="space-between"
           >
             <Box className={classes.chipMain}>
-              <Chip label="C1" size="medium" style={{ width: 85 }} />
-              <Chip label="LOC1234" size="medium" style={{ width:85 }} />
+              <Chip label="C1" size="small" style={{ width: "49px" }} />
+              <Chip label="LOC1234"  style={{ width:"135px" }} />
               <Button
                 className={classes.confirmBtn}
                 onClick={handleGModal}
@@ -247,16 +220,15 @@ export default function YardOperation(props) {
               </Button>
             </Box>
           </Box>
-        </Card>
-        <Card className={classes.yardCard}>
+        </Card><Card className={classes.yardCard}>
           <Box
             display="flex"
             alignItems="center"
             justifyContent="space-between"
           >
             <Box className={classes.chipMain}>
-              <Chip label="C1" size="medium" style={{ width: 85 }} />
-              <Chip label="LOC1234" size="medium" style={{ width:85 }} />
+              <Chip label="C1" size="small" style={{ width: "49px" }} />
+              <Chip label="LOC1234"  style={{ width:"135px" }} />
               <Button
                 className={classes.confirmBtn}
                 onClick={handleGModal}
@@ -265,16 +237,15 @@ export default function YardOperation(props) {
               </Button>
             </Box>
           </Box>
-        </Card>
-        <Card className={classes.yardCard}>
+        </Card><Card className={classes.yardCard}>
           <Box
             display="flex"
             alignItems="center"
             justifyContent="space-between"
           >
             <Box className={classes.chipMain}>
-              <Chip label="C1" size="medium" style={{ width: 85 }} />
-              <Chip label="LOC1234" size="medium" style={{ width:85 }} />
+              <Chip label="C1" size="small" style={{ width: "49px" }} />
+              <Chip label="LOC1234"  style={{ width:"135px" }} />
               <Button
                 className={classes.confirmBtn}
                 onClick={handleGModal}
@@ -283,16 +254,15 @@ export default function YardOperation(props) {
               </Button>
             </Box>
           </Box>
-        </Card>
-        <Card className={classes.yardCard}>
+        </Card><Card className={classes.yardCard}>
           <Box
             display="flex"
             alignItems="center"
             justifyContent="space-between"
           >
             <Box className={classes.chipMain}>
-              <Chip label="C1" size="medium" style={{ width: 85 }} />
-              <Chip label="LOC1234" size="medium" style={{ width:85 }} />
+              <Chip label="C1" size="small" style={{ width: "49px" }} />
+              <Chip label="LOC1234"  style={{ width:"135px" }} />
               <Button
                 className={classes.confirmBtn}
                 onClick={handleGModal}
@@ -301,16 +271,32 @@ export default function YardOperation(props) {
               </Button>
             </Box>
           </Box>
-        </Card>
-        <Card className={classes.yardCard}>
+        </Card><Card className={classes.yardCard}>
           <Box
             display="flex"
             alignItems="center"
             justifyContent="space-between"
           >
             <Box className={classes.chipMain}>
-              <Chip label="C1" size="medium" style={{ width: 85 }} />
-              <Chip label="LOC1234" size="medium" style={{ width:85 }} />
+              <Chip label="C1" size="small" style={{ width: "49px" }} />
+              <Chip label="LOC1234"  style={{ width:"135px" }} />
+              <Button
+                className={classes.confirmBtn}
+                onClick={handleGModal}
+              >
+                <EditIcon fontSize="small"/>
+              </Button>
+            </Box>
+          </Box>
+        </Card><Card className={classes.yardCard}>
+          <Box
+            display="flex"
+            alignItems="center"
+            justifyContent="space-between"
+          >
+            <Box className={classes.chipMain}>
+              <Chip label="C1" size="small" style={{ width: "49px" }} />
+              <Chip label="LOC1234"  style={{ width:"135px" }} />
               <Button
                 className={classes.confirmBtn}
                 onClick={handleGModal}
@@ -320,9 +306,11 @@ export default function YardOperation(props) {
             </Box>
           </Box>
         </Card>
+       
       </div>
      <ScrollToTop />
      {gModal &&( <GroundingModal open={gModal} setOpen={setGModal} type={gType} api={"Location Api"} data={"LOC1234"} />)}
+     {openModal && <Modal open={openModal} setOpen={setModal} modalData={"container"} data={data}/>}
     </>
   );
 }
