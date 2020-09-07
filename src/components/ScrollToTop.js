@@ -7,9 +7,12 @@ import Fab from "@material-ui/core/Fab";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 const useStyles = makeStyles((theme) => ({
     root: {
-        position:"fixed",
-        bottom: theme.spacing(2),
+        // position:"fixed",
+        // bottom: theme.spacing(2),
         right: theme.spacing(2),
+        position:"fixed",
+          bottom: 0,
+          left: 100,
       },
 }));
 
@@ -49,8 +52,8 @@ ScrollTop.propTypes = {
 export default function scrollToTop(props) {
   return (
     <ScrollTop {...props}>
-      <Fab color="secondary" size="small" aria-label="scroll back to top">
-        <KeyboardArrowUpIcon />
+      <Fab color="secondary" size="small" aria-label="scroll back to top" style={{width: 40, height: 20,borderRadius:'inherit', border: '3px solid #a5a4a4',minHeight:"inherit"}}>
+        <KeyboardArrowUpIcon fontSize="small"/>
       </Fab>
     </ScrollTop>
   );

@@ -10,11 +10,13 @@ import PositionUpdate from "../pages/PositionUpdate"
 import YardOperations from "../pages/yard/YardOperation";
 import GateMovePage from "../pages/GateMove/GateMovePage";
 import DamageContainer from "../pages/GateMove/DamageContainer";
+import UserList from "../pages/UserAccess/UserList";
+
 export function Routes() {
   const { isAuthorized } = useSelector(
     ({ auth }) => ({
-      // isAuthorized: auth.user != null,
-      isAuthorized: true,
+      isAuthorized: auth.user != null,
+      //isAuthorized: true,
     }),
     shallowEqual
   );
@@ -69,6 +71,11 @@ export function Routes() {
             exact
             path="/position"
             component={PositionUpdate}
+          />
+          <Route
+            exact
+            path="/user"
+            component={UserList}
           />
           
         </>

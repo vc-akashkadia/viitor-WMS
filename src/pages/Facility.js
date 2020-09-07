@@ -2,10 +2,9 @@ import React, { useState, useEffect } from "react";
 // import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-// import brandLogo from "@assests/img/logo.png";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import { makeStyles, withStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import Alert from "@material-ui/lab/Alert";
@@ -13,52 +12,22 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 // import InputLabel from "@material-ui/core/InputLabel";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
+// import Select from "@material-ui/core/Select";
 import bottomImage from "@assests/img/pattern.svg";
-import InputBase from "@material-ui/core/InputBase";
-import MenuItem from "@material-ui/core/MenuItem";
+import Select from "../components/Select";
+
 import {
   facilityListApiCall,
   selectedFacility,
 } from "../apicalls/FacilityApiCalls";
 import { Typography } from "@material-ui/core";
-import Header from "../components/Header"
-import Loader from "../components/Loader"
+import Header from "../components/Header";
+import Loader from "../components/Loader";
 
 let toasterOption = {
   option: "error",
   message: "Please select Facility",
 };
-
-const BootstrapInput = withStyles((theme) => ({
-  root: {
-    "label + &": {
-      marginTop: theme.spacing(3),
-    },
-  },
-  input: {
-    borderRadius: 4,
-    position: "relative",
-    backgroundColor: "#f6f6f6",
-    border: "1px solid #ced4da",
-    fontSize: 16,
-    padding: "10px 26px 10px 12px",
-    transition: theme.transitions.create(["border-color", "box-shadow"]),
-    width: "100%",
-    whiteSpace: "nowrap",
-    overflow: "hidden",
-    textOverflow: "ellipsis",
-    display: "inline-block",
-    lineHeight: "28px",
-    // Use the system font instead of the default Roboto font.
-    fontFamily: ["Roboto"].join(","),
-    "&:focus": {
-      borderRadius: 4,
-      borderColor: "#80bdff",
-      boxShadow: "0 0 0 0.2rem rgba(0,123,255,.25)",
-    },
-  },
-}))(InputBase);
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -66,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: "15px",
     margin: "auto",
     position: "relative",
-    paddingBottom: 12,
+    paddingBottom: 101,
     "@media (min-width:241px)": {
       paddingBottom: 40,
     },
@@ -92,12 +61,9 @@ const useStyles = makeStyles((theme) => ({
   bottomImage: {
     position: "absolute",
     bottom: 0,
-    maxWidth: "100%",
+    width: "100%",
     left: 0,
-    display: 'block',
-    right: 0,
-    margin: '0 auto'
-
+    display: "block",
   },
   // label: {
   //   fontSize: 14,
@@ -125,7 +91,9 @@ export default function Facility() {
   const classes = useStyles();
   const [alert, setAlert] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [facility, setSelectFacility] = useState("");
+  const [facility, setSelectFacility] = useState(
+    useSelector(({ base }) => base.facility)
+  );
   const [errors, setErrors] = useState("");
   const authToken = useSelector(({ auth }) => auth.authToken);
   let facilityList = useSelector(({ base }) => base.facilityList);
@@ -166,10 +134,13 @@ export default function Facility() {
       setLoading(false);
     }
   };
+
   return (
     <>
       <Header />
-      <br /><br /><br />
+      <br />
+      <br />
+      <br />
 
       <Card className={classes.root}>
         <CardContent>
@@ -183,31 +154,24 @@ export default function Facility() {
               {loading && <Loader />}
               {!loading && (
                 <>
-                  <Typography
+                  {/* <Typography
                     className={classes.formControl}
                     style={{ textAlign: "center", paddingBottom: 5 }}
                   >
                     Facility
-                  </Typography>
+                  </Typography> */}
                   <FormControl
                     variant="filled"
                     className={classes.formControl}
                     error={errors !== ""}
                   >
                     <Select
-                      labelId="demo-customized-select-label"
-                      id="demo-customized-select"
-                      value={facility}
-                      onChange={(e) => setSelectFacility(e.target.value)}
-                      input={<BootstrapInput />}
-                      placeholder="Select Yard Crane"
-                      style={{ width: "100%" }}
-                    >
-                      <MenuItem value="one">One</MenuItem>
-                      {facilityList.map((item) => (
-                        <MenuItem key={item.value} value={item.value}>{item.label}</MenuItem>
-                      ))}
-                    </Select>
+                      selectedValue={facility !== '' ? facility : 'none'}
+                      handleChange={setSelectFacility}
+                      options={facilityList}
+                      placeholder="Select Facility"
+                    />
+
                     <FormHelperText>{errors}</FormHelperText>
                   </FormControl>
                 </>
@@ -226,11 +190,7 @@ export default function Facility() {
               </Button>
             </Grid>
           </form>
-          <img
-            src={bottomImage}
-            alt="bottom"
-            className={classes.bottomImage}
-          />
+          <img src={bottomImage} alt="bottom" className={classes.bottomImage} />
         </CardContent>
       </Card>
     </>

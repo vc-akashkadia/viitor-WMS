@@ -8,14 +8,12 @@ import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
-import Checkbox from "@material-ui/core/Checkbox";
-import Typography from "@material-ui/core/Typography";
+// import Checkbox from "@material-ui/core/Checkbox";
+// import Typography from "@material-ui/core/Typography";
 import InputLabel from "@material-ui/core/InputLabel";
 import { LoginApi } from "../../apicalls/authCall";
 import { useDispatch } from "react-redux";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import clsx from "clsx";
-import Alert from "@material-ui/lab/Alert";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: "15px",
     margin: "auto",
     position: "relative",
-    paddingBottom: 12,
+    paddingBottom: 57,
     "@media (min-width:241px)": {
       paddingBottom: 40,
     },
@@ -102,11 +100,9 @@ const useStyles = makeStyles((theme) => ({
   bottomImage: {
     position: "absolute",
     bottom: 0,
-    maxWidth: "100%",
+    width: "100%",
     left: 0,
-    display: 'block',
-    right: 0,
-    margin: '0 auto'
+    display: 'block'
   },
 }));
 // let errors = {
@@ -174,11 +170,11 @@ export default function Login() {
 
       <Card className={classes.root}>
         <CardContent className={classes.card}>
-        {alert && (
+        {/* {alert && (
             <Alert severity={toasterOption.option}>
               {toasterOption.message}
             </Alert>
-          )}
+          )} */}
           <form onSubmit={handleSubmit}>
             <Grid item xs={12} className={classes.listItemsChild}>
               {/* <FormControl className={classes.field}> */}
@@ -230,7 +226,7 @@ export default function Login() {
                   />
             </Grid>
 
-            <Grid item xs={12} className={classes.listItemsChild}>
+            {/* <Grid item xs={12} className={classes.listItemsChild}>
               <Checkbox
                 className={clsx(classes.checkBox, classes.paddingRemove)}
                 color="primary"
@@ -247,7 +243,7 @@ export default function Login() {
               >
                 Remember Me
               </Typography>
-            </Grid>
+            </Grid> */}
             <Grid item xs={12} className={classes.listItemsChild}>
               <Button
                 type="submit"

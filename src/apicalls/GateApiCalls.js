@@ -18,6 +18,7 @@ export const DamageCodeListApi = (authToken, callback) => {
           let damageCodeList = data.damageCodeList.map((code) => ({
             value: code.damageCode,
             label: code.damageDescription,
+            text : code.damageCode+'-'+ (code.damageType === "1") ? 'Min' : 'Max' 
           }));
           dispatch(DamageCodeList(damageCodeList));
         }

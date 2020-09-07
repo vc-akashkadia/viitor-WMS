@@ -9,29 +9,32 @@ import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import ArrowUpwardIcon from "@material-ui/icons/ArrowUpward";
 import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
-import MenuItem from "@material-ui/core/MenuItem";
+
 import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
+
 import InputBase from "@material-ui/core/InputBase";
 import TextField from "@material-ui/core/TextField";
 import Modal from "../../components/modal";
 import PickUpModal from "./PickUpModal";
 // import CircularProgress from "@material-ui/core/CircularProgress";
-import Snackbar from '@material-ui/core/Snackbar';
-import MuiAlert from '@material-ui/lab/Alert';
-import CardGrid from '../../components/Card'
+import Snackbar from "@material-ui/core/Snackbar";
+import MuiAlert from "@material-ui/lab/Alert";
+import Select from "../../components/Select";
+import CardGrid from "../../components/Card";
 import {
   getBlockListApiCall,
   getYardOperationApiCall,
 } from "../../apicalls/YardApiCalls";
-import TitleHeader from "../../components/TitleHeader"
-import ScrollToTop from "../../components/ScrollToTop"
-import Loader from "../../components/Loader"
+import TitleHeader from "../../components/TitleHeader";
+import ScrollToTop from "../../components/ScrollToTop";
+import Loader from "../../components/Loader";
+import Divider from '@material-ui/core/Divider';
 
 let toasterOption = {
-    varient : 'success',
-    message : ''
-}
+  varient: "success",
+  message: "",
+};
+
 const BootstrapInput = withStyles((theme) => ({
   root: {
     "label + &": {
@@ -48,7 +51,7 @@ const BootstrapInput = withStyles((theme) => ({
     transition: theme.transitions.create(["border-color", "box-shadow"]),
     width: "100%",
     height: 28,
-    display: "flex",
+    // display: "flex",
     alignItems: "center",
     whiteSpace: "nowrap",
     overflow: "hidden",
@@ -65,8 +68,7 @@ const BootstrapInput = withStyles((theme) => ({
   },
 }))(InputBase);
 
-const useStyles = makeStyles((theme)=>({
-  
+const useStyles = makeStyles((theme) => ({
   backIcon: {
     color: "#173a64",
   },
@@ -75,9 +77,14 @@ const useStyles = makeStyles((theme)=>({
     fontSize: 15,
   },
   yardTitle: {
-    margin: "12px 10px",
+    margin: "10px 10px",
     fontSize: 15,
     color: "#173a64",
+  },
+  yardNoData: {
+    width:'100%',
+    marginTop:'93px',
+    paddingLeft:70
   },
   yardCard: {
     padding: 12,
@@ -110,9 +117,11 @@ const useStyles = makeStyles((theme)=>({
     padding: 0,
   },
   filterSearch: {
-    margin: "12px 10px",
+    margin: "1px 1px",
     padding: 10,
-    position: 'fixed'
+    position: "fixed",
+    backgroundColor: "#ffff",
+    zIndex: "2",
   },
   searchTitle: {
     fontSize: 15,
@@ -129,16 +138,31 @@ const useStyles = makeStyles((theme)=>({
   },
 }));
 
+const vehicalOption = [
+  {
+    value: "Criteria",
+    label: "Criteria",
+  },
+  { value: "truck", label: "Truck" },
+  { value: "container", label: "Container" },
+];
+
+const gateTypeOptions = [
+  { value: "ALL", label: "Both" },
+  { value: "GROUNDING", label: "Ground" },
+  { value: "PICKUP", label: "Pick Up" },
+];
+const blockConst = [{value: "Block", label: "Block"}]
 export default function YardOperation(props) {
   const classes = useStyles();
   const history = useHistory();
   const [loading, setLoading] = useState(false);
   const [toaster, setToaster] = useState(false);
   const [open, setOpen] = useState(false);
-  const [modalData,setModalData] =useState()
+  const [modalData, setModalData] = useState();
   const [openPickUpModal, setopenPickUpModal] = useState(false);
   const [selectedContainer, setselectedContainer] = useState({});
-  const [openGrounding, setOpenGrounding] = React.useState(false)
+  const [openGrounding, setOpenGrounding] = React.useState(false);
   const [block, setBlock] = useState("Block");
   const [gateType, setGetType] = useState("ALL");
   const [vehical, setVehical] = useState("");
@@ -155,56 +179,56 @@ export default function YardOperation(props) {
     if (blockList.length === 0) {
       dispatch(getBlockListApiCall(facility, authToken, handleCallbackBlock));
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [blockList]);
 
   useEffect(() => {
-    handleSearch()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    handleSearch();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [block, gateType]);
 
   useEffect(() => {
-    handleSearch()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    handleSearch();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const handleCallbackBlock = () => {};
-  
+
   const handleOpenGroundingModal = () => {
-    setOpenGrounding(true)
-}
+    setOpenGrounding(true);
+  };
 
   const handleFilterOpen = () => {
     setOpen(!open);
   };
 
-  const handleOpenModal = (title,data) => {
+  const handleOpenModal = (title, data) => {
     setOpenMdal(true);
-    setModalData(title)
-    setDataModal(data)
-    
+    setModalData(title);
+    setDataModal(data);
   };
-
 
   const handleSearch = () => {
     let data = {
       facilityId: facility,
-      gatetype : gateType
+      gatetype: gateType,
     };
     if (block !== "Block") {
       data.blockNumber = block;
     }
     if (vehical !== "" && vehical !== "Criteria") {
-      if (number === "" ) {
+      if (number === "") {
         alert("Please add search text");
         return;
-      } if(number.length < 4){
+      }
+      if (number.length < 4) {
         alert("Please add minimum 4 character");
         return;
-      }else {
+      } else {
         data.vehical = vehical;
         data.number = number;
       }
     }
+    setOpen(false);
     setLoading(true);
     getYardContainerList(data);
   };
@@ -226,20 +250,25 @@ export default function YardOperation(props) {
   const handleClosePickUp = (status) => {
     setopenPickUpModal(false);
     setselectedContainer({});
-    if(status)
-    {
-        toasterOption = {
-            varient : 'success',
-            message : 'Container Pickup Successfully'
-        }
-        setToaster(true)
-        handleSearch()
+    if (status) {
+      toasterOption = {
+        varient: "success",
+        message: "Container Pickup Successfully",
+      };
+      setToaster(true);
+      handleSearch();
     }
   };
 
+  
   return (
     <>
-      <TitleHeader open={open} setOpen={setOpen} title={"Yard Operation"} backPath={"/operations"}/>
+      <TitleHeader
+        open={open}
+        setOpen={setOpen}
+        title={"Yard Operation"}
+        backPath={"/operations"}
+      />
       {open && (
         <Card className={classes.filterSearch}>
           <Grid container spacing={1} alignItems="center">
@@ -251,68 +280,41 @@ export default function YardOperation(props) {
             <Grid item xs={6}>
               <FormControl fullWidth>
                 <Select
-                  labelId="demo-customized-select-label"
-                  id="demo-customized-select"
-                  value={block === "" ? "Block" : block}
-                  onChange={(e) => setBlock(e.target.value)}
-                  input={<BootstrapInput />}
-                  placeholder="Block"
-                  style={{ width: "100%" }}
-                  name="block"
-                >
-                  <MenuItem value="Block">
-                    <em>Block</em>
-                  </MenuItem>
-                  {blockList.map((item) => (
-                    <MenuItem key={item.value} value={item.value}>
-                      {item.label}
-                    </MenuItem>
-                  ))}
-                </Select>
+                  selectedValue={block === "" ? "Block" : block}
+                  handleChange={setBlock}
+                  options={[...blockConst,...blockList]}
+                  placeholder="Select Block"
+                  inputStyle={<BootstrapInput />}
+                />
               </FormControl>
             </Grid>
             <Grid item xs={6}>
               <FormControl fullWidth>
                 <Select
-                  labelId="demo-customized-select-label"
-                  id="demo-customized-select"
-                  value={gateType === "" ? "ALL" : gateType}
-                  onChange={(e) => setGetType(e.target.value)}
-                  input={<BootstrapInput />}
-                  placeholder="Gate Type"
-                  style={{ width: "100%" }}
-                  name="gateType"
-                >
-                  <MenuItem value="ALL">
-                    <em>Both</em>
-                  </MenuItem>
-                  <MenuItem value="GROUNDING">Ground</MenuItem>
-                  <MenuItem value="PICKUP">Pick Up</MenuItem>
-                </Select>
+                  selectedValue={gateType === "" ? "ALL" : gateType}
+                  handleChange={setGetType}
+                  options={gateTypeOptions}
+                  placeholder="Select Type"
+                  inputStyle={<BootstrapInput />}
+                />
+                
               </FormControl>
             </Grid>
             <Grid item xs={6}>
               <FormControl fullWidth>
                 <Select
-                  labelId="demo-customized-select-label"
-                  id="demo-customized-select"
-                  value={vehical === "" ? "Criteria" : vehical}
-                  onChange={(e) => {
-                    setVehical(e.target.value)
-                    if(e.target.value === 'Criteria'){
-                      setNumber('')
+                  selectedValue={vehical === "" ? "Criteria" : vehical}
+                  handleChange={(value) => {
+                    setVehical(value);
+                    if (value === "Criteria") {
+                      setNumber("");
                     }
                   }}
-                  input={<BootstrapInput />}
-                  placeholder="Vehical"
-                  style={{ width: "100%" }}
-                >
-                  <MenuItem value="Criteria">
-                    <em>Criteria</em>
-                  </MenuItem>
-                  <MenuItem value="truck">Truck</MenuItem>
-                  <MenuItem value="container">Container</MenuItem>
-                </Select>
+                  options={vehicalOption}
+                  placeholder="Select Type"
+                  inputStyle={<BootstrapInput />}
+                />
+                
               </FormControl>
             </Grid>
             <Grid item xs={8}>
@@ -339,11 +341,17 @@ export default function YardOperation(props) {
           </Grid>
         </Card>
       )}
-      <div className={classes.yardMain}>
+      <div
+        className={classes.yardMain}
+        style={open ? { marginTop: "132px" } : { marginTop: "0px" }}
+      >
         <Typography className={classes.yardTitle}>Work Order</Typography>
-        {loading &&  <Loader />}
+        <Divider style={{marginBottom:"7px"}}/>
+        {loading && <Loader />}
         {!loading && yardContainerList && yardContainerList.length === 0 && (
-          <Typography className={classes.yardTitle}>No record Found</Typography>
+          <Typography className={classes.yardNoData}>
+          No Data Found
+        </Typography>
         )}
         {!loading &&
           yardContainerList &&
@@ -351,27 +359,34 @@ export default function YardOperation(props) {
           yardContainerList.map((item, key) => (
             <CardGrid key={key} item={item} handleOpenModal={handleOpenModal}>
               <Box>
-                  {item.containerStatus === "GROUNDING" ? (
-                    <Button
-                      className={classes.rightBoxArrow}
-                      onClick={() => handleOpenGroundingModal()}
-                    >
-                      <ArrowDownwardIcon color="secondary" />
-                    </Button>
-                  ) : (
-                    <Button
-                      className={classes.rightBoxArrow}
-                      onClick={() => handleOpenPickUpModal(item)}
-                      // onClick={() => handleOpenModal("pickup",item.containerNumber)}
-                    ><ArrowUpwardIcon color="secondary" />
-                      
-                    </Button>
-                  )}
-                </Box>
+                {item.containerStatus === "GROUNDING" ? (
+                  <Button
+                    className={classes.rightBoxArrow}
+                    onClick={() => handleOpenGroundingModal()}
+                  >
+                    <ArrowDownwardIcon color="secondary" />
+                  </Button>
+                ) : (
+                  <Button
+                    className={classes.rightBoxArrow}
+                    onClick={() => handleOpenPickUpModal(item)}
+                    // onClick={() => handleOpenModal("pickup",item.containerNumber)}
+                  >
+                    <ArrowUpwardIcon color="secondary" />
+                  </Button>
+                )}
+              </Box>
             </CardGrid>
           ))}
       </div>
-      {openModal && <Modal open={openModal} setOpen={setOpenMdal} modalData={modalData} data={dataModal}/>}
+      {openModal && (
+        <Modal
+          open={openModal}
+          setOpen={setOpenMdal}
+          modalData={modalData}
+          data={dataModal}
+        />
+      )}
       {openPickUpModal && (
         <PickUpModal
           container={selectedContainer}
@@ -379,8 +394,18 @@ export default function YardOperation(props) {
           setOpen={handleClosePickUp}
         />
       )}
-      <Snackbar open={toaster} anchorOrigin={{ vertical: 'top', horizontal: 'right' }} autoHideDuration={6000} onClose={() => setToaster(false)}>
-        <MuiAlert elevation={6} variant="filled" onClose={() => setToaster(false)} severity={toasterOption.varient}>
+      <Snackbar
+        open={toaster}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+        autoHideDuration={6000}
+        onClose={() => setToaster(false)}
+      >
+        <MuiAlert
+          elevation={6}
+          variant="filled"
+          onClose={() => setToaster(false)}
+          severity={toasterOption.varient}
+        >
           {toasterOption.message}
         </MuiAlert>
       </Snackbar>

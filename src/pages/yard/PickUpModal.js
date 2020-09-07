@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
@@ -7,32 +7,32 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { AddPickUpApiCall } from "../../apicalls/YardApiCalls";
-import { dispatch } from "store";
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from "@material-ui/core/styles";
+import Loader from "../../components/Loader";
 
 const useStyles = makeStyles((theme) => ({
-  title:{
-      fontSize: 16,
-      color: "#0c79c1",
-      fontWeight: 900,
-      fontFamily: "Roboto",
-      textTransform: "uppercase",
-      paddingTop: 12,
-      paddingLeft: 10,
-      paddingRight: 10,
-      paddingBottom: 5,
-      margin: "auto"
+  title: {
+    fontSize: 16,
+    color: "#0c79c1",
+    fontWeight: 900,
+    fontFamily: "Roboto",
+    textTransform: "uppercase",
+    paddingTop: 12,
+    paddingLeft: 10,
+    paddingRight: 10,
+    paddingBottom: 5,
+    margin: "auto",
   },
-  content:{
-      color: "#5c5c5c",
-      fontFamily: "Roboto",
-      textAlign: "center",
-      paddingLeft: 10,
-      paddingRight: 10,
-      backgroundColor: "#f6f6f6",
-      position: "relative"
+  content: {
+    color: "#5c5c5c",
+    fontFamily: "Roboto",
+    textAlign: "center",
+    paddingLeft: 10,
+    paddingRight: 10,
+    backgroundColor: "#f6f6f6",
+    position: "relative",
   },
-  licenseLabel:{
+  licenseLabel: {
     position: "absolute",
     bottom: 20,
     left: "50%",
@@ -43,15 +43,15 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "center",
     display: "flex",
     justifyContent: "center",
-    whiteSpace: "nowrap"
+    whiteSpace: "nowrap",
   },
-  label:{
+  label: {
     fontSize: 15,
     fontWeight: 900,
-    color: "#000000"
+    color: "#000000",
   },
 
-  containerLabel:{
+  containerLabel: {
     position: "absolute",
     bottom: 40,
     left: "45%",
@@ -61,36 +61,39 @@ const useStyles = makeStyles((theme) => ({
     overflow: "hidden",
     textAlign: "center",
     display: "flex",
-    backgroundColor:"white",
-    paddingLeft:"15px",
+    backgroundColor: "white",
+    paddingLeft: "15px",
     justifyContent: "center",
-    whiteSpace: "nowrap"
-
+    whiteSpace: "nowrap",
   },
 
-  actionbutton:{
+  actionbutton: {
     paddingBottom: 15,
-    justifyContent: "center"
+    justifyContent: "center",
   },
-  button:{
-    paddingTop: 10,
-    paddingBottom: 10,
-    paddingLeft: 15,
-    paddingRight: 15,
-    fontSize: 14,
-    fontWeight: 400,
-    fontFamily: "Roboto",
-    lineHeight: "16px",
-    textTransform: "inherit"
-  }
+  button: {
+    // paddingTop: 10,
+    // paddingBottom: 10,
+    // paddingLeft: 15,
+    // paddingRight: 15,
+    // fontSize: 14,
+    // fontWeight: 400,
+    // fontFamily: "Roboto",
+    // lineHeight: "16px",
+    // textTransform: "inherit",
+    textTransform: "capitalize",
+    padding: 0,
+    height: 26,
+  },
 }));
 
 export default function PickUpModal(props) {
   const { open, setOpen, container } = props;
   const classes = useStyles();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const authToken = useSelector(({ auth }) => auth.authToken);
   const yardCrane = useSelector(({ base }) => base.yardCrane);
+  const [loading, setLoading] = useState(false);
   const handleClose = () => {
     setOpen(false);
   };
@@ -101,11 +104,13 @@ export default function PickUpModal(props) {
       craneNumber: yardCrane,
       truckNumber: container.truckNumber,
     };
-    dispatch(AddPickUpApiCall(data,authToken,handleCallback))
+    setLoading(true);
+    dispatch(AddPickUpApiCall(data, authToken, handleCallback));
   };
   const handleCallback = (response) => {
+    setLoading(false);
     setOpen(true);
-  }
+  };
 
   return (
     <div>
@@ -113,30 +118,45 @@ export default function PickUpModal(props) {
         Open alert dialog
       </Button> */}
       <Dialog
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-        >
-          <DialogTitle id="alert-dialog-title" className={classes.title}>CONFIRMATION</DialogTitle>
-          <DialogContent className={classes.content}>
-            <DialogContentText id="alert-dialog-description"  >
-            Are you sure you want to confirm Work Order For Container : <br />
-            {container.containerNumber}
-            </DialogContentText>
-          </DialogContent>
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title" className={classes.title}>
+          CONFIRMATION
+        </DialogTitle>
+        <DialogContent className={classes.content}>
+          <DialogContentText id="alert-dialog-description">
+            Do you want to confirm Pick up for{" "}
+            <b>{container && container.containerNumber}</b>?
+          </DialogContentText>
+        </DialogContent>
+        {loading && <Loader />}
+        {!loading && (
           <DialogActions className={classes.actionbutton}>
-            <Button onClick={handleClose}variant="contained"
-                  size="small"  color="secondary" className={classes.button}>
+            <Button
+              onClick={handleClose}
+              variant="contained"
+              size="small"
+              color="secondary"
+              className={classes.button}
+            >
               Cancel
             </Button>
-            <Button onClick={handleConfirm} variant="contained"
-                  size="small" color="primary" autoFocus className={classes.button}>
+            <Button
+              onClick={handleConfirm}
+              variant="contained"
+              size="small"
+              color="primary"
+              autoFocus
+              className={classes.button}
+            >
               Confirm
             </Button>
           </DialogActions>
-        </Dialog>
-      
+        )}
+      </Dialog>
     </div>
   );
 }
