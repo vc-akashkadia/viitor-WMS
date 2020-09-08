@@ -199,10 +199,10 @@ export default function Header() {
         </div>
         <Divider />
         <List>
-          <ListItem button onClick={() => history.push("/user")}>
+          {/* <ListItem button onClick={() => history.push("/user")}>
             <ListItemIcon>{<PersonIcon />}</ListItemIcon>
             <ListItemText primary={"User Access"} />
-          </ListItem>
+          </ListItem> */}
           <ListItem button onClick={handleLogout}>
             <ListItemIcon>{<ExitToAppIcon />}</ListItemIcon>
             <ListItemText primary={"Logout"} />

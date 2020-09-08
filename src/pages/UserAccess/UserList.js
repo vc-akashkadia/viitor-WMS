@@ -121,17 +121,17 @@ export default function YardOperation(props) {
         <Typography className={classes.yardTitle}>User List</Typography>
         <AddCircleIcon style={{position:'absolute',top: '-5px',right:'10px'}}  onClick={()=>handleGModal("add")}/>
         </div>
-        <Card className={classes.yardCard}>
+        <Card className={classes.yardCard} style={{ border: "1px solid #929eaa",marginLeft:"2px", marginRight:"2px" }}>
           <Box
             display="flex"
             alignItems="center"
             justifyContent="space-between"
           >
             <Box className={classes.chipMain}>
-              <Chip label="John"  style={{ width: "111px" }}/>
-              <Chip label="Baxter Chennai"    style={{ width:"111px" }} />
-              <Chip label="Gate"  size="large"  style={{ width:"92px" }} />
-              <Chip label="Yard"  size="large"  style={{ width:"92px" }} />
+              <Chip label="John"  style={{ width: "107px" }}/>
+              <Chip label="Baxter Chennai"    style={{ width:"112px" }} />
+              <Chip label="Gate"  size="large"  style={{ width:"90px" }} />
+              <Chip label="Yard"  size="large"  style={{ width:"90px" }} />
               <Button
                 className={classes.confirmBtn}
                 onClick={()=>handleGModal("edit")}

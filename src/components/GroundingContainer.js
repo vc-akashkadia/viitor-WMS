@@ -1,13 +1,16 @@
 import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
 import Typography from "@material-ui/core/Typography";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
+import Loader from "./Loader";
+
+import { GroundingContianerApiCall } from "../apicalls/YardApiCalls";
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -36,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
     paddingLeft: 10,
     paddingRight: 10,
     fontWeight: 400,
-    marginTop:"-15px"
+    marginTop: "-15px",
   },
   actionbutton: {
     paddingBottom: 15,
@@ -63,9 +66,14 @@ const useStyles = makeStyles((theme) => ({
 
 export default function GroundingContainers(props) {
   const classes = useStyles();
-  const { open, setOpen, type, api, data } = props;
-  const [location, setLocation] = useState(data);
+  const { open, setOpen, type, api, data, container } = props;
+  const [location, setLocation] = useState(container.location);
   const [error, setError] = useState("");
+  const dispatch = useDispatch();
+  const authToken = useSelector(({ auth }) => auth.authToken);
+  const yardCrane = useSelector(({ base }) => base.yardCrane);
+  const facility = useSelector(({ base }) => base.facility);
+  const [loading, setLoading] = useState(false);
   //   const [open, setOpen] = React.useState(open);
 
   //   const handleClickOpen = () => {
@@ -91,11 +99,26 @@ export default function GroundingContainers(props) {
         setOpen(false);
       } else {
         //call other API
-
-        console.log("api", api);
-        setOpen(false);
+        let data = {
+          containerNumber: container.containerNumber,
+          locationNumber: location,
+          craneNumber: yardCrane,
+          truckNumber: container.truckNumber,
+          facilityId:facility
+        };
+        setLoading(true);
+        
+        // setTimeout(() => {
+        //   handleCallback({});
+        // }, 1000);
+        dispatch(GroundingContianerApiCall(data, authToken, handleCallback));
       }
     }
+  };
+
+  const handleCallback = (response) => {
+    setLoading(false);
+    setOpen(true);
   };
 
   return (
@@ -114,7 +137,7 @@ export default function GroundingContainers(props) {
         </DialogTitle>
         <DialogContent className={classes.content}>
           <Typography className={classes.innerContent}>
-            Cont# <span style={{ color: "#000000" }}>1420 1100 1234</span>{" "}
+            Cont# <span style={{ color: "#000000" }}>{container.containerNumber}</span>{" "}
           </Typography>
           {type !== "position" && (
             <Typography className={classes.innerContent}>
@@ -122,14 +145,12 @@ export default function GroundingContainers(props) {
             </Typography>
           )}
           <Typography className={classes.innerContent}>
-            Location <span style={{ color: "#000000" }}>LOC1020</span>{" "}
+            Location <span style={{ color: "#000000" }}>{container.location}</span>{" "}
           </Typography>
         </DialogContent>
         <form onSubmit={handleSubmit}>
           <DialogContent className={classes.content2}>
-            <Typography style={{ fontWeight: "400" }}>
-              New Location:
-            </Typography>
+            <Typography style={{ fontWeight: "400" }}>New Location:</Typography>
             <TextField
               error={error !== ""}
               id="newLocation"
@@ -137,7 +158,7 @@ export default function GroundingContainers(props) {
               variant="outlined"
               placeholder="Enter New Location"
               style={{ width: "100%", marginTop: 10 }}
-              value={location}
+              value={(location !== null ) ? location : ''}
               onChange={handleChange}
               InputProps={{
                 classes: {
@@ -147,27 +168,30 @@ export default function GroundingContainers(props) {
               helperText={error}
             />
           </DialogContent>
-          <DialogActions className={classes.actionbutton}>
-            <Button
-              onClick={handleClose}
-              variant="contained"
-              size="small"
-              color="secondary"
-              className={classes.button}
-            >
-              Cancel
-            </Button>
-            <Button
-              type="submit"
-              variant="contained"
-              size="small"
-              color="primary"
-              autoFocus
-              className={classes.button}
-            >
-              Confirm
-            </Button>
-          </DialogActions>
+          {loading && <Loader />}
+          {!loading && (
+            <DialogActions className={classes.actionbutton}>
+              <Button
+                onClick={handleClose}
+                variant="contained"
+                size="small"
+                color="secondary"
+                className={classes.button}
+              >
+                Cancel
+              </Button>
+              <Button
+                type="submit"
+                variant="contained"
+                size="small"
+                color="primary"
+                autoFocus
+                className={classes.button}
+              >
+                Confirm
+              </Button>
+            </DialogActions>
+          )}
         </form>
       </Dialog>
     </div>

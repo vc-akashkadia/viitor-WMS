@@ -92,5 +92,16 @@ export const AddPickUpApiCall = (data, authToken, callback) => {
 
 
 
+export const GroundingContianerApiCall = (data, authToken, callback) => {
+  
+  let url = getUrl("groundingAddapi");
+  return (dispatch) => {
+    post(url,data, authToken).then((response) => {
+      callback(response);
+    });
+  };
+}
+
+
 
 

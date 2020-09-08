@@ -20,7 +20,6 @@ import {
   facilityListApiCall,
   selectedFacility,
 } from "../apicalls/FacilityApiCalls";
-import { Typography } from "@material-ui/core";
 import Header from "../components/Header";
 import Loader from "../components/Loader";
 

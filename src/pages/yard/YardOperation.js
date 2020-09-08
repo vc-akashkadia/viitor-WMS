@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
+
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
@@ -28,7 +28,9 @@ import {
 import TitleHeader from "../../components/TitleHeader";
 import ScrollToTop from "../../components/ScrollToTop";
 import Loader from "../../components/Loader";
-import Divider from '@material-ui/core/Divider';
+import Divider from "@material-ui/core/Divider";
+import GroundingModal from "../../components/GroundingContainer";
+import RefreshIcon from '@material-ui/icons/Refresh';
 
 let toasterOption = {
   varient: "success",
@@ -82,9 +84,9 @@ const useStyles = makeStyles((theme) => ({
     color: "#173a64",
   },
   yardNoData: {
-    width:'100%',
-    marginTop:'93px',
-    paddingLeft:70
+    width: "100%",
+    marginTop: "93px",
+    paddingLeft: 70,
   },
   yardCard: {
     padding: 12,
@@ -152,10 +154,10 @@ const gateTypeOptions = [
   { value: "GROUNDING", label: "Ground" },
   { value: "PICKUP", label: "Pick Up" },
 ];
-const blockConst = [{value: "Block", label: "Block"}]
+const blockConst = [{ value: "Block", label: "Block" }];
 export default function YardOperation(props) {
   const classes = useStyles();
-  const history = useHistory();
+
   const [loading, setLoading] = useState(false);
   const [toaster, setToaster] = useState(false);
   const [open, setOpen] = useState(false);
@@ -193,13 +195,9 @@ export default function YardOperation(props) {
   }, []);
   const handleCallbackBlock = () => {};
 
-  const handleOpenGroundingModal = () => {
-    setOpenGrounding(true);
-  };
-
-  const handleFilterOpen = () => {
-    setOpen(!open);
-  };
+  // const handleFilterOpen = () => {
+  //   setOpen(!open);
+  // };
 
   const handleOpenModal = (title, data) => {
     setOpenMdal(true);
@@ -228,7 +226,7 @@ export default function YardOperation(props) {
         data.number = number;
       }
     }
-    setOpen(false);
+
     setLoading(true);
     getYardContainerList(data);
   };
@@ -260,7 +258,25 @@ export default function YardOperation(props) {
     }
   };
 
-  
+  const handleOpenGroundingModal = (container) => {
+    setselectedContainer(container);
+    setOpenGrounding(true);
+  };
+
+  const handleCloseGrounding = (status) => {
+    setOpenGrounding(false);
+    setselectedContainer({});
+    if (status) {
+      toasterOption = {
+        varient: "success",
+        message: "Container Ground Successfully",
+      };
+      setToaster(true);
+      handleSearch();
+    }
+  };
+  console.log(openGrounding)
+
   return (
     <>
       <TitleHeader
@@ -282,7 +298,7 @@ export default function YardOperation(props) {
                 <Select
                   selectedValue={block === "" ? "Block" : block}
                   handleChange={setBlock}
-                  options={[...blockConst,...blockList]}
+                  options={[...blockConst, ...blockList]}
                   placeholder="Select Block"
                   inputStyle={<BootstrapInput />}
                 />
@@ -297,7 +313,6 @@ export default function YardOperation(props) {
                   placeholder="Select Type"
                   inputStyle={<BootstrapInput />}
                 />
-                
               </FormControl>
             </Grid>
             <Grid item xs={6}>
@@ -314,7 +329,6 @@ export default function YardOperation(props) {
                   placeholder="Select Type"
                   inputStyle={<BootstrapInput />}
                 />
-                
               </FormControl>
             </Grid>
             <Grid item xs={8}>
@@ -333,7 +347,16 @@ export default function YardOperation(props) {
                 variant="contained"
                 color="primary"
                 className={classes.searchBtn}
-                onClick={handleSearch}
+                onClick={() => {
+                  if (vehical === "" || vehical === "Criteria") {
+                    setOpen(false);
+                  }
+
+                  if (number !== "" && number.length > 3) {
+                    setOpen(false);
+                  }
+                  handleSearch();
+                }}
               >
                 Search
               </Button>
@@ -345,24 +368,30 @@ export default function YardOperation(props) {
         className={classes.yardMain}
         style={open ? { marginTop: "132px" } : { marginTop: "0px" }}
       >
+         <div style={{position:'relative'}}>
         <Typography className={classes.yardTitle}>Work Order</Typography>
-        <Divider style={{marginBottom:"7px"}}/>
+        <RefreshIcon fontSize="small" style={{position:'absolute',top: '-2px',right:'10px'}}  />
+        </div>
+        <Divider style={{ marginBottom: "7px" }} />
         {loading && <Loader />}
         {!loading && yardContainerList && yardContainerList.length === 0 && (
-          <Typography className={classes.yardNoData}>
-          No Data Found
-        </Typography>
+          <Typography className={classes.yardNoData}>No Data Found</Typography>
         )}
         {!loading &&
           yardContainerList &&
           yardContainerList.length > 0 &&
           yardContainerList.map((item, key) => (
-            <CardGrid key={key} item={item} handleOpenModal={handleOpenModal}>
+            <CardGrid
+              key={key}
+              item={item}
+              handleOpenModal={handleOpenModal}
+              cardFor="yardOperation"
+            >
               <Box>
                 {item.containerStatus === "GROUNDING" ? (
                   <Button
                     className={classes.rightBoxArrow}
-                    onClick={() => handleOpenGroundingModal()}
+                    onClick={() => handleOpenGroundingModal(item)}
                   >
                     <ArrowDownwardIcon color="secondary" />
                   </Button>
@@ -387,6 +416,16 @@ export default function YardOperation(props) {
           data={dataModal}
         />
       )}
+      {openGrounding && (
+        <GroundingModal
+          container={selectedContainer}
+          setOpen={handleCloseGrounding}
+          open={openGrounding}
+          type={"grounding"}
+          api={"Grounding Api"}
+          data={""}
+        />
+      )}
       {openPickUpModal && (
         <PickUpModal
           container={selectedContainer}
@@ -397,7 +436,7 @@ export default function YardOperation(props) {
       <Snackbar
         open={toaster}
         anchorOrigin={{ vertical: "top", horizontal: "right" }}
-        autoHideDuration={6000}
+        autoHideDuration={3000}
         onClose={() => setToaster(false)}
       >
         <MuiAlert
