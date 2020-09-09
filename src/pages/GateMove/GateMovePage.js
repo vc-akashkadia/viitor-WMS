@@ -523,7 +523,7 @@ export default function GateMovePage(props) {
       >
         <div style={{position:'relative'}}>
         <Typography className={classes.yardTitle}>Work Order</Typography>
-        <RefreshIcon fontSize="small" style={{position:'absolute',top: '-1px',right:'10px'}}  />
+        <RefreshIcon onClick={handleSearch} fontSize="small" style={{position:'absolute',top: '-1px',right:'10px'}}  />
         </div>
         <Divider style={{marginBottom:"7px"}}/>
         {/* <hr /> */}

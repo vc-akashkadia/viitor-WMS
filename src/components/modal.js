@@ -236,6 +236,7 @@ export default function AlertDialog(props) {
          ) */}
       {modalData === "filterPopup" && (
         <Dialog
+
           open={open}
           onClose={() => handleClose(false)}
           aria-labelledby="alert-dialog-title"
@@ -312,6 +313,7 @@ export default function AlertDialog(props) {
       {modalData === "print" && (
         <Dialog
           open={open}
+          
           onClose={() => handleClose(false)}
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"

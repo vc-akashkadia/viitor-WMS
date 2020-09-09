@@ -1,8 +1,6 @@
 import React from "react";
 import "./print.css";
 export default function LocationPrint(props) {
-  
-
   return (
     <>
       <div className="ticket">

@@ -31,6 +31,8 @@ export const getUrl = (type) => {
       return `${baseUrl}/addRole`;
     case 'groundingAddapi':
       return `${baseUrl}/yard/grounding`;
+    case 'locationSlipPrint':
+      return `${baseUrl}/gateoperation/getPrintDetails`;
     default:
       return baseUrl;
   }
