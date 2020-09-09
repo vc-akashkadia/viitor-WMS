@@ -79,7 +79,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 15,
   },
   yardTitle: {
-    margin: "10px 10px",
+    margin: "15px 10px 10px 15px",
     fontSize: 15,
     color: "#173a64",
   },
@@ -367,12 +367,30 @@ export default function YardOperation(props) {
         className={classes.yardMain}
         style={open ? { marginTop: "132px" } : { marginTop: "0px" }}
       >
-         <div style={{position:'relative'}}>
+        <div style={{position:'relative'}}>
         <Typography className={classes.yardTitle}>Work Order</Typography>
-        <RefreshIcon fontSize="small" style={{position:'absolute',top: '-2px',right:'10px'}}  />
+        <RefreshIcon fontSize="small" style={{position:'absolute',top: '-2px',right:'10px',color:"#173a64"}}  />
         </div>
         <Divider style={{ marginBottom: "7px" }} />
-        {loading && <Loader />}
+        {/* {loading && <Loader />} */}
+        <CardGrid
+              // key={key}
+              item={{truckNumber:"1223",containerNumber:"AGTL8968961"}}
+
+              handleOpenModal={handleOpenModal}
+              cardFor="yardOperation"
+            >
+              <Box>
+                {/* {/ {item.containerStatus === "GROUNDING" ? ( /} */}
+                  <Button
+                    className={classes.rightBoxArrow}
+                    // onClick={() => handleOpenGroundingModal(item)}
+                  >
+                    <ArrowDownwardIcon color="secondary" />
+                  </Button>
+              </Box>
+            </CardGrid>
+
         {!loading && yardContainerList && yardContainerList.length === 0 && (
           <Typography className={classes.yardNoData}>No Data Found</Typography>
         )}

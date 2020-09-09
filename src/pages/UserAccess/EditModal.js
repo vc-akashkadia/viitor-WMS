@@ -256,8 +256,7 @@ export default function GroundingContainers(props) {
                   <ListItemText
                     primary={"Yard Job"}
                     
-                   className={classes.listItemText}
-                   
+                  className={classes.listItemText} 
                   />
                 </ListItem>
                 <ListItem

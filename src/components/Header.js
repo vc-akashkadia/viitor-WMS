@@ -36,10 +36,11 @@ const useStyles = makeStyles((theme) => ({
   drawerHeader: {
     display: "flex",
     alignItems: "center",
-    padding: theme.spacing(0, 1),
+    padding: theme.spacing(0, 2),
     // necessary for content to be below app bar
-    ...theme.mixins.toolbar,
-    justifyContent: "flex-end",
+    // ...theme.mixins.toolbar,
+    justifyContent: "space-between",
+    minHeight: "auto"
   },
 }));
 
@@ -157,7 +158,7 @@ export default function Header() {
               />
             </Link>
             <IconButton aria-haspopup="true" onClick={handleClick}>
-              <AccountCircle />
+              <AccountCircle style={{color:"#173a64"}}/>
             </IconButton>
           </Box>
           <StyledMenu
@@ -189,7 +190,7 @@ export default function Header() {
       >
         <div className={classes.drawerHeader}>
           <Typography style={{ textAlign: "center" }}>WMS</Typography>
-          <IconButton onClick={handleDrawerClose}>
+          <IconButton onClick={handleDrawerClose} style={{paddingRight :0}}>
             {theme.direction === "ltr" ? (
               <ChevronLeftIcon />
             ) : (
@@ -198,7 +199,7 @@ export default function Header() {
           </IconButton>
         </div>
         <Divider />
-        <List>
+        <List style={{padding: 0}}>
           {/* <ListItem button onClick={() => history.push("/user")}>
             <ListItemIcon>{<PersonIcon />}</ListItemIcon>
             <ListItemText primary={"User Access"} />

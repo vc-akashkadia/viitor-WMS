@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
     position: "fixed",
   },
   yardTitle: {
-    margin: "10px 10px",
+    margin: "15px 10px 10px 15px",
     fontSize: 15,
     color: "#173a64",
   },
@@ -166,9 +166,9 @@ export default function YardOperation(props) {
         className={classes.yardMain}
         style={open ? { marginTop: "82px" } : { marginTop: "0px" }}
       >
-         <div style={{position:'relative'}}>
+        <div style={{position:'relative'}}>
         <Typography className={classes.yardTitle}>Work Order</Typography>
-        <RefreshIcon fontSize="small" style={{position:'absolute',top: '-1px',right:'10px'}}  />
+        <RefreshIcon fontSize="small" style={{position:'absolute',top: '-1px',right:'10px',color:'#173a64'}}  />
         </div>
         <Divider style={{ marginBottom: "7px" }} />
         <Card className={classes.yardCard} style={{ border: "1px solid #929eaa",marginLeft:"2px", marginRight:"2px" }}>
@@ -200,7 +200,7 @@ export default function YardOperation(props) {
               <div style={{ position: "relative" }}>
                 <Chip label="LOC1234" style={{ width: "132px" }} />
                 <LocationOnOutlinedIcon
-                 style={{
+                  style={{
                     position: "absolute",
                     top: "-10.5px",
                     left: "3px",
@@ -244,7 +244,7 @@ export default function YardOperation(props) {
               <div style={{ position: "relative" }}>
                 <Chip label="LOC1234" style={{ width: "132px" }} />
                 <LocationOnOutlinedIcon
-                 style={{
+                  style={{
                     position: "absolute",
                     top: "-10.5px",
                     left: "3px",
@@ -288,7 +288,7 @@ export default function YardOperation(props) {
               <div style={{ position: "relative" }}>
                 <Chip label="LOC1234" style={{ width: "132px" }} />
                 <LocationOnOutlinedIcon
-                 style={{
+                  style={{
                     position: "absolute",
                     top: "-10.5px",
                     left: "3px",
@@ -319,7 +319,7 @@ export default function YardOperation(props) {
         <Modal
           open={openModal}
           setOpen={setModal}
-          modalData={"container"}
+          modalData={"truck"}
           data={data}
         />
       )}

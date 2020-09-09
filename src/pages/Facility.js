@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, withStyles} from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import Alert from "@material-ui/lab/Alert";
@@ -15,6 +15,8 @@ import FormControl from "@material-ui/core/FormControl";
 // import Select from "@material-ui/core/Select";
 import bottomImage from "@assests/img/pattern.svg";
 import Select from "../components/Select";
+import InputBase from "@material-ui/core/InputBase";
+
 
 import {
   facilityListApiCall,
@@ -28,13 +30,46 @@ let toasterOption = {
   message: "Please select Facility",
 };
 
+const BootstrapInput = withStyles((theme) => ({
+  root: {
+    "label + &": {
+      marginTop: theme.spacing(3),
+    },
+  },
+  input: {
+    borderRadius: 4,
+    position: "relative",
+    backgroundColor: "#f6f6f6",
+    border: "1px solid #ced4da",
+    fontSize: 16,
+    padding: "0px 26px 0px 12px",
+    transition: theme.transitions.create(["border-color", "box-shadow"]),
+    width: "100%",
+    height: 28,
+    // display: "flex",
+    alignItems: "center",
+    whiteSpace: "nowrap",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    display: "inline-block",
+    lineHeight: "28px",
+    // Use the system font instead of the default Roboto font.
+    fontFamily: ["Roboto"].join(","),
+    "&:focus": {
+      borderRadius: 4,
+      borderColor: "#80bdff",
+      boxShadow: "0 0 0 0.2rem rgba(0,123,255,.25)",
+    },
+  },
+}))(InputBase);
+
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: "500px",
     marginTop: "15px",
     margin: "auto",
     position: "relative",
-    paddingBottom: 101,
+    paddingBottom: 95,
     "@media (min-width:241px)": {
       paddingBottom: 40,
     },
@@ -169,7 +204,9 @@ export default function Facility() {
                       handleChange={setSelectFacility}
                       options={facilityList}
                       placeholder="Select Facility"
+                      inputStyle={<BootstrapInput />}
                     />
+                  
 
                     <FormHelperText>{errors}</FormHelperText>
                   </FormControl>

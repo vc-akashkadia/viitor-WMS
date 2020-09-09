@@ -37,15 +37,16 @@ const useStyles = makeStyles((theme) => ({
   licenseLabel: {
     position: "absolute",
     bottom: 20,
-    left: "50%",
+    left: "65%",
     transform: "translateX(-50%)",
-    marginLeft: 40,
+    margin: "auto",
     width: "auto",
     overflow: "hidden",
     textAlign: "center",
     display: "flex",
     justifyContent: "center",
     whiteSpace: "nowrap",
+    paddingLeft: 5
   },
   label: {
     fontSize: 15,
@@ -56,7 +57,7 @@ const useStyles = makeStyles((theme) => ({
   containerLabel: {
     position: "absolute",
     bottom: 40,
-    left: "45%",
+    left: "43%",
     transform: "translateX(-50%)",
     marginLeft: 15,
     width: "auto",
@@ -64,7 +65,7 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "center",
     display: "flex",
     backgroundColor: "white",
-    paddingLeft: "15px",
+    paddingLeft: "10px",
     justifyContent: "center",
     whiteSpace: "nowrap",
   },
@@ -124,7 +125,7 @@ export default function AlertDialog(props) {
         anchor.scrollIntoView({ behavior: "smooth" });
       }
     }, 100);
-   
+
     
   };
   const handleClose = (status = false) => {
@@ -246,7 +247,7 @@ export default function AlertDialog(props) {
           </DialogTitle>
           <DialogContent className={classes.content}>
             <DialogContentText id="alert-dialog-description">
-              Damage Captured on <b>{data}</b> will be lost
+              Damage Captured on <b style={{color:'#000000'}}>{data}</b> will be lost
             </DialogContentText>
           </DialogContent>
           <DialogActions className={classes.actionbutton}>
@@ -347,7 +348,7 @@ export default function AlertDialog(props) {
               </DialogActions>
           </>}
           {printType === "" &&
-           (
+          (
             <>
               <DialogTitle id="alert-dialog-title" className={classes.title}>
                 Choose the Print Type

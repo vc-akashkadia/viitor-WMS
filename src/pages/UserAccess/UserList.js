@@ -119,7 +119,7 @@ export default function YardOperation(props) {
       <div className={classes.yardMain} style={open ?{marginTop:"82px"}:{marginTop:"0px"}}>
         <div style={{position:'relative'}}>
         <Typography className={classes.yardTitle}>User List</Typography>
-        <AddCircleIcon style={{position:'absolute',top: '-5px',right:'10px'}}  onClick={()=>handleGModal("add")}/>
+        <AddCircleIcon style={{position:'absolute',top: '-5px',right:'10px',color:"#173a64"}}  onClick={()=>handleGModal("add")}/>
         </div>
         <Card className={classes.yardCard} style={{ border: "1px solid #929eaa",marginLeft:"2px", marginRight:"2px" }}>
           <Box
@@ -142,8 +142,8 @@ export default function YardOperation(props) {
           </Box>
         </Card>
       </div>
-     <ScrollToTop />
-     {gModal &&( <EditUserModal open={gModal} setOpen={setGModal} type={type} api={"Location Api"} data={"LOC1234"} />)}
+      <ScrollToTop />
+      {gModal &&( <EditUserModal open={gModal} setOpen={setGModal} type={type} api={"Location Api"} data={"LOC1234"} />)}
     </>
   );
 }

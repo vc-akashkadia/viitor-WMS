@@ -79,7 +79,7 @@ const useStyles = makeStyles({
     fontSize: 15,
   },
   yardTitle: {
-    margin: "10px 10px",
+    margin: "15px 10px 10px 15px",
     fontSize: 15,
     color: "#173a64",
   },
@@ -523,11 +523,65 @@ export default function GateMovePage(props) {
       >
         <div style={{position:'relative'}}>
         <Typography className={classes.yardTitle}>Work Order</Typography>
-        <RefreshIcon fontSize="small" style={{position:'absolute',top: '-1px',right:'10px'}}  />
+        <RefreshIcon fontSize="small" style={{position:'absolute',top: '-1px',right:'10px',color:"#173a64"}}  />
         </div>
         <Divider style={{marginBottom:"7px"}}/>
         {/* <hr /> */}
-        {loading && <Loader />}
+        {/* {loading && <Loader />} */}
+        <CradGrid
+              // key={key}
+              // index={key}
+              item={{truckNumber:"1223",containerNumber:"AGTL8968961"}}
+              handleOpenModal={handleOpenModal}
+              handleOpenDamageModal={handleOpenDamageModal}
+              cardFor="gateOperation"
+            >
+            <Box style={{'marginLeft': '3px'}}>
+             <Button
+                      className={classes.rightBoxArrow}
+                      // onClick={() => handleOpenModalGate(item, key)}
+                    >
+                      {/* {/ <ArrowDownwardIcon color="secondary" /> /} */}
+                      <img src={GateInIcon} alt="Gate In"  style={{paddingLeft:"5px"}}/>
+                    </Button>
+                    </Box>
+                    </CradGrid>
+                    <CradGrid
+              // key={key}
+              // index={key}
+              item={{truckNumber:"1223",containerNumber:"AGTL8968961"}}
+              handleOpenModal={handleOpenModal}
+              handleOpenDamageModal={handleOpenDamageModal}
+              cardFor="gateOperation"
+            >
+            <Box style={{'marginLeft': '3px'}}>
+             <Button
+                      className={classes.rightBoxArrow}
+                      // onClick={() => handleOpenModalGate(item, key)}
+                    >
+                      {/* {/ <ArrowDownwardIcon color="secondary" /> /} */}
+                      <img src={GateInIcon} alt="Gate In"  style={{paddingLeft:"5px"}}/>
+                    </Button>
+                    </Box>
+                    </CradGrid>
+                    <CradGrid
+              // key={key}
+              // index={key}
+              item={{truckNumber:"1223",containerNumber:"AGTL8968961"}}
+              handleOpenModal={handleOpenModal}
+              handleOpenDamageModal={handleOpenDamageModal}
+              cardFor="gateOperation"
+            >
+            <Box style={{'marginLeft': '3px'}}>
+             <Button
+                      className={classes.rightBoxArrow}
+                      // onClick={() => handleOpenModalGate(item, key)}
+                    >
+                      {/* {/ <ArrowDownwardIcon color="secondary" /> /} */}
+                      <img src={GateInIcon} alt="Gate In"  style={{paddingLeft:"5px"}}/>
+                    </Button>
+                    </Box>
+                    </CradGrid>
         {!loading &&
           gateMoveContainerList &&
           gateMoveContainerList.length === 0 && (

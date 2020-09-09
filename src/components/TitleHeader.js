@@ -180,8 +180,8 @@ export default function TitleHeader(props) {
                 onClick={handleClick}
                 // ref={anchorRef}
               >
-                <AccountCircle />
-              </IconButton>
+                <AccountCircle style={{color:"#173a64"}}/>
+              </IconButton >
             </Box>
             <StyledMenu
               id="customized-menu"
@@ -192,7 +192,7 @@ export default function TitleHeader(props) {
               style={{marginLeft:"14px",marginTop:"0px"}}
               disableAutoFocusItem={true}
             >
-               <StyledMenuItem
+              <StyledMenuItem
               >
                 <ListItemIcon className={classes.menuIcon}>
                   <AccountBalanceIcon fontSize="small" />

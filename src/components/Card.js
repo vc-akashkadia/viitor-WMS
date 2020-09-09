@@ -178,6 +178,7 @@ export default function CardGrid(props) {
                     top: "-10px",
                     left: "4px",
                     width: 19,
+                    backgroundColor: "#ffffff"
                   }}
                 />
               </div>
@@ -209,7 +210,7 @@ export default function CardGrid(props) {
                 style={{ width: "97%", color: "#173a64"}}
               />
               <LocationOnOutlinedIcon
-                 style={{
+                  style={{
                     position: "absolute",
                     top: "-10.5px",
                     left: "3px",

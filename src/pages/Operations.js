@@ -184,14 +184,18 @@ export default function Dashboard() {
                       aria-controls="additional-actions1-content"
                       id="additional-actions1-header"
                     >
-                      <Box display="flex" alignItems="center">
-                        <img src={item.img} alt="" />
-                        <Typography
-                          color="primary"
-                          className={classes.mainTitle}
-                        >
-                          {item.title}
-                        </Typography>
+                      <Box display="flex" alignItems="center" width="100%">
+                        <div style={{width: "15%"}}>
+                          <img src={item.img} alt="" />
+                        </div>
+                        <div style={{width: "70%"}}>
+                          <Typography
+                            color="primary"
+                            className={classes.mainTitle}
+                          >
+                            {item.title}
+                          </Typography>
+                        </div>
                       </Box>
                     </AccordionSummary>
                   </Accordion>
@@ -206,18 +210,22 @@ export default function Dashboard() {
                       aria-controls="additional-actions1-content"
                       id="additional-actions1-header"
                     >
-                      <Box display="flex" alignItems="center">
-                        <img src={item.img} alt={item.title} />
-                        <Typography
-                          color="primary"
-                          className={classes.mainTitle}
-                        >
-                          {item.title}
-                        </Typography>
+                      <Box display="flex" alignItems="center" width="100%">
+                      <div style={{width: "15%"}}>
+                          <img src={item.img} alt="" />
+                        </div>
+                        <div style={{width: "70%"}}>
+                          <Typography
+                            color="primary"
+                            className={classes.mainTitle}
+                          >
+                            {item.title}
+                          </Typography>
+                        </div>
                       </Box>
                     </AccordionSummary>
                     <AccordionDetails className={classes.accordiondetails}>
-                      {loading && <Loader />}
+                      {/* {loading && <Loader />} */}
                       {!loading && (
                         <Box className={classes.operationDetails}>
                           <FormControl fullWidth error={errors !== ""}>
