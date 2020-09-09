@@ -84,6 +84,11 @@ const theme = createMuiTheme({
         fontWeight: 500,
         lineHeight: '26px',
         fontFamily: 'Roboto',
+      },
+      clickable:{
+        "&:focus":{
+          backgroundColor: '#f6f6f6'
+        }
       }
     },
     MuiInputLabel: {

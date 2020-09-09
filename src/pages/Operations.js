@@ -122,7 +122,7 @@ export default function Dashboard() {
   const classes = useStyles();
   const history = useHistory();
   const [errors, setErrors] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [crane, setCrane] = useState(useSelector(({ base }) => base.yardCrane));
   const authToken = useSelector(({ auth }) => auth.authToken);
   const facility = useSelector(({ base }) => base.facility);
@@ -147,10 +147,11 @@ export default function Dashboard() {
       data: { status },
     } = response;
     if (status) {
-      setLoading(false);
+      
     } else {
-      setLoading(false);
+
     }
+    setLoading(false);
   };
   const getCraneList = () => {
     dispatch(
@@ -163,38 +164,7 @@ export default function Dashboard() {
   return (
     <>
       {/* <Header /> */}
-
-      {/* <AppBar position="static" color="secondary">
-        <Toolbar>
-          <Box
-            display="flex"
-            alignItems="center"
-            justifyContent="space-between"
-            style={{ width: "100%" }}
-            key="headerBox1"
-          >
-            <Box key="headerBox2" display="flex" alignItems="center">
-              <IconButton
-                aria-label="back"
-                className={classes.backIcon}
-                size="small"
-                onClick={() => history.push("/facility")}
-              >
-                <ArrowBackIcon />
-              </IconButton>
-              <div key={'backtext_' +Math.random} className={classes.headerDiv}>
-                <Typography key={'backtext_' +Math.random}
-                  className={classes.backText + " " + classes.headerText}
-                >
-                  Operations
-                </Typography>
-              </div>
-            </Box>
-          </Box>
-        </Toolbar>
-      </AppBar> */}
-      <TitleHeader   title={"Operations"}
-        backPath={"/facility"} isSearch={false}/>
+      <TitleHeader  key="operation-header" title="Operations" backPath={"/facility"} isSearch={false}/>
 
       <div className={classes.mainContainer}>
         {content &&

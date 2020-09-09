@@ -15,19 +15,22 @@ import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 // import CloseIcon from "@material-ui/icons/Close";
-import EditIcon from '@material-ui/icons/Edit';
-import GroundingModal from "./../components/GroundingContainer"
+import EditIcon from "@material-ui/icons/Edit";
+import GroundingModal from "./../components/GroundingContainer";
 import { getContainerListForLocationUpdate } from "../apicalls/ModuleAccessApiCalls";
-import TitleHeader from "../components/TitleHeader"
-import ScrollToTop from "../components/ScrollToTop"
-import Modal from "../components/modal"
-import Divider from '@material-ui/core/Divider';
+import TitleHeader from "../components/TitleHeader";
+import ScrollToTop from "../components/ScrollToTop";
+import Modal from "../components/modal";
+import Divider from "@material-ui/core/Divider";
+import ContainerIcon from "@assests/img/container.svg";
+// import LocalShippingOutlinedIcon from "@material-ui/icons/LocalShippingOutlined";
+import RefreshIcon from '@material-ui/icons/Refresh';
+import LocationOnOutlinedIcon from '@material-ui/icons/LocationOnOutlined';
 // import Modal from "../../components/modal"
-
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    position: 'fixed',
+    position: "fixed",
   },
   yardTitle: {
     margin: "10px 10px",
@@ -61,11 +64,11 @@ const useStyles = makeStyles((theme) => ({
   filterSearch: {
     margin: "1px 1px",
     padding: 10,
-    position: 'fixed',
-    backgroundColor:"#ffff",
-    zIndex:"2"
+    position: "fixed",
+    backgroundColor: "#ffff",
+    zIndex: "2",
   },
- 
+
   searchInput: {
     width: "100%",
   },
@@ -87,8 +90,6 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-
-
 export default function YardOperation(props) {
   const classes = useStyles();
   const history = useHistory();
@@ -97,7 +98,7 @@ export default function YardOperation(props) {
   const [open, setOpen] = useState(false);
   const [gModal, setGModal] = useState(false);
   const [openModal, setModal] = useState(false);
-  const [data,setData]=useState()
+  const [data, setData] = useState();
   const [gType, setGType] = useState();
   // const handleFilterOpen =()=>{
   //   setOpen(!open)
@@ -113,21 +114,25 @@ export default function YardOperation(props) {
     }
   };
   useEffect(getContainerList, []);
-  
   const handleCallBack = () => {};
-  const handleGModal =()=>{
-    setGModal(true)
-    setGType("position")
-  }
+  const handleGModal = () => {
+    setGModal(true);
+    setGType("position");
+  };
 
-  const handleOpenModal =()=>{
-    setModal(true)
-    setData("1234")
-  } 
-  
+  const handleOpenModal = () => {
+    setModal(true);
+    setData("1234");
+  };
+
   return (
     <>
-      <TitleHeader open={open} setOpen={setOpen} title={"Location Update"} backPath={"/operations"}/>
+      <TitleHeader
+        open={open}
+        setOpen={setOpen}
+        title={"Location Update"}
+        backPath={"/operations"}
+      />
       {open && (
         <Card className={classes.filterSearch}>
           <Grid container spacing={1} alignItems="center">
@@ -157,172 +162,167 @@ export default function YardOperation(props) {
           </Grid>
         </Card>
       )}
-      <div className={classes.yardMain} style={open ?{marginTop:"82px"}:{marginTop:"0px"}}>
+      <div
+        className={classes.yardMain}
+        style={open ? { marginTop: "82px" } : { marginTop: "0px" }}
+      >
+         <div style={{position:'relative'}}>
         <Typography className={classes.yardTitle}>Work Order</Typography>
-        <Divider style={{marginBottom:"7px"}}/>
-        <Card className={classes.yardCard}>
+        <RefreshIcon fontSize="small" style={{position:'absolute',top: '-1px',right:'10px'}}  />
+        </div>
+        <Divider style={{ marginBottom: "7px" }} />
+        <Card className={classes.yardCard} style={{ border: "1px solid #929eaa",marginLeft:"2px", marginRight:"2px" }}>
           <Box
             display="flex"
             alignItems="center"
             justifyContent="space-between"
           >
             <Box className={classes.chipMain}>
-              <Chip label="C1" size="small" style={{ width: "49px" }} onClick={handleOpenModal}/>
-              <Chip label="LOC1234"  style={{ width:"135px" }} />
-              <Button
-                className={classes.confirmBtn}
-                onClick={handleGModal}
-              >
-                <EditIcon fontSize="small"/>
+              <div style={{ position: "relative" }}>
+                <Chip
+                  label="C1"
+                  size="small"
+                  style={{ width: "49px" }}
+                  onClick={handleOpenModal}
+                  
+                />
+                <img
+                  src={ContainerIcon}
+                  alt="container"
+                  style={{
+                    position: "absolute",
+                    top: "-8px",
+                    left: "3px",
+                    width: 15,
+                  }}
+                ></img>
+              </div>
+              <div style={{ position: "relative" }}>
+                <Chip label="LOC1234" style={{ width: "132px" }} />
+                <LocationOnOutlinedIcon
+                 style={{
+                    position: "absolute",
+                    top: "-10.5px",
+                    left: "3px",
+                    width: 18,
+                  }}
+                  color="action" 
+                  />
+                </div>
+              <Button className={classes.confirmBtn} onClick={handleGModal}>
+                <EditIcon fontSize="small" />
               </Button>
             </Box>
           </Box>
         </Card>
-        <Card className={classes.yardCard}>
+        <Card className={classes.yardCard} style={{ border: "1px solid #929eaa",marginLeft:"2px", marginRight:"2px" }}>
           <Box
             display="flex"
             alignItems="center"
             justifyContent="space-between"
           >
             <Box className={classes.chipMain}>
-              <Chip label="C1" size="small" style={{ width: "49px" }} />
-              <Chip label="LOC1234"  style={{ width:"135px" }} />
-              <Button
-                className={classes.confirmBtn}
-                onClick={handleGModal}
-              >
-                <EditIcon fontSize="small"/>
-              </Button>
-            </Box>
-          </Box>
-        </Card><Card className={classes.yardCard}>
-          <Box
-            display="flex"
-            alignItems="center"
-            justifyContent="space-between"
-          >
-            <Box className={classes.chipMain}>
-              <Chip label="C1" size="small" style={{ width: "49px" }} />
-              <Chip label="LOC1234"  style={{ width:"135px" }} />
-              <Button
-                className={classes.confirmBtn}
-                onClick={handleGModal}
-              >
-                <EditIcon fontSize="small"/>
-              </Button>
-            </Box>
-          </Box>
-        </Card><Card className={classes.yardCard}>
-          <Box
-            display="flex"
-            alignItems="center"
-            justifyContent="space-between"
-          >
-            <Box className={classes.chipMain}>
-              <Chip label="C1" size="small" style={{ width: "49px" }} />
-              <Chip label="LOC1234"  style={{ width:"135px" }} />
-              <Button
-                className={classes.confirmBtn}
-                onClick={handleGModal}
-              >
-                <EditIcon fontSize="small"/>
-              </Button>
-            </Box>
-          </Box>
-        </Card><Card className={classes.yardCard}>
-          <Box
-            display="flex"
-            alignItems="center"
-            justifyContent="space-between"
-          >
-            <Box className={classes.chipMain}>
-              <Chip label="C1" size="small" style={{ width: "49px" }} />
-              <Chip label="LOC1234"  style={{ width:"135px" }} />
-              <Button
-                className={classes.confirmBtn}
-                onClick={handleGModal}
-              >
-                <EditIcon fontSize="small"/>
-              </Button>
-            </Box>
-          </Box>
-        </Card><Card className={classes.yardCard}>
-          <Box
-            display="flex"
-            alignItems="center"
-            justifyContent="space-between"
-          >
-            <Box className={classes.chipMain}>
-              <Chip label="C1" size="small" style={{ width: "49px" }} />
-              <Chip label="LOC1234"  style={{ width:"135px" }} />
-              <Button
-                className={classes.confirmBtn}
-                onClick={handleGModal}
-              >
-                <EditIcon fontSize="small"/>
-              </Button>
-            </Box>
-          </Box>
-        </Card><Card className={classes.yardCard}>
-          <Box
-            display="flex"
-            alignItems="center"
-            justifyContent="space-between"
-          >
-            <Box className={classes.chipMain}>
-              <Chip label="C1" size="small" style={{ width: "49px" }} />
-              <Chip label="LOC1234"  style={{ width:"135px" }} />
-              <Button
-                className={classes.confirmBtn}
-                onClick={handleGModal}
-              >
-                <EditIcon fontSize="small"/>
-              </Button>
-            </Box>
-          </Box>
-        </Card><Card className={classes.yardCard}>
-          <Box
-            display="flex"
-            alignItems="center"
-            justifyContent="space-between"
-          >
-            <Box className={classes.chipMain}>
-              <Chip label="C1" size="small" style={{ width: "49px" }} />
-              <Chip label="LOC1234"  style={{ width:"135px" }} />
-              <Button
-                className={classes.confirmBtn}
-                onClick={handleGModal}
-              >
-                <EditIcon fontSize="small"/>
-              </Button>
-            </Box>
-          </Box>
-        </Card><Card className={classes.yardCard}>
-          <Box
-            display="flex"
-            alignItems="center"
-            justifyContent="space-between"
-          >
-            <Box className={classes.chipMain}>
-              <Chip label="C1" size="small" style={{ width: "49px" }} />
-              <Chip label="LOC1234"  style={{ width:"135px" }} />
-              <Button
-                className={classes.confirmBtn}
-                onClick={handleGModal}
-              >
-                <EditIcon fontSize="small"/>
+              <div style={{ position: "relative" }}>
+                <Chip
+                  label="C1"
+                  size="small"
+                  style={{ width: "49px" }}
+                  onClick={handleOpenModal}
+                  
+                />
+                <img
+                  src={ContainerIcon}
+                  alt="container"
+                  style={{
+                    position: "absolute",
+                    top: "-8px",
+                    left: "3px",
+                    width: 15,
+                  }}
+                ></img>
+              </div>
+              <div style={{ position: "relative" }}>
+                <Chip label="LOC1234" style={{ width: "132px" }} />
+                <LocationOnOutlinedIcon
+                 style={{
+                    position: "absolute",
+                    top: "-10.5px",
+                    left: "3px",
+                    width: 18,
+                  }}
+                  color="action" 
+                  />
+                </div>
+              <Button className={classes.confirmBtn} onClick={handleGModal}>
+                <EditIcon fontSize="small" />
               </Button>
             </Box>
           </Box>
         </Card>
-       
+        <Card className={classes.yardCard} style={{ border: "1px solid #929eaa",marginLeft:"2px", marginRight:"2px" }}>
+          <Box
+            display="flex"
+            alignItems="center"
+            justifyContent="space-between"
+          >
+            <Box className={classes.chipMain}>
+              <div style={{ position: "relative" }}>
+                <Chip
+                  label="C1"
+                  size="small"
+                  style={{ width: "49px" }}
+                  onClick={handleOpenModal}
+                  
+                />
+                <img
+                  src={ContainerIcon}
+                  alt="container"
+                  style={{
+                    position: "absolute",
+                    top: "-8px",
+                    left: "3px",
+                    width: 15,
+                  }}
+                ></img>
+              </div>
+              <div style={{ position: "relative" }}>
+                <Chip label="LOC1234" style={{ width: "132px" }} />
+                <LocationOnOutlinedIcon
+                 style={{
+                    position: "absolute",
+                    top: "-10.5px",
+                    left: "3px",
+                    width: 18,
+                  }}
+                  color="action" 
+                  />
+                </div>
+              <Button className={classes.confirmBtn} onClick={handleGModal}>
+                <EditIcon fontSize="small" />
+              </Button>
+            </Box>
+          </Box>
+        </Card>
+
       </div>
-     <ScrollToTop />
-      <div className={classes.modal}>
-        {gModal &&( <GroundingModal open={gModal} setOpen={setGModal} type={gType} api={"Location Api"} data={"LOC1234"} />)}
-        {openModal && <Modal open={openModal} setOpen={setModal} modalData={"container"} data={data} />}
-      </div>
-     
+      <ScrollToTop />
+      {gModal && (
+        <GroundingModal
+          open={gModal}
+          setOpen={setGModal}
+          type={gType}
+          api={"Location Api"}
+          data={"LOC1234"}
+        />
+      )}
+      {openModal && (
+        <Modal
+          open={openModal}
+          setOpen={setModal}
+          modalData={"container"}
+          data={data}
+        />
+      )}
     </>
   );
 }

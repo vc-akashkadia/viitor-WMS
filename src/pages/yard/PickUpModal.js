@@ -93,6 +93,7 @@ export default function PickUpModal(props) {
   const dispatch = useDispatch();
   const authToken = useSelector(({ auth }) => auth.authToken);
   const yardCrane = useSelector(({ base }) => base.yardCrane);
+  const facility = useSelector(({ base }) => base.facility);
   const [loading, setLoading] = useState(false);
   const handleClose = () => {
     setOpen(false);
@@ -103,6 +104,7 @@ export default function PickUpModal(props) {
       locationNumber: container.location,
       craneNumber: yardCrane,
       truckNumber: container.truckNumber,
+      facilityId:facility
     };
     setLoading(true);
     dispatch(AddPickUpApiCall(data, authToken, handleCallback));

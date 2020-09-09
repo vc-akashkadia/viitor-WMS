@@ -1,5 +1,5 @@
 import React from "react";
-import { makeStyles,withStyles } from "@material-ui/core/styles";
+import { makeStyles, withStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import Chip from "@material-ui/core/Chip";
 import Button from "@material-ui/core/Button";
@@ -7,8 +7,10 @@ import Box from "@material-ui/core/Box";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
-
 import InputBase from "@material-ui/core/InputBase";
+import ContainerIcon from "@assests/img/container.svg";
+import LocalShippingOutlinedIcon from "@material-ui/icons/LocalShippingOutlined";
+import LocationOnOutlinedIcon from '@material-ui/icons/LocationOnOutlined';
 
 const BootstrapInput = withStyles((theme) => ({
   root: {
@@ -75,8 +77,6 @@ const useStyles = makeStyles({
       margin: "2px 1px",
     },
   },
-  
-  
   confirmBtn: {
     minWidth: 37,
     height: 26,
@@ -129,7 +129,7 @@ export default function CardGrid(props) {
     cardFor,
     handleChange,
     handleRemove,
-    selectOption
+    selectOption,
   } = props;
 
   return (
@@ -146,6 +146,7 @@ export default function CardGrid(props) {
             " " +
             (item.gateOperationCompleted ? classes.damageCode : "")
           }
+          style={{ border: "1px solid #929eaa",marginLeft:"2px", marginRight:"2px" }}
         >
           <Box
             display="flex"
@@ -153,26 +154,70 @@ export default function CardGrid(props) {
             justifyContent="space-between"
           >
             <Box className={classes.chipMain}>
-              <Chip
+              {/* <Chip
                 label={item.truckNumber.substring(item.truckNumber.length - 4)}
                 size="medium"
                 style={{ width: 80, color: "#173a64" }}
                 onClick={() => handleOpenModal("truck", item.truckNumber)}
-              />
-              <Chip
-                label={item.containerNumber.substring(
-                  item.containerNumber.length - 4
-                )}
-                onClick={() =>
-                  handleOpenModal("container", item.containerNumber)
-                }
-                size="medium"
-                style={{ width: 80, color: "#173a64" }}
-              />
+              /> */}
+              <div style={{ position: "relative" }}>
+                <Chip
+                  label={item.truckNumber.substring(
+                    item.truckNumber.length - 4
+                  )}
+                  size="medium"
+                  style={{ width: 78, color: "#173a64" }}
+                  onClick={() => handleOpenModal("truck", item.truckNumber)}
+                />
+                {/* <img src={TruckICon} alt="truck" style={{position:'absolute',top:'-11px',left:'7px',width:23}}></img> */}
+                <LocalShippingOutlinedIcon
+                  size="small"
+                  color="action"
+                  style={{
+                    position: "absolute",
+                    top: "-10px",
+                    left: "4px",
+                    width: 19,
+                  }}
+                />
+              </div>
+              <div style={{ position: "relative" }}>
+                <Chip
+                  label={item.containerNumber.substring(
+                    item.containerNumber.length - 4
+                  )}
+                  onClick={() =>
+                    handleOpenModal("container", item.containerNumber)
+                  }
+                  size="medium"
+                  style={{ width: 78, color: "#173a64" }}
+                />
+                <img
+                  src={ContainerIcon}
+                  alt="container"
+                  style={{
+                    position: "absolute",
+                    top: "-7.5px",
+                    left: "4px",
+                    width: 16,
+                  }}
+                ></img>
+              </div>
+              <div style={{ position: "relative",width: "100%" }}>
               <Chip
                 label={item.location}
-                style={{ width: "97%", color: "#173a64" }}
+                style={{ width: "97%", color: "#173a64"}}
               />
+              <LocationOnOutlinedIcon
+                 style={{
+                    position: "absolute",
+                    top: "-10.5px",
+                    left: "3px",
+                    width: 18,
+                  }}
+                  color="action" 
+                  />
+              </div>
             </Box>
             <Box>
               {!item.gateOperationCompleted &&
@@ -235,7 +280,10 @@ export default function CardGrid(props) {
               >
                 {selectOption.map((selectItem, key) => {
                   return (
-                    <MenuItem key={selectItem.value + "_" + key} value={selectItem.value}>
+                    <MenuItem
+                      key={selectItem.value + "_" + key}
+                      value={selectItem.value}
+                    >
                       {selectItem.value}
                     </MenuItem>
                   );

@@ -9,8 +9,9 @@ import Operations from "../pages/Operations";
 import PositionUpdate from "../pages/PositionUpdate"
 import YardOperations from "../pages/yard/YardOperation";
 import GateMovePage from "../pages/GateMove/GateMovePage";
-import PrintSample from "../pages/GateMove/print/PrintSample";
-// import DamageContainer from "../pages/GateMove/DamageContainer";d
+import PrintSample from "../components/print/PrintSample";
+import LocationPrint from "../components/print/LocationPrint";
+import EIRPrint from "../components/print/EIRPrint";
 import UserList from "../pages/UserAccess/UserList";
 
 export function Routes() {
@@ -66,6 +67,16 @@ export function Routes() {
             exact
             path="/print"
             render={(props) => <PrintSample  />}
+          />
+          <Route
+            exact
+            path="/location/print"
+            render={(props) => <LocationPrint  />}
+          />
+          <Route
+            exact
+            path="/eir/print"
+            render={(props) => <EIRPrint  />}
           />
           <Route
             exact

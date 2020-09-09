@@ -29,6 +29,8 @@ export const getUrl = (type) => {
       return `${baseUrl}/gateoperation/getinconfirmation`;
     case 'addRole':
       return `${baseUrl}/addRole`;
+    case 'groundingAddapi':
+      return `${baseUrl}/yard/grounding`;
     default:
       return baseUrl;
   }

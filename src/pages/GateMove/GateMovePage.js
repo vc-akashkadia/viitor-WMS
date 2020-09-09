@@ -4,11 +4,8 @@ import { makeStyles, withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import Card from "@material-ui/core/Card";
-
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
-// import ArrowUpwardIcon from "@material-ui/icons/ArrowUpward";
-// import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
 import LocalPrintshopOutlinedIcon from '@material-ui/icons/LocalPrintshopOutlined';
 import FormControl from "@material-ui/core/FormControl";
 
@@ -37,6 +34,7 @@ import MuiAlert from "@material-ui/lab/Alert";
 import GateInIcon from "@assests/img/gate-in1.svg";
 import GateOutIcon from "@assests/img/gate-out1.svg";
 import Select from "../../components/Select";
+import RefreshIcon from '@material-ui/icons/Refresh';
 import Divider from '@material-ui/core/Divider';
 
 const BootstrapInput = withStyles((theme) => ({
@@ -257,6 +255,7 @@ export default function GateMovePage(props) {
     false
   );
   const [openDamageModal, setOpenDamageModal] = useState(false);
+  const [openPrintModal, setOpenPrintModal] = useState(false);
   const [selectContainer, setSelectContainer] = useState({});
   const [gatetype, setGateType] = useState("Both");
   const [vehical, setVehical] = useState("Criteria");
@@ -288,7 +287,7 @@ export default function GateMovePage(props) {
       alert("Please enter Truck or Container No.");
       return;
     }
-    setOpen(false);
+    // setOpen(false);
     // operationtype: `Gate_${props.gateType}_${gatetype}`.toUpperCase(),
     let data = {
       vehical: vehical,
@@ -315,6 +314,7 @@ export default function GateMovePage(props) {
       setDataModal(damagedContainer)
       return;
     }
+    setOpen(false)
     getContainerList();
   };
   const handleCallback = (response) => {
@@ -431,6 +431,8 @@ export default function GateMovePage(props) {
     }
   };
 
+
+
   const handleCloseGateModal = (status) => {
     if (status) {
       handleGateMove(selectContainer);
@@ -438,6 +440,15 @@ export default function GateMovePage(props) {
     setSelectContainer({});
     setopenConfirmGateOperation(false);
   };
+
+  const handleOpenPrint = (container,index)=>{
+    setSelectContainer(container);
+    setOpenPrintModal(true)
+    setModalData("print");
+    
+  }
+
+ 
   return (
     <>
       <TitleHeader
@@ -510,7 +521,10 @@ export default function GateMovePage(props) {
         className={classes.yardMain}
         style={open ? { marginTop: "120px" } : { marginTop: "0px" }}
       >
+        <div style={{position:'relative'}}>
         <Typography className={classes.yardTitle}>Work Order</Typography>
+        <RefreshIcon fontSize="small" style={{position:'absolute',top: '-1px',right:'10px'}}  />
+        </div>
         <Divider style={{marginBottom:"7px"}}/>
         {/* <hr /> */}
         {loading && <Loader />}
@@ -542,7 +556,7 @@ export default function GateMovePage(props) {
                       onClick={() => handleOpenModalGate(item, key)}
                     >
                       {/* <ArrowDownwardIcon color="secondary" /> */}
-                      <img src={GateInIcon} alt="Gate In" />
+                      <img src={GateInIcon} alt="Gate In"  style={{paddingLeft:"5px"}}/>
                     </Button>
                   ) : (
                     <Button
@@ -550,18 +564,16 @@ export default function GateMovePage(props) {
                       onClick={() => handleOpenModalGate(item, key)}
                     >
                       {/* <ArrowUpwardIcon color="secondary" /> */}
-                      <img src={GateOutIcon} alt="Gate Out" />
+                      <img src={GateOutIcon} alt="Gate Out" style={{paddingLeft:"5px"}} />
                     </Button>
                   )}
                 </Box>
               ) : (
                 <Box style={{'marginLeft': '3px'}}>
-                  
                     <Button
                       className={classes.rightBoxArrow}
-                      onClick={() => handleOpenModalGate(item, key)}
+                      onClick={() => handleOpenPrint(item, key)}
                     >
-                      {/* <ArrowDownwardIcon color="secondary" /> */}
                       <LocalPrintshopOutlinedIcon color="secondary"/>
                     </Button>
                  
@@ -593,6 +605,15 @@ export default function GateMovePage(props) {
           setOpen={handleFilterPopup}
           modalData={modalData}
           data={dataModal}
+        />
+      )}
+      {openPrintModal && (
+        <Modal
+          open={openPrintModal}
+          setOpen={setOpenPrintModal}
+          modalData={modalData}
+          data={dataModal}
+          // handleAction={handlePrintData}
         />
       )}
       {openConfirmGateOperation && (
