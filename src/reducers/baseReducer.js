@@ -20,6 +20,7 @@ const initialstate = {
   gateMoveContainerList: [],
   yardContainerList: [],
   containerListForLocation: [],
+  locationSlip:{}
 };
 const base = persistReducer(
   { storage, key: "base-wms", whitelist: ["facility","facilityList","yardCrane"] },(state = initialstate, action) => {
@@ -107,6 +108,18 @@ const base = persistReducer(
       return {
         ...state,
         containerListForLocation: action.data,
+      };
+    }
+    case actionTypes.GET_LOCATION_SLIP: {
+      return {
+        ...state,
+        locationSlip: action.data,
+      };
+    }
+    case actionTypes.GET_EIR_PRINT: {
+      return {
+        ...state,
+        locationSlip: action.data,
       };
     }
     case actionTypes.LOGOUT: {

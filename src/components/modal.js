@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -9,9 +9,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import InputLabel from "@material-ui/core/InputLabel";
 import container from "@assests/img/popup-container.svg";
 import license from "@assests/img/popup-licence.svg";
-import { Divider } from "@material-ui/core";
-import LocationSlip from './print/LocationPrint'
-import EIRSlip from './print/EIRPrint'
+
 const useStyles = makeStyles((theme) => ({
   title: {
     fontSize: 16,
@@ -93,47 +91,18 @@ const useStyles = makeStyles((theme) => ({
     padding: 0,
     height: 26,
   },
-  buttonPrint: {
-    textTransform: "capitalize",
-    padding: 0,
-    height: 28,
-    width: "110px",
-    marginLeft: "52px",
-    marginTop: "6px",
-    marginBottom: "1px",
-  },
-  hiddenPrint:{
-    '@media print' :{
-      display: 'none !important'
-    }
-  }
+  
+  
 }));
 
 export default function AlertDialog(props) {
   const classes = useStyles();
   const { open, setOpen, modalData, data } = props;
-  const [printType, setPrintType] = useState("");
-
-  const handlePrintType = (printType) => {
-    setPrintType(printType);
-    setTimeout(() => {
-      const anchor = (document).querySelector(
-        ".ticket"
-      );
-      if (anchor) {
-        anchor.scrollIntoView({ behavior: "smooth" });
-      }
-    }, 100);
-   
-    
-  };
   const handleClose = (status = false) => {
     setOpen(status);
   };
 
-  const handlePrint = () => {
-    window.print();
-  };
+ 
   return (
     <div>
       {modalData === "truck" && (
@@ -310,91 +279,7 @@ export default function AlertDialog(props) {
           </DialogActions>
         </Dialog>
       )}
-      {modalData === "print" && (
-        <Dialog
-          open={open}
-          
-          onClose={() => handleClose(false)}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-          className={classes.muiDialog}
-          fullScreen={(printType ==="locationSlip" || printType==="EIR")}
-        >
-          {printType === 'locationSlip' && <>
-          <LocationSlip />
-          </>}
-          {printType === 'EIR' && <><EIRSlip /> </>}
-          {printType !== '' && <>
-          <DialogActions className={classes.actionbutton}>
-                <Button
-                  onClick={() => handleClose(false)}
-                  variant="contained"
-                  size="small"
-                  color="secondary"
-                  autoFocus
-                  className={classes.button +' '+ classes.hiddenPrint}
-                >
-                  Close
-                </Button>
-                <Button
-                  onClick={() => handlePrint()}
-                  variant="contained"
-                  size="small"
-                  color="primary"
-                  autoFocus
-                  className={classes.button +' '+ classes.hiddenPrint}
-                >
-                  Print
-                </Button>
-              </DialogActions>
-          </>}
-          {printType === "" &&
-           (
-            <>
-              <DialogTitle id="alert-dialog-title" className={classes.title}>
-                Choose the Print Type
-              </DialogTitle>
-              <Divider />
-
-              <Button
-                onClick={(e) => handlePrintType("locationSlip")}
-                variant="contained"
-                size="small"
-                color="primary"
-                autoFocus
-                className={classes.buttonPrint}
-                // style={{width:"110px"}}
-              >
-                Location Slip
-              </Button>
-              <Button
-                onClick={(e) => handlePrintType("EIR")}
-                variant="contained"
-                size="small"
-                color="primary"
-                autoFocus
-                className={classes.buttonPrint}
-                // style={{width:"110px"}}
-              >
-                EIR Slip
-              </Button>
-
-              <DialogActions className={classes.actionbutton}>
-                <Button
-                  onClick={() => handleClose(false)}
-                  variant="contained"
-                  size="small"
-                  color="secondary"
-                  autoFocus
-                  className={classes.button}
-                >
-                  Close
-                </Button>
-              </DialogActions>
-            </>
-          )}
-        </Dialog>
-      )}
+      
     </div>
   );
 }

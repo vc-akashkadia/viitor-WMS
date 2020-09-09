@@ -1,63 +1,77 @@
 import React from "react";
 import "./print.css";
 export default function LocationPrint(props) {
+  const { data } = props;
+  const date = new Date()
+    .toLocaleDateString("en-GB", {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+    })
+    .split(" ")
+    .join("-");
+  const time = new Date()
+    .toLocaleDateString("en-GB", {
+      hour: "numeric",
+      minute: "numeric",
+      second: "numeric",
+    })
+    .split(" ")
+    .join("-");
   return (
     <>
       <div className="ticket">
-        <p className="centered">
-          Location Slip
-        </p>
+        <p className="centered">Location Slip</p>
         <table>
           <tbody>
             <tr>
               <td className="description">CAMCO VISIT ID:</td>
-              <td className="price">8164621</td>
+              <td className="price">{data.visitId}</td>
             </tr>
             <tr>
-              <td className="description">LANE</td>
-              <td className="price">1ICG12</td>
+              <td className="description">Print Date:</td>
+              <td className="price">
+                {date} {time}
+              </td>
             </tr>
             <tr>
-              <td className="description">Print Date</td>
-              <td className="price">28-May-2020 19:00:19</td>
+              <td className="description">Req. Number:</td>
+              <td className="price">{data.reqestNumber}</td>
             </tr>
             <tr>
-              <td className="description">Req. Number</td>
-              <td className="price">8164621</td>
+              <td className="description">Terminal ID:</td>
+              <td className="price">{data.facilityName}</td>
             </tr>
             <tr>
-              <td className="description">Terminal ID</td>
-              <td className="price">T1</td>
+              <td className="description">Vehical No.:</td>
+              <td className="price">{data.vehicleNumber}</td>
             </tr>
-            <tr>
-              <td className="description">Vehical No.</td>
-              <td className="price">61349</td>
-            </tr>
-            <tr>
+            {/* <tr>
               <td className="description">Token No.</td>
               <td className="price">972401</td>
-            </tr>
+            </tr> */}
             <tr>
-              <td className="description">Contr. No.</td>
-              <td className="price">TEMJ628066 / FULL / OUT</td>
+              <td className="description">Contr. No.:</td>
+              <td className="price">
+              {data.containerNumber}
+                {/* / FULL / OUT */}
+              </td>
             </tr>
             <tr>
               <td className="description">Current Loc.:</td>
-              <td className="price">11E08C1</td>
+              <td className="price">{data.currentLocation}</td>
             </tr>
             <tr>
               <td className="description">Seal No.:</td>
               <td className="price">8164621</td>
             </tr>
             <tr>
-              <td className="description">Remarsk</td>
-              <td className="price">8164621</td>
+              <td className="description">Remarks:</td>
+              <td className="price">{data.remarks}</td>
             </tr>
-            
           </tbody>
         </table>
       </div>
-      
     </>
   );
 }

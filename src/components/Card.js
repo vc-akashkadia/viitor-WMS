@@ -163,9 +163,9 @@ export default function CardGrid(props) {
               /> */}
               <div style={{ position: "relative" }}>
                 <Chip
-                  label={item.truckNumber.substring(
+                  label={(item.truckNumber !== null) ? item.truckNumber.substring(
                     item.truckNumber.length - 4
-                  )}
+                  ) : '' }
                   size="medium"
                   style={{ width: 78, color: "#173a64" }}
                   onClick={() => handleOpenModal("truck", item.truckNumber)}
@@ -184,9 +184,9 @@ export default function CardGrid(props) {
               </div>
               <div style={{ position: "relative" }}>
                 <Chip
-                  label={item.containerNumber.substring(
+                  label={(item.containerNumber !== null) ? item.containerNumber.substring(
                     item.containerNumber.length - 4
-                  )}
+                  ) : '' }
                   onClick={() =>
                     handleOpenModal("container", item.containerNumber)
                   }

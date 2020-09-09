@@ -13,6 +13,7 @@ import InputBase from "@material-ui/core/InputBase";
 import TextField from "@material-ui/core/TextField";
 // import DamageModal from "../../components/DamageModal";
 import Modal from "../../components/modal";
+import PrintModal from "../../components/PrintModal";
 
 import DamageModal from "../../components/DamageCapture"
 // import CircularProgress from "@material-ui/core/CircularProgress";
@@ -608,11 +609,13 @@ export default function GateMovePage(props) {
         />
       )}
       {openPrintModal && (
-        <Modal
+        <PrintModal
           open={openPrintModal}
           setOpen={setOpenPrintModal}
           modalData={modalData}
           data={dataModal}
+          container={selectContainer}
+          gateType={props.gateType}
           // handleAction={handlePrintData}
         />
       )}

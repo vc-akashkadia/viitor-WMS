@@ -33,6 +33,8 @@ export const getUrl = (type) => {
       return `${baseUrl}/yard/grounding`;
     case 'locationSlipPrint':
       return `${baseUrl}/gateoperation/getPrintDetails`;
+    case 'EIRPrint':
+      return `${baseUrl}/gateoperation/printeir`;
     default:
       return baseUrl;
   }

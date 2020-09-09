@@ -58,3 +58,14 @@ export const ContainerListForLocation = (data) => ({
   type: actionTypes.CONTAINER_LIST_LOCATION,
   data: data,
 });
+
+export const GetLocationSlipDetail = (data) => ({
+  type: actionTypes.GET_LOCATION_SLIP,
+  data: data,
+});
+
+
+export const EIRPrintDetail = (data) => ({
+  type: actionTypes.GET_EIR_PRINT,
+  data: data,
+});
