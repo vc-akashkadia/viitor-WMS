@@ -6,9 +6,11 @@ import { logout } from "../../actions/authActions";
 
 export default function Logout(props) {
     const dispatch = useDispatch()
-    useEffect(() => {
-          dispatch(logout());
-        }, []);
+    
+    const logoutAction = () => {
+        dispatch(logout());
+    }
+    useEffect(logoutAction, [])
         
     return <Redirect to="/login" />;
         

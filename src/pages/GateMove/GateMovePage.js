@@ -16,8 +16,8 @@ import InputBase from "@material-ui/core/InputBase";
 import TextField from "@material-ui/core/TextField";
 // import DamageModal from "../../components/DamageModal";
 import Modal from "../../components/modal";
-import { useHistory } from "react-router-dom";
-import NewDamageModal from "../../components/NewDamageCapture"
+
+import DamageModal from "../../components/DamageCapture"
 // import CircularProgress from "@material-ui/core/CircularProgress";
 import {
   getContainerListApi,
@@ -241,7 +241,7 @@ const vehicalOption = [
 
 export default function GateMovePage(props) {
   const classes = useStyles();
-  const history = useHistory();
+  
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const [toaster, setToaster] = useState(false);
@@ -531,6 +531,7 @@ export default function GateMovePage(props) {
               item={item}
               handleOpenModal={handleOpenModal}
               handleOpenDamageModal={handleOpenDamageModal}
+              cardFor="gateOperation"
             >
               {!item.gateOperationCompleted ? (
                 <Box style={{'marginLeft': '3px'}}>
@@ -570,13 +571,7 @@ export default function GateMovePage(props) {
           ))}
       </div>
       {openDamageModal && (
-        // <DamageModal
-          // container={selectContainer}
-          // open={openDamageModal}
-          // setOpen={setOpenDamageModal}
-          // addDamage={handleDamage}
-        // />
-        <NewDamageModal 
+        <DamageModal 
         container={selectContainer}
           open={openDamageModal}
           setOpen={setOpenDamageModal}

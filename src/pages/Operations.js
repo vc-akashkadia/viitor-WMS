@@ -72,13 +72,13 @@ const useStyles = makeStyles({
     minWidth: 31,
     marginLeft: 5,
   },
-  headerDiv:{
-    width: '100%',
-    margin: '0px 43px'
+  headerDiv: {
+    width: "100%",
+    margin: "0px 43px",
   },
-  headerText:{
+  headerText: {
     fontSize: 16,
-    fontWeight:'bolder'
+    fontWeight: "bolder",
   },
   operationCard: {
     marginBottom: 10,
@@ -86,26 +86,35 @@ const useStyles = makeStyles({
       marginBottom: 0,
     },
   },
-  accordiondetails:{
-    padding: '0px 11px 7px 10px'
-  }
+  accordiondetails: {
+    padding: "0px 11px 7px 10px",
+  },
 });
 
 const content = [
   {
-    title: "Location Update",
-    route: "/location/update",
-    img: PositionIcon,
-  },
-  {
     title: "Gate In",
     route: "/gate/in",
     img: GateInIcon,
+    isAccordion: false,
+  },
+  {
+    title: "Yard Operation",
+    route: "",
+    img: OperationIcon,
+    isAccordion: true,
+  },
+  {
+    title: "Location Update",
+    route: "/location/update",
+    img: PositionIcon,
+    isAccordion: false,
   },
   {
     title: "Gate Out",
     route: "/gate/out",
     img: GateOutIcon,
+    isAccordion: false,
   },
 ];
 
@@ -119,7 +128,6 @@ export default function Dashboard() {
   const facility = useSelector(({ base }) => base.facility);
   let yardCraneList = useSelector(({ base }) => base.yardCraneList);
   const dispatch = useDispatch();
-
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -144,15 +152,13 @@ export default function Dashboard() {
       setLoading(false);
     }
   };
-  
-  useEffect(() => {
-    if (yardCraneList.length === 0) {
-      dispatch(
-        GetYardCraneList(facility, authToken, handleCallBackYardCraneList)
-      );
-      setLoading(false);
-    }
-  }, []);
+  const getCraneList = () => {
+    dispatch(
+      GetYardCraneList(facility, authToken, handleCallBackYardCraneList)
+    );
+    setLoading(true);
+  };
+  useEffect(getCraneList, []);
 
   return (
     <>
@@ -165,8 +171,9 @@ export default function Dashboard() {
             alignItems="center"
             justifyContent="space-between"
             style={{ width: "100%" }}
+            key="headerBox1"
           >
-            <Box display="flex" alignItems="center">
+            <Box key="headerBox2" display="flex" alignItems="center">
               <IconButton
                 aria-label="back"
                 className={classes.backIcon}
@@ -175,100 +182,99 @@ export default function Dashboard() {
               >
                 <ArrowBackIcon />
               </IconButton>
-              <div className={classes.headerDiv}>
-              <Typography className={classes.backText+' ' + classes.headerText}>Operations</Typography>
+              <div key={'backtext_' +Math.random} className={classes.headerDiv}>
+                <Typography key={'backtext_' +Math.random}
+                  className={classes.backText + " " + classes.headerText}
+                >
+                  Operations
+                </Typography>
               </div>
-              
-            </Box> */}
-            {/* <Box display="flex" alignItems="center" onClick={handleFilterOpen}>
-              <IconButton
-                aria-label="back"
-                className={classes.backIcon}
-                size="small"
-                style={{ paddingRight: 10 }}
-              >
-                {!open && <SearchIcon /> }
-                {open && <CloseIcon /> }
-              </IconButton>
-              {/* <IconButton
-                aria-label="back"
-                className={classes.backIcon}
-                size="small"
-              >
-                <FilterListIcon />
-              </IconButton> */}
-            {/* </Box> */}
-          {/* </Box>
+            </Box>
+          </Box>
         </Toolbar>
       </AppBar> */}
       <TitleHeader   title={"Operations"}
         backPath={"/facility"} isSearch={false}/>
 
       <div className={classes.mainContainer}>
-        <Card className={classes.operationCard}>
-          <Accordion>
-            <AccordionSummary
-              expandIcon={<ArrowRightIcon />}
-              aria-label="Expand"
-              aria-controls="additional-actions1-content"
-              id="additional-actions1-header"
-            >
-              <Box display="flex" alignItems="center">
-                <img src={OperationIcon} alt="" />
-                <Typography color="primary" className={classes.mainTitle}>
-                  Yard Operation
-                </Typography>
-              </Box>
-            </AccordionSummary>
-            <AccordionDetails className={classes.accordiondetails}>
-              {loading && <Loader />}
-              {!loading && <Box className={classes.operationDetails}>
-                <FormControl fullWidth error={errors !== ""}>
-                  <Select
-                    selectedValue={crane !== '' ? crane : 'none'}
-                    handleChange={setCrane}
-                    options={yardCraneList}
-                    placeholder="Select Yard Crane"
-                    inputStyle={<BootstrapInput />}
-                  />
-                  <FormHelperText>{errors}</FormHelperText>
-                </FormControl>
-                <Button
-                  className={classes.operationBtn}
-                  variant="contained"
-                  color="primary"
-                  onClick={handleSubmit}
-                >
-                  Ok
-                </Button>
-              </Box>}
-            </AccordionDetails>
-          </Accordion>
-        </Card>
         {content &&
           content.map((item) => (
-            <Card
-              key={item.title}
-              className={classes.operationCard}
-              onClick={() => history.push(item.route)}
-              style={{ cursor: "pointer" }}
-            >
-              <Accordion>
-                <AccordionSummary
-                  expandIcon={<ArrowRightIcon />}
-                  aria-label="Expand"
-                  aria-controls="additional-actions1-content"
-                  id="additional-actions1-header"
+            <>
+              {!item.isAccordion && (
+                <Card
+                  key={item.title}
+                  className={classes.operationCard}
+                  onClick={() => history.push(item.route)}
+                  style={{ cursor: "pointer" }}
                 >
-                  <Box display="flex" alignItems="center">
-                    <img src={item.img} alt="" />
-                    <Typography color="primary" className={classes.mainTitle}>
-                      {item.title}
-                    </Typography>
-                  </Box>
-                </AccordionSummary>
-              </Accordion>
-            </Card>
+                  <Accordion>
+                    <AccordionSummary
+                      expandIcon={<ArrowRightIcon />}
+                      aria-label="Expand"
+                      aria-controls="additional-actions1-content"
+                      id="additional-actions1-header"
+                    >
+                      <Box display="flex" alignItems="center">
+                        <img src={item.img} alt="" />
+                        <Typography
+                          color="primary"
+                          className={classes.mainTitle}
+                        >
+                          {item.title}
+                        </Typography>
+                      </Box>
+                    </AccordionSummary>
+                  </Accordion>
+                </Card>
+              )}
+              {item.isAccordion && (
+                <Card className={classes.operationCard} key={item.title}>
+                  <Accordion>
+                    <AccordionSummary
+                      expandIcon={<ArrowRightIcon />}
+                      aria-label="Expand"
+                      aria-controls="additional-actions1-content"
+                      id="additional-actions1-header"
+                    >
+                      <Box display="flex" alignItems="center">
+                        <img src={item.img} alt={item.title} />
+                        <Typography
+                          color="primary"
+                          className={classes.mainTitle}
+                        >
+                          {item.title}
+                        </Typography>
+                      </Box>
+                    </AccordionSummary>
+                    <AccordionDetails className={classes.accordiondetails}>
+                      {loading && <Loader />}
+                      {!loading && (
+                        <Box className={classes.operationDetails}>
+                          <FormControl fullWidth error={errors !== ""}>
+                            <Select
+                              selectedValue={crane !== "" ? crane : "none"}
+                              handleChange={setCrane}
+                              options={yardCraneList}
+                              placeholder="Select Yard Crane"
+                              inputStyle={<BootstrapInput />}
+                            />
+                            <FormHelperText>{errors}</FormHelperText>
+                          </FormControl>
+                          <Button
+                            className={classes.operationBtn}
+                            variant="contained"
+                            color="primary"
+                            onClick={handleSubmit}
+                          >
+                            Ok
+                          </Button>
+                        </Box>
+                      )}
+                    </AccordionDetails>
+                  </Accordion>
+                </Card>
+              )}
+            </>
           ))}
       </div>
     </>

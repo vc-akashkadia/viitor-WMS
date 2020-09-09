@@ -78,6 +78,13 @@ const useStyles = makeStyles((theme) => ({
     padding: 0,
     height: 26,
   },
+  modal:{
+    '&$MuiDialog':{
+      '&$paper':{
+        margin: 12
+      }
+    }
+  }
 }));
 
 
@@ -98,13 +105,15 @@ export default function YardOperation(props) {
   let containerList = useSelector(({ base }) => base.containerListForLocation);
   const dispatch = useDispatch();
   //   const [open, setOpen] = useState(false);
-  useEffect(() => {
+  const getContainerList = () => {
     if (containerList.length === 0) {
       dispatch(
         getContainerListForLocationUpdate(facility, authToken, handleCallBack)
       );
     }
-  }, []);
+  };
+  useEffect(getContainerList, []);
+  
   const handleCallBack = () => {};
   const handleGModal =()=>{
     setGModal(true)
@@ -309,8 +318,11 @@ export default function YardOperation(props) {
        
       </div>
      <ScrollToTop />
-     {gModal &&( <GroundingModal open={gModal} setOpen={setGModal} type={gType} api={"Location Api"} data={"LOC1234"} />)}
-     {openModal && <Modal open={openModal} setOpen={setModal} modalData={"container"} data={data}/>}
+      <div className={classes.modal}>
+        {gModal &&( <GroundingModal open={gModal} setOpen={setGModal} type={gType} api={"Location Api"} data={"LOC1234"} />)}
+        {openModal && <Modal open={openModal} setOpen={setModal} modalData={"container"} data={data} />}
+      </div>
+     
     </>
   );
 }

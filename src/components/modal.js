@@ -45,15 +45,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     whiteSpace: "nowrap",
   },
-<<<<<<< HEAD
-<<<<<<< HEAD
-  label :{
-=======
-  label:{
->>>>>>> 8e1dc19e601dcce6bc6483f5bfb916d2a6a8be6d
-=======
   label: {
->>>>>>> 26e17d4cf6c65365214fa1c82c9efb0c19b77da8
     fontSize: 15,
     fontWeight: 900,
     color: "#000000",
@@ -69,26 +61,10 @@ const useStyles = makeStyles((theme) => ({
     overflow: "hidden",
     textAlign: "center",
     display: "flex",
-<<<<<<< HEAD
-<<<<<<< HEAD
-    justifyContent: "center",
-    whiteSpace: "nowrap",
-    paddingLeft: 15,
-    backgroundColor: "#ffffff"
-  },
-=======
-    backgroundColor:"white",
-    paddingLeft:"15px",
-    justifyContent: "center",
-    whiteSpace: "nowrap"
->>>>>>> 8e1dc19e601dcce6bc6483f5bfb916d2a6a8be6d
-
-=======
     backgroundColor: "white",
     paddingLeft: "15px",
     justifyContent: "center",
     whiteSpace: "nowrap",
->>>>>>> 26e17d4cf6c65365214fa1c82c9efb0c19b77da8
   },
 
   actionbutton: {
@@ -121,70 +97,8 @@ export default function AlertDialog(props) {
 
   return (
     <div>
-<<<<<<< HEAD
-<<<<<<< HEAD
-      {/* <Dialog
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title" className={classes.title}>CONFIRMATION</DialogTitle>
-        <DialogContent className={classes.content}>
-          <DialogContentText id="alert-dialog-description"  >
-          Are you sure you want to confirm Work Order?
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions className={classes.actionbutton}>
-          <Button onClick={handleClose}variant="contained"
-                size="small"  color="secondary" className={classes.button}>
-            Back
-          </Button>
-          <Button onClick={handleClose} variant="contained"
-                size="small" color="primary" autoFocus className={classes.button}>
-            Confirm
-          </Button>
-        </DialogActions>
-      </Dialog> */}
-
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title" className={classes.title}>CONTAINER NO.</DialogTitle>
-        <DialogContent className={classes.content}>
-          <img src={container} alt="container-popup" />
-          <div className={classes.containerLabel}>
-          <InputLabel
-                  shrink
-                  htmlFor="bootstrap-input"
-                  className={classes.label}
-                >
-                  1420 1100 1234
-                </InputLabel>
-          </div>
-          
-        </DialogContent>
-        <DialogActions className={classes.actionbutton}>
-          <Button onClick={handleClose}variant="contained"
-                size="small"  color="secondary" className={classes.button}>
-            Back
-          </Button>
-          <Button onClick={handleClose} variant="contained"
-                size="small" color="primary" autoFocus className={classes.button}>
-            Ok
-          </Button>
-        </DialogActions>
-      </Dialog>
-=======
-      {modalData ==="truck" ?
-        ( <Dialog
-=======
       {modalData === "truck" && (
         <Dialog
->>>>>>> 26e17d4cf6c65365214fa1c82c9efb0c19b77da8
           open={open}
           onClose={() => handleClose(false)}
           aria-labelledby="alert-dialog-title"
@@ -217,18 +131,10 @@ export default function AlertDialog(props) {
               Ok
             </Button>
           </DialogActions>
-<<<<<<< HEAD
-        </Dialog>) :(
-         modalData ==="container" ?(
->>>>>>> 8e1dc19e601dcce6bc6483f5bfb916d2a6a8be6d
-
-          <Dialog
-=======
         </Dialog>
       )}
       {modalData === "container" && (
         <Dialog
->>>>>>> 26e17d4cf6c65365214fa1c82c9efb0c19b77da8
           open={open}
           onClose={() => handleClose(false)}
           aria-labelledby="alert-dialog-title"
@@ -288,45 +194,6 @@ export default function AlertDialog(props) {
             </Button>
           </DialogActions>
         </Dialog>
-<<<<<<< HEAD
-         )
-
-<<<<<<< HEAD
-      {/* <Dialog
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title" className={classes.title}>TRUCK LICENCE</DialogTitle>
-        <DialogContent className={classes.content}>
-          <img src={license} alt="container-popup" />
-          <div className={classes.licenseLabel}>
-          <InputLabel
-                  shrink
-                  htmlFor="bootstrap-input"
-                  className={classes.label}
-                >
-                  1420 1100 1234
-                </InputLabel>
-          </div>
-        </DialogContent>
-        <DialogActions className={classes.actionbutton}>
-          <Button onClick={handleClose}variant="contained"
-                size="small"  color="secondary" className={classes.button}>
-            Back
-          </Button>
-          <Button onClick={handleClose} variant="contained"
-                size="small" color="primary" autoFocus className={classes.button}>
-            Ok
-          </Button>
-        </DialogActions>
-      </Dialog> */}
-=======
-      )
-      }
->>>>>>> 8e1dc19e601dcce6bc6483f5bfb916d2a6a8be6d
-=======
          ) */}
       {modalData === "filterPopup" && (
         <Dialog
@@ -404,7 +271,6 @@ export default function AlertDialog(props) {
           </DialogActions>
         </Dialog>
       )}
->>>>>>> 26e17d4cf6c65365214fa1c82c9efb0c19b77da8
     </div>
   );
 }

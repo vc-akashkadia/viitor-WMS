@@ -56,7 +56,7 @@ const BootstrapInput = withStyles((theme) => ({
   },
 }))(InputBase);
 export default function SelectDropdown(props) {
-  const {selectedValue, handleChange, options, placeholder,inputStyle} = props 
+  const {selectedValue, handleChange, options, placeholder,inputStyle,customeStyle} = props 
   return (
     <>
       <Select
@@ -66,7 +66,7 @@ export default function SelectDropdown(props) {
         onChange={(e) => handleChange(e.target.value)}
         input={inputStyle !== undefined ? inputStyle : <BootstrapInput />}
         placeholder={placeholder}
-        style={{ width: "100%" }}
+        style={customeStyle=== undefined ? { width: "100%" } : customeStyle}
         defaultValue='none'
       >
         {placeholder && <MenuItem value="none" disabled>

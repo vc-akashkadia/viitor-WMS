@@ -109,18 +109,18 @@ const useStyles = makeStyles((theme) => ({
 //   email: "",
 //   password: "",
 // };
-let toasterOption = {
-  option: "error",
-  message: "Invalid Login",
-};
+// let toasterOption = {
+//   option: "error",
+//   message: "Invalid Login",
+// };
 
 export default function Login() {
   const classes = useStyles();
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [remember_me, setCheckbox] = useState(false);
-  const [alert, setAlert] = useState(false);
+  // const [remember_me, setCheckbox] = useState(false);
+  // const [alert, setAlert] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({
     email: "",
@@ -142,7 +142,7 @@ export default function Login() {
         username: email,
         password: password,
       };
-      dispatch(LoginApi(data, remember_me, handleCallback));
+      dispatch(LoginApi(data, false, handleCallback));
     }
   };
 
@@ -151,12 +151,12 @@ export default function Login() {
       data: { status },
     } = response;
     if (status) {
-      toasterOption = {
-        option: "success",
-        message: "Login Successfull",
-      };
+      // toasterOption = {
+      //   option: "success",
+      //   message: "Login Successfull",
+      // };
     }
-    setAlert(true);
+    // setAlert(true);
     setLoading(false);
   };
 

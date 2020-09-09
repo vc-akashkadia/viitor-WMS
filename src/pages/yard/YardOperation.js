@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
+
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
@@ -155,7 +155,7 @@ const gateTypeOptions = [
 const blockConst = [{value: "Block", label: "Block"}]
 export default function YardOperation(props) {
   const classes = useStyles();
-  const history = useHistory();
+  
   const [loading, setLoading] = useState(false);
   const [toaster, setToaster] = useState(false);
   const [open, setOpen] = useState(false);
@@ -197,9 +197,9 @@ export default function YardOperation(props) {
     setOpenGrounding(true);
   };
 
-  const handleFilterOpen = () => {
-    setOpen(!open);
-  };
+  // const handleFilterOpen = () => {
+  //   setOpen(!open);
+  // };
 
   const handleOpenModal = (title, data) => {
     setOpenMdal(true);
@@ -357,7 +357,7 @@ export default function YardOperation(props) {
           yardContainerList &&
           yardContainerList.length > 0 &&
           yardContainerList.map((item, key) => (
-            <CardGrid key={key} item={item} handleOpenModal={handleOpenModal}>
+            <CardGrid key={key} item={item} handleOpenModal={handleOpenModal} cardFor="yardOperation">
               <Box>
                 {item.containerStatus === "GROUNDING" ? (
                   <Button
@@ -412,5 +412,4 @@ export default function YardOperation(props) {
       <ScrollToTop />
     </>
   );
-}
 }

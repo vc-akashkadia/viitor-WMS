@@ -9,14 +9,15 @@ import Operations from "../pages/Operations";
 import PositionUpdate from "../pages/PositionUpdate"
 import YardOperations from "../pages/yard/YardOperation";
 import GateMovePage from "../pages/GateMove/GateMovePage";
-import DamageContainer from "../pages/GateMove/DamageContainer";
+import PrintSample from "../pages/GateMove/print/PrintSample";
+// import DamageContainer from "../pages/GateMove/DamageContainer";d
 import UserList from "../pages/UserAccess/UserList";
 
 export function Routes() {
   const { isAuthorized } = useSelector(
     ({ auth }) => ({
-      isAuthorized: auth.user != null,
-      //isAuthorized: true,
+      // isAuthorized: auth.user != null,
+      isAuthorized: true,
     }),
     shallowEqual
   );
@@ -63,10 +64,9 @@ export function Routes() {
           />
           <Route
             exact
-            path="/container-damage/:container_id"
-            component={DamageContainer}
+            path="/print"
+            render={(props) => <PrintSample  />}
           />
-
           <Route
             exact
             path="/position"

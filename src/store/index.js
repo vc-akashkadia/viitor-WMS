@@ -1,4 +1,3 @@
-import { createStore, combineReducers, compose, applyMiddleware } from "redux";
 import {configureStore,getDefaultMiddleware} from "@reduxjs/toolkit";
 import logger from "redux-logger";
 import {persistStore} from "redux-persist";

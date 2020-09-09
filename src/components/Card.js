@@ -1,13 +1,60 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles,withStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import Chip from "@material-ui/core/Chip";
 import Button from "@material-ui/core/Button";
 import Box from "@material-ui/core/Box";
+import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
+
+import InputBase from "@material-ui/core/InputBase";
+
+const BootstrapInput = withStyles((theme) => ({
+  root: {
+    "label + &": {
+      marginTop: theme.spacing(3),
+    },
+  },
+  input: {
+    borderRadius: 4,
+    position: "relative",
+    backgroundColor: "#f6f6f6",
+    border: "none",
+    fontSize: 14,
+    fontWeight: 500,
+    padding: "0px 26px 0px 12px",
+    transition: theme.transitions.create(["border-color", "box-shadow"]),
+    width: "100%",
+    height: 26,
+    // display: "flex",
+    alignItems: "center",
+    whiteSpace: "nowrap",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    display: "inline-block",
+    lineHeight: "26px",
+    // Use the system font instead of the default Roboto font.
+    fontFamily: ["Roboto"].join(","),
+    "&:focus": {
+      borderRadius: 4,
+      borderColor: "#80bdff",
+      // boxShadow: "0 0 0 0.2rem rgba(0,123,255,.25)",
+    },
+  },
+}))(InputBase);
 const useStyles = makeStyles({
   yardCard: {
     padding: 4,
     marginBottom: 8,
+    "&:last-child": {
+      marginBottom: 0,
+    },
+  },
+  yardCardDamage: {
+    padding: 1,
+    margin: "0px -9px",
+    marginBottom: 5,
     "&:last-child": {
       marginBottom: 0,
     },
@@ -28,6 +75,8 @@ const useStyles = makeStyles({
       margin: "2px 1px",
     },
   },
+  
+  
   confirmBtn: {
     minWidth: 37,
     height: 26,
@@ -42,6 +91,13 @@ const useStyles = makeStyles({
     backgroundColor: "#2991d6",
     minWidth: 28,
     height: 61,
+    padding: 0,
+  },
+  rightBoxArrowDelete: {
+    backgroundColor: "#ff0000bd",
+    minWidth: 28,
+    height: 56,
+    color: "white",
     padding: 0,
   },
   filterSearch: {
@@ -70,63 +126,138 @@ export default function CardGrid(props) {
     handleOpenModal,
     handleOpenDamageModal,
     children,
+    cardFor,
+    handleChange,
+    handleRemove,
+    selectOption
   } = props;
 
   return (
-    <Card
-      key={index}
-      className={
-        classes.yardCard +
-        " " +
-        (item.damage !== "" && item.damage !== undefined
-          ? classes.damageCode
-          : "") +
-        " " +
-        (item.gateOperationCompleted ? classes.damageCode : "")
-      }
-    >
-      <Box display="flex" alignItems="center" justifyContent="space-between">
-        <Box className={classes.chipMain}>
-          <Chip
-            label={item.truckNumber.substring(item.truckNumber.length - 4)}
-            size="medium"
-            style={{ width: 80 ,color : '#173a64' }}
-            onClick={() => handleOpenModal("truck", item.truckNumber)}
-          />
-          <Chip
-            label={item.containerNumber.substring(
-              item.containerNumber.length - 4
-            )}
-            onClick={() => handleOpenModal("container", item.containerNumber)}
-            size="medium"
-            style={{ width: 80 ,color : '#173a64'}}
-          />
-          <Chip label={item.location} style={{ width: "97%",color : '#173a64' }} />
-        </Box>
-        <Box>
-          {!item.gateOperationCompleted &&
-            (item.operationCode === "GATE_IN_INBOUND" ||
-              item.operationCode === "GATE_OUT_OUTBOUND") ? (
-              <Button
-                className={
-                  classes.rightBoxArrow +
-                  "  " +
-                  classes.confirmBtn +
-                  " " +
-                  (item.damage !== "" && item.damage !== undefined
-                    ? classes.damageCodeCnfrButton
-                    : classes.damageCodeButton)
+    <>
+      {(cardFor === "gateOperation" || cardFor === "yardOperation") && (
+        <Card
+          key={index}
+          className={
+            classes.yardCard +
+            " " +
+            (item.damage !== "" && item.damage !== undefined
+              ? classes.damageCode
+              : "") +
+            " " +
+            (item.gateOperationCompleted ? classes.damageCode : "")
+          }
+        >
+          <Box
+            display="flex"
+            alignItems="center"
+            justifyContent="space-between"
+          >
+            <Box className={classes.chipMain}>
+              <Chip
+                label={item.truckNumber.substring(item.truckNumber.length - 4)}
+                size="medium"
+                style={{ width: 80, color: "#173a64" }}
+                onClick={() => handleOpenModal("truck", item.truckNumber)}
+              />
+              <Chip
+                label={item.containerNumber.substring(
+                  item.containerNumber.length - 4
+                )}
+                onClick={() =>
+                  handleOpenModal("container", item.containerNumber)
                 }
-                onClick={() => handleOpenDamageModal(item, index)}
+                size="medium"
+                style={{ width: 80, color: "#173a64" }}
+              />
+              <Chip
+                label={item.location}
+                style={{ width: "97%", color: "#173a64" }}
+              />
+            </Box>
+            <Box>
+              {!item.gateOperationCompleted &&
+              (item.operationCode === "GATE_IN_INBOUND" ||
+                item.operationCode === "GATE_OUT_OUTBOUND") ? (
+                <Button
+                  className={
+                    classes.rightBoxArrow +
+                    "  " +
+                    classes.confirmBtn +
+                    " " +
+                    (item.damage !== "" && item.damage !== undefined
+                      ? classes.damageCodeCnfrButton
+                      : classes.damageCodeButton)
+                  }
+                  onClick={() => handleOpenDamageModal(item, index)}
+                >
+                  D
+                </Button>
+              ) : (
+                <label>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </label>
+              )}
+            </Box>
+            {children}
+          </Box>
+        </Card>
+      )}
+      {cardFor === "damageCapture" && (
+        <Card className={classes.yardCardDamage} id={item.id} key={item.id}>
+          <Box
+            display="flex"
+            alignItems="center"
+            justifyContent="space-between"
+          >
+            <Box className={classes.chipMain}>
+              <Chip label="Code" style={{ width: "57px" }} />
+              {/* <Select
+                  selectedValue={item.damageCode}
+                  handleChange={(value) => {
+                    handleChange(value, "damageCode", item.id)
+                  }}
+                  options={selectOption}
+                  placeholder="Select Damage Code"
+                  inputStyle={<BootstrapInput />}
+                  customeStyle={{ width: "70%" }}
+                /> */}
+              <Select
+                labelId="demo-customized-select-label"
+                id="demo-customized-select"
+                name="damageCode"
+                value={item.damageCode}
+                onChange={(event) =>
+                  handleChange(event.target.value, "damageCode", item.id)
+                }
+                input={<BootstrapInput />}
+                placeholder="Block"
+                style={{ width: "70%" }}
               >
-                D
+                {selectOption.map((selectItem, key) => {
+                  return (
+                    <MenuItem key={selectItem.value + "_" + key} value={selectItem.value}>
+                      {selectItem.value}
+                    </MenuItem>
+                  );
+                })}
+              </Select>
+
+              <Chip
+                label={item.description}
+                style={{ width: "203px", justifyContent: "left" }}
+              />
+            </Box>
+            <Box
+              style={{ marginLeft: "3px" }}
+              onClick={(e) => handleRemove(item.id)}
+            >
+              <Button className={classes.rightBoxArrowDelete}>
+                <DeleteForeverIcon />
               </Button>
-            ):(
-              <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-            )}
-        </Box>
-        {children}
-      </Box>
-    </Card>
+            </Box>
+          </Box>
+        </Card>
+      )}
+    </>
   );
 }

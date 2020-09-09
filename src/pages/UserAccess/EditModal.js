@@ -61,6 +61,9 @@ const useStyles = makeStyles((theme) => ({
   },
   searchInput: {
     width: "60%",
+    '& input':{
+      height: '25px'
+    }
   },
   button: {
     // paddingTop: 10,

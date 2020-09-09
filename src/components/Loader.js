@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Loader() {
   const classes = useStyles();
   return (
-    <div className={classes.root}>
+    <div key="loader" className={classes.root}>
       <CircularProgress size={24} />
     </div>
   );
