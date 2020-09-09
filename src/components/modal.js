@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React,{useState} from "react";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -9,9 +9,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import InputLabel from "@material-ui/core/InputLabel";
 import container from "@assests/img/popup-container.svg";
 import license from "@assests/img/popup-licence.svg";
-import { Divider } from "@material-ui/core";
-import LocationSlip from './print/LocationPrint'
-import EIRSlip from './print/EIRPrint'
+
 const useStyles = makeStyles((theme) => ({
   title: {
     fontSize: 16,
@@ -94,20 +92,8 @@ const useStyles = makeStyles((theme) => ({
     padding: 0,
     height: 26,
   },
-  buttonPrint: {
-    textTransform: "capitalize",
-    padding: 0,
-    height: 28,
-    width: "110px",
-    marginLeft: "52px",
-    marginTop: "6px",
-    marginBottom: "1px",
-  },
-  hiddenPrint:{
-    '@media print' :{
-      display: 'none !important'
-    }
-  }
+  
+  
 }));
 
 export default function AlertDialog(props) {
@@ -132,9 +118,7 @@ export default function AlertDialog(props) {
     setOpen(status);
   };
 
-  const handlePrint = () => {
-    window.print();
-  };
+ 
   return (
     <div>
       {modalData === "truck" && (
@@ -237,6 +221,7 @@ export default function AlertDialog(props) {
          ) */}
       {modalData === "filterPopup" && (
         <Dialog
+
           open={open}
           onClose={() => handleClose(false)}
           aria-labelledby="alert-dialog-title"

@@ -13,6 +13,7 @@ import InputBase from "@material-ui/core/InputBase";
 import TextField from "@material-ui/core/TextField";
 // import DamageModal from "../../components/DamageModal";
 import Modal from "../../components/modal";
+import PrintModal from "../../components/PrintModal";
 
 import DamageModal from "../../components/DamageCapture"
 // import CircularProgress from "@material-ui/core/CircularProgress";
@@ -523,7 +524,7 @@ export default function GateMovePage(props) {
       >
         <div style={{position:'relative'}}>
         <Typography className={classes.yardTitle}>Work Order</Typography>
-        <RefreshIcon fontSize="small" style={{position:'absolute',top: '-1px',right:'10px',color:"#173a64"}}  />
+        <RefreshIcon onClick={handleSearch} fontSize="small" style={{position:'absolute',top: '-1px',right:'10px',color:"#173a64"}}  />
         </div>
         <Divider style={{marginBottom:"7px"}}/>
         {/* <hr /> */}
@@ -662,11 +663,13 @@ export default function GateMovePage(props) {
         />
       )}
       {openPrintModal && (
-        <Modal
+        <PrintModal
           open={openPrintModal}
           setOpen={setOpenPrintModal}
           modalData={modalData}
           data={dataModal}
+          container={selectContainer}
+          gateType={props.gateType}
           // handleAction={handlePrintData}
         />
       )}

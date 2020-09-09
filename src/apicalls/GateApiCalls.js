@@ -4,6 +4,7 @@ import {
   DamageCodeList,
   GateMoveContainerList,
   selectGateMoveOperationOption,
+  GetLocationSlipDetail,
 } from "../actions/actions";
 
 export const DamageCodeListApi = (authToken, callback) => {
@@ -18,7 +19,8 @@ export const DamageCodeListApi = (authToken, callback) => {
           let damageCodeList = data.damageCodeList.map((code) => ({
             value: code.damageCode,
             label: code.damageDescription,
-            text : code.damageCode+'-'+ (code.damageType === "1") ? 'Min' : 'Max' 
+            text:
+              code.damageCode + "-" + (code.damageType === "1") ? "Min" : "Max",
           }));
           dispatch(DamageCodeList(damageCodeList));
         }
@@ -32,11 +34,11 @@ export const DamageCodeListApi = (authToken, callback) => {
 
 export const getContainerListApi = (data, authToken, callback) => {
   let url = getUrl("gatemovecontainer");
-  let querystring = `?facilityid=${data.facilityid}`
+  let querystring = `?facilityid=${data.facilityid}`;
   if (data.operationtype !== undefined) {
     querystring = querystring + `&operationtype=${data.operationtype}`;
   }
-  
+
   if (data.vehical === "truck") {
     querystring = querystring + `&trucknumber=${data.number}`;
   }
@@ -67,14 +69,54 @@ export const getContainerListApi = (data, authToken, callback) => {
       })
     );
   };
-
 };
 
-export const GateMoveContainerApi = (data,authToken,callback) => {
+export const GateMoveContainerApi = (data, authToken, callback) => {
   let url = getUrl("gatemoveapi");
   return (dispatch) => {
-    post(url,data, authToken).then((response) => {
+    post(url, data, authToken).then((response) => {
       callback(response);
     });
   };
-}
+};
+
+export const LocationSlipApi = (data, authToken, callback) => {
+  let url = getUrl("locationSlipPrint");
+  let querystring = `?shipmentId=${data.shipmentId}`;
+  url = url + querystring;
+  return (dispatch) => {
+    get(url, authToken)
+      .then((response) => {
+        const {
+          data: { status, data },
+        } = response;
+        if (status) {
+          dispatch(GetLocationSlipDetail(data));
+        }
+        callback(response);
+      })
+      .catch((err) => {
+        console.log("error", err);
+      });
+  };
+};
+export const EIRPrintApi = (data, authToken, callback) => {
+  let url = getUrl("EIRPrint");
+  let querystring = `?container_number=${data.containerNumber}&operation_type=${data.operationCode}&facility_id=${data.facility}`;
+  url = url + querystring;
+  return (dispatch) => {
+    get(url, authToken)
+      .then((response) => {
+        const {
+          data: { status, data },
+        } = response;
+        if (status) {
+          dispatch(GetLocationSlipDetail(data));
+        }
+        callback(response);
+      })
+      .catch((err) => {
+        console.log("error", err);
+      });
+  };
+};
