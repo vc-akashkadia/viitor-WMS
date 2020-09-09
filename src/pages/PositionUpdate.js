@@ -182,7 +182,7 @@ export default function YardOperation(props) {
                 <Chip
                   label="C1"
                   size="small"
-                  style={{ width: "49px" }}
+                  style={{ width: "49px",color: "#173a64" }}
                   onClick={handleOpenModal}
                   
                 />
@@ -198,7 +198,7 @@ export default function YardOperation(props) {
                 ></img>
               </div>
               <div style={{ position: "relative" }}>
-                <Chip label="LOC1234" style={{ width: "132px" }} />
+                <Chip label="LOC1234" style={{ width: "132px" ,color: "#173a64"}} />
                 <LocationOnOutlinedIcon
                   style={{
                     position: "absolute",
@@ -226,9 +226,8 @@ export default function YardOperation(props) {
                 <Chip
                   label="C1"
                   size="small"
-                  style={{ width: "49px" }}
+                  style={{ width: "49px",color: "#173a64"}}
                   onClick={handleOpenModal}
-                  
                 />
                 <img
                   src={ContainerIcon}
@@ -242,7 +241,7 @@ export default function YardOperation(props) {
                 ></img>
               </div>
               <div style={{ position: "relative" }}>
-                <Chip label="LOC1234" style={{ width: "132px" }} />
+                <Chip label="LOC1234" style={{ width: "132px",color: "#173a64" }} />
                 <LocationOnOutlinedIcon
                   style={{
                     position: "absolute",
@@ -270,7 +269,7 @@ export default function YardOperation(props) {
                 <Chip
                   label="C1"
                   size="small"
-                  style={{ width: "49px" }}
+                  style={{ width: "49px" ,color: "#173a64"}}
                   onClick={handleOpenModal}
                   
                 />
@@ -286,7 +285,7 @@ export default function YardOperation(props) {
                 ></img>
               </div>
               <div style={{ position: "relative" }}>
-                <Chip label="LOC1234" style={{ width: "132px" }} />
+                <Chip label="LOC1234" style={{ width: "132px" ,color: "#173a64"}} />
                 <LocationOnOutlinedIcon
                   style={{
                     position: "absolute",

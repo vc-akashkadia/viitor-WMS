@@ -178,7 +178,7 @@ export default function CardGrid(props) {
                     top: "-10px",
                     left: "4px",
                     width: 19,
-                    backgroundColor: "#ffffff"
+                    // backgroundColor: "#ffffff"
                   }}
                 />
               </div>
