@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
     position: 'fixed',
   },
   yardTitle: {
-    margin: "12px 10px",
+    margin: "15px 10px 10px 15px",
     fontSize: 15,
     color: "#173a64",
   },
