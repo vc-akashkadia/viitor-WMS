@@ -17,8 +17,8 @@ import UserList from "../pages/UserAccess/UserList";
 export function Routes() {
   const { isAuthorized } = useSelector(
     ({ auth }) => ({
-      isAuthorized: auth.user != null,
-      //isAuthorized: true,
+      // isAuthorized: auth.user != null,
+      isAuthorized: true,
     }),
     shallowEqual
   );

@@ -269,7 +269,7 @@ export default function PositionUpdate(props) {
                   // color="action" 
                   />
                 </div>
-              <Button className={classes.confirmBtn} onClick={() => handleGModal(container)}>
+              <Button className={classes.confirmBtn} onClick={() => handleGModal("container")}>
                 <EditIcon fontSize="small" />
               </Button>
             </Box>

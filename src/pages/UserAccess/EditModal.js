@@ -330,7 +330,7 @@ export default function EditModal(props) {
             <div className={classes.boxStyle}>
               <List style={{ paddingTop: "0px", paddingBottom: "0px" }}>
                 {accessValue.map((item,index) => (
-                  <React.Fragment key={index}>
+                  <>
                   <ListItem
                     key={item.title}
                     role={undefined}
