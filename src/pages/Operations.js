@@ -59,7 +59,8 @@ const BootstrapInput = withStyles((theme) => ({
 
 const useStyles = makeStyles({
   mainContainer: {
-    margin: "13px 10px 13px 10px",
+    margin: "13px",
+    paddingTop: 8
   },
   mainTitle: {
     paddingLeft: 14,

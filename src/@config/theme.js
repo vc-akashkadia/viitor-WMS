@@ -80,7 +80,7 @@ const theme = createMuiTheme({
         backgroundColor: '#f6f6f6',
         borderRadius: 4,
         height: 26,
-        fontSize: 14,
+        fontSize: 12,
         fontWeight: 500,
         lineHeight: '26px',
         fontFamily: 'Roboto',
@@ -101,7 +101,7 @@ const theme = createMuiTheme({
     MuiOutlinedInput: {
       input: {
         padding: '0px 14px',
-        height: 28,
+        height: 26,
         backgroundColor: '#f6f6f6',
         borderRadius: 4
       }

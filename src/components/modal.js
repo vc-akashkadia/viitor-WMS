@@ -34,10 +34,10 @@ const useStyles = makeStyles((theme) => ({
   },
   licenseLabel: {
     position: "absolute",
-    bottom: 20,
+    bottom:  16,
     left: "50%",
     transform: "translateX(-50%)",
-    marginLeft: 40,
+    marginLeft: 35,
     width: "auto",
     overflow: "hidden",
     textAlign: "center",
@@ -46,9 +46,12 @@ const useStyles = makeStyles((theme) => ({
     whiteSpace: "nowrap",
   },
   label: {
-    fontSize: 15,
+    fontSize: 22,
     fontWeight: 900,
     color: "#000000",
+    transform: 'translateX(0)',
+    display: 'inline-block',
+    lineHeight: '24px'
   },
 
   containerLabel: {
@@ -56,13 +59,13 @@ const useStyles = makeStyles((theme) => ({
     bottom: 40,
     left: "45%",
     transform: "translateX(-50%)",
-    marginLeft: 15,
+    marginLeft: 10,
     width: "auto",
     overflow: "hidden",
     textAlign: "center",
     display: "flex",
     backgroundColor: "white",
-    paddingLeft: "15px",
+    padding: "0 5px",
     justifyContent: "center",
     whiteSpace: "nowrap",
   },

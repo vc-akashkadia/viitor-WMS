@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
     position: "fixed",
   },
   yardTitle: {
-    margin: "15px 10px 10px 15px",
+    margin: "15px 10px 10px 10px",
     fontSize: 15,
     color: "#173a64",
   },
@@ -68,7 +68,10 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#ffff",
     zIndex: "2",
   },
-
+  searchTitle:{
+    fontSize: 15,
+    color: "#173a64"
+  },
   searchInput: {
     width: "100%",
   },
@@ -168,7 +171,7 @@ export default function YardOperation(props) {
       >
         <div style={{position:'relative'}}>
         <Typography className={classes.yardTitle}>Work Order</Typography>
-        <RefreshIcon fontSize="small" style={{position:'absolute',top: '-1px',right:'10px',color:'#173a64'}}  />
+        <RefreshIcon fontSize="small" style={{position:'absolute',top: '1px',right:'10px',color:'#173a64'}}  />
         </div>
         <Divider style={{ marginBottom: "7px" }} />
         <Card className={classes.yardCard} style={{ border: "1px solid #929eaa",marginLeft:"2px", marginRight:"2px" }}>
@@ -191,9 +194,9 @@ export default function YardOperation(props) {
                   alt="container"
                   style={{
                     position: "absolute",
-                    top: "-8px",
+                    top: "-6px",
                     left: "3px",
-                    width: 15,
+                    width: 13,
                   }}
                 ></img>
               </div>
@@ -204,9 +207,10 @@ export default function YardOperation(props) {
                     position: "absolute",
                     top: "-10.5px",
                     left: "3px",
-                    width: 18,
+                    width: 15,
+                    color: "#0000004d"
                   }}
-                  color="action" 
+                  // color="action" 
                   />
                 </div>
               <Button className={classes.confirmBtn} onClick={handleGModal}>
@@ -234,9 +238,9 @@ export default function YardOperation(props) {
                   alt="container"
                   style={{
                     position: "absolute",
-                    top: "-8px",
+                    top: "-6px",
                     left: "3px",
-                    width: 15,
+                    width: 13,
                   }}
                 ></img>
               </div>
@@ -247,9 +251,10 @@ export default function YardOperation(props) {
                     position: "absolute",
                     top: "-10.5px",
                     left: "3px",
-                    width: 18,
+                    width: 15,
+                    color: "#0000004d"
                   }}
-                  color="action" 
+                  // color="action" 
                   />
                 </div>
               <Button className={classes.confirmBtn} onClick={handleGModal}>
@@ -278,9 +283,9 @@ export default function YardOperation(props) {
                   alt="container"
                   style={{
                     position: "absolute",
-                    top: "-8px",
+                    top: "-6px",
                     left: "3px",
-                    width: 15,
+                    width: 13,
                   }}
                 ></img>
               </div>
@@ -291,9 +296,10 @@ export default function YardOperation(props) {
                     position: "absolute",
                     top: "-10.5px",
                     left: "3px",
-                    width: 18,
+                    width: 15,
+                    color: "#0000004d"
                   }}
-                  color="action" 
+                  // color="action" 
                   />
                 </div>
               <Button className={classes.confirmBtn} onClick={handleGModal}>
@@ -318,7 +324,7 @@ export default function YardOperation(props) {
         <Modal
           open={openModal}
           setOpen={setModal}
-          modalData={"truck"}
+          modalData={"filterPopup"}
           data={data}
         />
       )}
