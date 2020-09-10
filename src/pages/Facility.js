@@ -163,10 +163,11 @@ export default function Facility() {
     }
   },[]);
   const handleCallbackFacilityList = (response) => {
-    const {
-      data: { status },
-    } = response;
-    if (status) {
+    console.log("response",response)
+    // const {
+    //   data: { status },
+    // } = response;
+    if (response && response.status) {
       setLoading(false);
     } else {
       toasterOption = {
