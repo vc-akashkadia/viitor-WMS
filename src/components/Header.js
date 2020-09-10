@@ -189,7 +189,7 @@ export default function Header() {
         }}
       >
         <div className={classes.drawerHeader}>
-          <Typography style={{ textAlign: "center" }}>WMS</Typography>
+          <Typography style={{ textAlign: "center",color: "#120e5b", }}>WMS</Typography>
           <IconButton onClick={handleDrawerClose} style={{paddingRight :0}}>
             {theme.direction === "ltr" ? (
               <ChevronLeftIcon />

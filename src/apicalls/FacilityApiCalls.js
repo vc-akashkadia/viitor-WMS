@@ -23,7 +23,7 @@ export const facilityListApiCall = (authToken, callback) => {
         console.log("error", err);
       let response = {
         status : false,
-        code : err && err.response && err.response.status
+        code : err.response.status
       }
       callback(response)
       });

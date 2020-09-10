@@ -80,7 +80,7 @@ const theme = createMuiTheme({
         backgroundColor: '#f6f6f6',
         borderRadius: 4,
         height: 26,
-        fontSize: 12,
+        fontSize: 14,
         fontWeight: 500,
         lineHeight: '26px',
         fontFamily: 'Roboto',

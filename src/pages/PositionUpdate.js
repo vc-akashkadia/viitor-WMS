@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
   yardTitle: {
     margin: "15px 10px 10px 15px",
     fontSize: 15,
-    color: "#173a64",
+    color: "#5c5c5c",
   },
   yardCard: {
     padding: 5,
@@ -136,6 +136,7 @@ export default function PositionUpdate(props) {
     setModal(true);
     setData("1234");
   };
+  console.log(containerList)
 
   return (
     <>
@@ -183,11 +184,11 @@ export default function PositionUpdate(props) {
       >
         <div style={{position:'relative'}}>
         <Typography className={classes.yardTitle}>Work Order</Typography>
-        <RefreshIcon onClick={()=> getContainerList()} fontSize="small" style={{position:'absolute',top: '-1px',right:'10px',color:'#173a64'}}  />
+        <RefreshIcon onClick={()=> getContainerList()} fontSize="small" style={{position:'absolute',top: '-1px',right:'10px',color:'#5c5c5c'}}  />
         </div>
         <Divider style={{ marginBottom: "7px" }} />
         {containerList && containerList.length > 0 && containerList.map((container,index) => (
-          <Card className={classes.yardCard} style={{ border: "1px solid #929eaa",marginLeft:"2px", marginRight:"2px" }}>
+          <Card key={index} className={classes.yardCard} style={{ border: "1px solid #929eaa",marginLeft:"2px", marginRight:"2px" }}>
           <Box
             display="flex"
             alignItems="center"
@@ -196,9 +197,9 @@ export default function PositionUpdate(props) {
             <Box className={classes.chipMain}>
               <div style={{ position: "relative" }}>
                 <Chip
-                  label="C1"
+                  label={container.containerNumber}
                   size="small"
-                  style={{ width: "49px" ,color: "#173a64" }}
+                  style={{ width: "49px" ,color: "#000000" }}
                   onClick={handleOpenModal}
                   
                 />
@@ -207,25 +208,25 @@ export default function PositionUpdate(props) {
                   alt="container"
                   style={{
                     position: "absolute",
-                    top: "-8px",
+                    top: "-5.5px",
                     left: "3px",
-                    width: 15,
+                    width: 13,
                   }}
                 ></img>
               </div>
               <div style={{ position: "relative" }}>
-                <Chip label="LOC1234" style={{ width: "132px",color: "#173a64"  }} />
+                <Chip label={container.locationNumber} style={{ width: "132px",color: "#000000"  }} />
                 <LocationOnOutlinedIcon
-                  style={{
+                   style={{
                     position: "absolute",
                     top: "-10.5px",
                     left: "3px",
-                    width: 18,
+                    width: 15,
+                    color:"#0000004d"
                   }}
-                  color="action" 
                   />
                 </div>
-              <Button className={classes.confirmBtn} onClick={() => handleGModal("container")}>
+              <Button className={classes.confirmBtn} onClick={() => handleGModal(container)}>
                 <EditIcon fontSize="small" />
               </Button>
             </Box>

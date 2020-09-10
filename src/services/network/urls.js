@@ -38,7 +38,7 @@ export const getUrl = (type) => {
     case 'EIRPrint':
       return `${baseUrl}/gateoperation/printeir`;
     case 'userlist':
-      return `${baseUrl}/getContainersList`;
+      return `${baseUrl}/userlist`;
     default:
       return baseUrl;
   }

@@ -68,7 +68,7 @@ export const getContainerListApi = (data, authToken, callback) => {
         console.log("error", err);
         let response = {
           status: false,
-          code: err.response.status,
+          // code: err.response.status,
         };
         callback(response);
       });
@@ -144,9 +144,9 @@ export const EIRPrintApi = (callData, authToken, callback) => {
       .catch((err) => {
         console.log("error", err);
         let response = {
-          status: false,
-          code: err.response.status,
-        };
+          data : { status: false,}
+           
+         };
         callback(response, callData.printType);
       });
   };

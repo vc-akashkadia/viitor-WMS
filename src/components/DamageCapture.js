@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
         marginBottom:"-4px"
     },
   title: {
-    color: "#173a64",
+    color: "#0c79c1",
     // textTransform: "uppercase",
     paddingTop: 0,
     paddingLeft: 10,
@@ -321,17 +321,17 @@ export default function DamageCapture(props) {
               zIndex: "2",
             }}
           >
-            <DialogContentText style={{ color: "#173a64" }} className={classes.root}>
+            <DialogContentText style={{ color:  "#777777" }} className={classes.root}>
               Truck Number:{" "}
-              {<b>{container && container.truckNumber}</b>}
+              {<span style={{ color: "#1f1f21" }}>{container && container.truckNumber}</span>}
             </DialogContentText >
             <Box
               display="flex"
               alignItems="center"
               justifyContent="space-between"
             >
-              <DialogContentText className={classes.root} style={{ color: "#173a64",marginTop:"7px" }}>
-                Container: {<b>{container.containerNumber}</b>}
+              <DialogContentText className={classes.root} style={{ color: "#777777",marginTop:"7px" }}>
+                Container: {<span style={{ color: "#1f1f21" }}>{container.containerNumber}</span>}
               </DialogContentText>
               <Box
                 style={{ marginRight: "-4px", borderRadius: "50%" }}

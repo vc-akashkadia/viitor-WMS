@@ -7,7 +7,7 @@ export default function EIRPrint(props) {
   return (
     <>
       <div className="ticket">
-        <img src={brandLogo} alt="Logo" style={{ display: "block", height: "100%", width: 100, margin: "10px auto"}}/>
+        <img src={brandLogo} alt="Logo" style={{ display: "block", width: 100, margin: "10px auto"}}/>
         <p className="centered" style={{ marginBottom: "0px" }}>
           {data.FacilityCode}
         </p>

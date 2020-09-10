@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState ,useEffect} from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
@@ -21,7 +21,7 @@ import { ReactComponent as YardIcon } from "@assests/img/yard-operation-user.svg
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import IconButton from "@material-ui/core/IconButton";
 import FormHelperText from "@material-ui/core/FormHelperText";
-import {AddRoleApi} from '../../apicalls/ModuleAccessApiCalls';
+import {AddRoleApi,getUserRoleList} from '../../apicalls/ModuleAccessApiCalls';
 import Select from "../../components/Select";
 import Loader from "../../components/Loader";
 import Snackbar from "@material-ui/core/Snackbar";
@@ -48,6 +48,7 @@ const BootstrapInput = withStyles((theme) => ({
     border: "1px solid #ced4da",
     fontSize: 14,
     fontWeight: 500,
+    color:"#1f1f21",
     padding: "0px 26px 0px 12px",
     transition: theme.transitions.create(["border-color", "box-shadow"]),
     width: "100%",
@@ -92,7 +93,7 @@ const useStyles = makeStyles((theme) => ({
     // justifyContent: "space-between",
     marginBottom: 10,
     marginTop: "3px",
-    color: "#707070",
+    color: "#777777",
   },
   innerContentCheck: {
     display: "flex",
@@ -107,7 +108,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: "-15px",
   },
   actionbutton: {
-    // paddingBottom: 15,
+    paddingBottom: 15,
     justifyContent: "center",
   },
   boxStyle: {
@@ -147,38 +148,65 @@ let toasterOption = {
   varient: "success",
   message: "",
 };
-
-const accessValue = [
-  {
+const accessValue = {
+  "ROLE_YARD" : {
     title: "Yard Operation",
-    roleName : "YARD_JOB",
+    roleName : "ROLE_YARD",
     icon: <YardIcon />,
     startIcon: <YardIcon style={{ width: "21px" }} />,
   },
-  {
+  "ROLE_GATE" : {
     title: "Gate Operation",
-    roleName : "GATE_JOB",
+    roleName : "ROLE_GATE",
     icon: <GateInIcon style={{ width: "18px", marginLeft: "3px" }} />,
     startIcon: <GateInIcon style={{ width: "18px", marginLeft: "3px" }} />,
   },
-];
+  // "ROLE_ADMIN" : "Admin"
+}
+// const accessValue = [
+//   {
+//     title: "Yard Operation",
+//     roleName : "YARD_JOB",
+//     icon: <YardIcon />,
+//     startIcon: <YardIcon style={{ width: "21px" }} />,
+//   },
+//   {
+//     title: "Gate Operation",
+//     roleName : "GATE_JOB",
+//     icon: <GateInIcon style={{ width: "18px", marginLeft: "3px" }} />,
+//     startIcon: <GateInIcon style={{ width: "18px", marginLeft: "3px" }} />,
+//   },
+// ];
 
 export default function EditModal(props) {
   const classes = useStyles();
-  const { open, setOpen, type, api } = props;
+  const { open, setOpen, type,user } = props;
   const [userName, setUserName] = useState("");
   const [facility, setFacility] = useState();
-  const [access, setAccess] = useState([]);
+  const [access, setAccess] = useState((user.userRoleId !== undefined) ? user.userRoleId.map(role => role.roleName) :  []);
   const [toaster, setToaster] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({
     userName: "",
     facility: "",
   });
-  const [gateChecked, setGetChecked] = useState(false);
   const authToken = useSelector(({ auth }) => auth.authToken);
   let facilityList = useSelector(({ base }) => base.facilityList);
+  let roleList = useSelector(({ base }) => base.userRoleList);
   const dispatch = useDispatch();
+  
+  const getUserRoleList = () => {
+    if (roleList.length === 0) {
+      dispatch(
+        getUserRoleList(authToken, handleCallRoleBack)
+      );
+    }
+  };
+  useEffect(getUserRoleList, []);
+
+  const handleCallRoleBack =(response)=>{
+    
+  }
   const handleNameChange =(e)=>{
     setUserName(e.target.value)
   }
@@ -222,7 +250,7 @@ export default function EditModal(props) {
         setLoading(true)
         dispatch(AddRoleApi(data,authToken,handleCallback));
       }else{
-        // call edit user api
+        // call edit user api //getUserRoleList
       }
     }
   };
@@ -274,7 +302,7 @@ export default function EditModal(props) {
           {type === "edit" ? (
             <Typography className={classes.innerContent}>
               User Name:
-              <span style={{ color: "#000000", marginLeft: "2px" }}>John</span>
+              <span style={{ color: "#1f1f21", marginLeft: "2px" }}>{user.userName}</span>
             </Typography>
           ) : (
             <>
@@ -324,15 +352,19 @@ export default function EditModal(props) {
           )}
           {/* Access user */}
           <form onSubmit={handleSubmit}>
-            <Typography style={{ fontWeight: "400", marginTop: "10px" }}>
+            <Typography style={{ fontWeight: "400", marginTop: "10px",color:"#777777" }}>
               Access
             </Typography>
             <div className={classes.boxStyle}>
               <List style={{ paddingTop: "0px", paddingBottom: "0px" }}>
-                {accessValue.map((item,index) => (
-                  <>
+                {roleList && roleList.map((role,roleIndex) => {
+                  let roleData = accessValue[role.roleName]
+                  if(roleData === undefined){
+                    return null
+                  }
+                  return <React.Fragment key={roleIndex}>
                   <ListItem
-                    key={item.title}
+                    key={roleData.title}
                     role={undefined}
                     dense
                     button
@@ -342,25 +374,29 @@ export default function EditModal(props) {
                   >
                     <ListItemIcon style={{paddingLeft:"2px"}}>
                       <IconButton edge="start" aria-label="comments" >
-                        {item.startIcon}
+                        {roleData.startIcon}
                       </IconButton>
                     </ListItemIcon>
                     <ListItemText
-                      primary={item.title}
+                      primary={roleData.title}
                       className={classes.listItemText}
                     />
                     <ListItemSecondaryAction>
                       <GreenCheckbox
                         edge="end"
-                        name={item.title}
+                        name={roleData.title}
                         tabIndex={-1}
-                        onChange={(e) => handleCheckbox(e, item.roleName)}
+                        onChange={(e) => handleCheckbox(e, roleData.roleName)}
+                        checked={access.indexOf(roleData.roleName) > -1}
                       />
                     </ListItemSecondaryAction>
                   </ListItem>
-                  <Divider style={{backgroundColor:"#ced4da",marginLeft: '-3px'}} />
-                  </>
-                ))}
+                  <Divider style={{backgroundColor:"#ced4da"}} />
+                  </React.Fragment>
+                })}
+                {/* {accessValue.map((item,index) => (
+                  
+                ))} */}
               </List>
             </div>
 

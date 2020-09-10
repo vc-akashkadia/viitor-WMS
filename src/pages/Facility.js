@@ -36,11 +36,9 @@ const BootstrapInput = withStyles((theme) => ({
     },
   },
   input: {
-    color: '#1f1f21',
     borderRadius: 4,
     position: "relative",
     backgroundColor: "#f6f6f6",
-    // color: "#173a64",
     border: "1px solid #ced4da",
     fontSize: 16,
     padding: "0px 26px 0px 12px",
@@ -48,6 +46,7 @@ const BootstrapInput = withStyles((theme) => ({
     width: "100%",
     height: 28,
     // display: "flex",
+    color:"#1f1f21",
     alignItems: "center",
     whiteSpace: "nowrap",
     overflow: "hidden",
@@ -164,11 +163,10 @@ export default function Facility() {
     }
   },[]);
   const handleCallbackFacilityList = (response) => {
-    console.log("response",response)
-    // const {
-    //   data: { status },
-    // } = response;
-    if (response && response.status) {
+    const {
+      data: { status },
+    } = response;
+    if (status) {
       setLoading(false);
     } else {
       toasterOption = {

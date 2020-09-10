@@ -2,41 +2,44 @@ import { getUrl } from "../services/network/urls";
 import { post, get } from "../services/network/requests";
 import {
   ContainerListForLocation,
-  userList
+  userList,
+  userRoleList,
 } from "../actions/actions";
 
 export const AddRoleApi = (data, authtoken, callback) => {
   let url = getUrl("addRole");
-  return (dispatch) => { post(url, data, authtoken)
-    .then((response) => {
-      callback(response);
-    })
-    .catch((err) => {
-      console.log("error", err);
-      let response = {
-        status : false,
-        code : err.response.status
-      }
-      callback(response)
-    });
+  return (dispatch) => {
+    post(url, data, authtoken)
+      .then((response) => {
+        callback(response);
+      })
+      .catch((err) => {
+        console.log("error", err);
+        let response = {
+          status: false,
+          code: err.response.status,
+        };
+        callback(response);
+      });
   };
 };
 
 export const EditRoleApi = (data, authtoken, callback) => {
   let url = getUrl("addRole");
-  return (dispatch) => {  post(url, data, authtoken)
-    .then((response) => {
-      callback(response);
-    })
-    .catch((err) => {
-      console.log("error", err);
-      let response = {
-        status : false,
-        code : err.response.status
-      }
-      callback(response)
-    });
-  }
+  return (dispatch) => {
+    post(url, data, authtoken)
+      .then((response) => {
+        callback(response);
+      })
+      .catch((err) => {
+        console.log("error", err);
+        let response = {
+          status: false,
+          code: err.response.status,
+        };
+        callback(response);
+      });
+  };
 };
 
 export const getUserList = (data, authToken, callback) => {
@@ -60,16 +63,52 @@ export const getUserList = (data, authToken, callback) => {
       })
       .catch((err) => {
         console.log("error", err);
-      let response = {
-        status : false,
-        code : err.response.status
-      }
-      callback(response)
+        let response = {
+         data : { status: false,}
+          
+        };
+        callback(response);
       });
   };
-}
+};
+export const getUserRoleList = (authToken, callback) => {
+  let url = getUrl("userRolelist");
+  // let querystring = `?containerNumber=${data.containerNumber}&facilityName=${data.facility}`;
+  // url = url + querystring;
+  return (dispatch) => {
+    get(url, authToken)
+      .then((response) => {
+        const {
+          data: { status, data },
+        } = response;
+        if (status) {
+          let damageCodeList = data.damageCodeList.map((code) => ({
+            value: code.damageCode,
+            label: code.damageDescription,
+          }));
+          dispatch(userRoleList(damageCodeList));
+        }
+        callback(response);
+      })
+      .catch((err) => {
+        console.log("error", err);
+        let responseNew = {
+          data: {
+            status: false,
+            code: err.response.status,
+          },
+        };
 
-export const getContainerListForLocationUpdate = (data, authToken, callback) => {
+        callback(responseNew);
+      });
+  };
+};
+
+export const getContainerListForLocationUpdate = (
+  data,
+  authToken,
+  callback
+) => {
   let url = getUrl("locationUpdateGetApi");
   let querystring = `?containerNumber=${data.containerNumber}&facilityName=${data.facility}`;
   url = url + querystring;
@@ -86,28 +125,29 @@ export const getContainerListForLocationUpdate = (data, authToken, callback) => 
       })
       .catch((err) => {
         console.log("error", err);
-      let response = {
-        status : false,
-        code : err.response.status
-      }
-      callback(response)
+        let response = {
+          status: false,
+          code: err.response.status,
+        };
+        callback(response);
       });
   };
-}
+};
 
 export const LocationUpdatePost = (data, authtoken, callback) => {
   let url = getUrl("addRole");
-  return (dispatch) => {post(url, data, authtoken)
-    .then((response) => {
-      callback(response);
-    })
-    .catch((err) => {
-      console.log("error", err);
-      let response = {
-        status : false,
-        code : err.response.status
-      }
-      callback(response)
-    });
+  return (dispatch) => {
+    post(url, data, authtoken)
+      .then((response) => {
+        callback(response);
+      })
+      .catch((err) => {
+        console.log("error", err);
+        let response = {
+          status: false,
+          code: err.response.status,
+        };
+        callback(response);
+      });
   };
 };

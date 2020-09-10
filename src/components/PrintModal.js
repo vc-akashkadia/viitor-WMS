@@ -143,7 +143,9 @@ export default function AlertDialog(props) {
     }
   };
   const handleCallback = (response,printType) => {
-    const {status} = response
+    console.log(response)
+    const { data : {status}} = response
+   
     if(status){
     setPrintType(printType);
     setTimeout(() => {

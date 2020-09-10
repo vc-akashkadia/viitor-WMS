@@ -35,8 +35,8 @@ const useStyles = makeStyles((theme) => ({
   },
   headerDiv: {
     width: "100%",
-    textAlign: "center",
-    // marginLeft: "5px",
+    // textAlign: "center",
+    marginLeft: "5px",
   },
   headerDiv1: {
     width: "100%",
@@ -141,11 +141,7 @@ export default function TitleHeader(props) {
               </IconButton>
 
               <div
-                className={
-                  title && title.length <= 10
-                    ? classes.headerDiv
-                    : classes.headerDiv1
-                }
+                className={ classes.headerDiv }
               >
                 <Typography
                   className={classes.backText + " " + classes.headerText}
@@ -180,7 +176,7 @@ export default function TitleHeader(props) {
                 onClick={handleClick}
                 // ref={anchorRef}
               >
-                <AccountCircle style={{ color: "#120e5b" }} />
+                <AccountCircle style={{ color: "#173a64" }} />
               </IconButton>
             </Box>
             <StyledMenu
@@ -195,7 +191,7 @@ export default function TitleHeader(props) {
               {facility && (
                 <StyledMenuItem>
                   <ListItemIcon className={classes.menuIcon}>
-                    <AccountBalanceIcon fontSize="small" />
+                    <AccountBalanceIcon fontSize="small" color="#120e5b" />
                   </ListItemIcon>
                   <ListItemText primary={facility} />
                 </StyledMenuItem>

@@ -131,7 +131,8 @@ export default function PickUpModal(props) {
         <DialogContent className={classes.content}>
           <DialogContentText id="alert-dialog-description">
             Do you want to confirm Pick up for{" "}
-            <b>{container && container.containerNumber}</b>?
+            {/* <b>{container && container.containerNumber}</b>? */}
+            <span style={{ color: "#000000" }}>{container && container.containerNumber}</span>?
           </DialogContentText>
         </DialogContent>
         {loading && <Loader />}

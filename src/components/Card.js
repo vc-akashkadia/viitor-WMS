@@ -24,6 +24,7 @@ const BootstrapInput = withStyles((theme) => ({
     backgroundColor: "#f6f6f6",
     border: "none",
     fontSize: 14,
+    color:"#1f1f21",
     fontWeight: 500,
     padding: "0px 26px 0px 12px",
     transition: theme.transitions.create(["border-color", "box-shadow"]),
@@ -147,7 +148,7 @@ export default function CardGrid(props) {
             " " +
             (item.gateOperationCompleted ? classes.damageCode : "")
           }
-          style={{ border: "1px solid #929eaa",marginLeft:"2px", marginRight:"2px" }}
+          style={{ border: "1px solid #929eaa",marginLeft:"1px", marginRight:"1px" }}
         >
           <Box
             display="flex"
@@ -167,7 +168,7 @@ export default function CardGrid(props) {
                     item.truckNumber.length - 4
                   ) : '' }
                   size="medium"
-                  style={{ width: 78, color: "#000000" }}
+                  style={{ width: 80, color: "#000000" }}
                   onClick={() => handleOpenModal("truck", item.truckNumber)}
                 />
                 {/* <img src={TruckICon} alt="truck" style={{position:'absolute',top:'-11px',left:'7px',width:23}}></img> */}
@@ -209,17 +210,16 @@ export default function CardGrid(props) {
               <div style={{ position: "relative",width: "100%" }}>
               <Chip
                 label={item.location}
-                style={{ width: "100%", color: "#173a64"}}
+                style={{ width: "100%", color: "#000000"}}
               />
               <LocationOnOutlinedIcon
-                 style={{
-                    position: "absolute",
-                    top: "-10.5px",
-                    left: "3px",
-                    width: 15,
-                    color:"#0000004d"
-                  }}
-                 
+                style={{
+                  position: "absolute",
+                  top: "-10.5px",
+                  left: "4px",
+                  width: 15,
+                  color:"#0000004d"
+                }}
                   />
               </div>
             </Box>

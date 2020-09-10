@@ -14,6 +14,7 @@ import TitleHeader from "../../components/TitleHeader"
 import ScrollToTop from "../../components/ScrollToTop"
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import EditUserModal from "./EditModal"
+import Divider from "@material-ui/core/Divider";
 import {
   getUserList
 } from "../../apicalls/ModuleAccessApiCalls";
@@ -23,9 +24,9 @@ const useStyles = makeStyles((theme) => ({
     position: 'fixed',
   },
   yardTitle: {
-    margin: "12px 10px",
+    margin: "15px 10px 10px 15px",
     fontSize: 15,
-    color: "#173a64",
+    color: "#5c5c5c",
   },
   yardCard: {
     padding: 5,
@@ -60,7 +61,7 @@ const useStyles = makeStyles((theme) => ({
   },
   searchTitle: {
     fontSize: 15,
-    color: "#173a64",
+    color: "#5c5c5c",
   },
  
   searchInput: {
@@ -77,9 +78,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const access = {
+  "ROLE_YARD" : "Yard",
+  "ROLE_GATE" : "Gate",
+  "ROLE_ADMIN" : "Admin"
+}
+  
 
 
-export default function YardOperation(props) {
+export default function UserList(props) {
   const classes = useStyles();
 //   const history = useHistory();
   const [open, setOpen] = useState(false);
@@ -145,9 +152,10 @@ export default function YardOperation(props) {
       <div className={classes.yardMain} style={open ?{marginTop:"82px"}:{marginTop:"0px"}}>
         <div style={{position:'relative'}}>
         <Typography className={classes.yardTitle}>User List</Typography>
-        <AddCircleIcon style={{position:'absolute',top: '-5px',right:'10px'}}  onClick={()=>handleGModal("add",{})}/>
+        <AddCircleIcon  fontSize="small"  style={{position:'absolute',top: '-1px',right:'10px',color:'#5c5c5c'}}  onClick={()=>handleGModal("add",{})}/>
         </div>
-        {/* {userList && userList.map((user,index)=> ( */}
+        <Divider style={{ marginBottom: "7px" }} />
+         {userList && userList.map((user,index)=> ( 
           <Card  className={classes.yardCard} style={{ border: "1px solid #929eaa",marginLeft:"2px", marginRight:"2px" }}>
           <Box
             display="flex"
@@ -155,24 +163,26 @@ export default function YardOperation(props) {
             justifyContent="space-between"
           >
             <Box className={classes.chipMain}>
-              <Chip label="John"  style={{ width: "107px", color: "#173a64" }}/>
-              <Chip label="Baxter Chennai"    style={{ width:"112px",color: "#173a64" }} />
-              <Chip label="Gate"  size="medium"  style={{ width:"90px", color: "#173a64" }} />
-              <Chip label="Yard"  size="medium"  style={{ width:"90px", color: "#173a64" }} />
+              <Chip label={user.userName}  style={{ width: "107px", color: "#000000" }}/>
+              <Chip label={user.facilityId}    style={{ width:"112px",color: "#000000" }} />
+              {user.userRoleId.map((role,key) => (
+                <Chip key={key+'_'+role.roleName} label={access[role.roleName]}  size="medium"  style={{ width:"90px", color: "#000000" }} />
+              ))}
+              
               <Button
                 className={classes.confirmBtn}
-                onClick={()=>handleGModal("edit",{})}
+                onClick={()=>handleGModal("edit",user)}
               >
                 <EditIcon fontSize="small"/>
               </Button>
             </Box>
           </Box>
         </Card>
-        {/* ))} */}
+         ))} 
         
       </div>
      <ScrollToTop />
-     {gModal &&( <EditUserModal open={gModal} setOpen={setGModal} type={type} api={"Location Api"} data={"LOC1234"} />)}
+     {gModal &&( <EditUserModal open={gModal} setOpen={setGModal} type={type} api={"Location Api"} data={"LOC1234"} user={selectUser} />)}
     </>
   );
 }

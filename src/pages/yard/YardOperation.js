@@ -49,10 +49,11 @@ const BootstrapInput = withStyles((theme) => ({
     backgroundColor: "#f6f6f6",
     border: "1px solid #ced4da",
     fontSize: 14,
+    color:"#1f1f21",
     padding: "0px 26px 0px 12px",
     transition: theme.transitions.create(["border-color", "box-shadow"]),
     width: "100%",
-    height: 26,
+    height: 28,
     // display: "flex",
     alignItems: "center",
     whiteSpace: "nowrap",
@@ -79,9 +80,9 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 15,
   },
   yardTitle: {
-    margin: "15px 10px 10px 10px",
+    margin: "15px 10px 10px 15px",
     fontSize: 15,
-    color: "#173a64",
+    color: "#5c5c5c",
   },
   yardNoData: {
     width: "100%",
@@ -127,7 +128,7 @@ const useStyles = makeStyles((theme) => ({
   },
   searchTitle: {
     fontSize: 15,
-    color: "#173a64",
+    color: "#5c5c5c",
   },
   searchInput: {
     width: "100%",
@@ -370,7 +371,7 @@ export default function YardOperation(props) {
       >
          <div style={{position:'relative'}}>
         <Typography className={classes.yardTitle}>Work Order</Typography>
-        <RefreshIcon onClick={handleSearch} fontSize="small" style={{position:'absolute',top: '-2px',right:'10px',color:"#173a64"}}  />
+        <RefreshIcon onClick={handleSearch} fontSize="small" style={{position:'absolute',top: '-2px',right:'10px',color:"#5c5c5c"}}  />
         </div>
         <Divider style={{ marginBottom: "7px" }} />
         {loading && <Loader />}

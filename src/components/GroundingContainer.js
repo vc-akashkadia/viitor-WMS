@@ -33,14 +33,14 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "space-between",
     marginBottom: 10,
-    color: "#707070",
+    color: "#777777",
   },
   content2: {
     fontFamily: "Roboto",
     paddingLeft: 10,
     paddingRight: 10,
     fontWeight: 400,
-    marginTop: "-15px",
+    marginTop: "-21px",
   },
   actionbutton: {
     paddingBottom: 15,
@@ -148,7 +148,7 @@ export default function GroundingContainers(props) {
         </DialogTitle>
         <DialogContent className={classes.content}>
           <Typography className={classes.innerContent}>
-            Cont#: <span style={{ color: "#000000" }}>{container && container.containerNumber}</span>{" "}
+            Cont#: <span style={{ color: "#1f1f21" }}>{container && container.containerNumber}</span>{" "}
           </Typography>
           {type !== "position" && (
             <Typography className={classes.innerContent}>
@@ -156,7 +156,7 @@ export default function GroundingContainers(props) {
             </Typography>
           )}
           <Typography className={classes.innerContent}>
-            Location: <span style={{ color: "#000000" }}>{container && container.location}</span>{" "}
+            Location: <span style={{ color: "#1f1f21" }}>{container && container.location}</span>{" "}
           </Typography>
         </DialogContent>
         <form onSubmit={handleSubmit}>

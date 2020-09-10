@@ -48,13 +48,13 @@ const BootstrapInput = withStyles((theme) => ({
     borderRadius: 4,
     position: "relative",
     backgroundColor: "#f6f6f6",
-    // color: "#173a64",
     border: "1px solid #ced4da",
     fontSize: 14,
     padding: "0px 26px 0px 12px",
     transition: theme.transitions.create(["border-color", "box-shadow"]),
     width: "100%",
-    height: 26,
+    height: 28,
+    color:"#1f1f21",
     // display: "flex",
     alignItems: "center",
     whiteSpace: "nowrap",
@@ -81,9 +81,9 @@ const useStyles = makeStyles({
     fontSize: 15,
   },
   yardTitle: {
-    margin: "15px 10px 10px 10px",
+    margin: "15px 10px 10px 15px",
     fontSize: 15,
-    color: "#173a64",
+    color: "#5c5c5c",
   },
   yardNoData: {
     width:'100%',
@@ -133,7 +133,7 @@ const useStyles = makeStyles({
   },
   searchTitle: {
     fontSize: 15,
-    color: "#173a64",
+    color: "#5c5c5c",
   },
   searchInput: {
     width: "100%",
@@ -521,11 +521,11 @@ export default function GateMovePage(props) {
       )}
       <div
         className={classes.yardMain}
-        style={open ? { marginTop: "116px" } : { marginTop: "0px" }}
+        style={open ? { marginTop: "120px" } : { marginTop: "0px" }}
       >
         <div style={{position:'relative'}}>
         <Typography className={classes.yardTitle}>Work Order</Typography>
-        <RefreshIcon onClick={handleSearch} fontSize="small" style={{position:'absolute',top: '1px',right:'10px',color:"#173a64"}}  />
+        <RefreshIcon onClick={handleSearch} fontSize="small" style={{position:'absolute',top: '-1px',right:'10px',color:"#5c5c5c"}}  />
         </div>
         <Divider style={{marginBottom:"7px"}}/>
         {/* <hr /> */}
@@ -634,7 +634,8 @@ export default function GateMovePage(props) {
             <DialogContentText id="alert-dialog-description">
               Do you want to confirm Gate{" "}
               {props.gateType.charAt(0).toUpperCase() + props.gateType.slice(1)}{" "}
-              for <b>{selectContainer.containerNumber}</b>?
+              {/* for <b>{selectContainer.containerNumber}</b>? */}
+              for <span style={{ color: "#000000" }}>{selectContainer.containerNumber}</span>?
             </DialogContentText>
           </DialogContent>
           <DialogActions className={classes.actionbutton}>
