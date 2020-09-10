@@ -23,15 +23,15 @@ const useStyles = makeStyles((theme) => ({
     position: "fixed",
   },
   backIcon: {
-    color: "#173a64",
+    color: "#120e5b",
   },
   backText: {
-    color: "#173a64",
+    color: "#120e5b",
     fontSize: 15,
   },
   searchTitle: {
     fontSize: 15,
-    color: "#173a64",
+    color: "#120e5b",
   },
   headerDiv: {
     width: "100%",
@@ -180,7 +180,7 @@ export default function TitleHeader(props) {
                 onClick={handleClick}
                 // ref={anchorRef}
               >
-                <AccountCircle style={{ color: "#173a64" }} />
+                <AccountCircle style={{ color: "#120e5b" }} />
               </IconButton>
             </Box>
             <StyledMenu

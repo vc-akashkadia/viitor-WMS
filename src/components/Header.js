@@ -146,7 +146,7 @@ export default function Header() {
               color="primary"
               onClick={handleDrawer}
             >
-              <MenuIcon style={{color:"#173a64"}}/>
+              <MenuIcon style={{color:"#120e5b"}}/>
             </IconButton>
             <Link to="/">
               <img
@@ -158,7 +158,7 @@ export default function Header() {
               />
             </Link>
             <IconButton aria-haspopup="true" onClick={handleClick}>
-              <AccountCircle style={{color:"#173a64"}}/>
+              <AccountCircle style={{color:"#120e5b"}}/>
             </IconButton>
           </Box>
           <StyledMenu
