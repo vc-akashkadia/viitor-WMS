@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
     bottom: "13.5px",
     left: "50%",
     transform: "translateX(-50%)",
-    marginLeft: 40,
+    marginLeft: 35,
     width: "auto",
     overflow: "hidden",
     textAlign: "center",
@@ -49,6 +49,9 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 21,
     fontWeight: 900,
     color: "#000000",
+    transform: 'translateX(0)',
+    display: 'inline-block',
+    lineHeight: '24px'
   },
 
   containerLabel: {

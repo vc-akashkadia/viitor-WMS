@@ -84,9 +84,8 @@ const useStyles = makeStyles((theme) => ({
   },
   content: {
     fontFamily: "Roboto",
-    paddingLeft: 10,
-    paddingRight: 10,
-    paddingBottom: 0,
+    padding: "10px 10px",
+    margin: 5
   },
   innerContent: {
     display: "flex",
@@ -108,11 +107,11 @@ const useStyles = makeStyles((theme) => ({
     marginTop: "-15px",
   },
   actionbutton: {
-    paddingBottom: 15,
+    // paddingBottom: 15,
     justifyContent: "center",
   },
   boxStyle: {
-    width: "190px",
+    width: "180px",
     border: "1px solid #ced4da",
     paddingLeft: "2px",
     margin: "4px 0px 0px 0px",
@@ -359,8 +358,8 @@ export default function EditModal(props) {
                       />
                     </ListItemSecondaryAction>
                   </ListItem>
-                  <Divider style={{backgroundColor:"#ced4da"}} />
-                  </React.Fragment>
+                  <Divider style={{backgroundColor:"#ced4da",marginLeft: '-3px'}} />
+                  </>
                 ))}
               </List>
             </div>

@@ -167,7 +167,7 @@ export default function CardGrid(props) {
                     item.truckNumber.length - 4
                   ) : '' }
                   size="medium"
-                  style={{ width: 78, color: "#173a64" }}
+                  style={{ width: 78, color: "#000000" }}
                   onClick={() => handleOpenModal("truck", item.truckNumber)}
                 />
                 {/* <img src={TruckICon} alt="truck" style={{position:'absolute',top:'-11px',left:'7px',width:23}}></img> */}
@@ -178,7 +178,9 @@ export default function CardGrid(props) {
                     position: "absolute",
                     top: "-10px",
                     left: "4px",
-                    width: 19,
+                    width: 15,
+                    color:"#0000004d"
+                    // backgroundColor: "#ffffff"
                   }}
                 />
               </div>
@@ -191,32 +193,33 @@ export default function CardGrid(props) {
                     handleOpenModal("container", item.containerNumber)
                   }
                   size="medium"
-                  style={{ width: 78, color: "#173a64" }}
+                  style={{ width: 78, color: "#000000" }}
                 />
                 <img
                   src={ContainerIcon}
                   alt="container"
                   style={{
                     position: "absolute",
-                    top: "-7.5px",
+                    top: "-5.5px",
                     left: "4px",
-                    width: 16,
+                    width: 13,
                   }}
                 ></img>
               </div>
               <div style={{ position: "relative",width: "100%" }}>
               <Chip
                 label={item.location}
-                style={{ width: "97%", color: "#173a64"}}
+                style={{ width: "100%", color: "#173a64"}}
               />
               <LocationOnOutlinedIcon
                  style={{
                     position: "absolute",
                     top: "-10.5px",
                     left: "3px",
-                    width: 18,
+                    width: 15,
+                    color:"#0000004d"
                   }}
-                  color="action" 
+                 
                   />
               </div>
             </Box>

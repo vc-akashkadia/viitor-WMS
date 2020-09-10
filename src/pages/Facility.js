@@ -39,6 +39,7 @@ const BootstrapInput = withStyles((theme) => ({
     borderRadius: 4,
     position: "relative",
     backgroundColor: "#f6f6f6",
+    // color: "#173a64",
     border: "1px solid #ced4da",
     fontSize: 16,
     padding: "0px 26px 0px 12px",
@@ -65,15 +66,17 @@ const BootstrapInput = withStyles((theme) => ({
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: "500px",
-    marginTop: "15px",
-    margin: "auto",
+    margin: "0 10px",
+    // margin: "auto",
     position: "relative",
-    paddingBottom: 95,
+    // paddingBottom: 125,
     "@media (min-width:241px)": {
       paddingBottom: 40,
+      margin: 'auto'
     },
     "@media (min-width:768px)": {
       paddingBottom: 100,
+      margin: 'auto'
     },
   },
   logo: {
@@ -83,7 +86,7 @@ const useStyles = makeStyles((theme) => ({
     margin: "10px auto",
   },
   listItemsChild: {
-    marginBottom: 20,
+    marginBottom: 10,
     // marginTop: 20,
   },
   formControl: {
@@ -97,6 +100,7 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     left: 0,
     display: "block",
+    padding: "0 10px"
   },
   // label: {
   //   fontSize: 14,
@@ -118,6 +122,12 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: "5px",
     marginTop: "25px",
   },
+  facilityForm:{
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    minHeight: 210
+  }
 }));
 
 export default function Facility() {
@@ -176,13 +186,13 @@ export default function Facility() {
       <br />
 
       <Card className={classes.root}>
-        <CardContent>
+        <CardContent style={{minHeight: '270px'}}>
           {alert && (
             <Alert severity={toasterOption.option}>
               {toasterOption.message}
             </Alert>
           )}
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} className={classes.facilityForm}>
             <Grid item xs={12} className={classes.listItemsChild}>
               {loading && <Loader />}
               {!loading && (

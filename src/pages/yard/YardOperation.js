@@ -52,7 +52,7 @@ const BootstrapInput = withStyles((theme) => ({
     padding: "0px 26px 0px 12px",
     transition: theme.transitions.create(["border-color", "box-shadow"]),
     width: "100%",
-    height: 28,
+    height: 26,
     // display: "flex",
     alignItems: "center",
     whiteSpace: "nowrap",
@@ -79,7 +79,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 15,
   },
   yardTitle: {
-    margin: "15px 10px 10px 15px",
+    margin: "15px 10px 10px 10px",
     fontSize: 15,
     color: "#173a64",
   },

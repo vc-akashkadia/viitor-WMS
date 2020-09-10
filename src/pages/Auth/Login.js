@@ -18,10 +18,9 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: "500px",
-    marginTop: "15px",
-    margin: "auto",
+    margin: "0 10px",
     position: "relative",
-    paddingBottom: 57,
+    paddingBottom: 70,
     "@media (min-width:241px)": {
       paddingBottom: 40,
     },
@@ -102,7 +101,8 @@ const useStyles = makeStyles((theme) => ({
     bottom: 0,
     width: "100%",
     left: 0,
-    display: 'block'
+    display: 'block',
+    padding: "0 10px"
   },
 }));
 // let errors = {
