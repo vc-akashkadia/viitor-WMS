@@ -11,6 +11,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Loader from "./Loader";
 
 import { GroundingContianerApiCall } from "../apicalls/YardApiCalls";
+import { LocationUpdatePost } from "../apicalls/ModuleAccessApiCalls";
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -67,7 +68,7 @@ const useStyles = makeStyles((theme) => ({
 export default function GroundingContainers(props) {
   const classes = useStyles();
   const { open, setOpen, type, api, data, container } = props;
-  const [location, setLocation] = useState(container.location);
+  const [location, setLocation] = useState(container &&container.location);
   const [error, setError] = useState("");
   const dispatch = useDispatch();
   const authToken = useSelector(({ auth }) => auth.authToken);
@@ -87,6 +88,7 @@ export default function GroundingContainers(props) {
   const handleChange = (e) => {
     setLocation(e.target.value);
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (location === "") {
@@ -96,6 +98,15 @@ export default function GroundingContainers(props) {
         //call the postion API
 
         console.log("api", api);
+        let data = {
+          containerNumber: container.containerNumber,
+          locationNumber: location,
+          craneNumber: yardCrane,
+          truckNumber: container.truckNumber,
+          facilityId:facility
+        };
+        setLoading(true);
+        dispatch(LocationUpdatePost(data, authToken, handleCallback));
         setOpen(false);
       } else {
         //call other API
@@ -137,27 +148,27 @@ export default function GroundingContainers(props) {
         </DialogTitle>
         <DialogContent className={classes.content}>
           <Typography className={classes.innerContent}>
-            Cont# <span style={{ color: "#000000" }}>{container.containerNumber}</span>{" "}
+            Cont#: <span style={{ color: "#000000" }}>{container && container.containerNumber}</span>{" "}
           </Typography>
           {type !== "position" && (
             <Typography className={classes.innerContent}>
-              Status <span style={{ color: "#0c79c1" }}>Ground</span>{" "}
+              Status: <span style={{ color: "#0c79c1" }}>Ground</span>{" "}
             </Typography>
           )}
           <Typography className={classes.innerContent}>
-            Location <span style={{ color: "#000000" }}>{container.location}</span>{" "}
+            Location: <span style={{ color: "#000000" }}>{container && container.location}</span>{" "}
           </Typography>
         </DialogContent>
         <form onSubmit={handleSubmit}>
           <DialogContent className={classes.content2}>
-            <Typography style={{ fontWeight: "400" }}>New Location:</Typography>
+            <Typography className={classes.innerContent}>New Location</Typography>
             <TextField
               error={error !== ""}
               id="newLocation"
               label=""
               variant="outlined"
               placeholder="Enter New Location"
-              style={{ width: "100%", marginTop: 10 }}
+              style={{ width: "100%", marginTop: "-5px" }}
               value={(location !== null ) ? location : ''}
               onChange={handleChange}
               InputProps={{

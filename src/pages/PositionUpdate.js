@@ -68,6 +68,10 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#ffff",
     zIndex: "2",
   },
+  searchTitle: {
+    fontSize: 15,
+    color: "#173a64",
+  },
 
   searchInput: {
     width: "100%",
@@ -90,7 +94,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function YardOperation(props) {
+export default function PositionUpdate(props) {
   const classes = useStyles();
   const history = useHistory();
   const authToken = useSelector(({ auth }) => auth.authToken);
@@ -100,6 +104,8 @@ export default function YardOperation(props) {
   const [openModal, setModal] = useState(false);
   const [data, setData] = useState();
   const [gType, setGType] = useState();
+  const [containerNumber, setContainerNumber] = useState('');
+  const [selectedContainer, setSelectedContainer] = useState('');
   // const handleFilterOpen =()=>{
   //   setOpen(!open)
   // }
@@ -108,16 +114,22 @@ export default function YardOperation(props) {
   //   const [open, setOpen] = useState(false);
   const getContainerList = () => {
     if (containerList.length === 0) {
+      let data ={
+        containerNumber:containerNumber,
+        facility:facility
+      }
       dispatch(
-        getContainerListForLocationUpdate(facility, authToken, handleCallBack)
+        getContainerListForLocationUpdate(data, authToken, handleCallBack)
       );
     }
   };
   useEffect(getContainerList, []);
+
   const handleCallBack = () => {};
-  const handleGModal = () => {
+  const handleGModal = (container) => {
     setGModal(true);
     setGType("position");
+    setSelectedContainer(container)
   };
 
   const handleOpenModal = () => {
@@ -145,9 +157,11 @@ export default function YardOperation(props) {
               <TextField
                 className={classes.searchInput}
                 id="outlined-basic"
-                placeholder="Enter No."
+                placeholder="Enter Container No."
                 label=""
                 variant="outlined"
+                value={containerNumber}
+                onChange={(e) => setContainerNumber(e.target.value)}
               />
             </Grid>
             <Grid item xs={4}>
@@ -155,6 +169,7 @@ export default function YardOperation(props) {
                 variant="contained"
                 color="primary"
                 className={classes.searchBtn}
+                onClick={getContainerList}
               >
                 Search
               </Button>
@@ -168,10 +183,11 @@ export default function YardOperation(props) {
       >
         <div style={{position:'relative'}}>
         <Typography className={classes.yardTitle}>Work Order</Typography>
-        <RefreshIcon fontSize="small" style={{position:'absolute',top: '-1px',right:'10px',color:'#173a64'}}  />
+        <RefreshIcon onClick={()=> getContainerList()} fontSize="small" style={{position:'absolute',top: '-1px',right:'10px',color:'#173a64'}}  />
         </div>
         <Divider style={{ marginBottom: "7px" }} />
-        <Card className={classes.yardCard} style={{ border: "1px solid #929eaa",marginLeft:"2px", marginRight:"2px" }}>
+        {containerList && containerList.length > 0 && containerList.map((container,index) => (
+          <Card className={classes.yardCard} style={{ border: "1px solid #929eaa",marginLeft:"2px", marginRight:"2px" }}>
           <Box
             display="flex"
             alignItems="center"
@@ -182,7 +198,7 @@ export default function YardOperation(props) {
                 <Chip
                   label="C1"
                   size="small"
-                  style={{ width: "49px" }}
+                  style={{ width: "49px" ,color: "#173a64" }}
                   onClick={handleOpenModal}
                   
                 />
@@ -198,7 +214,7 @@ export default function YardOperation(props) {
                 ></img>
               </div>
               <div style={{ position: "relative" }}>
-                <Chip label="LOC1234" style={{ width: "132px" }} />
+                <Chip label="LOC1234" style={{ width: "132px",color: "#173a64"  }} />
                 <LocationOnOutlinedIcon
                   style={{
                     position: "absolute",
@@ -209,101 +225,13 @@ export default function YardOperation(props) {
                   color="action" 
                   />
                 </div>
-              <Button className={classes.confirmBtn} onClick={handleGModal}>
+              <Button className={classes.confirmBtn} onClick={() => handleGModal(container)}>
                 <EditIcon fontSize="small" />
               </Button>
             </Box>
           </Box>
         </Card>
-        <Card className={classes.yardCard} style={{ border: "1px solid #929eaa",marginLeft:"2px", marginRight:"2px" }}>
-          <Box
-            display="flex"
-            alignItems="center"
-            justifyContent="space-between"
-          >
-            <Box className={classes.chipMain}>
-              <div style={{ position: "relative" }}>
-                <Chip
-                  label="C1"
-                  size="small"
-                  style={{ width: "49px" }}
-                  onClick={handleOpenModal}
-                  
-                />
-                <img
-                  src={ContainerIcon}
-                  alt="container"
-                  style={{
-                    position: "absolute",
-                    top: "-8px",
-                    left: "3px",
-                    width: 15,
-                  }}
-                ></img>
-              </div>
-              <div style={{ position: "relative" }}>
-                <Chip label="LOC1234" style={{ width: "132px" }} />
-                <LocationOnOutlinedIcon
-                  style={{
-                    position: "absolute",
-                    top: "-10.5px",
-                    left: "3px",
-                    width: 18,
-                  }}
-                  color="action" 
-                  />
-                </div>
-              <Button className={classes.confirmBtn} onClick={handleGModal}>
-                <EditIcon fontSize="small" />
-              </Button>
-            </Box>
-          </Box>
-        </Card>
-        <Card className={classes.yardCard} style={{ border: "1px solid #929eaa",marginLeft:"2px", marginRight:"2px" }}>
-          <Box
-            display="flex"
-            alignItems="center"
-            justifyContent="space-between"
-          >
-            <Box className={classes.chipMain}>
-              <div style={{ position: "relative" }}>
-                <Chip
-                  label="C1"
-                  size="small"
-                  style={{ width: "49px" }}
-                  onClick={handleOpenModal}
-                  
-                />
-                <img
-                  src={ContainerIcon}
-                  alt="container"
-                  style={{
-                    position: "absolute",
-                    top: "-8px",
-                    left: "3px",
-                    width: 15,
-                  }}
-                ></img>
-              </div>
-              <div style={{ position: "relative" }}>
-                <Chip label="LOC1234" style={{ width: "132px" }} />
-                <LocationOnOutlinedIcon
-                  style={{
-                    position: "absolute",
-                    top: "-10.5px",
-                    left: "3px",
-                    width: 18,
-                  }}
-                  color="action" 
-                  />
-                </div>
-              <Button className={classes.confirmBtn} onClick={handleGModal}>
-                <EditIcon fontSize="small" />
-              </Button>
-            </Box>
-          </Box>
-        </Card>
-
+        )) }
       </div>
       <ScrollToTop />
       {gModal && (
@@ -313,13 +241,14 @@ export default function YardOperation(props) {
           type={gType}
           api={"Location Api"}
           data={"LOC1234"}
+          container={selectedContainer}
         />
       )}
       {openModal && (
         <Modal
           open={openModal}
           setOpen={setModal}
-          modalData={"truck"}
+          modalData={"container"}
           data={data}
         />
       )}

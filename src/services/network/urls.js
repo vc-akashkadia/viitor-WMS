@@ -31,10 +31,14 @@ export const getUrl = (type) => {
       return `${baseUrl}/addRole`;
     case 'groundingAddapi':
       return `${baseUrl}/yard/grounding`;
+    case 'locationUpdateGetApi':
+      return `${baseUrl}/getContainersList`;
     case 'locationSlipPrint':
       return `${baseUrl}/gateoperation/getPrintDetails`;
     case 'EIRPrint':
       return `${baseUrl}/gateoperation/printeir`;
+    case 'userlist':
+      return `${baseUrl}/getContainersList`;
     default:
       return baseUrl;
   }

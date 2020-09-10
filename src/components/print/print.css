@@ -27,7 +27,7 @@ th.price {
 }
 
 .centered {
-    font-size: 23px;
+    font-size: 20px;
     font-weight: 500;
     margin-bottom: 10px;
     margin-top: 10px;
@@ -36,7 +36,7 @@ th.price {
 .ticket {
     width: 230px;
     max-width: 302px;
-    font-size: 12px;
+    font-size: 10px;
     font-family: "Roboto";
     margin-left:10px;
 }

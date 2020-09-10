@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-// import { useHistory } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+// import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
@@ -13,14 +14,16 @@ import TitleHeader from "../../components/TitleHeader"
 import ScrollToTop from "../../components/ScrollToTop"
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import EditUserModal from "./EditModal"
-
+import {
+  getUserList
+} from "../../apicalls/ModuleAccessApiCalls";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     position: 'fixed',
   },
   yardTitle: {
-    margin: "15px 10px 10px 15px",
+    margin: "12px 10px",
     fontSize: 15,
     color: "#173a64",
   },
@@ -55,6 +58,10 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor:"#ffff",
     zIndex:"2"
   },
+  searchTitle: {
+    fontSize: 15,
+    color: "#173a64",
+  },
  
   searchInput: {
     width: "100%",
@@ -76,18 +83,37 @@ export default function YardOperation(props) {
   const classes = useStyles();
 //   const history = useHistory();
   const [open, setOpen] = useState(false);
+  const [selectUser, setSelectUser] = useState({});
   const [gModal, setGModal] = useState(false);
   const [type,setType]=useState()
-  const handleGModal =(type)=>{
+ 
+  const authToken = useSelector(({ auth }) => auth.authToken);
+  let facilityList = useSelector(({ base }) => base.facilityList);
+  let userList = useSelector(({ base }) => base.userList);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (userList.length === 0) {
+      let data ={
+
+      }
+      //dispatch(getUserList(data,authToken, handleCallbackUserList));
+    }
+  },[]);
+
+  const handleGModal =(type,user)=>{
     setGModal(true)
     setType(type)
+    setSelectUser(user)
   }
 
+  const handleCallbackUserList = (response) => {
+    
+  }
   
   return (
     <>
-      <TitleHeader open={open} setOpen={setOpen} title={"User Access"} backPath={"/facility"}/>
-      {open && (
+      <TitleHeader open={open} isSearch={false} setOpen={setOpen} title={"User Access"} backPath={"/facility"}/>
+      {/* {open && (
         <Card className={classes.filterSearch}>
           <Grid container spacing={1} alignItems="center">
             <Grid item xs={6}>
@@ -115,35 +141,38 @@ export default function YardOperation(props) {
             </Grid>
           </Grid>
         </Card>
-      )}
+      )} */}
       <div className={classes.yardMain} style={open ?{marginTop:"82px"}:{marginTop:"0px"}}>
         <div style={{position:'relative'}}>
         <Typography className={classes.yardTitle}>User List</Typography>
-        <AddCircleIcon style={{position:'absolute',top: '-5px',right:'10px',color:"#173a64"}}  onClick={()=>handleGModal("add")}/>
+        <AddCircleIcon style={{position:'absolute',top: '-5px',right:'10px'}}  onClick={()=>handleGModal("add",{})}/>
         </div>
-        <Card className={classes.yardCard} style={{ border: "1px solid #929eaa",marginLeft:"2px", marginRight:"2px" }}>
+        {/* {userList && userList.map((user,index)=> ( */}
+          <Card  className={classes.yardCard} style={{ border: "1px solid #929eaa",marginLeft:"2px", marginRight:"2px" }}>
           <Box
             display="flex"
             alignItems="center"
             justifyContent="space-between"
           >
             <Box className={classes.chipMain}>
-              <Chip label="John"  style={{ width: "107px" }}/>
-              <Chip label="Baxter Chennai"    style={{ width:"112px" }} />
-              <Chip label="Gate"  size="large"  style={{ width:"90px" }} />
-              <Chip label="Yard"  size="large"  style={{ width:"90px" }} />
+              <Chip label="John"  style={{ width: "107px", color: "#173a64" }}/>
+              <Chip label="Baxter Chennai"    style={{ width:"112px",color: "#173a64" }} />
+              <Chip label="Gate"  size="medium"  style={{ width:"90px", color: "#173a64" }} />
+              <Chip label="Yard"  size="medium"  style={{ width:"90px", color: "#173a64" }} />
               <Button
                 className={classes.confirmBtn}
-                onClick={()=>handleGModal("edit")}
+                onClick={()=>handleGModal("edit",{})}
               >
                 <EditIcon fontSize="small"/>
               </Button>
             </Box>
           </Box>
         </Card>
+        {/* ))} */}
+        
       </div>
-      <ScrollToTop />
-      {gModal &&( <EditUserModal open={gModal} setOpen={setGModal} type={type} api={"Location Api"} data={"LOC1234"} />)}
+     <ScrollToTop />
+     {gModal &&( <EditUserModal open={gModal} setOpen={setGModal} type={type} api={"Location Api"} data={"LOC1234"} />)}
     </>
   );
 }

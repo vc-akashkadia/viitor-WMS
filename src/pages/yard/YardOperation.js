@@ -48,7 +48,7 @@ const BootstrapInput = withStyles((theme) => ({
     position: "relative",
     backgroundColor: "#f6f6f6",
     border: "1px solid #ced4da",
-    fontSize: 16,
+    fontSize: 14,
     padding: "0px 26px 0px 12px",
     transition: theme.transitions.create(["border-color", "box-shadow"]),
     width: "100%",
@@ -157,6 +157,7 @@ const gateTypeOptions = [
 const blockConst = [{ value: "Block", label: "Block" }];
 export default function YardOperation(props) {
   const classes = useStyles();
+
   const [loading, setLoading] = useState(false);
   const [toaster, setToaster] = useState(false);
   const [open, setOpen] = useState(false);
@@ -367,30 +368,12 @@ export default function YardOperation(props) {
         className={classes.yardMain}
         style={open ? { marginTop: "132px" } : { marginTop: "0px" }}
       >
-        <div style={{position:'relative'}}>
+         <div style={{position:'relative'}}>
         <Typography className={classes.yardTitle}>Work Order</Typography>
         <RefreshIcon onClick={handleSearch} fontSize="small" style={{position:'absolute',top: '-2px',right:'10px',color:"#173a64"}}  />
         </div>
         <Divider style={{ marginBottom: "7px" }} />
-        {/* {loading && <Loader />} */}
-        <CardGrid
-              // key={key}
-              item={{truckNumber:"1223",containerNumber:"AGTL8968961"}}
-
-              handleOpenModal={handleOpenModal}
-              cardFor="yardOperation"
-            >
-              <Box>
-                {/* {/ {item.containerStatus === "GROUNDING" ? ( /} */}
-                  <Button
-                    className={classes.rightBoxArrow}
-                    // onClick={() => handleOpenGroundingModal(item)}
-                  >
-                    <ArrowDownwardIcon color="secondary" />
-                  </Button>
-              </Box>
-            </CardGrid>
-
+        {loading && <Loader />}
         {!loading && yardContainerList && yardContainerList.length === 0 && (
           <Typography className={classes.yardNoData}>No Data Found</Typography>
         )}

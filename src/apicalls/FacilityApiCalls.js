@@ -21,6 +21,11 @@ export const facilityListApiCall = (authToken, callback) => {
       })
       .catch((err) => {
         console.log("error", err);
+      let response = {
+        status : false,
+        code : err.response.status
+      }
+      callback(response)
       });
   };
 };

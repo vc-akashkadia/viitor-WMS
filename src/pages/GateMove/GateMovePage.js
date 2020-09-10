@@ -49,7 +49,7 @@ const BootstrapInput = withStyles((theme) => ({
     position: "relative",
     backgroundColor: "#f6f6f6",
     border: "1px solid #ced4da",
-    fontSize: 16,
+    fontSize: 14,
     padding: "0px 26px 0px 12px",
     transition: theme.transitions.create(["border-color", "box-shadow"]),
     width: "100%",
@@ -528,61 +528,7 @@ export default function GateMovePage(props) {
         </div>
         <Divider style={{marginBottom:"7px"}}/>
         {/* <hr /> */}
-        {/* {loading && <Loader />} */}
-        <CradGrid
-              // key={key}
-              // index={key}
-              item={{truckNumber:"1223",containerNumber:"AGTL8968961"}}
-              handleOpenModal={handleOpenModal}
-              handleOpenDamageModal={handleOpenDamageModal}
-              cardFor="gateOperation"
-            >
-            <Box style={{'marginLeft': '3px'}}>
-             <Button
-                      className={classes.rightBoxArrow}
-                      // onClick={() => handleOpenModalGate(item, key)}
-                    >
-                      {/* {/ <ArrowDownwardIcon color="secondary" /> /} */}
-                      <img src={GateInIcon} alt="Gate In"  style={{paddingLeft:"5px"}}/>
-                    </Button>
-                    </Box>
-                    </CradGrid>
-                    <CradGrid
-              // key={key}
-              // index={key}
-              item={{truckNumber:"1223",containerNumber:"AGTL8968961"}}
-              handleOpenModal={handleOpenModal}
-              handleOpenDamageModal={handleOpenDamageModal}
-              cardFor="gateOperation"
-            >
-            <Box style={{'marginLeft': '3px'}}>
-             <Button
-                      className={classes.rightBoxArrow}
-                      // onClick={() => handleOpenModalGate(item, key)}
-                    >
-                      {/* {/ <ArrowDownwardIcon color="secondary" /> /} */}
-                      <img src={GateInIcon} alt="Gate In"  style={{paddingLeft:"5px"}}/>
-                    </Button>
-                    </Box>
-                    </CradGrid>
-                    <CradGrid
-              // key={key}
-              // index={key}
-              item={{truckNumber:"1223",containerNumber:"AGTL8968961"}}
-              handleOpenModal={handleOpenModal}
-              handleOpenDamageModal={handleOpenDamageModal}
-              cardFor="gateOperation"
-            >
-            <Box style={{'marginLeft': '3px'}}>
-             <Button
-                      className={classes.rightBoxArrow}
-                      // onClick={() => handleOpenModalGate(item, key)}
-                    >
-                      {/* {/ <ArrowDownwardIcon color="secondary" /> /} */}
-                      <img src={GateInIcon} alt="Gate In"  style={{paddingLeft:"5px"}}/>
-                    </Button>
-                    </Box>
-                    </CradGrid>
+        {loading && <Loader />}
         {!loading &&
           gateMoveContainerList &&
           gateMoveContainerList.length === 0 && (

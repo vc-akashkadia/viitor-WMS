@@ -1,6 +1,7 @@
 import React from "react";
 import "./print.css";
 export default function LocationPrint(props) {
+  console.log(props)
   const { data } = props;
   const date = new Date()
     .toLocaleDateString("en-GB", {
@@ -31,7 +32,7 @@ export default function LocationPrint(props) {
             <tr>
               <td className="description">Print Date:</td>
               <td className="price">
-                {date} {time}
+              {data.printDate}
               </td>
             </tr>
             <tr>
@@ -44,7 +45,7 @@ export default function LocationPrint(props) {
             </tr>
             <tr>
               <td className="description">Vehical No.:</td>
-              <td className="price">{data.vehicleNumber}</td>
+              <td className="price">{(data.vehicleNumber !== null) ? data.vehicleNumber: ''}</td>
             </tr>
             {/* <tr>
               <td className="description">Token No.</td>
@@ -53,13 +54,13 @@ export default function LocationPrint(props) {
             <tr>
               <td className="description">Contr. No.:</td>
               <td className="price">
-              {data.containerNumber}
+              {(data.containerNumber !== null) ? data.containerNumber: ''}
                 {/* / FULL / OUT */}
               </td>
             </tr>
             <tr>
               <td className="description">Current Loc.:</td>
-              <td className="price">{data.currentLocation}</td>
+              <td className="price">{(data.currentLocation !== null) ? data.currentLocation: ''}</td>
             </tr>
             <tr>
               <td className="description">Seal No.:</td>
@@ -67,7 +68,7 @@ export default function LocationPrint(props) {
             </tr>
             <tr>
               <td className="description">Remarks:</td>
-              <td className="price">{data.remarks}</td>
+              <td className="price">{(data.remarks !== null) ? data.remarks: '' }</td>
             </tr>
           </tbody>
         </table>

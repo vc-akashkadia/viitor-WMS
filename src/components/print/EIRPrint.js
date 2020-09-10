@@ -7,7 +7,7 @@ export default function EIRPrint(props) {
   return (
     <>
       <div className="ticket">
-        <img src={brandLogo} alt="Logo" />
+        <img src={brandLogo} alt="Logo" style={{ display: "block", height: "100%", width: 100, margin: "10px auto"}}/>
         <p className="centered" style={{ marginBottom: "0px" }}>
           {data.FacilityCode}
         </p>
@@ -18,7 +18,7 @@ export default function EIRPrint(props) {
         <table>
           <tbody>
             <tr>
-              <td className="description">CAMCO VISIT ID:</td>
+              <td className="description" style={{width:"103px"}}>CAMCO VISIT ID:</td>
               <td className="price">{data.SeqNo}</td>
             </tr>
             <tr>
@@ -26,7 +26,7 @@ export default function EIRPrint(props) {
               <td className="price">{data.printDate}</td>
             </tr>
             <tr>
-              <td className="description">seq. Number:</td>
+              <td className="description">Seq. Number:</td>
               <td className="price">{data.SeqNo}</td>
             </tr>
             <tr>
@@ -55,7 +55,7 @@ export default function EIRPrint(props) {
             </tr>
             <tr>
               <td className="description">Yard Loc:</td>
-              <td className="price">74E9882</td>
+              <td className="price">{data.YardLocation}</td>
             </tr>
             <tr>
               <td className="description">Seal No:</td>

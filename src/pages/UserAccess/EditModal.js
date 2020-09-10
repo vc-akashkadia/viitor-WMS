@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -9,9 +10,8 @@ import { makeStyles, withStyles } from "@material-ui/core/styles";
 import Checkbox from "@material-ui/core/Checkbox";
 import Divider from "@material-ui/core/Divider";
 import TextField from "@material-ui/core/TextField";
-import Select from "@material-ui/core/Select";
 import InputBase from "@material-ui/core/InputBase";
-import MenuItem from "@material-ui/core/MenuItem";
+
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
@@ -21,7 +21,11 @@ import { ReactComponent as YardIcon } from "@assests/img/yard-operation-user.svg
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import IconButton from "@material-ui/core/IconButton";
 import FormHelperText from "@material-ui/core/FormHelperText";
-
+import {AddRoleApi} from '../../apicalls/ModuleAccessApiCalls';
+import Select from "../../components/Select";
+import Loader from "../../components/Loader";
+import Snackbar from "@material-ui/core/Snackbar";
+import MuiAlert from "@material-ui/lab/Alert";
 const GreenCheckbox = withStyles({
   root: {
     "&$checked": {
@@ -67,12 +71,15 @@ const BootstrapInput = withStyles((theme) => ({
 
 const useStyles = makeStyles((theme) => ({
   title: {
+    fontSize: 16,
     color: "#0c79c1",
+    fontWeight: 900,
+    fontFamily: "Roboto",
     textTransform: "uppercase",
-    paddingTop: 2,
+    paddingTop: 12,
     paddingLeft: 10,
     paddingRight: 10,
-    paddingBottom: 0,
+    paddingBottom: 5,
     margin: "auto",
   },
   content: {
@@ -137,14 +144,21 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+let toasterOption = {
+  varient: "success",
+  message: "",
+};
+
 const accessValue = [
   {
     title: "Yard Operation",
+    roleName : "YARD_JOB",
     icon: <YardIcon />,
     startIcon: <YardIcon style={{ width: "21px" }} />,
   },
   {
     title: "Gate Operation",
+    roleName : "GATE_JOB",
     icon: <GateInIcon style={{ width: "18px", marginLeft: "3px" }} />,
     startIcon: <GateInIcon style={{ width: "18px", marginLeft: "3px" }} />,
   },
@@ -155,43 +169,97 @@ export default function EditModal(props) {
   const { open, setOpen, type, api } = props;
   const [userName, setUserName] = useState("");
   const [facility, setFacility] = useState();
+  const [access, setAccess] = useState([]);
+  const [toaster, setToaster] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({
     userName: "",
     facility: "",
   });
   const [gateChecked, setGetChecked] = useState(false);
-
+  const authToken = useSelector(({ auth }) => auth.authToken);
+  let facilityList = useSelector(({ base }) => base.facilityList);
+  const dispatch = useDispatch();
   const handleNameChange =(e)=>{
     setUserName(e.target.value)
   }
 
-  const handleFacility =(e)=>{
-    setFacility(e.target.value)
+  const handleFacility =(value)=>{
+    setFacility(value)
   }
 
   const handleClose = () => {
     setOpen(false);
   };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("facility",facility)
+  
+  const validateData = () => {
+    let validate = true
     let error = { userName: "", facility: "" };
     if (userName === "") {
       error.userName = "User Name is required";
+      validate = false
     }
      if (facility === undefined) {
       error.facility = "Please select the facility";
+      validate = false
     }
     setErrors(error);
-    if(type==="add"){
-      //call the add user api
-    }else{
-      // call edit user api
+    // if (!values.gateIn && !values.yardOperation) {
+    //   errors.anyone = "Please give atleast one access";
+    // }
+    return validate;
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("facility",facility)
+    if(validateData){
+      let data =  {
+        "username":userName,
+        "facilityName":facility,
+        "roleList":access
+      }
+      console.log(data)
+      if(type==="add"){
+        setLoading(true)
+        dispatch(AddRoleApi(data,authToken,handleCallback));
+      }else{
+        // call edit user api
+      }
     }
-
   };
 
+  const handleCallback = (response) => {
+    const {status} = response
+    if(status){
+      toasterOption = {
+        varient: "success",
+        message: type === 'add' ? "User Add Sucessful" : "User Edit Sucessful",
+      };
+    }else{
+      toasterOption = {
+        varient: "error",
+        message: "Something went wrong try after sometime",
+      };
+    }
+    setToaster(true);
+    setLoading(false)
+  }
+
+  const handleCheckbox = (e, targetName) => {
+    // setFieldValue(targetName, e.target.checked);
+    let newAccess = [...access];
+    let index = newAccess.indexOf(targetName);
+    if(e.target.checked){
+      if(index === -1){
+        newAccess.push(targetName)
+      }
+    }else{
+      if(index > -1){
+        newAccess.splice(index, 1);
+      }
+    }
+    setAccess(newAccess)
+  };
   return (
     <div>
       <Dialog
@@ -203,7 +271,6 @@ export default function EditModal(props) {
         <DialogTitle id="alert-dialog-title" className={classes.title}>
           {type === "add" ? "Add User Access" : "Update User Access"}
         </DialogTitle>
-        <Divider />
         <DialogContent className={classes.content}>
           {type === "edit" ? (
             <Typography className={classes.innerContent}>
@@ -222,10 +289,10 @@ export default function EditModal(props) {
               helperText={errors.userName}
               onChange={handleNameChange}
               variant="outlined"
-              style={{ marginTop: "-3px", width: "100%" }}
+              style={{ marginTop: "-3px", width: "100%",marginBottom: "5px" }}
             />
           
-            <Select
+            {/* <Select
               labelId="demo-customized-select-label"
               id="demo-customized-select"
               name="damageCode"
@@ -243,7 +310,16 @@ export default function EditModal(props) {
                 Select Facility
               </MenuItem>
               <MenuItem value={"a"}>a</MenuItem>
-            </Select>
+            </Select> */}
+              <Select
+                selectedValue={facility !== '' ? facility : 'none'}
+                handleChange={handleFacility}
+                options={facilityList}
+                placeholder="Select Facility"
+                inputStyle={<BootstrapInput />}
+                style={{ width: "100%", marginTop: "5px" }}
+                
+              />
             <FormHelperText style={{color:"red"}}>{errors.facility}</FormHelperText>
             </>
           )}
@@ -255,7 +331,7 @@ export default function EditModal(props) {
             <div className={classes.boxStyle}>
               <List style={{ paddingTop: "0px", paddingBottom: "0px" }}>
                 {accessValue.map((item,index) => (
-                  <>
+                  <React.Fragment key={index}>
                   <ListItem
                     key={item.title}
                     role={undefined}
@@ -279,11 +355,12 @@ export default function EditModal(props) {
                         edge="end"
                         name={item.title}
                         tabIndex={-1}
+                        onChange={(e) => handleCheckbox(e, item.roleName)}
                       />
                     </ListItemSecondaryAction>
                   </ListItem>
                   <Divider style={{backgroundColor:"#ced4da"}} />
-                  </>
+                  </React.Fragment>
                 ))}
               </List>
             </div>
@@ -304,7 +381,6 @@ export default function EditModal(props) {
                 size="small"
                 color="primary"
                 autoFocus
-                // onClick={handleSubmit}
                 className={classes.button}
               >
                 {type === "edit" ? "Update" : "Add User"}
@@ -313,6 +389,21 @@ export default function EditModal(props) {
           </form>
         </DialogContent>
       </Dialog>
+      <Snackbar
+        open={toaster}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+        autoHideDuration={6000}
+        onClose={() => setToaster(false)}
+      >
+        <MuiAlert
+          elevation={6}
+          variant="filled"
+          onClose={() => setToaster(false)}
+          severity={toasterOption.varient}
+        >
+          {toasterOption.message}
+        </MuiAlert>
+      </Snackbar>
     </div>
   );
 }

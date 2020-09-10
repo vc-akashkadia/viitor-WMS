@@ -10,6 +10,12 @@ import LocationSlip from "./print/LocationPrint";
 import EIRSlip from "./print/EIRPrint";
 import { LocationSlipApi, EIRPrintApi } from "./../apicalls/GateApiCalls";
 import Loader from "./Loader";
+import Snackbar from "@material-ui/core/Snackbar";
+import MuiAlert from "@material-ui/lab/Alert";
+let toasterOption = {
+  varient: "success",
+  message: "",
+};
 const useStyles = makeStyles((theme) => ({
   title: {
     fontSize: 16,
@@ -113,14 +119,17 @@ export default function AlertDialog(props) {
   const { open, setOpen, modalData, container, gateType } = props;
   const [printType, setPrintType] = useState("");
   const dispatch = useDispatch();
+  const [toaster, setToaster] = useState(false);
   const authToken = useSelector(({ auth }) => auth.authToken);
   const facility = useSelector(({ base }) => base.facility);
-  const locationSlip = useSelector(({ auth }) => auth.locationSlip);
+  const locationSlipData = useSelector(({ base }) => base.locationSlip);
   const handlePrintType = (printType) => {
     setLoading(true)
     if (printType === "locationSlip") {
       let data = {
         shipmentId: container.shipmentId,
+        operationCode: container.operationCode,
+        printType:printType
       };
       dispatch(LocationSlipApi(data, authToken, handleCallback));
     } else {
@@ -128,11 +137,14 @@ export default function AlertDialog(props) {
         containerNumber: container.containerNumber,
         operationCode: container.operationCode,
         facility: facility,
+        printType:printType
       };
       dispatch(EIRPrintApi(data, authToken, handleCallback));
     }
   };
-  const handleCallback = (response) => {
+  const handleCallback = (response,printType) => {
+    const {status} = response
+    if(status){
     setPrintType(printType);
     setTimeout(() => {
       const anchor = document.querySelector(".ticket");
@@ -141,6 +153,15 @@ export default function AlertDialog(props) {
       }
       setLoading(false)
     }, 100);
+  }else{
+    toasterOption = {
+      varient: "error",
+      message: "Something went wrong try after sometime",
+    };
+    setToaster(true);
+    setPrintType('');
+    setLoading(false)
+  }
   };
   const handleClose = (status = false) => {
     setOpen(status);
@@ -161,14 +182,14 @@ export default function AlertDialog(props) {
           className={classes.muiDialog}
           fullScreen={printType === "locationSlip" || printType === "EIR"}
         >
-          {printType === "locationSlip" && gateType === "in" && (
+          {printType === "locationSlip" && gateType === "In" && (
             <>
-              <LocationSlip data={locationSlip} />
+              <LocationSlip data={locationSlipData} />
             </>
           )}
           {printType === "EIR" && (
             <>
-              <EIRSlip data={locationSlip} gateType={gateType} />
+              <EIRSlip data={locationSlipData} gateType={gateType} />
             </>
           )}
           {printType !== "" && (
@@ -202,7 +223,6 @@ export default function AlertDialog(props) {
               <DialogTitle id="alert-dialog-title" className={classes.title}>
                 Choose the Print Type
               </DialogTitle>
-              <Divider />
               {loading && <Loader />}
               {!loading && (
                 <>
@@ -249,6 +269,22 @@ export default function AlertDialog(props) {
           )}
         </Dialog>
       )}
+      <Snackbar
+        open={toaster}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+        autoHideDuration={6000}
+        onClose={() => setToaster(false)}
+      >
+        <MuiAlert
+          elevation={6}
+          variant="filled"
+          onClose={() => setToaster(false)}
+          severity={toasterOption.varient}
+        >
+          {toasterOption.message}
+        </MuiAlert>
+      </Snackbar>
+      
     </div>
   );
 }

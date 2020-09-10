@@ -17,7 +17,6 @@ import bottomImage from "@assests/img/pattern.svg";
 import Select from "../components/Select";
 import InputBase from "@material-ui/core/InputBase";
 
-
 import {
   facilityListApiCall,
   selectedFacility,
@@ -152,7 +151,7 @@ export default function Facility() {
     if (facilityList.length === 0) {
       dispatch(facilityListApiCall(authToken, handleCallbackFacilityList));
     }
-  });
+  },[]);
   const handleCallbackFacilityList = (response) => {
     const {
       data: { status },
@@ -206,8 +205,6 @@ export default function Facility() {
                       placeholder="Select Facility"
                       inputStyle={<BootstrapInput />}
                     />
-                  
-
                     <FormHelperText>{errors}</FormHelperText>
                   </FormControl>
                 </>

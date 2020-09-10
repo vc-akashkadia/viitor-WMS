@@ -40,8 +40,8 @@ const BootstrapInput = withStyles((theme) => ({
     position: "relative",
     backgroundColor: "#f6f6f6",
     border: "1px solid #ced4da",
-    fontSize: 16,
-    padding: "0px 4px 0px 3px",
+    fontSize: 14,
+    padding: "0px 26px 0px 12px",
     transition: theme.transitions.create(["border-color", "box-shadow"]),
     width: "100%",
     height: 28,
@@ -69,8 +69,11 @@ const useStyles = makeStyles({
     display: "flex",
   },
   operationBtn: {
-    minWidth: 31,
-    marginLeft: 5,
+    textTransform: "capitalize",
+    padding: 0,
+    height: 28,
+    minWidth: 39,
+    marginLeft: 4,
   },
   headerDiv: {
     width: "100%",
@@ -147,9 +150,7 @@ export default function Dashboard() {
       data: { status },
     } = response;
     if (status) {
-      
     } else {
-
     }
     setLoading(false);
   };
@@ -164,7 +165,12 @@ export default function Dashboard() {
   return (
     <>
       {/* <Header /> */}
-      <TitleHeader  key="operation-header" title="Operations" backPath={"/facility"} isSearch={false}/>
+      <TitleHeader
+        key="operation-header"
+        title="Operations"
+        backPath={"/facility"}
+        isSearch={false}
+      />
 
       <div className={classes.mainContainer}>
         {content &&
@@ -185,10 +191,10 @@ export default function Dashboard() {
                       id="additional-actions1-header"
                     >
                       <Box display="flex" alignItems="center" width="100%">
-                        <div style={{width: "15%"}}>
+                        <div style={{ width: "15%" }}>
                           <img src={item.img} alt="" />
                         </div>
-                        <div style={{width: "70%"}}>
+                        <div style={{ width: "70%" }}>
                           <Typography
                             color="primary"
                             className={classes.mainTitle}
@@ -211,10 +217,10 @@ export default function Dashboard() {
                       id="additional-actions1-header"
                     >
                       <Box display="flex" alignItems="center" width="100%">
-                      <div style={{width: "15%"}}>
+                        <div style={{ width: "15%" }}>
                           <img src={item.img} alt="" />
                         </div>
-                        <div style={{width: "70%"}}>
+                        <div style={{ width: "70%" }}>
                           <Typography
                             color="primary"
                             className={classes.mainTitle}
@@ -225,7 +231,7 @@ export default function Dashboard() {
                       </Box>
                     </AccordionSummary>
                     <AccordionDetails className={classes.accordiondetails}>
-                      {/* {loading && <Loader />} */}
+                      {loading && <Loader />}
                       {!loading && (
                         <Box className={classes.operationDetails}>
                           <FormControl fullWidth error={errors !== ""}>

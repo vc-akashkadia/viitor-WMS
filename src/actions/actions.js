@@ -69,3 +69,7 @@ export const EIRPrintDetail = (data) => ({
   type: actionTypes.GET_EIR_PRINT,
   data: data,
 });
+export const userList = (data) => ({
+  type: actionTypes.GET_USER_LIST,
+  data: data,
+});

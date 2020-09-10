@@ -16,8 +16,8 @@ import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import Menu from "@material-ui/core/Menu";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
-
+import AccountBalanceIcon from "@material-ui/icons/AccountBalance";
+import { useSelector } from "react-redux";
 const useStyles = makeStyles((theme) => ({
   root: {
     position: "fixed",
@@ -102,6 +102,7 @@ const StyledMenuItem = withStyles((theme) => ({
 
 export default function TitleHeader(props) {
   const { open, setOpen, title, backPath, isSearch } = props;
+  const facility = useSelector(({ base }) => base.facility);
   const history = useHistory();
   const classes = useStyles();
   // const anchorRef = React.useRef(null);
@@ -113,7 +114,6 @@ export default function TitleHeader(props) {
   const handleClose = () => {
     setAnchorEl(null);
   };
-
 
   const handleFilterOpen = () => {
     setOpen(!open);
@@ -180,8 +180,8 @@ export default function TitleHeader(props) {
                 onClick={handleClick}
                 // ref={anchorRef}
               >
-                <AccountCircle style={{color:"#173a64"}}/>
-              </IconButton >
+                <AccountCircle style={{ color: "#173a64" }} />
+              </IconButton>
             </Box>
             <StyledMenu
               id="customized-menu"
@@ -189,20 +189,18 @@ export default function TitleHeader(props) {
               keepMounted
               open={Boolean(anchorEl)}
               onClose={handleClose}
-              style={{marginLeft:"14px",marginTop:"0px"}}
+              style={{ marginLeft: "14px", marginTop: "0px" }}
               disableAutoFocusItem={true}
             >
-              <StyledMenuItem
-              >
-                <ListItemIcon className={classes.menuIcon}>
-                  <AccountBalanceIcon fontSize="small" />
-                </ListItemIcon>
-                <ListItemText primary="HYD-PTF" />
-              </StyledMenuItem>
-              
-              <StyledMenuItem
-              onClick={() => history.push("/logout")}
-              >
+              {facility && (
+                <StyledMenuItem>
+                  <ListItemIcon className={classes.menuIcon}>
+                    <AccountBalanceIcon fontSize="small" />
+                  </ListItemIcon>
+                  <ListItemText primary={facility} />
+                </StyledMenuItem>
+              )}
+              <StyledMenuItem onClick={() => history.push("/logout")}>
                 <ListItemIcon className={classes.menuIcon}>
                   <ExitToAppIcon fontSize="small" />
                 </ListItemIcon>
