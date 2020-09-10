@@ -359,7 +359,7 @@ export default function EditModal(props) {
                     </ListItemSecondaryAction>
                   </ListItem>
                   <Divider style={{backgroundColor:"#ced4da",marginLeft: '-3px'}} />
-                  </React.Fragment>
+                  </>
                 ))}
               </List>
             </div>
