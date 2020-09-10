@@ -103,7 +103,9 @@ const theme = createMuiTheme({
         padding: '0px 14px',
         height: 26,
         backgroundColor: '#f6f6f6',
-        borderRadius: 4
+        borderRadius: 4,
+        color: '#1f1f21',
+        fontSize: 12
       }
     },
     MuiAppBar: {

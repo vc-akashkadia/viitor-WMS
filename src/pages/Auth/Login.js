@@ -19,14 +19,17 @@ const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: "500px",
     margin: "0 10px",
+    // margin: "auto",
     position: "relative",
-    paddingBottom: 70,
+    // paddingBottom: 125,
     "@media (min-width:241px)": {
       paddingBottom: 40,
+      margin: 'auto'
     },
     "@media (min-width:768px)": {
       paddingBottom: 100,
-    },
+      margin: 'auto'
+    }
   },
   logo: {
     display: "block",
@@ -70,11 +73,12 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
   },
   card: {
-    padding: 20,
+    // padding: 20,
+    minHeight: '250px'
   },
   label: {
     fontSize: 16,
-    color: "#707070",
+    color: "#777777",
     fontWeight: 500,
     fontFamily: "Roboto",
     lineHeight: '16px',
@@ -104,6 +108,12 @@ const useStyles = makeStyles((theme) => ({
     display: 'block',
     padding: "0 10px"
   },
+  loginForm:{
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    minHeight: 195
+  }
 }));
 // let errors = {
 //   email: "",
@@ -175,7 +185,7 @@ export default function Login() {
               {toasterOption.message}
             </Alert>
           )} */}
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} className={classes.loginForm}>
             <Grid item xs={12} className={classes.listItemsChild}>
               {/* <FormControl className={classes.field}> */}
                 <InputLabel

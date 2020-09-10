@@ -187,7 +187,7 @@ export default function Facility() {
       <br />
 
       <Card className={classes.root}>
-        <CardContent style={{minHeight: '270px'}}>
+        <CardContent style={{minHeight: '250px'}}>
           {alert && (
             <Alert severity={toasterOption.option}>
               {toasterOption.message}
