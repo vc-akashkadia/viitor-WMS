@@ -45,7 +45,7 @@ const BootstrapInput = withStyles((theme) => ({
     padding: "0px 26px 0px 12px",
     transition: theme.transitions.create(["border-color", "box-shadow"]),
     width: "100%",
-    height: 28,
+    height: 26,
     display: "flex",
     alignItems: "center",
     // Use the system font instead of the default Roboto font.
@@ -60,7 +60,7 @@ const BootstrapInput = withStyles((theme) => ({
 
 const useStyles = makeStyles({
   mainContainer: {
-    margin: "13px 10px 13px 10px",
+    margin: "20px 10px 10px 10px",
   },
   mainTitle: {
     paddingLeft: 14,
@@ -217,7 +217,7 @@ export default function Dashboard() {
                       aria-controls="additional-actions1-content"
                       id="additional-actions1-header"
                     >
-                      <Box display="flex" alignItems="center" width="100%">
+                      <Box display="flex" alignItems="center" width="100%"  >
                         <div style={{ width: "15%" }}>
                           <img src={item.img} alt="" />
                         </div>

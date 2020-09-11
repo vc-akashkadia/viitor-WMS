@@ -142,6 +142,7 @@ const useStyles = makeStyles((theme) => ({
   notchedOutline: {
     borderColor: "#f6f6f6 !important",
   },
+  
 }));
 
 let toasterOption = {
@@ -391,7 +392,7 @@ export default function EditModal(props) {
                       />
                     </ListItemSecondaryAction>
                   </ListItem>
-                  <Divider style={{backgroundColor:"#ced4da"}} />
+                  <Divider className={classes.divider} style={{backgroundColor:"#ced4da",marginLeft:'-1px'}} />
                   </React.Fragment>
                 })}
                 {/* {accessValue.map((item,index) => (

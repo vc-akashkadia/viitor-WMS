@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
     position: "fixed",
   },
   yardTitle: {
-    margin: "15px 10px 10px 15px",
+    margin: "15px 10px 10px 10px",
     fontSize: 15,
     color: "#5c5c5c",
   },
@@ -70,7 +70,7 @@ const useStyles = makeStyles((theme) => ({
   },
   searchTitle: {
     fontSize: 15,
-    color: "#173a64",
+    color: "#5c5c5c",
   },
 
   searchInput: {

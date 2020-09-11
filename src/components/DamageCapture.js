@@ -330,14 +330,14 @@ export default function DamageCapture(props) {
               alignItems="center"
               justifyContent="space-between"
             >
-              <DialogContentText className={classes.root} style={{ color: "#777777",marginTop:"7px" }}>
+              <DialogContentText className={classes.root} style={{ color: "#777777",marginTop:"7px" ,display: 'flex'}}>
                 Container: {<span style={{ color: "#1f1f21" }}>{container.containerNumber}</span>}
               </DialogContentText>
               <Box
                 style={{ marginRight: "-4px", borderRadius: "50%" }}
                 onClick={addDamageRow}
               >
-                <AddIcon className={classes.addNewICon} />
+              <AddIcon className={classes.addNewICon} />
               </Box>
             </Box>
           </Box>

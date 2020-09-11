@@ -28,7 +28,7 @@ export const LoginApi = (userData, remember_me, callback) => {
         console.log("error", err);
         let response = {
           status: false,
-          code: err.response.status,
+          // code: err.response.status,
         };
         callback(response);
       });

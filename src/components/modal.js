@@ -8,8 +8,11 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import { makeStyles } from "@material-ui/core/styles";
 import InputLabel from "@material-ui/core/InputLabel";
 import container from "@assests/img/popup-container.svg";
+import crane from "@assests/img/LocationContainer.svg";
 import license from "@assests/img/popup-licence.svg";
-
+// import LocationOnOutlinedIcon from '@material-ui/icons/LocationOnOutlined';
+// import RoomTwoToneIcon from '@material-ui/icons/RoomTwoTone';
+import RoomSharpIcon from '@material-ui/icons/RoomSharp';
 const useStyles = makeStyles((theme) => ({
   title: {
     fontSize: 16,
@@ -53,19 +56,37 @@ const useStyles = makeStyles((theme) => ({
 
   containerLabel: {
     position: "absolute",
-    bottom: 40,
+    bottom: 45,
     left: "45%",
-    transform: "translateX(-50%)",
-    marginLeft: 10,
-    width: "auto",
+    transform: "translate(-50%, 20px)",
+    margin: '0 10px',
+    width: "80%",
+    height: '55%',
     overflow: "hidden",
-    textAlign: "center",
+    // textAlign: "center",
     display: "flex",
     backgroundColor: "white",
     // paddingLeft: "15px",
-    padding:"0 5px",
+    // padding:"0 5px",
     justifyContent: "center",
-    whiteSpace: "nowrap",
+    alignItems: 'center'
+    // whiteSpace: "nowrap",
+  },
+
+  LocationLabel:{
+    position: "absolute",
+    bottom: 55,
+    left: "45%",
+    transform: "translate(-50%, 20px)",
+    margin: '0 11px',
+    width: "70%",
+    height: '30%',
+    overflow: "hidden",
+    display: "flex",
+    backgroundColor: "white",
+    justifyContent: "center",
+    alignItems: 'center',
+    // fontSize:20
   },
 
   actionbutton: {
@@ -123,7 +144,6 @@ export default function AlertDialog(props) {
                 shrink
                 htmlFor="bootstrap-input"
                 className={classes.label}
-                
               >
                 {data}
               </InputLabel>
@@ -143,7 +163,7 @@ export default function AlertDialog(props) {
           </DialogActions>
         </Dialog>
       )}
-      {modalData === "container" && (
+      {/* {modalData === "container" && (
         <Dialog
           open={open}
           onClose={() => handleClose(false)}
@@ -182,7 +202,64 @@ export default function AlertDialog(props) {
             </Button>
           </DialogActions>
         </Dialog>
-      )}
+      )} */}
+
+       {modalData === "container" && (
+        <Dialog
+          open={open}
+          onClose={() => handleClose(false)}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title" className={classes.title}>
+            LOCATION NO.
+          </DialogTitle>
+          <DialogContent className={classes.content}>
+            <img src={crane} alt="container-popup" />
+            <RoomSharpIcon 
+                  size="small"
+                  color="action"
+                  style={{
+                    position: "absolute",
+                    top: "-3px",
+                    left: "90px",
+                    width: 22,
+                    color:"#0c79c1",
+                    // backgroundColor: "#ffffff",
+                    // borderRadius: '50%'
+                  }}
+                />
+            <div className={classes.LocationLabel}>
+              <InputLabel
+                shrink
+                htmlFor="bootstrap-input"
+                className={classes.label}
+                style={{  transform: "translateX(0)",
+                  display: "inline-block",
+                  lineHeight: "24px",
+                  fontSize: 16
+                }}
+              >
+                {/* {data} */}
+                HYD-PFT-DRP-001
+              </InputLabel>
+            </div>
+          </DialogContent>
+          <DialogActions className={classes.actionbutton}>
+            <Button
+              onClick={() => handleClose(false)}
+              variant="contained"
+              size="small"
+              color="primary"
+              autoFocus
+              className={classes.button}
+            >
+              Ok
+            </Button>
+          </DialogActions>
+        </Dialog>
+      )} 
+
       {/* (
           <Dialog
           open={open}

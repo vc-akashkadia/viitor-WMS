@@ -55,6 +55,9 @@ const theme = createMuiTheme({
           transform: 'rotate(90deg)'
         }
       },
+      content:{
+        margin: '10px 0'
+      }
     },
     MuiAccordionDetails: {
       root: {
@@ -100,12 +103,15 @@ const theme = createMuiTheme({
     },
     MuiOutlinedInput: {
       input: {
-        padding: '0px 14px',
-        height: 28,
+        padding: '0px 10px',
+        height: 26,
         backgroundColor: '#f6f6f6',
         borderRadius: 4,
         color: '#1f1f21',
         // fontSize: 12
+        '&::placeholder': {
+          color: '#afafaf'
+        }
       }
     },
     MuiAppBar: {

@@ -152,7 +152,7 @@ export default function UserList(props) {
       <div className={classes.yardMain} style={open ?{marginTop:"82px"}:{marginTop:"0px"}}>
         <div style={{position:'relative'}}>
         <Typography className={classes.yardTitle}>User List</Typography>
-        <AddCircleIcon  fontSize="small"  style={{position:'absolute',top: '-1px',right:'10px',color:'#5c5c5c'}}  onClick={()=>handleGModal("add",{})}/>
+        <AddCircleIcon  fontSize="small"  style={{position:'absolute',top: '-1px',right:'18px',color:'#5c5c5c'}}  onClick={()=>handleGModal("add",{})}/>
         </div>
         <Divider style={{ marginBottom: "7px" }} />
          {userList && userList.map((user,index)=> ( 

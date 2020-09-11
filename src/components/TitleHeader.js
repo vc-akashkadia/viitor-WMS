@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     position: "fixed",
   },
   backIcon: {
-    color: "#120e5b",
+    color: "#5c5c5c",
   },
   backText: {
     color: "#120e5b",
@@ -176,7 +176,7 @@ export default function TitleHeader(props) {
                 onClick={handleClick}
                 // ref={anchorRef}
               >
-                <AccountCircle style={{ color: "#173a64" }} />
+                <AccountCircle style={{ color: "#5c5c5c" }} />
               </IconButton>
             </Box>
             <StyledMenu
@@ -191,7 +191,7 @@ export default function TitleHeader(props) {
               {facility && (
                 <StyledMenuItem>
                   <ListItemIcon className={classes.menuIcon}>
-                    <AccountBalanceIcon fontSize="small" color="#120e5b" />
+                    <AccountBalanceIcon fontSize="small" color="#5c5c5c" />
                   </ListItemIcon>
                   <ListItemText primary={facility} />
                 </StyledMenuItem>
