@@ -224,7 +224,7 @@ export default function AlertDialog(props) {
                     top: "-3px",
                     left: "90px",
                     width: 22,
-                    color:"#0c79c1",
+                    color:"#5c5c5c",
                     // backgroundColor: "#ffffff",
                     // borderRadius: '50%'
                   }}
