@@ -105,13 +105,12 @@ const useStyles = makeStyles((theme) => ({
     lineHeight: "20px",
     textTransform: "uppercase",
   },
-  // filterSearch: {
-  //   margin: "1px 1px",
-  //   padding: 10,
-  //   position: "fixed",
-  //   backgroundColor: "#ffff",
-  //   zIndex: "2",
-  // },
+    filterSearch: {
+      padding: "12px 5px 0",
+      backgroundColor: "#fafafa",
+      position: "fixed",
+      zIndex: "1",
+  },
   // searchTitle: {
   //   fontSize: 15,
   //   color: "#5c5c5c",
@@ -249,47 +248,49 @@ export default function PositionUpdate(props) {
         backPath={"/operations"}
       />
       {open && (
-        <Card className={classes.filterSearch}>
-          <Grid container spacing={1} alignItems="center">
-            <Grid item xs={6}>
-              <Typography className={classes.searchTitle}>
-                Search Here
-              </Typography>
-            </Grid>
-            <Grid item xs={6}>
-              <FormControl fullWidth>
-                <Select
-                  selectedValue={block === "" ? "Block" : block}
-                  handleChange={setBlock}
-                  options={[...blockConst, ...blockList]}
-                  placeholder={constants.formPlaceHolder.block}
-                  inputStyle={<BootstrapInput />}
+        <div className={classes.filterSearch}>
+          <Card style={{padding: 10, backgroundColor:"#ffffff"}}>
+            <Grid container spacing={1} alignItems="center">
+              <Grid item xs={6}>
+                <Typography className={classes.searchTitle}>
+                  Search Here
+                </Typography>
+              </Grid>
+              <Grid item xs={6}>
+                <FormControl fullWidth>
+                  <Select
+                    selectedValue={block === "" ? "Block" : block}
+                    handleChange={setBlock}
+                    options={[...blockConst, ...blockList]}
+                    placeholder={constants.formPlaceHolder.block}
+                    inputStyle={<BootstrapInput />}
+                  />
+                </FormControl>
+              </Grid>
+              <Grid item xs={8}>
+                <TextField
+                  className={classes.searchInput}
+                  id="outlined-basic"
+                  placeholder="Enter Container No."
+                  label=""
+                  variant="outlined"
+                  value={containerNumber}
+                  onChange={(e) => setContainerNumber(e.target.value)}
                 />
-              </FormControl>
+              </Grid>
+              <Grid item xs={4}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  className={classes.searchBtn}
+                  onClick={() => getContainerList()}
+                >
+                  Search
+                </Button>
+              </Grid>
             </Grid>
-            <Grid item xs={8}>
-              <TextField
-                className={classes.searchInput}
-                id="outlined-basic"
-                placeholder="Enter Container No."
-                label=""
-                variant="outlined"
-                value={containerNumber}
-                onChange={(e) => setContainerNumber(e.target.value)}
-              />
-            </Grid>
-            <Grid item xs={4}>
-              <Button
-                variant="contained"
-                color="primary"
-                className={classes.searchBtn}
-                onClick={() => getContainerList()}
-              >
-                Search
-              </Button>
-            </Grid>
-          </Grid>
-        </Card>
+          </Card>
+        </div>
       )}
       <div
         className={classes.yardMain}

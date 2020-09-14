@@ -125,13 +125,12 @@ const useStyles = makeStyles({
     height: 61,
     padding: 0,
   },
-  // filterSearch: {
-  //   margin: "1px 1px",
-  //   padding: 10,
-  //   position: "fixed",
-  //   backgroundColor: "#ffff",
-  //   zIndex: "2",
-  // },
+  filterSearch: {
+    padding: "12px 5px 0",
+    backgroundColor: "#fafafa",
+    position: "fixed",
+    zIndex: "1",
+  },
   // searchTitle: {
   //   fontSize: 15,
   //   color: "#5c5c5c",
@@ -478,64 +477,66 @@ export default function GateMovePage(props) {
         backPath={"/operations"}
       />
       {open && (
-        <Card className={classes.filterSearch}>
-          <Grid container spacing={1} alignItems="center">
-            <Grid item xs={12}>
-              <Typography className={classes.searchTitle}>
-                Search Here
-              </Typography>
-            </Grid>
-            <Grid item xs={6}>
-              <FormControl fullWidth>
-                <Select
-                  selectedValue={gatetype}
-                  handleChange={setGateType}
-                  options={gateTypeOptions}
-                  placeholder={constants.formPlaceHolder.gateType}
-                  inputStyle={<BootstrapInput />}
+        <div className={classes.filterSearch}>
+          <Card style={{padding: 10, backgroundColor:"#ffffff"}}>
+            <Grid container spacing={1} alignItems="center">
+              <Grid item xs={12}>
+                <Typography className={classes.searchTitle}>
+                  Search Here
+                </Typography>
+              </Grid>
+              <Grid item xs={6}>
+                <FormControl fullWidth>
+                  <Select
+                    selectedValue={gatetype}
+                    handleChange={setGateType}
+                    options={gateTypeOptions}
+                    placeholder={constants.formPlaceHolder.gateType}
+                    inputStyle={<BootstrapInput />}
+                  />
+                </FormControl>
+              </Grid>
+              <Grid item xs={6}>
+                <FormControl fullWidth>
+                  <Select
+                    selectedValue={vehical}
+                    handleChange={(value) => {
+                      setVehical(value);
+                      if (value === "Criteria") {
+                        setNumber("");
+                        handleSearch()
+                      }
+                    }}
+                    options={vehicalOption}
+                    placeholder={constants.formPlaceHolder.vehical}
+                    inputStyle={<BootstrapInput />}
+                  />
+                </FormControl>
+              </Grid>
+              <Grid item xs={8}>
+                <TextField
+                  className={classes.searchInput}
+                  id="outlined-basic"
+                  placeholder="Enter No."
+                  label=""
+                  variant="outlined"
+                  value={number}
+                  onInput={(e) => setNumber(e.target.value)}
                 />
-              </FormControl>
+              </Grid>
+              <Grid item xs={4}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  className={classes.searchBtn}
+                  onClick={handleSearch}
+                >
+                  Search
+                </Button>
+              </Grid>
             </Grid>
-            <Grid item xs={6}>
-              <FormControl fullWidth>
-                <Select
-                  selectedValue={vehical}
-                  handleChange={(value) => {
-                    setVehical(value);
-                    if (value === "Criteria") {
-                      setNumber("");
-                      handleSearch()
-                    }
-                  }}
-                  options={vehicalOption}
-                  placeholder={constants.formPlaceHolder.vehical}
-                  inputStyle={<BootstrapInput />}
-                />
-              </FormControl>
-            </Grid>
-            <Grid item xs={8}>
-              <TextField
-                className={classes.searchInput}
-                id="outlined-basic"
-                placeholder="Enter No."
-                label=""
-                variant="outlined"
-                value={number}
-                onInput={(e) => setNumber(e.target.value)}
-              />
-            </Grid>
-            <Grid item xs={4}>
-              <Button
-                variant="contained"
-                color="primary"
-                className={classes.searchBtn}
-                onClick={handleSearch}
-              >
-                Search
-              </Button>
-            </Grid>
-          </Grid>
-        </Card>
+          </Card>
+        </div>
       )}
       <div
         className={classes.yardMain}

@@ -77,8 +77,15 @@ const useStyles = makeStyles({
     "& > *": {
       margin: "2px 1px",
     },
+    "@media (min-width:600px)":{
+      flexWrap: "nowrap"
+    }
   },
-
+  chip:{
+    "@media (min-width:600px)":{
+      height: 52
+    }
+  },
   confirmBtn: {
     minWidth: 37,
     height: 26,
@@ -194,7 +201,7 @@ export default function CardGrid(props) {
                     handleOpenModal("container", item.containerNumber)
                   }
                   size="medium"
-                  style={{ width: 82, color: "#000000" }}
+                  style={{ width: 78, color: "#000000" }}
                 />
                 <img
                   src={ContainerIcon}
@@ -210,10 +217,11 @@ export default function CardGrid(props) {
               <div style={{ position: "relative",width: "100%" }}>
               <Chip
                 label={item.location}
-                style={{ width: "97%", color: "#000000"}}
+                style={{ width: "158px", color: "#000000"}}
                 onClick={() =>
                   handleOpenModal("location", item.location)
                 }
+                className={classes.chip}
               />
               <LocationOnOutlinedIcon
                 style={{
@@ -262,7 +270,7 @@ export default function CardGrid(props) {
             justifyContent="space-between"
           >
             <Box className={classes.chipMain}>
-              <Chip label="Code" style={{ width: "57px",color: "#000000" }} />
+              <Chip label="Code" style={{ width: "57px",color: "#000000" }} className={classes.chip}/>
               {/* <Select
                   selectedValue={item.damageCode}
                   handleChange={(value) => {
@@ -300,6 +308,7 @@ export default function CardGrid(props) {
               <Chip
                 label={item.description}
                 style={{ width: "203px", justifyContent: "left",color: "#000000" }}
+                className={classes.chip}
               />
             </Box>
             <Box

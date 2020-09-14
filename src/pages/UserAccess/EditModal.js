@@ -402,7 +402,11 @@ export default function EditModal(props) {
                       return null;
                     }
                     return (
-                      <React.Fragment key={roleIndex}>
+                      <React.Fragment key={roleIndex} style={{"&:last-child":{
+                        "divider":{
+                          display:"none"
+                        }
+                      }}}>
                         <ListItem
                           key={roleData.title}
                           role={undefined}

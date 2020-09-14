@@ -124,13 +124,12 @@ const useStyles = makeStyles((theme) => ({
     height: 61,
     padding: 0,
   },
-  // filterSearch: {
-  //   margin: "1px 1px",
-  //   padding: 10,
-  //   position: "fixed",
-  //   backgroundColor: "#ffff",
-  //   zIndex: "2",
-  // },
+  filterSearch: {
+    padding: "12px 5px 0",
+    backgroundColor: "#fafafa",
+    position: "fixed",
+    zIndex: "1",
+  },
   // searchTitle: {
   //   fontSize: 15,
   //   color: "#5c5c5c",
@@ -301,83 +300,85 @@ export default function YardOperation(props) {
         backPath={"/operations"}
       />
       {open && (
-        <Card className={classes.filterSearch}>
-          <Grid container spacing={1} alignItems="center">
-            <Grid item xs={6}>
-              <Typography className={classes.searchTitle}>
-                Search Here
-              </Typography>
-            </Grid>
-            <Grid item xs={6}>
-              <FormControl fullWidth>
-                <Select
-                  selectedValue={block === "" ? "Block" : block}
-                  handleChange={setBlock}
-                  options={[...blockConst, ...blockList]}
-                  placeholder={constants.formPlaceHolder.block}
-                  inputStyle={<BootstrapInput />}
+        <div className={classes.filterSearch}>
+        <Card style={{padding: 10, backgroundColor:"#ffffff"}}>
+            <Grid container spacing={1} alignItems="center">
+              <Grid item xs={6}>
+                <Typography className={classes.searchTitle}>
+                  Search Here
+                </Typography>
+              </Grid>
+              <Grid item xs={6}>
+                <FormControl fullWidth>
+                  <Select
+                    selectedValue={block === "" ? "Block" : block}
+                    handleChange={setBlock}
+                    options={[...blockConst, ...blockList]}
+                    placeholder={constants.formPlaceHolder.block}
+                    inputStyle={<BootstrapInput />}
+                  />
+                </FormControl>
+              </Grid>
+              <Grid item xs={6}>
+                <FormControl fullWidth>
+                  <Select
+                    selectedValue={gateType === "" ? "ALL" : gateType}
+                    handleChange={setGetType}
+                    options={gateTypeOptions}
+                    placeholder={constants.formPlaceHolder.gateType}
+                    inputStyle={<BootstrapInput />}
+                  />
+                </FormControl>
+              </Grid>
+              <Grid item xs={6}>
+                <FormControl fullWidth>
+                  <Select
+                    selectedValue={vehical === "" ? "Criteria" : vehical}
+                    handleChange={(value) => {
+                      setVehical(value);
+                      if (value === "Criteria") {
+                        setNumber("");
+                      }
+                    }}
+                    options={vehicalOption}
+                    placeholder={constants.formPlaceHolder.vehical}
+                    inputStyle={<BootstrapInput />}
+                  />
+                </FormControl>
+              </Grid>
+              <Grid item xs={8}>
+                <TextField
+                  className={classes.searchInput}
+                  onChange={(e) => setNumber(e.target.value)}
+                  id="outlined-basic"
+                  placeholder="Enter No."
+                  label=""
+                  value={number}
+                  variant="outlined"
                 />
-              </FormControl>
-            </Grid>
-            <Grid item xs={6}>
-              <FormControl fullWidth>
-                <Select
-                  selectedValue={gateType === "" ? "ALL" : gateType}
-                  handleChange={setGetType}
-                  options={gateTypeOptions}
-                  placeholder={constants.formPlaceHolder.gateType}
-                  inputStyle={<BootstrapInput />}
-                />
-              </FormControl>
-            </Grid>
-            <Grid item xs={6}>
-              <FormControl fullWidth>
-                <Select
-                  selectedValue={vehical === "" ? "Criteria" : vehical}
-                  handleChange={(value) => {
-                    setVehical(value);
-                    if (value === "Criteria") {
-                      setNumber("");
+              </Grid>
+              <Grid item xs={4}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  className={classes.searchBtn}
+                  onClick={() => {
+                    if (vehical === "" || vehical === "Criteria") {
+                      setOpen(false);
                     }
-                  }}
-                  options={vehicalOption}
-                  placeholder={constants.formPlaceHolder.vehical}
-                  inputStyle={<BootstrapInput />}
-                />
-              </FormControl>
-            </Grid>
-            <Grid item xs={8}>
-              <TextField
-                className={classes.searchInput}
-                onChange={(e) => setNumber(e.target.value)}
-                id="outlined-basic"
-                placeholder="Enter No."
-                label=""
-                value={number}
-                variant="outlined"
-              />
-            </Grid>
-            <Grid item xs={4}>
-              <Button
-                variant="contained"
-                color="primary"
-                className={classes.searchBtn}
-                onClick={() => {
-                  if (vehical === "" || vehical === "Criteria") {
-                    setOpen(false);
-                  }
 
-                  if (number !== "" && number.length > 3) {
-                    setOpen(false);
-                  }
-                  handleSearch();
-                }}
-              >
-                Search
-              </Button>
+                    if (number !== "" && number.length > 3) {
+                      setOpen(false);
+                    }
+                    handleSearch();
+                  }}
+                >
+                  Search
+                </Button>
+              </Grid>
             </Grid>
-          </Grid>
-        </Card>
+          </Card>
+        </div>
       )}
       <div
         className={classes.yardMain}

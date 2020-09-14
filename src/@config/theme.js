@@ -112,6 +112,12 @@ const theme = createMuiTheme({
         // '&::placeholder': {
         //   color: '#afafaf'
         // }
+        
+      },
+      inputMarginDense:{
+        height: 30,
+        paddingTop: 0,
+        paddingBottom: 0
       }
     },
     MuiAppBar: {

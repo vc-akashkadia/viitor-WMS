@@ -227,8 +227,10 @@ export default function Login() {
                   helperText={errors.email}
                   value={email}
                   onInput={(e) => setEmail(e.target.value)}
-                  style={{width: '100%'}}
-                  className={classes.loginField}
+                  // style={{width: '100%'}}
+                  fullWidth
+                  size="small"
+                  // className={classes.loginField}
                   />
               {/* </FormControl> */}
             </Grid>
@@ -248,7 +250,8 @@ export default function Login() {
                   helperText={errors.password}
                   onInput={(e) => setPassword(e.target.value)}
                   placeholder="Enter Password"
-                  style={{width: '100%'}}
+                  fullWidth
+                  size="small"
                   />
             </Grid>
 

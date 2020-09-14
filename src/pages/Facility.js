@@ -53,7 +53,7 @@ const BootstrapInput = withStyles((theme) => ({
     overflow: "hidden",
     textOverflow: "ellipsis",
     display: "inline-block",
-    lineHeight: "28px",
+    lineHeight: "32px",
     // Use the system font instead of the default Roboto font.
     fontFamily: ["Roboto"].join(","),
     "&:focus": {

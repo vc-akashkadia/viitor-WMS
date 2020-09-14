@@ -29,7 +29,8 @@ const useStyles = makeStyles((theme) => ({
   menuIcon: {
     minWidth: "auto",
     paddingRight: 5,
-    display: "block"
+    display: "block",
+    lineHeight: "12px"
   },
   regular: {
     minHeight: "40px",
@@ -47,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
     display: "block",
     height: "100%",
     width: 100,
-    // margin: "10px auto",
+    marginTop: "-7px",
   },
 }));
 
