@@ -109,7 +109,6 @@ export default function Header() {
 
   const handleDrawer = () => {
     setOpenDrawer(true);
-    console.log("trurrr");
   };
 
   const handleDrawerClose = () => {
@@ -172,7 +171,7 @@ export default function Header() {
           >
             <StyledMenuItem onClick={() => history.push("/logout")}>
               <ListItemIcon className={classes.menuIcon}>
-                <ExitToAppIcon fontSize="small" />
+                <ExitToAppIcon fontSize="small" style={{color:"#5c5c5c"}}/>
               </ListItemIcon>
               <ListItemText primary="Logout" />
             </StyledMenuItem>
@@ -192,18 +191,18 @@ export default function Header() {
           <Typography style={{ textAlign: "center",color: "#120e5b", }}>WMS</Typography>
           <IconButton onClick={handleDrawerClose} style={{paddingRight :0}}>
             {theme.direction === "ltr" ? (
-              <ChevronLeftIcon />
+              <ChevronLeftIcon  style={{color:"#5c5c5c"}}/>
             ) : (
-              <ChevronRightIcon />
+              <ChevronRightIcon style={{color:"#5c5c5c"}} />
             )}
           </IconButton>
         </div>
         <Divider />
         <List style={{padding: 0}}>
-          {/* <ListItem button onClick={() => history.push("/user")}>
+          <ListItem button onClick={() => history.push("/user")}>
             <ListItemIcon>{<PersonIcon />}</ListItemIcon>
             <ListItemText primary={"User Access"} />
-          </ListItem> */}
+          </ListItem>
           <ListItem button onClick={handleLogout}>
             <ListItemIcon>{<ExitToAppIcon />}</ListItemIcon>
             <ListItemText primary={"Logout"} />

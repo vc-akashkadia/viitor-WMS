@@ -7,7 +7,7 @@ import {
 } from "../actions/actions";
 
 export const AddRoleApi = (data, authtoken, callback) => {
-  let url = getUrl("addRole");
+  let url = getUrl("addUser");
   return (dispatch) => {
     post(url, data, authtoken)
       .then((response) => {
@@ -15,17 +15,19 @@ export const AddRoleApi = (data, authtoken, callback) => {
       })
       .catch((err) => {
         console.log("error", err);
-        let response = {
-          status: false,
-          code: err.response.status,
+        let responseNew = {
+          data: {
+            status: false,
+            // code: err.response.status,
+          },
         };
-        callback(response);
+        callback(responseNew);
       });
   };
 };
 
 export const EditRoleApi = (data, authtoken, callback) => {
-  let url = getUrl("addRole");
+  let url = getUrl("editUser");
   return (dispatch) => {
     post(url, data, authtoken)
       .then((response) => {
@@ -33,11 +35,13 @@ export const EditRoleApi = (data, authtoken, callback) => {
       })
       .catch((err) => {
         console.log("error", err);
-        let response = {
-          status: false,
-          code: err.response.status,
+        let responseNew = {
+          data: {
+            status: false,
+            // code: err.response.status,
+          },
         };
-        callback(response);
+        callback(responseNew);
       });
   };
 };
@@ -53,11 +57,8 @@ export const getUserList = (data, authToken, callback) => {
           data: { status, data },
         } = response;
         if (status) {
-          let damageCodeList = data.damageCodeList.map((code) => ({
-            value: code.damageCode,
-            label: code.damageDescription,
-          }));
-          dispatch(userList(damageCodeList));
+          
+          dispatch(userList(data));
         }
         callback(response);
       })
@@ -82,11 +83,8 @@ export const getUserRoleList = (authToken, callback) => {
           data: { status, data },
         } = response;
         if (status) {
-          let damageCodeList = data.damageCodeList.map((code) => ({
-            value: code.damageCode,
-            label: code.damageDescription,
-          }));
-          dispatch(userRoleList(damageCodeList));
+          
+          dispatch(userRoleList(data));
         }
         callback(response);
       })
@@ -95,7 +93,7 @@ export const getUserRoleList = (authToken, callback) => {
         let responseNew = {
           data: {
             status: false,
-            code: err.response.status,
+            // code: err.response.status,
           },
         };
 
@@ -111,6 +109,9 @@ export const getContainerListForLocationUpdate = (
 ) => {
   let url = getUrl("locationUpdateGetApi");
   let querystring = `?containerNumber=${data.containerNumber}&facilityName=${data.facility}`;
+  if (data.blockNumber !== "" && data.blockNumber !== undefined) {
+    querystring = querystring + `&blockNumber=${data.blockNumber}`;
+  }
   url = url + querystring;
   return (dispatch) => {
     get(url, authToken)
@@ -125,17 +126,19 @@ export const getContainerListForLocationUpdate = (
       })
       .catch((err) => {
         console.log("error", err);
-        let response = {
-          status: false,
-          code: err.response.status,
+        let responseNew = {
+          data: {
+            status: false,
+            // code: err.response.status,
+          },
         };
-        callback(response);
+        callback(responseNew);
       });
   };
 };
 
 export const LocationUpdatePost = (data, authtoken, callback) => {
-  let url = getUrl("addRole");
+  let url = getUrl("locationUpdatePost");
   return (dispatch) => {
     post(url, data, authtoken)
       .then((response) => {
@@ -143,11 +146,13 @@ export const LocationUpdatePost = (data, authtoken, callback) => {
       })
       .catch((err) => {
         console.log("error", err);
-        let response = {
-          status: false,
-          code: err.response.status,
+        let responseNew = {
+          data: {
+            status: false,
+            // code: err.response.status,
+          },
         };
-        callback(response);
+        callback(responseNew);
       });
   };
 };

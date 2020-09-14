@@ -27,18 +27,25 @@ export const getUrl = (type) => {
       return `${baseUrl}/yard/pickup`;
     case 'gatemoveapi':
       return `${baseUrl}/gateoperation/getinconfirmation`;
-    case 'addRole':
-      return `${baseUrl}/addRole`;
+    
     case 'groundingAddapi':
       return `${baseUrl}/yard/grounding`;
     case 'locationUpdateGetApi':
-      return `${baseUrl}/getContainersList`;
+      return `${baseUrl}/yard/showlocationupdatecontainers`;
+    case 'locationUpdatePost':
+      return `${baseUrl}/yard/locationUpdate`;
     case 'locationSlipPrint':
       return `${baseUrl}/gateoperation/getPrintDetails`;
     case 'EIRPrint':
       return `${baseUrl}/gateoperation/printeir`;
     case 'userlist':
       return `${baseUrl}/userlist`;
+    case 'userRolelist':
+      return `${baseUrl}/rolelist`;
+    case 'addUser':
+      return `${baseUrl}/addUser`;
+    case 'editUser':
+      return `${baseUrl}/editUser`;
     default:
       return baseUrl;
   }

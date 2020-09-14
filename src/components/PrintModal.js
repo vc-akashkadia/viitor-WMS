@@ -10,8 +10,7 @@ import LocationSlip from "./print/LocationPrint";
 import EIRSlip from "./print/EIRPrint";
 import { LocationSlipApi, EIRPrintApi } from "./../apicalls/GateApiCalls";
 import Loader from "./Loader";
-import Snackbar from "@material-ui/core/Snackbar";
-import MuiAlert from "@material-ui/lab/Alert";
+import Toaster from "./Toaster";
 let toasterOption = {
   varient: "success",
   message: "",
@@ -143,10 +142,8 @@ export default function AlertDialog(props) {
     }
   };
   const handleCallback = (response,printType) => {
-    console.log(response)
     const { data : {status}} = response
-   
-    if(status){
+   if(status){
     setPrintType(printType);
     setTimeout(() => {
       const anchor = document.querySelector(".ticket");
@@ -271,21 +268,13 @@ export default function AlertDialog(props) {
           )}
         </Dialog>
       )}
-      <Snackbar
+      <Toaster 
         open={toaster}
-        anchorOrigin={{ vertical: "top", horizontal: "right" }}
-        autoHideDuration={6000}
-        onClose={() => setToaster(false)}
-      >
-        <MuiAlert
-          elevation={6}
-          variant="filled"
-          onClose={() => setToaster(false)}
-          severity={toasterOption.varient}
-        >
-          {toasterOption.message}
-        </MuiAlert>
-      </Snackbar>
+        handleClose={setToaster}
+        option={toasterOption.varient}
+        message={toasterOption.message}
+        />
+      
       
     </div>
   );

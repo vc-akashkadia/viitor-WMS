@@ -15,10 +15,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { DamageCodeListApi } from "../apicalls/GateApiCalls";
 // import CircularProgress from "@material-ui/core/CircularProgress";
 import Loader from "./Loader";
-
-
-import MuiAlert from "@material-ui/lab/Alert";
-import Snackbar from "@material-ui/core/Snackbar";
+import Toaster from './Toaster'
 
 const useStyles = makeStyles((theme) => ({
     root:{
@@ -123,7 +120,7 @@ const useStyles = makeStyles((theme) => ({
     padding: 0,
   },
   addNewICon: {
-    backgroundColor: "#0c79c1",
+    backgroundColor: "#5c5c5c",
     width: 19,
     height: 20,
     color: "white",
@@ -330,14 +327,14 @@ export default function DamageCapture(props) {
               alignItems="center"
               justifyContent="space-between"
             >
-              <DialogContentText className={classes.root} style={{ color: "#777777",marginTop:"7px" ,display: 'flex'}}>
-                Container: {<span style={{ color: "#1f1f21" }}>{container.containerNumber}</span>}
+              <DialogContentText className={classes.root} style={{ color:  "#777777",marginTop:"7px",display:"flex" }}>
+                Container:{<span style={{ color: "#1f1f21",marginLeft:"4px"}}>{container.containerNumber}</span>}
               </DialogContentText>
               <Box
                 style={{ marginRight: "-4px", borderRadius: "50%" }}
                 onClick={addDamageRow}
               >
-              <AddIcon className={classes.addNewICon} />
+                <AddIcon className={classes.addNewICon} />
               </Box>
             </Box>
           </Box>
@@ -377,21 +374,13 @@ export default function DamageCapture(props) {
         </DialogActions>
       </Dialog>
       {error && (
-        <Snackbar
-          open={error}
-          autoHideDuration={6000}
-          anchorOrigin={{ vertical: "top", horizontal: "right" }}
-          onClose={handleErrorClose}
-        >
-          <MuiAlert
-            elevation={6}
-            variant="filled"
-            onClose={handleErrorClose}
-            severity="error"
-          >
-           Please Fill the Damage Code
-          </MuiAlert>
-        </Snackbar>
+        <Toaster 
+        open={error}
+        handleClose={handleErrorClose}
+        option={error}
+        message={'Please Fill the Damage Code'}
+        />
+       
       )}
     </div>
   );

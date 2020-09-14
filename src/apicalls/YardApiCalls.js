@@ -1,6 +1,6 @@
 import { getUrl } from "../services/network/urls";
 import { post, get } from "../services/network/requests";
-import { yardCraneList, selectYardCrane,blockList,YardContainerList } from "../actions/actions";
+import { yardCraneList, selectYardCrane,blockList,YardContainerList,selectLocationcrane } from "../actions/actions";
 
 export const GetYardCraneList = (facility, authToken, callback) => {
   let url = getUrl("craneList") + facility;
@@ -24,6 +24,12 @@ export const GetYardCraneList = (facility, authToken, callback) => {
 export const selectYardCraneApi = (yardCrane) => {
     return (dispatch) => {
         dispatch(selectYardCrane(yardCrane));
+      };
+}
+
+export const selectLocationCraneApi = (yardCrane) => {
+    return (dispatch) => {
+        dispatch(selectLocationcrane(yardCrane));
       };
 }
 

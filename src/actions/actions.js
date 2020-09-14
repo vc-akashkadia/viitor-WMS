@@ -28,6 +28,11 @@ export const selectYardCrane = (data) => ({
   type: actionTypes.YARD_CRANE,
   data: data,
 });
+
+export const selectLocationcrane = (data) => ({
+  type: actionTypes.LOCATION_CRANE,
+  data: data,
+});
 export const selectYardOperation = (data) => ({
   type: actionTypes.YARD_OPERATIONS,
   data: data,

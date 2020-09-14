@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     position: "fixed",
   },
   backIcon: {
-    color: "#5c5c5c",
+    color: "#120e5b",
   },
   backText: {
     color: "#120e5b",
@@ -137,7 +137,7 @@ export default function TitleHeader(props) {
                 size="small"
                 onClick={() => history.push(backPath)}
               >
-                <ArrowBackIcon />
+                <ArrowBackIcon  style={{color:"#5c5c5c"}}/>
               </IconButton>
 
               <div
@@ -162,8 +162,8 @@ export default function TitleHeader(props) {
                   size="small"
                   style={{ paddingRight: 0 }}
                 >
-                  {!open && <SearchIcon />}
-                  {open && <CloseIcon />}
+                  {!open && <SearchIcon style={{color:"#5c5c5c"}} />}
+                  {open && <CloseIcon style={{color:"#5c5c5c"}} />}
                 </IconButton>
               </Box>
             )}
@@ -176,7 +176,7 @@ export default function TitleHeader(props) {
                 onClick={handleClick}
                 // ref={anchorRef}
               >
-                <AccountCircle style={{ color: "#5c5c5c" }} />
+                <AccountCircle style={{color:"#5c5c5c"}} />
               </IconButton>
             </Box>
             <StyledMenu
@@ -191,14 +191,14 @@ export default function TitleHeader(props) {
               {facility && (
                 <StyledMenuItem>
                   <ListItemIcon className={classes.menuIcon}>
-                    <AccountBalanceIcon fontSize="small" color="#5c5c5c" />
+                    <AccountBalanceIcon fontSize="small" style={{color:"#5c5c5c"}} />
                   </ListItemIcon>
                   <ListItemText primary={facility} />
                 </StyledMenuItem>
               )}
               <StyledMenuItem onClick={() => history.push("/logout")}>
                 <ListItemIcon className={classes.menuIcon}>
-                  <ExitToAppIcon fontSize="small" />
+                  <ExitToAppIcon fontSize="small" style={{color:"#5c5c5c"}}/>
                 </ListItemIcon>
                 <ListItemText primary="Logout" />
               </StyledMenuItem>

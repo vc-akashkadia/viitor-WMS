@@ -109,9 +109,9 @@ const theme = createMuiTheme({
         borderRadius: 4,
         color: '#1f1f21',
         // fontSize: 12
-        '&::placeholder': {
-          color: '#afafaf'
-        }
+        // '&::placeholder': {
+        //   color: '#afafaf'
+        // }
       }
     },
     MuiAppBar: {
@@ -140,12 +140,11 @@ const theme = createMuiTheme({
         fontSize: 16
       }
     },
-    // MuiOutlinedInput:{
+   // MuiOutlinedInput:{
     //   notchedOutline:{
     //     borderColor: '#f6f6f6'
     //   }
     // }
   }
 });
-
 export default theme;

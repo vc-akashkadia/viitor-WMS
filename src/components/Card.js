@@ -168,7 +168,7 @@ export default function CardGrid(props) {
                     item.truckNumber.length - 4
                   ) : '' }
                   size="medium"
-                  style={{ width: 80, color: "#000000" }}
+                  style={{ width: 78, color: "#000000" }}
                   onClick={() => handleOpenModal("truck", item.truckNumber)}
                 />
                 {/* <img src={TruckICon} alt="truck" style={{position:'absolute',top:'-11px',left:'7px',width:23}}></img> */}
@@ -194,7 +194,7 @@ export default function CardGrid(props) {
                     handleOpenModal("container", item.containerNumber)
                   }
                   size="medium"
-                  style={{ width: 78, color: "#000000" }}
+                  style={{ width: 80, color: "#000000" }}
                 />
                 <img
                   src={ContainerIcon}
@@ -211,6 +211,9 @@ export default function CardGrid(props) {
               <Chip
                 label={item.location}
                 style={{ width: "100%", color: "#000000"}}
+                onClick={() =>
+                  handleOpenModal("location", item.location)
+                }
               />
               <LocationOnOutlinedIcon
                 style={{
@@ -259,7 +262,7 @@ export default function CardGrid(props) {
             justifyContent="space-between"
           >
             <Box className={classes.chipMain}>
-              <Chip label="Code" style={{ width: "57px" }} />
+              <Chip label="Code" style={{ width: "57px",color: "#000000" }} />
               {/* <Select
                   selectedValue={item.damageCode}
                   handleChange={(value) => {
@@ -296,7 +299,7 @@ export default function CardGrid(props) {
 
               <Chip
                 label={item.description}
-                style={{ width: "203px", justifyContent: "left" }}
+                style={{ width: "203px", justifyContent: "left",color: "#000000" }}
               />
             </Box>
             <Box

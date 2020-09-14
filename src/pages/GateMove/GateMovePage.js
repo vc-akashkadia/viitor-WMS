@@ -30,14 +30,12 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import Snackbar from "@material-ui/core/Snackbar";
-import MuiAlert from "@material-ui/lab/Alert";
 import GateInIcon from "@assests/img/gate-in1.svg";
 import GateOutIcon from "@assests/img/gate-out1.svg";
 import Select from "../../components/Select";
 import RefreshIcon from '@material-ui/icons/Refresh';
 import Divider from '@material-ui/core/Divider';
-
+import Toaster from '../../components/Toaster'
 const BootstrapInput = withStyles((theme) => ({
   root: {
     "label + &": {
@@ -50,7 +48,7 @@ const BootstrapInput = withStyles((theme) => ({
     backgroundColor: "#f6f6f6",
     border: "1px solid #ced4da",
     fontSize: 14,
-    padding: "0px 26px 0px 10px",
+    padding: "0px 26px 0px 12px",
     transition: theme.transitions.create(["border-color", "box-shadow"]),
     width: "100%",
     height: 26,
@@ -662,22 +660,13 @@ export default function GateMovePage(props) {
         </Dialog>
       )}
       <ScrollToTop />
-      <Snackbar
-        open={toaster}
-        anchorOrigin={{ vertical: "top", horizontal: "right" }}
-        autoHideDuration={6000}
-        onClose={() => setToaster(false)}
-      >
-        <MuiAlert
-          elevation={6}
-          variant="filled"
-          onClose={() => setToaster(false)}
-          severity={toasterOption.varient}
-        >
-          {toasterOption.message}
-        </MuiAlert>
-      </Snackbar>
-      <ScrollToTop />
+      <Toaster 
+      open={toaster}
+      handleClose={setToaster}
+      option={toasterOption.varient}
+      message={toasterOption.message}
+      />
+      
     </>
   );
 }

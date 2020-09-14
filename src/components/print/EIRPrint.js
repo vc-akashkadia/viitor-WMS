@@ -8,9 +8,6 @@ export default function EIRPrint(props) {
     <>
       <div className="ticket">
         <img src={brandLogo} alt="Logo" style={{ display: "block", width: 100, margin: "10px auto"}}/>
-        <p className="centered" style={{ marginBottom: "0px" }}>
-          {data.FacilityCode}
-        </p>
         <br />
         <p className="centered" style={{ marginTop: "0px" }}>
           EQUIPMENT INTERCHANGE RECEIPT
@@ -30,7 +27,7 @@ export default function EIRPrint(props) {
               <td className="price">{data.SeqNo}</td>
             </tr>
             <tr>
-              <td className="description">Terminal ID:</td>
+              <td className="description">Facility Code:</td>
               <td className="price">{data.FacilityCode}</td>
             </tr>
             <tr>
@@ -76,7 +73,7 @@ export default function EIRPrint(props) {
             <br />
 
             <tr>
-              <td className="description">Eir No:</td>
+              <td className="description">EIR No:</td>
               <td className="price">{data.EIRNo}</td>
             </tr>
             <tr>
@@ -86,6 +83,10 @@ export default function EIRPrint(props) {
             <tr>
               <td className="description">EIR Time:</td>
               <td className="price">{data.EIRTime}</td>
+            </tr>
+            <tr>
+              <td className="description">Remarks1:</td>
+              <td className="price">{data.Remarks1}</td>
             </tr>
             {gateType === "out" && (
               <>
@@ -107,7 +108,7 @@ export default function EIRPrint(props) {
                   <td className="price">{data.ContainerNumber}</td>
                 </tr>
                 <tr>
-                  <td className="description">Eir No:</td>
+                  <td className="description">EIR No:</td>
                   <td className="price">{data.EIRNo}</td>
                 </tr>
                 <tr>

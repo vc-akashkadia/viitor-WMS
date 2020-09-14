@@ -9,6 +9,7 @@ const initialstate = {
   blockList: [],
 
   yardCrane: "",
+  locationCrane: "",
   yardOperation: {},
   yardJobOption: {},
   gateMoveOperation: {
@@ -19,31 +20,9 @@ const initialstate = {
   groundContainer: {},
   gateMoveContainerList: [],
   yardContainerList: [],
-  containerListForLocation: [
-    {
-      containerNumber: "TESTBOL010102",
-      locationNumber: null,
-    },
-    {
-      containerNumber: "TESTBOL010102",
-      locationNumber: null,
-    },
-  ],
+  containerListForLocation: [],
   locationSlip: {},
-  userList: [
-    {
-      userName: "admin",
-      facilityId: "CLS01",
-      userRoleId: [
-        {
-          roleName: "ROLE_ADMIN",
-        },
-        {
-          roleName: "ROLE_GATE",
-        },
-      ],
-    },
-  ],
+  userList: [],
   userRoleList: [
     {
       roleName: "ROLE_YARD",
@@ -54,13 +33,16 @@ const initialstate = {
     {
       roleName: "ROLE_ADMIN",
     },
+    {
+      roleName: "ROLE_LOCATION",
+    },
   ],
 };
 const base = persistReducer(
   {
     storage,
     key: "base-wms",
-    whitelist: ["facility", "facilityList", "yardCrane"],
+    whitelist: ["facility", "facilityList", "yardCrane","locationCrane"],
   },
   (state = initialstate, action) => {
     switch (action.type) {
@@ -95,6 +77,14 @@ const base = persistReducer(
         return {
           ...state,
           yardCrane: action.data,
+        };
+      }
+
+
+      case actionTypes.LOCATION_CRANE: {
+        return {
+          ...state,
+          locationCrane: action.data,
         };
       }
 

@@ -13,7 +13,7 @@ import FormControl from "@material-ui/core/FormControl";
 
 import InputBase from "@material-ui/core/InputBase";
 import Button from "@material-ui/core/Button";
-import OperationIcon from "@assests/img/dashboard1.svg";
+import OperationIcon from "@assests/img/yard-operation.svg";
 import GateInIcon from "@assests/img/gate-in.svg";
 import GateOutIcon from "@assests/img/gate-out.svg";
 import PositionIcon from "@assests/img/postion-update.svg";
@@ -24,7 +24,7 @@ import FormHelperText from "@material-ui/core/FormHelperText";
 // import Toolbar from "@material-ui/core/Toolbar";
 // import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 // import IconButton from "@material-ui/core/IconButton";
-import { GetYardCraneList, selectYardCraneApi } from "../apicalls/YardApiCalls";
+import { GetYardCraneList, selectYardCraneApi,selectLocationCraneApi } from "../apicalls/YardApiCalls";
 import Select from "../components/Select";
 import Loader from "../components/Loader";
 import TitleHeader from "../components/TitleHeader"
@@ -60,7 +60,7 @@ const BootstrapInput = withStyles((theme) => ({
 
 const useStyles = makeStyles({
   mainContainer: {
-    margin: "20px 10px 10px 10px",
+    margin: "13px 10px 13px 10px",
   },
   mainTitle: {
     paddingLeft: 14,
@@ -99,24 +99,28 @@ const content = [
   {
     title: "Gate In",
     route: "/gate/in",
+    value:'gateIn',
     img: GateInIcon,
     isAccordion: false,
   },
   {
     title: "Yard Operation",
-    route: "",
+    route: "/yard/operation",
+    value:'yardOperation',
     img: OperationIcon,
     isAccordion: true,
   },
   {
     title: "Location Update",
+    value:'location',
     route: "/location/update",
     img: PositionIcon,
-    isAccordion: false,
+    isAccordion: true,
   },
   {
     title: "Gate Out",
     route: "/gate/out",
+    value:'gateout',
     img: GateOutIcon,
     isAccordion: false,
   },
@@ -128,24 +132,45 @@ export default function Dashboard() {
   const [errors, setErrors] = useState("");
   const [loading, setLoading] = useState(true);
   const [crane, setCrane] = useState(useSelector(({ base }) => base.yardCrane));
+  const [locationCrane, setLocationCrane] = useState(useSelector(({ base }) => base.locationCrane));
   const authToken = useSelector(({ auth }) => auth.authToken);
   const facility = useSelector(({ base }) => base.facility);
   let yardCraneList = useSelector(({ base }) => base.yardCraneList);
   const dispatch = useDispatch();
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event,item) => {
     event.preventDefault();
     setLoading(true);
-    if (crane !== "") {
-      dispatch(selectYardCraneApi(crane));
-      setTimeout(() => {
-        history.push("/yard/operation");
-      }, 500);
-    } else {
-      setErrors("Please Select Crane");
-      setLoading(false);
+    if(item.value !== 'location'){
+      if (crane !== "") {
+        dispatch(selectYardCraneApi(crane));
+        setTimeout(() => {
+          history.push(item.route);
+        }, 500);
+      } else {
+        setErrors("Please Select Crane");
+        setLoading(false);
+      }
+    }else{
+      if (locationCrane !== "") {
+        dispatch(selectLocationCraneApi(locationCrane));
+        setTimeout(() => {
+          history.push(item.route);
+        }, 500);
+      } else {
+        setErrors("Please Select Crane");
+        setLoading(false);
+      }
     }
+    
   };
+  const handleCranselect = (type,value) => {
+    if(type=== 'location'){
+      setLocationCrane(value)
+    }else{
+      setCrane(value)
+    }
+  }
   const handleCallBackYardCraneList = (response) => {
     const {
       data: { status },
@@ -217,7 +242,7 @@ export default function Dashboard() {
                       aria-controls="additional-actions1-content"
                       id="additional-actions1-header"
                     >
-                      <Box display="flex" alignItems="center" width="100%"  >
+                      <Box display="flex" alignItems="center" width="100%">
                         <div style={{ width: "15%" }}>
                           <img src={item.img} alt="" />
                         </div>
@@ -237,10 +262,10 @@ export default function Dashboard() {
                         <Box className={classes.operationDetails}>
                           <FormControl fullWidth error={errors !== ""}>
                             <Select
-                              selectedValue={crane !== "" ? crane : "none"}
-                              handleChange={setCrane}
+                              selectedValue={item.value === 'yardOperation' ? (crane !== "" ? crane : "none") : (locationCrane !== "" ? locationCrane : "none")}
+                              handleChange={(value) => handleCranselect(item.value,value)}
                               options={yardCraneList}
-                              placeholder="Select Yard Crane"
+                              placeholder={"Select Crane"}
                               inputStyle={<BootstrapInput />}
                             />
                             <FormHelperText>{errors}</FormHelperText>
@@ -249,7 +274,7 @@ export default function Dashboard() {
                             className={classes.operationBtn}
                             variant="contained"
                             color="primary"
-                            onClick={handleSubmit}
+                            onClick={(event) => handleSubmit(event,item)}
                           >
                             Ok
                           </Button>

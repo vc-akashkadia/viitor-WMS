@@ -26,11 +26,13 @@ export const LoginApi = (userData, remember_me, callback) => {
       })
       .catch((err) => {
         console.log("error", err);
-        let response = {
-          status: false,
-          // code: err.response.status,
+        let responseNew = {
+          data: {
+            status: false,
+            // code: err.response.status,
+          },
         };
-        callback(response);
+        callback(responseNew);
       });
   };
 };

@@ -1,7 +1,6 @@
 import React from "react";
 import "./print.css";
 export default function LocationPrint(props) {
-  console.log(props)
   const { data } = props;
   const date = new Date()
     .toLocaleDateString("en-GB", {

@@ -1,4 +1,4 @@
-import React, { useState ,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
@@ -21,11 +21,17 @@ import { ReactComponent as YardIcon } from "@assests/img/yard-operation-user.svg
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import IconButton from "@material-ui/core/IconButton";
 import FormHelperText from "@material-ui/core/FormHelperText";
-import {AddRoleApi,getUserRoleList} from '../../apicalls/ModuleAccessApiCalls';
+import LocationOnOutlinedIcon from '@material-ui/icons/LocationOnOutlined';
+import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
+import {
+  AddRoleApi,
+  getUserRoleList,
+  EditRoleApi,
+} from "../../apicalls/ModuleAccessApiCalls";
 import Select from "../../components/Select";
+import Toaster from "../../components/Toaster";
 import Loader from "../../components/Loader";
-import Snackbar from "@material-ui/core/Snackbar";
-import MuiAlert from "@material-ui/lab/Alert";
+
 const GreenCheckbox = withStyles({
   root: {
     "&$checked": {
@@ -85,8 +91,9 @@ const useStyles = makeStyles((theme) => ({
   },
   content: {
     fontFamily: "Roboto",
-    padding: "10px 10px",
-    margin: 5
+    paddingLeft: 23,
+    paddingRight: 23,
+    paddingBottom: 0,
   },
   innerContent: {
     display: "flex",
@@ -94,6 +101,13 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: 10,
     marginTop: "3px",
     color: "#777777",
+  },
+  innerContentActive: {
+    display: "flex",
+    // justifyContent: "space-between",
+    marginBottom: 3,
+    marginTop: "3px",
+    color: "#707070",
   },
   innerContentCheck: {
     display: "flex",
@@ -112,7 +126,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
   },
   boxStyle: {
-    width: "180px",
+    width: "100%",
     border: "1px solid #ced4da",
     paddingLeft: "2px",
     margin: "4px 0px 0px 0px",
@@ -142,7 +156,6 @@ const useStyles = makeStyles((theme) => ({
   notchedOutline: {
     borderColor: "#f6f6f6 !important",
   },
-  
 }));
 
 let toasterOption = {
@@ -150,20 +163,32 @@ let toasterOption = {
   message: "",
 };
 const accessValue = {
-  "ROLE_YARD" : {
+  ROLE_YARD: {
     title: "Yard Operation",
-    roleName : "ROLE_YARD",
+    roleName: "ROLE_YARD",
     icon: <YardIcon />,
-    startIcon: <YardIcon style={{ width: "21px" }} />,
+    startIcon: <YardIcon style={{ width: "18px" }} />,
   },
-  "ROLE_GATE" : {
+  ROLE_GATE: {
     title: "Gate Operation",
-    roleName : "ROLE_GATE",
-    icon: <GateInIcon style={{ width: "18px", marginLeft: "3px" }} />,
-    startIcon: <GateInIcon style={{ width: "18px", marginLeft: "3px" }} />,
+    roleName: "ROLE_GATE",
+    icon: <GateInIcon style={{ width: "15px", marginLeft: "3px" }} />,
+    startIcon: <GateInIcon style={{ width: "15px", marginLeft: "3px" }} />,
   },
+  ROLE_LOCATION: {
+    title: "Location Update",
+    roleName: "ROLE_LOCATION",
+    icon: <LocationOnOutlinedIcon style={{ width: "18px", marginLeft: "3px",color:"#5c5c5c"  }} />,
+    startIcon: <LocationOnOutlinedIcon style={{ width: "18px", marginLeft: "3px",color:"#5c5c5c"  }} />,
+  },
+  ROLE_ADMIN: {
+    title: "Admin",
+    roleName: "ROLE_ADMIN",
+    icon: <SupervisorAccountIcon style={{ width: "18px", marginLeft: "3px", color:"#5c5c5c" }} />,
+    startIcon: <SupervisorAccountIcon style={{ width: "18px", marginLeft: "3px",color:"#5c5c5c"  }} />,
+  }
   // "ROLE_ADMIN" : "Admin"
-}
+};
 // const accessValue = [
 //   {
 //     title: "Yard Operation",
@@ -181,12 +206,17 @@ const accessValue = {
 
 export default function EditModal(props) {
   const classes = useStyles();
-  const { open, setOpen, type,user } = props;
-  const [userName, setUserName] = useState("");
-  const [facility, setFacility] = useState();
-  const [access, setAccess] = useState((user.userRoleId !== undefined) ? user.userRoleId.map(role => role.roleName) :  []);
+  const { open, setOpen, type, user } = props;
+  const [userName, setUserName] = useState(user.userName);
+  const [facility, setFacility] = useState(user.facilityId);
+  const [access, setAccess] = useState(
+    user.userRoleId !== undefined
+      ? user.userRoleId.map((role) => role.roleName)
+      : []
+  );
   const [toaster, setToaster] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [active, setActive] = useState((user.isactive) ? user.isactive : true);
   const [errors, setErrors] = useState({
     userName: "",
     facility: "",
@@ -195,41 +225,37 @@ export default function EditModal(props) {
   let facilityList = useSelector(({ base }) => base.facilityList);
   let roleList = useSelector(({ base }) => base.userRoleList);
   const dispatch = useDispatch();
-  
-  const getUserRoleList = () => {
+
+  const getUserRoleListAPI = () => {
     if (roleList.length === 0) {
-      dispatch(
-        getUserRoleList(authToken, handleCallRoleBack)
-      );
+      dispatch(getUserRoleList(authToken, handleCallRoleBack));
     }
   };
-  useEffect(getUserRoleList, []);
+  useEffect(getUserRoleListAPI, []);
 
-  const handleCallRoleBack =(response)=>{
-    
-  }
-  const handleNameChange =(e)=>{
-    setUserName(e.target.value)
-  }
+  const handleCallRoleBack = (response) => {};
+  const handleNameChange = (e) => {
+    setUserName(e.target.value);
+  };
 
-  const handleFacility =(value)=>{
-    setFacility(value)
-  }
+  const handleFacility = (value) => {
+    setFacility(value);
+  };
 
   const handleClose = () => {
     setOpen(false);
   };
-  
+
   const validateData = () => {
-    let validate = true
+    let validate = true;
     let error = { userName: "", facility: "" };
     if (userName === "") {
       error.userName = "User Name is required";
-      validate = false
+      validate = false;
     }
-     if (facility === undefined) {
+    if (facility === undefined) {
       error.facility = "Please select the facility";
-      validate = false
+      validate = false;
     }
     setErrors(error);
     // if (!values.gateIn && !values.yardOperation) {
@@ -239,54 +265,60 @@ export default function EditModal(props) {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("facility",facility)
-    if(validateData){
-      let data =  {
-        "username":userName,
-        "facilityName":facility,
-        "roleList":access
-      }
-      console.log(data)
-      if(type==="add"){
-        setLoading(true)
-        dispatch(AddRoleApi(data,authToken,handleCallback));
-      }else{
+    if (validateData) {
+      let data = {
+        username: userName,
+        facilityName: facility,
+        roleList: access.toString(),
+        IsActive:active ? 1 : 0
+      };
+      if (type === "add") {
+        setLoading(true);
+        dispatch(AddRoleApi(data, authToken, handleCallback));
+      } else {
         // call edit user api //getUserRoleList
+        setLoading(true);
+        dispatch(EditRoleApi(data, authToken, handleCallback));
       }
     }
   };
 
   const handleCallback = (response) => {
-    const {status} = response
-    if(status){
+    const {
+      data: { status },
+    } = response;
+    if (status) {
       toasterOption = {
         varient: "success",
-        message: type === 'add' ? "User Add Sucessful" : "User Edit Sucessful",
+        message: type === "add" ? "User Add Sucessful" : "User Edit Sucessful",
       };
-    }else{
+    } else {
       toasterOption = {
         varient: "error",
         message: "Something went wrong try after sometime",
       };
     }
     setToaster(true);
-    setLoading(false)
-  }
+    setTimeout(() => {
+      setLoading(false);
+      setOpen(true);
+    }, 1000);
+  };
 
   const handleCheckbox = (e, targetName) => {
     // setFieldValue(targetName, e.target.checked);
     let newAccess = [...access];
     let index = newAccess.indexOf(targetName);
-    if(e.target.checked){
-      if(index === -1){
-        newAccess.push(targetName)
+    if (e.target.checked) {
+      if (index === -1) {
+        newAccess.push(targetName);
       }
-    }else{
-      if(index > -1){
+    } else {
+      if (index > -1) {
         newAccess.splice(index, 1);
       }
     }
-    setAccess(newAccess)
+    setAccess(newAccess);
   };
   return (
     <div>
@@ -295,106 +327,129 @@ export default function EditModal(props) {
         onClose={handleClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
+        fullScreen={true}
       >
+        {loading && <Loader />}
         <DialogTitle id="alert-dialog-title" className={classes.title}>
           {type === "add" ? "Add User Access" : "Update User Access"}
         </DialogTitle>
         <DialogContent className={classes.content}>
           {type === "edit" ? (
-            <Typography className={classes.innerContent}>
-              User Name:
-              <span style={{ color: "#1f1f21", marginLeft: "2px" }}>{user.userName}</span>
+            <>
+              <Typography className={classes.innerContent}>
+                User Name:
+                <span style={{ color:"#1f1f21", marginLeft: "2px" }}>
+                  {user.userName}
+                </span>
+              </Typography>
+              <Typography className={classes.innerContent}>
+                Facility Code:
+                <span style={{ color:"#1f1f21", marginLeft: "2px" }}>
+                  {user.facilityId}
+                </span>
+              </Typography>
+              <Typography className={classes.innerContentActive}>
+              Active:
+              <span style={{ color:"#1f1f21", marginLeft: "-8px", marginTop: "-12px"  }}>
+                {" "}
+                <GreenCheckbox
+                  edge="end"
+                  name={"isactive"}
+                  tabIndex={-1}
+                  onChange={(e) => setActive(e.target.checked)}
+                  checked={active}
+                  style={{paddingTop: 8,paddingBottom: 0}}
+                />
+              </span>
             </Typography>
+            </>
           ) : (
             <>
-            <TextField
-            error={errors.userName !== ""}
-              className={classes.searchInput}
-              id="outlined-basic"
-              placeholder="Enter User Name"
-              label=""
-              value={userName}
-              helperText={errors.userName}
-              onChange={handleNameChange}
-              variant="outlined"
-              style={{ marginTop: "-3px", width: "100%",marginBottom: "5px" }}
-            />
-          
-            {/* <Select
-              labelId="demo-customized-select-label"
-              id="demo-customized-select"
-              name="damageCode"
-              value={facility ? facility :"none"}
-              onChange={handleFacility}
-              // defaultValue="Select Facility"
-              // onChange={(event) =>
-              //   handleChange(event.target.value)
-              // }
-              input={<BootstrapInput />}
-              placeholder="Block"
-              style={{ width: "100%", marginTop: "5px" }}
-            >
-              <MenuItem value="none" disabled>
-                Select Facility
-              </MenuItem>
-              <MenuItem value={"a"}>a</MenuItem>
-            </Select> */}
+              <TextField
+                error={errors.userName !== ""}
+                className={classes.searchInput}
+                id="outlined-basic"
+                placeholder="Enter User Name"
+                label=""
+                value={
+                  userName !== "" && userName !== undefined ? userName : ""
+                }
+                helperText={errors.userName}
+                onChange={handleNameChange}
+                variant="outlined"
+                style={{
+                  marginTop: "-3px",
+                  width: "100%",
+                  marginBottom: "5px",
+                }}
+              />
               <Select
-                selectedValue={facility !== '' ? facility : 'none'}
+                selectedValue={
+                  facility !== "" && facility !== undefined ? facility : "none"
+                }
                 handleChange={handleFacility}
                 options={facilityList}
                 placeholder="Select Facility"
                 inputStyle={<BootstrapInput />}
                 style={{ width: "100%", marginTop: "5px" }}
-                
               />
-            <FormHelperText style={{color:"red"}}>{errors.facility}</FormHelperText>
+              <FormHelperText style={{ color: "red" }}>
+                {errors.facility}
+              </FormHelperText>
             </>
           )}
           {/* Access user */}
           <form onSubmit={handleSubmit}>
-            <Typography style={{ fontWeight: "400", marginTop: "10px",color:"#777777" }}>
+            
+
+            <Typography style={{ fontWeight: "500", marginTop: "6px", color: "#777777" }}>
               Access
             </Typography>
             <div className={classes.boxStyle}>
               <List style={{ paddingTop: "0px", paddingBottom: "0px" }}>
-                {roleList && roleList.map((role,roleIndex) => {
-                  let roleData = accessValue[role.roleName]
-                  if(roleData === undefined){
-                    return null
-                  }
-                  return <React.Fragment key={roleIndex}>
-                  <ListItem
-                    key={roleData.title}
-                    role={undefined}
-                    dense
-                    button
-                    className={classes.listItem}
-                    // style={index !==0 ?{borderTop:"1px solid #ced4da"}:{}}
-                    // onClick={handleToggle(value)}
-                  >
-                    <ListItemIcon style={{paddingLeft:"2px"}}>
-                      <IconButton edge="start" aria-label="comments" >
-                        {roleData.startIcon}
-                      </IconButton>
-                    </ListItemIcon>
-                    <ListItemText
-                      primary={roleData.title}
-                      className={classes.listItemText}
-                    />
-                    <ListItemSecondaryAction>
-                      <GreenCheckbox
-                        edge="end"
-                        name={roleData.title}
-                        tabIndex={-1}
-                        onChange={(e) => handleCheckbox(e, roleData.roleName)}
-                        checked={access.indexOf(roleData.roleName) > -1}
-                      />
-                    </ListItemSecondaryAction>
-                  </ListItem>
-                  <Divider className={classes.divider} style={{backgroundColor:"#ced4da",marginLeft:'-1px'}} />
-                  </React.Fragment>
-                })}
+                {roleList &&
+                  roleList.map((role, roleIndex) => {
+                    let roleData = accessValue[role.roleName];
+                    if (roleData === undefined) {
+                      return null;
+                    }
+                    return (
+                      <React.Fragment key={roleIndex}>
+                        <ListItem
+                          key={roleData.title}
+                          role={undefined}
+                          dense
+                          button
+                          className={classes.listItem}
+                          // style={index !==0 ?{borderTop:"1px solid #ced4da"}:{}}
+                          // onClick={handleToggle(value)}
+                        >
+                          <ListItemIcon style={{ paddingLeft: "2px" }}>
+                            <IconButton edge="start" aria-label="comments">
+                              {roleData.startIcon}
+                            </IconButton>
+                          </ListItemIcon>
+                          <ListItemText
+                            primary={roleData.title}
+                            className={classes.listItemText}
+                            style={{color:"#1f1f21"}}
+                          />
+                          <ListItemSecondaryAction>
+                            <GreenCheckbox
+                              edge="end"
+                              name={roleData.title}
+                              tabIndex={-1}
+                              onChange={(e) =>
+                                handleCheckbox(e, roleData.roleName)
+                              }
+                              checked={access.indexOf(roleData.roleName) > -1}
+                            />
+                          </ListItemSecondaryAction>
+                        </ListItem>
+                        <Divider className={classes.divider} style={{backgroundColor:"#ced4da",marginLeft:'-1px',height:"0.5px"}} />
+                      </React.Fragment>
+                    );
+                  })}
                 {/* {accessValue.map((item,index) => (
                   
                 ))} */}
@@ -419,27 +474,18 @@ export default function EditModal(props) {
                 autoFocus
                 className={classes.button}
               >
-                {type === "edit" ? "Update" : "Add User"}
+                {type === "edit" ? "Update" : "Save"}
               </Button>
             </DialogActions>
           </form>
         </DialogContent>
       </Dialog>
-      <Snackbar
+      <Toaster
         open={toaster}
-        anchorOrigin={{ vertical: "top", horizontal: "right" }}
-        autoHideDuration={6000}
-        onClose={() => setToaster(false)}
-      >
-        <MuiAlert
-          elevation={6}
-          variant="filled"
-          onClose={() => setToaster(false)}
-          severity={toasterOption.varient}
-        >
-          {toasterOption.message}
-        </MuiAlert>
-      </Snackbar>
+        handleClose={setToaster}
+        option={toasterOption.varient}
+        message={toasterOption.message}
+      />
     </div>
   );
 }

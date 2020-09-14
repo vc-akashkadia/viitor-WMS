@@ -17,9 +17,9 @@ import TextField from "@material-ui/core/TextField";
 import Modal from "../../components/modal";
 import PickUpModal from "./PickUpModal";
 // import CircularProgress from "@material-ui/core/CircularProgress";
-import Snackbar from "@material-ui/core/Snackbar";
-import MuiAlert from "@material-ui/lab/Alert";
+
 import Select from "../../components/Select";
+import Toaster from "../../components/Toaster";
 import CardGrid from "../../components/Card";
 import {
   getBlockListApiCall,
@@ -50,7 +50,7 @@ const BootstrapInput = withStyles((theme) => ({
     border: "1px solid #ced4da",
     fontSize: 14,
     color:"#1f1f21",
-    padding: "0px 26px 0px 10px",
+    padding: "0px 26px 0px 12px",
     transition: theme.transitions.create(["border-color", "box-shadow"]),
     width: "100%",
     height: 26,
@@ -276,8 +276,6 @@ export default function YardOperation(props) {
       handleSearch();
     }
   };
-  console.log(openGrounding)
-
   return (
     <>
       <TitleHeader
@@ -434,21 +432,12 @@ export default function YardOperation(props) {
           setOpen={handleClosePickUp}
         />
       )}
-      <Snackbar
+      <Toaster 
         open={toaster}
-        anchorOrigin={{ vertical: "top", horizontal: "right" }}
-        autoHideDuration={3000}
-        onClose={() => setToaster(false)}
-      >
-        <MuiAlert
-          elevation={6}
-          variant="filled"
-          onClose={() => setToaster(false)}
-          severity={toasterOption.varient}
-        >
-          {toasterOption.message}
-        </MuiAlert>
-      </Snackbar>
+        handleClose={setToaster}
+        option={toasterOption.varient}
+        message={toasterOption.message}
+        />
       <ScrollToTop />
     </>
   );

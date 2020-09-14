@@ -18,7 +18,7 @@ export function Routes() {
   const { isAuthorized } = useSelector(
     ({ auth }) => ({
       isAuthorized: auth.user != null,
-      // isAuthorized: true,
+      //isAuthorized: true,
     }),
     shallowEqual
   );

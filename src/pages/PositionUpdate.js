@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles,withStyles } from "@material-ui/core/styles";
 // import AppBar from "@material-ui/core/AppBar";
 // import Toolbar from "@material-ui/core/Toolbar";
 // import IconButton from "@material-ui/core/IconButton";
@@ -18,6 +18,10 @@ import TextField from "@material-ui/core/TextField";
 import EditIcon from "@material-ui/icons/Edit";
 import GroundingModal from "./../components/GroundingContainer";
 import { getContainerListForLocationUpdate } from "../apicalls/ModuleAccessApiCalls";
+import {
+  getBlockListApiCall,
+  
+} from "../apicalls/YardApiCalls";
 import TitleHeader from "../components/TitleHeader";
 import ScrollToTop from "../components/ScrollToTop";
 import Modal from "../components/modal";
@@ -26,7 +30,44 @@ import ContainerIcon from "@assests/img/container.svg";
 // import LocalShippingOutlinedIcon from "@material-ui/icons/LocalShippingOutlined";
 import RefreshIcon from '@material-ui/icons/Refresh';
 import LocationOnOutlinedIcon from '@material-ui/icons/LocationOnOutlined';
+import Loader from "../components/Loader";
+import Select from "../components/Select";
+import FormControl from "@material-ui/core/FormControl";
+import InputBase from "@material-ui/core/InputBase";
 // import Modal from "../../components/modal"
+
+const BootstrapInput = withStyles((theme) => ({
+  root: {
+    "label + &": {
+      marginTop: theme.spacing(3),
+    },
+  },
+  input: {
+    borderRadius: 4,
+    position: "relative",
+    backgroundColor: "#f6f6f6",
+    border: "1px solid #ced4da",
+    fontSize: 14,
+    padding: "0px 26px 0px 12px",
+    transition: theme.transitions.create(["border-color", "box-shadow"]),
+    width: "100%",
+    height: 26,
+    // display: "flex",
+    alignItems: "center",
+    whiteSpace: "nowrap",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    display: "inline-block",
+    lineHeight: "28px",
+    // Use the system font instead of the default Roboto font.
+    fontFamily: ["Roboto"].join(","),
+    "&:focus": {
+      borderRadius: 4,
+      borderColor: "#80bdff",
+      boxShadow: "0 0 0 0.2rem rgba(0,123,255,.25)",
+    },
+  },
+}))(InputBase);
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -54,7 +95,7 @@ const useStyles = makeStyles((theme) => ({
   confirmBtn: {
     backgroundColor: "#40d759",
     minWidth: 37,
-    height: 26,
+    height: 25,
     color: "#fff",
     fontSize: 15,
     fontWeight: 500,
@@ -79,6 +120,11 @@ const useStyles = makeStyles((theme) => ({
   input: {
     padding: "0px 5px",
   },
+  yardNoData: {
+    width: "100%",
+    marginTop: "93px",
+    paddingLeft: 70,
+  },
   searchBtn: {
     minWidth: "100%",
     textTransform: "capitalize",
@@ -93,12 +139,13 @@ const useStyles = makeStyles((theme) => ({
     }
   }
 }));
-
+const blockConst = [{ value: "Block", label: "Block" }];
 export default function PositionUpdate(props) {
   const classes = useStyles();
   const history = useHistory();
   const authToken = useSelector(({ auth }) => auth.authToken);
   const facility = useSelector(({ base }) => base.facility);
+  const [block, setBlock] = useState("Block");
   const [open, setOpen] = useState(false);
   const [gModal, setGModal] = useState(false);
   const [openModal, setModal] = useState(false);
@@ -106,6 +153,9 @@ export default function PositionUpdate(props) {
   const [gType, setGType] = useState();
   const [containerNumber, setContainerNumber] = useState('');
   const [selectedContainer, setSelectedContainer] = useState('');
+  const [loading, setLoading] = useState(false);
+  const blockList = useSelector(({ base }) => base.blockList);
+  const [modalData,setModalData]=useState()
   // const handleFilterOpen =()=>{
   //   setOpen(!open)
   // }
@@ -113,30 +163,58 @@ export default function PositionUpdate(props) {
   const dispatch = useDispatch();
   //   const [open, setOpen] = useState(false);
   const getContainerList = () => {
-    if (containerList.length === 0) {
+      setOpen(false);
+      setLoading(true)
       let data ={
         containerNumber:containerNumber,
         facility:facility
       }
+      if (block !== "Block") {
+        data.blockNumber = block;
+      }
       dispatch(
         getContainerListForLocationUpdate(data, authToken, handleCallBack)
       );
-    }
+    
   };
   useEffect(getContainerList, []);
+  useEffect(() => {
+    if (blockList.length === 0) {
+      dispatch(getBlockListApiCall(facility, authToken, handleCallbackBlock));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [blockList]);
 
-  const handleCallBack = () => {};
+  const handleCallbackBlock = () => {};
+
+  const handleCallBack = (response) => {
+    setLoading(false)
+  };
   const handleGModal = (container) => {
     setGModal(true);
-    setGType("position");
+    setGType("location");
     setSelectedContainer(container)
   };
 
-  const handleOpenModal = () => {
+  const handleOpenModal = (type,item) => {
     setModal(true);
-    setData("1234");
+    if(type==="c"){
+      setData(item.containerNumber);
+      setModalData("container")
+    }else{
+      setData(item.location)
+      setModalData("location")
+    }
   };
-  console.log(containerList)
+
+  const handleModalClose = (status) => {
+    setGModal(false);
+    if(status){
+      getContainerList()
+    }
+  };
+
+  
 
   return (
     <>
@@ -154,6 +232,17 @@ export default function PositionUpdate(props) {
                 Search Here
               </Typography>
             </Grid>
+            <Grid item xs={6}>
+              <FormControl fullWidth>
+                <Select
+                  selectedValue={block === "" ? "Block" : block}
+                  handleChange={setBlock}
+                  options={[...blockConst, ...blockList]}
+                  placeholder="Select Block"
+                  inputStyle={<BootstrapInput />}
+                />
+              </FormControl>
+            </Grid>
             <Grid item xs={8}>
               <TextField
                 className={classes.searchInput}
@@ -170,7 +259,7 @@ export default function PositionUpdate(props) {
                 variant="contained"
                 color="primary"
                 className={classes.searchBtn}
-                onClick={getContainerList}
+                onClick={() => getContainerList()}
               >
                 Search
               </Button>
@@ -180,15 +269,19 @@ export default function PositionUpdate(props) {
       )}
       <div
         className={classes.yardMain}
-        style={open ? { marginTop: "82px" } : { marginTop: "0px" }}
+        style={open ? { marginTop: "96px" } : { marginTop: "0px" }}
       >
         <div style={{position:'relative'}}>
         <Typography className={classes.yardTitle}>Work Order</Typography>
         <RefreshIcon onClick={()=> getContainerList()} fontSize="small" style={{position:'absolute',top: '-1px',right:'10px',color:'#5c5c5c'}}  />
         </div>
         <Divider style={{ marginBottom: "7px" }} />
-        {containerList && containerList.length > 0 && containerList.map((container,index) => (
-          <Card key={index} className={classes.yardCard} style={{ border: "1px solid #929eaa",marginLeft:"2px", marginRight:"2px" }}>
+        {loading && <Loader />}
+        {!loading && containerList && containerList.length === 0 && (
+          <Typography className={classes.yardNoData}>No Data Found</Typography>
+        )}
+        {!loading && containerList && containerList.length > 0 && containerList.map((container,index) => (
+          <Card key={index} className={classes.yardCard} style={{ border: "1px solid #929eaa",marginLeft:"1px", marginRight:"1px" }}>
           <Box
             display="flex"
             alignItems="center"
@@ -197,10 +290,12 @@ export default function PositionUpdate(props) {
             <Box className={classes.chipMain}>
               <div style={{ position: "relative" }}>
                 <Chip
-                  label={container.containerNumber}
-                  size="small"
-                  style={{ width: "49px" ,color: "#000000" }}
-                  onClick={handleOpenModal}
+                  label={(container.containerNumber !== null) ? container.containerNumber.substring(
+                    container.containerNumber.length - 4
+                  ) : ''}
+                  // size="small"
+                  style={{ width: "65px" ,color:  "#000000" }}
+                  onClick={() => handleOpenModal("c",container)}
                   
                 />
                 <img
@@ -215,14 +310,15 @@ export default function PositionUpdate(props) {
                 ></img>
               </div>
               <div style={{ position: "relative" }}>
-                <Chip label={container.locationNumber} style={{ width: "132px",color: "#000000"  }} />
+                <Chip label={container.location} style={{ width: "116px",color: "#000000"  }} onClick={() => handleOpenModal("l",container)}/>
                 <LocationOnOutlinedIcon
-                   style={{
+                  style={{
                     position: "absolute",
-                    top: "-10.5px",
-                    left: "3px",
+                    top: "-10px",
+                    left: "0px",
                     width: 15,
                     color:"#0000004d"
+                    // backgroundColor: "#ffffff"
                   }}
                   />
                 </div>
@@ -238,7 +334,7 @@ export default function PositionUpdate(props) {
       {gModal && (
         <GroundingModal
           open={gModal}
-          setOpen={setGModal}
+          setOpen={handleModalClose}
           type={gType}
           api={"Location Api"}
           data={"LOC1234"}
@@ -249,7 +345,8 @@ export default function PositionUpdate(props) {
         <Modal
           open={openModal}
           setOpen={setModal}
-          modalData={"container"}
+          // modalData={"container"}
+          modalData={modalData}
           data={data}
         />
       )}

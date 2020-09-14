@@ -9,9 +9,13 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
 import Loader from "./Loader";
-
+import Toaster from "./Toaster"
 import { GroundingContianerApiCall } from "../apicalls/YardApiCalls";
 import { LocationUpdatePost } from "../apicalls/ModuleAccessApiCalls";
+let toasterOption = {
+  varient: "success",
+  message: "",
+};
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -70,9 +74,11 @@ export default function GroundingContainers(props) {
   const { open, setOpen, type, api, data, container } = props;
   const [location, setLocation] = useState(container &&container.location);
   const [error, setError] = useState("");
+  const [toaster, setToaster] = useState(false);
   const dispatch = useDispatch();
   const authToken = useSelector(({ auth }) => auth.authToken);
   const yardCrane = useSelector(({ base }) => base.yardCrane);
+  const locationCrane = useSelector(({ base }) => base.locationCrane);
   const facility = useSelector(({ base }) => base.facility);
   const [loading, setLoading] = useState(false);
   //   const [open, setOpen] = React.useState(open);
@@ -94,20 +100,16 @@ export default function GroundingContainers(props) {
     if (location === "") {
       setError("pelase enter the location");
     } else {
-      if (type === "position") {
-        //call the postion API
-
-        console.log("api", api);
+      if (type === "location") {
         let data = {
           containerNumber: container.containerNumber,
           locationNumber: location,
-          craneNumber: yardCrane,
-          truckNumber: container.truckNumber,
+          craneNumber: locationCrane,
           facilityId:facility
         };
         setLoading(true);
         dispatch(LocationUpdatePost(data, authToken, handleCallback));
-        setOpen(false);
+        // setOpen(false);
       } else {
         //call other API
         let data = {
@@ -128,8 +130,33 @@ export default function GroundingContainers(props) {
   };
 
   const handleCallback = (response) => {
-    setLoading(false);
-    setOpen(true);
+    
+    const {
+      data: { status },
+    } = response;
+    if (status) {
+      toasterOption = {
+        varient: "success",
+        message: type=== "location" ? "Location Updated Successfull" : "Gorunding Successfull"
+      };
+      setToaster(true);
+      setTimeout(() => {
+        setLoading(false);
+        setOpen(true);
+      }, 1000);
+    } else {
+      toasterOption = {
+        varient: "error",
+        message: "Something went wrong try after sometime",
+      };
+      setToaster(true);
+      setTimeout(() => {
+        setLoading(false);
+        setOpen(true);
+      }, 1000);
+    }
+    
+
   };
 
   return (
@@ -144,19 +171,22 @@ export default function GroundingContainers(props) {
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title" className={classes.title}>
-          {type !== "position" ? "Grounding Container" : "Location Update"}
+          {type !== "location" ? "Grounding Container" : "Location Update"}
         </DialogTitle>
         <DialogContent className={classes.content}>
           <Typography className={classes.innerContent}>
-            Cont#: <span style={{ color: "#1f1f21" }}>{container && container.containerNumber}</span>{" "}
+            Cont#: <span style={{ color:"#1f1f21",textAlign:"right" }}>{container && container.containerNumber}</span>{" "}
           </Typography>
-          {type !== "position" && (
+          {type !== "location" && (
             <Typography className={classes.innerContent}>
               Status: <span style={{ color: "#0c79c1" }}>Ground</span>{" "}
             </Typography>
           )}
           <Typography className={classes.innerContent}>
-            Location: <span style={{ color: "#1f1f21" }}>{container && container.location}</span>{" "}
+            Location: <span style={{ color: "#1f1f21",textAlign:"right" }}>{container && container.location}</span>{" "}
+          </Typography>
+          <Typography className={classes.innerContent}>
+            Crane: <span style={{ color:"#1f1f21",textAlign:"right" }}>{type === 'location' ? locationCrane : yardCrane}</span>{" "}
           </Typography>
         </DialogContent>
         <form onSubmit={handleSubmit}>
@@ -168,7 +198,7 @@ export default function GroundingContainers(props) {
               label=""
               variant="outlined"
               placeholder="Enter New Location"
-              style={{ width: "100%", marginTop: "-5px" }}
+              style={{ width: "100%", marginTop: "-6px" }}
               value={(location !== null ) ? location : ''}
               onChange={handleChange}
               InputProps={{
@@ -205,6 +235,12 @@ export default function GroundingContainers(props) {
           )}
         </form>
       </Dialog>
+      <Toaster 
+        open={toaster}
+        handleClose={setToaster}
+        option={toasterOption.varient}
+        message={toasterOption.message}
+      />
     </div>
   );
 }

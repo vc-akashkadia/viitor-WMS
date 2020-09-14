@@ -8,11 +8,10 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import { makeStyles } from "@material-ui/core/styles";
 import InputLabel from "@material-ui/core/InputLabel";
 import container from "@assests/img/popup-container.svg";
-import crane from "@assests/img/LocationContainer.svg";
 import license from "@assests/img/popup-licence.svg";
-// import LocationOnOutlinedIcon from '@material-ui/icons/LocationOnOutlined';
-// import RoomTwoToneIcon from '@material-ui/icons/RoomTwoTone';
 import RoomSharpIcon from '@material-ui/icons/RoomSharp';
+import crane from "@assests/img/LocationContainer.svg";
+
 const useStyles = makeStyles((theme) => ({
   title: {
     fontSize: 16,
@@ -49,25 +48,25 @@ const useStyles = makeStyles((theme) => ({
     whiteSpace: "nowrap",
   },
   label: {
-    fontSize: 21,
+    fontSize: 20,
     fontWeight: 900,
     color: "#000000",
   },
 
   containerLabel: {
     position: "absolute",
-    bottom: 45,
+    bottom: 46,
     left: "45%",
     transform: "translate(-50%, 20px)",
     margin: '0 10px',
     width: "80%",
-    height: '55%',
+    height: '50%',
     overflow: "hidden",
     // textAlign: "center",
     display: "flex",
     backgroundColor: "white",
     // paddingLeft: "15px",
-    // padding:"0 5px",
+    padding:"0 5px",
     justifyContent: "center",
     alignItems: 'center'
     // whiteSpace: "nowrap",
@@ -75,12 +74,12 @@ const useStyles = makeStyles((theme) => ({
 
   LocationLabel:{
     position: "absolute",
-    bottom: 55,
+    bottom: 45,
     left: "45%",
     transform: "translate(-50%, 20px)",
-    margin: '0 11px',
+    margin: '0 10px',
     width: "70%",
-    height: '30%',
+    height: '53%',
     overflow: "hidden",
     display: "flex",
     backgroundColor: "white",
@@ -112,9 +111,7 @@ const useStyles = makeStyles((theme) => ({
     textTransform: "capitalize",
     padding: 0,
     height: 26,
-  },
-  
-  
+  },  
 }));
 
 export default function AlertDialog(props) {
@@ -144,6 +141,7 @@ export default function AlertDialog(props) {
                 shrink
                 htmlFor="bootstrap-input"
                 className={classes.label}
+                
               >
                 {data}
               </InputLabel>
@@ -163,7 +161,7 @@ export default function AlertDialog(props) {
           </DialogActions>
         </Dialog>
       )}
-      {/* {modalData === "container" && (
+      {modalData === "container" && (
         <Dialog
           open={open}
           onClose={() => handleClose(false)}
@@ -202,9 +200,9 @@ export default function AlertDialog(props) {
             </Button>
           </DialogActions>
         </Dialog>
-      )} */}
+      )}
 
-       {modalData === "container" && (
+      {modalData === "location" && (
         <Dialog
           open={open}
           onClose={() => handleClose(false)}
@@ -236,12 +234,11 @@ export default function AlertDialog(props) {
                 className={classes.label}
                 style={{  transform: "translateX(0)",
                   display: "inline-block",
-                  lineHeight: "24px",
-                  fontSize: 16
+                  lineHeight: "24px"
                 }}
               >
-                {/* {data} */}
-                HYD-PFT-DRP-001
+                {data ? data :"----"}
+                {/* HYD-PFT-DRP-001 */}
               </InputLabel>
             </div>
           </DialogContent>
@@ -259,6 +256,7 @@ export default function AlertDialog(props) {
           </DialogActions>
         </Dialog>
       )} 
+
 
       {/* (
           <Dialog
