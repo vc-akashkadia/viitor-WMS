@@ -127,7 +127,7 @@ export default function TitleHeader(props) {
           <Box
             display="flex"
             alignItems="center"
-            justifyContent="space-between"
+            // justifyContent="space-between"
             style={{ width: "100%" }}
           >
             <Box display="flex" className={classes.mainbox} alignItems="center">
@@ -171,12 +171,12 @@ export default function TitleHeader(props) {
               <IconButton
                 aria-haspopup="true"
                 style={
-                  isSearch === false ? { paddingRight: 7 } : { paddingRight: 0 }
+                  isSearch === false ? { paddingRight: 0 } : { paddingRight: 0 }
                 }
                 onClick={handleClick}
                 // ref={anchorRef}
               >
-                <AccountCircle style={{color:"#5c5c5c"}} />
+                <AccountCircle style={{color:"#5c5c5c",marginLeft: "auto",paddingRight:0}}/>
               </IconButton>
             </Box>
             <StyledMenu

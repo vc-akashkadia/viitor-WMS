@@ -4,7 +4,7 @@ import AppBar from "@material-ui/core/AppBar";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { Link, useHistory } from "react-router-dom";
 import { makeStyles, useTheme,withStyles } from "@material-ui/core/styles";
-import brandLogo from "@assests/img/logo-new.svg";
+import brandLogo from "@assests/img/Dp-world.png";
 import IconButton from "@material-ui/core/IconButton";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -28,7 +28,8 @@ const useStyles = makeStyles((theme) => ({
   },
   menuIcon: {
     minWidth: "auto",
-    paddingRight: 15,
+    paddingRight: 5,
+    display: "block"
   },
   regular: {
     minHeight: "40px",
@@ -42,13 +43,18 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "space-between",
     minHeight: "auto"
   },
+  logo: {
+    display: "block",
+    height: "100%",
+    width: 100,
+    // margin: "10px auto",
+  },
 }));
 
 const StyledMenu = withStyles({
   paper: {
     borderRadius: 0,
     boxShadow: "0px 3px 4px rgba(0,0,0,0.16)",
-    width: "auto",
     "& ul": {
       padding: 0,
       "& li": {
@@ -58,6 +64,7 @@ const StyledMenu = withStyles({
   },
 })((props) => (
   <Menu
+   
     elevation={0}
     getContentAnchorEl={null}
     anchorOrigin={{
@@ -134,7 +141,7 @@ export default function Header() {
         <Toolbar>
           <Box
             display="flex"
-            justifyContent="space-between"
+            // justifyContent="space-between"
             alignItems="center"
             style={{ width: "100%" }}
           >
@@ -147,16 +154,10 @@ export default function Header() {
             >
               <MenuIcon style={{color:"#5c5c5c"}}/>
             </IconButton>
-            <Link to="/">
-              <img
-                src={brandLogo}
-                alt="Logo"
-                style={{
-                  display: "block",
-                }}
-              />
+            <Link to="/" className="brand-logo">
+              <img src={brandLogo} alt="Logo" className={classes.logo} />
             </Link>
-            <IconButton aria-haspopup="true" onClick={handleClick}>
+            <IconButton aria-haspopup="true" onClick={handleClick} style={{marginLeft: "auto",padding:"12px 0"}}>
               <AccountCircle style={{color:"#5c5c5c"}}/>
             </IconButton>
           </Box>
@@ -189,7 +190,7 @@ export default function Header() {
       >
         <div className={classes.drawerHeader}>
           <Typography style={{ textAlign: "center",color: "#120e5b", }}>WMS</Typography>
-          <IconButton onClick={handleDrawerClose} style={{paddingRight :0}}>
+          <IconButton onClick={handleDrawerClose} style={{paddingRight :0,marginRight: '-10px'}}>
             {theme.direction === "ltr" ? (
               <ChevronLeftIcon  style={{color:"#5c5c5c"}}/>
             ) : (
@@ -200,11 +201,11 @@ export default function Header() {
         <Divider />
         <List style={{padding: 0}}>
           <ListItem button onClick={() => history.push("/user")}>
-            <ListItemIcon>{<PersonIcon />}</ListItemIcon>
+            <ListItemIcon className={classes.menuIcon}>{<PersonIcon />}</ListItemIcon>
             <ListItemText primary={"User Access"} />
           </ListItem>
           <ListItem button onClick={handleLogout}>
-            <ListItemIcon>{<ExitToAppIcon />}</ListItemIcon>
+            <ListItemIcon className={classes.menuIcon}>{<ExitToAppIcon />}</ListItemIcon>
             <ListItemText primary={"Logout"} />
           </ListItem>
         </List>

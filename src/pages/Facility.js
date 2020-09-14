@@ -41,10 +41,10 @@ const BootstrapInput = withStyles((theme) => ({
     backgroundColor: "#f6f6f6",
     border: "1px solid #ced4da",
     fontSize: 16,
-    padding: "0px 26px 0px 12px",
+    padding: "0px 26px 0px 7px",
     transition: theme.transitions.create(["border-color", "box-shadow"]),
     width: "100%",
-    height: 28,
+    height: 26,
     // display: "flex",
     color:"#1f1f21",
     alignItems: "center",
@@ -67,17 +67,21 @@ const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: "500px",
     margin: "0 10px",
+    height: "calc(100vh - 75px)",
     // margin: "auto",
     position: "relative",
     // paddingBottom: 125,
     "@media (min-width:241px)": {
-      paddingBottom: 40,
-      margin: 'auto'
+      // paddingBottom: 40,
+      margin: '0 15px',
+      maxWidth: '100%'
     },
     "@media (min-width:768px)": {
       paddingBottom: 100,
-      margin: 'auto'
-    },
+      margin: 'auto',
+      height: 'fit-content',
+      maxWidth: "500px"
+    }
   },
   logo: {
     display: "block",
@@ -114,7 +118,7 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 500,
     fontFamily: "Roboto",
     width: "100%",
-    height: 30,
+    height: 26,
     backgroundColor: "#0c79c1",
     textTransform: "inherit",
   },

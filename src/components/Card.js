@@ -148,7 +148,7 @@ export default function CardGrid(props) {
             " " +
             (item.gateOperationCompleted ? classes.damageCode : "")
           }
-          style={{ border: "1px solid #929eaa",marginLeft:"1px", marginRight:"1px" }}
+          style={{ border: "1px solid #929eaa",margin:"5px" }}
         >
           <Box
             display="flex"
@@ -210,7 +210,7 @@ export default function CardGrid(props) {
               <div style={{ position: "relative",width: "100%" }}>
               <Chip
                 label={item.location}
-                style={{ width: "100%", color: "#000000"}}
+                style={{ width: "99%", color: "#000000"}}
                 onClick={() =>
                   handleOpenModal("location", item.location)
                 }
@@ -246,7 +246,7 @@ export default function CardGrid(props) {
                 </Button>
               ) : (
                 <label>
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 </label>
               )}
             </Box>

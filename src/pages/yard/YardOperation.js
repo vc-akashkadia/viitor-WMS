@@ -120,7 +120,7 @@ const useStyles = makeStyles((theme) => ({
     padding: 0,
   },
   filterSearch: {
-    margin: "1px 1px",
+    margin: "12px 5px",
     padding: 10,
     position: "fixed",
     backgroundColor: "#ffff",
@@ -365,7 +365,7 @@ export default function YardOperation(props) {
       )}
       <div
         className={classes.yardMain}
-        style={open ? { marginTop: "132px" } : { marginTop: "0px" }}
+        style={open ? { marginTop: "140px" } : { marginTop: "0px" }}
       >
          <div style={{position:'relative'}}>
         <Typography className={classes.yardTitle}>Work Order</Typography>

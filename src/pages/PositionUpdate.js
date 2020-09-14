@@ -103,7 +103,7 @@ const useStyles = makeStyles((theme) => ({
     textTransform: "uppercase",
   },
   filterSearch: {
-    margin: "1px 1px",
+    margin: "12px 5px",
     padding: 10,
     position: "fixed",
     backgroundColor: "#ffff",
@@ -269,7 +269,7 @@ export default function PositionUpdate(props) {
       )}
       <div
         className={classes.yardMain}
-        style={open ? { marginTop: "96px" } : { marginTop: "0px" }}
+        style={open ? { marginTop: "105px" } : { marginTop: "0px" }}
       >
         <div style={{position:'relative'}}>
         <Typography className={classes.yardTitle}>Work Order</Typography>
@@ -281,7 +281,7 @@ export default function PositionUpdate(props) {
           <Typography className={classes.yardNoData}>No Data Found</Typography>
         )}
         {!loading && containerList && containerList.length > 0 && containerList.map((container,index) => (
-          <Card key={index} className={classes.yardCard} style={{ border: "1px solid #929eaa",marginLeft:"1px", marginRight:"1px" }}>
+          <Card key={index} className={classes.yardCard} style={{ border: "1px solid #929eaa",margin: "5px" }}>
           <Box
             display="flex"
             alignItems="center"
@@ -310,7 +310,7 @@ export default function PositionUpdate(props) {
                 ></img>
               </div>
               <div style={{ position: "relative" }}>
-                <Chip label={container.location} style={{ width: "116px",color: "#000000"  }} onClick={() => handleOpenModal("l",container)}/>
+                <Chip label={container.location} style={{ width: "110px",color: "#000000"  }} onClick={() => handleOpenModal("l",container)}/>
                 <LocationOnOutlinedIcon
                   style={{
                     position: "absolute",

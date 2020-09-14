@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import brandLogo from "@assests/img/logo-new.svg";
+import brandLogo from "@assests/img/Dp-world.png";
 import bottomImage from "@assests/img/pattern.svg";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
@@ -19,16 +19,20 @@ const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: "500px",
     margin: "0 10px",
+    height: "calc(100vh - 75px)",
     // margin: "auto",
     position: "relative",
     // paddingBottom: 125,
     "@media (min-width:241px)": {
-      paddingBottom: 40,
-      margin: 'auto'
+      // paddingBottom: 40,
+      margin: '0 15px',
+      maxWidth: '100%'
     },
     "@media (min-width:768px)": {
       paddingBottom: 100,
-      margin: 'auto'
+      margin: 'auto',
+      height: 'fit-content',
+      maxWidth: "500px"
     }
   },
   logo: {
@@ -40,10 +44,10 @@ const useStyles = makeStyles((theme) => ({
   listItemsChild: {
     marginBottom: 10,
   },
-  cardContent: {
-    paddingBottom: "5px",
-    marginTop: "25px",
-  },
+  // cardContent: {
+  //   paddingBottom: "5px",
+  //   marginTop: "25px",
+  // },
   icon: {
     borderRadius: 3,
     width: 16,
@@ -113,6 +117,13 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     justifyContent: 'center',
     minHeight: 195
+  },
+  loginField:{
+    '&$MuiOutlinedInput':{
+      '&$input':{
+        height: 30
+      }
+    }
   }
 }));
 // let errors = {
@@ -213,6 +224,7 @@ export default function Login() {
                   value={email}
                   onInput={(e) => setEmail(e.target.value)}
                   style={{width: '100%'}}
+                  className={classes.loginField}
                   />
               {/* </FormControl> */}
             </Grid>

@@ -123,7 +123,7 @@ const useStyles = makeStyles({
     padding: 0,
   },
   filterSearch: {
-    margin: "1px 1px",
+    margin: "12px 5px",
     padding: 10,
     position: "fixed",
     backgroundColor: "#ffff",
@@ -519,7 +519,7 @@ export default function GateMovePage(props) {
       )}
       <div
         className={classes.yardMain}
-        style={open ? { marginTop: "120px" } : { marginTop: "0px" }}
+        style={open ? { marginTop: "130px" } : { marginTop: "0px" }}
       >
         <div style={{position:'relative'}}>
         <Typography className={classes.yardTitle}>Work Order</Typography>

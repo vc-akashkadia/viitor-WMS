@@ -103,7 +103,7 @@ const theme = createMuiTheme({
     },
     MuiOutlinedInput: {
       input: {
-        padding: '0px 10px',
+        padding: '0px 7px',
         height: 26,
         backgroundColor: '#f6f6f6',
         borderRadius: 4,
@@ -143,6 +143,11 @@ const theme = createMuiTheme({
    // MuiOutlinedInput:{
     //   notchedOutline:{
     //     borderColor: '#f6f6f6'
+    //   }
+    // }
+    // MuiDrawer:{
+    //   paper: {
+    //     width: "70%"
     //   }
     // }
   }
