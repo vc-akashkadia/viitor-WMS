@@ -108,6 +108,33 @@ export const GroundingContianerApiCall = (data, authToken, callback) => {
   };
 }
 
+export const getRefreshYardContainer = (data, authToken, callback) => {
+  let url = getUrl("refreshContainer");
+  let querystring = `?facilityid=${data.facilityid}`;
+  if (data.operationtype !== undefined) {
+    querystring = querystring + `&operationtype=${data.operationtype}`;
+  }
 
+  url = url + querystring;
+  return (dispatch) => {
+    get(url, authToken)
+      .then((response) => {
+        const {
+          data: { status, data },
+        } = response;
+        callback(response);
+      })
+      .catch((err) => {
+        console.log("error", err);
+        let responseNew = {
+          data: {
+            status: false,
+            // code: err.response.status,
+          },
+        };
+        callback(responseNew);
+      });
+  };
+};
 
 

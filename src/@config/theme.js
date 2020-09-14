@@ -39,7 +39,7 @@ const theme = createMuiTheme({
     MuiPaper: {
       elevation1: {
         boxShadow: '0 1px 4px #e2e9ef',
-        borderRadius: 6,
+        borderRadius: 3,
         backgroundColor: '#ffffff'
       }
     },
@@ -67,7 +67,7 @@ const theme = createMuiTheme({
     MuiButton: {
       containedPrimary: {
         backgroundColor: '#0c79c1',
-        borderRadius: 5,
+        borderRadius: 3,
         fontFamily: 'Roboto',
         fontSize: 13,
         fontWeight: 400,
@@ -81,7 +81,7 @@ const theme = createMuiTheme({
     MuiChip: {
       root: {
         backgroundColor: '#f6f6f6',
-        borderRadius: 4,
+        borderRadius: 3,
         height: 26,
         fontSize: 14,
         fontWeight: 500,
@@ -106,7 +106,7 @@ const theme = createMuiTheme({
         padding: '0px 7px',
         height: 26,
         backgroundColor: '#f6f6f6',
-        borderRadius: 4,
+        borderRadius: 3,
         color: '#1f1f21',
         // fontSize: 12
         // '&::placeholder': {

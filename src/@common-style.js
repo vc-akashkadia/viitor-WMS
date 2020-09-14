@@ -13,12 +13,14 @@ const useGobalStyle = makeStyles(theme => ({
         position:'absolute',top: '-2px',right:'10px',color:"#5c5c5c"
     },
     filterSearch: {
-        margin: "12px 5px",
-        padding: 10,
-        position: "fixed",
-        backgroundColor: "#ffff",
-        zIndex: "2",
-      },
+      padding: "12px 5px 0",
+      backgroundColor: "#fafafa",
+      position: "fixed",
+      zIndex: "1",
+    },
+    filterPadding:{
+      padding: 10, backgroundColor:"#ffffff"
+    },
       searchTitle: {
         fontSize: 15,
         color: "#5c5c5c",

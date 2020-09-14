@@ -15,6 +15,7 @@ import EditUserModal from "./EditModal";
 import { getUserList } from "../../apicalls/ModuleAccessApiCalls";
 import Divider from "@material-ui/core/Divider";
 import useGlobalStyle from "@common-style"
+import Modal from "components/modal"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -87,6 +88,9 @@ export default function UserList(props) {
   const [open, setOpen] = useState(false);
   const [selectUser, setSelectUser] = useState({});
   const [gModal, setGModal] = useState(false);
+  const [openModal, setModal] = useState(false);
+  const [data, setData] = useState();
+  const [modalData,setModalData]=useState()
   const [type, setType] = useState();
 
   const authToken = useSelector(({ auth }) => auth.authToken);
@@ -102,6 +106,11 @@ export default function UserList(props) {
     setGModal(true);
     setType(type);
     setSelectUser(user);
+  };
+  const handleOpenModal = (type,item) => {
+    setModal(true);
+    setModalData(type)
+    setData(item)
   };
 
   const handleCallbackUserList = (response) => {};
@@ -188,7 +197,14 @@ export default function UserList(props) {
                     label={user.facilityId}
                     style={{ width: "112px", color:  "#000000" }}
                   />
-                  {user.userRoleId.map((role, key) => {
+                  <Chip
+                      // key={key + "_" + role.roleName}
+                      label={user && user.userRoleId.map((role, key) => (key ? ", ":"")+access[role.roleName])}
+                      size="medium"
+                      style={{ width: "182px", color:  "#000000" }}
+                      onClick={() => handleOpenModal("user",user && user.userRoleId)}
+                    />
+                  {/* {user.userRoleId.map((role, key) => {
                     if(access[role.roleName] === undefined){
                       return null
                     }
@@ -198,7 +214,7 @@ export default function UserList(props) {
                       size="medium"
                       style={{ width: "90px", color:  "#000000" }}
                     />
-                  })}
+                  })} */}
                   <Button
                     className={classes.confirmBtn}
                     onClick={() => handleGModal("edit", user)}
@@ -220,6 +236,15 @@ export default function UserList(props) {
           api={"Location Api"}
           data={"LOC1234"}
           user={selectUser}
+        />
+      )}
+      {openModal && (
+        <Modal
+          open={openModal}
+          setOpen={setModal}
+          // modalData={"container"}
+          modalData={modalData}
+          data={data}
         />
       )}
     </>

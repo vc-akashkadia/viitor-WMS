@@ -25,9 +25,10 @@ const useStyles = makeStyles((theme) => ({
     color: "#0c79c1",
     textTransform: "uppercase",
     paddingTop: 12,
-    paddingLeft: 10,
-    paddingRight: 10,
-    paddingBottom: 2,
+    // paddingLeft: 10,
+    // paddingRight: 10,
+    padding:"5px 10px",
+    // paddingBottom: 2,
     margin: "auto",
   },
   content: {

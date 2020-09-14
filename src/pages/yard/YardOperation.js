@@ -24,7 +24,9 @@ import CardGrid from "../../components/Card";
 import {
   getBlockListApiCall,
   getYardOperationApiCall,
+  getRefreshYardContainer
 } from "../../apicalls/YardApiCalls";
+
 import {
   getRefreshContainer,
 } from "../../apicalls/GateApiCalls";
@@ -49,7 +51,7 @@ const BootstrapInput = withStyles((theme) => ({
     },
   },
   input: {
-    borderRadius: 4,
+    borderRadius: 3,
     position: "relative",
     backgroundColor: "#f6f6f6",
     border: "1px solid #ced4da",
@@ -69,7 +71,7 @@ const BootstrapInput = withStyles((theme) => ({
     // Use the system font instead of the default Roboto font.
     fontFamily: ["Roboto"].join(","),
     "&:focus": {
-      borderRadius: 4,
+      borderRadius: 3,
       borderColor: "#80bdff",
       boxShadow: "0 0 0 0.2rem rgba(0,123,255,.25)",
     },
@@ -124,12 +126,12 @@ const useStyles = makeStyles((theme) => ({
     height: 61,
     padding: 0,
   },
-  filterSearch: {
-    padding: "12px 5px 0",
-    backgroundColor: "#fafafa",
-    position: "fixed",
-    zIndex: "1",
-  },
+  // filterSearch: {
+  //   padding: "12px 5px 0",
+  //   backgroundColor: "#fafafa",
+  //   position: "fixed",
+  //   zIndex: "1",
+  // },
   // searchTitle: {
   //   fontSize: 15,
   //   color: "#5c5c5c",
@@ -171,11 +173,11 @@ export default function YardOperation(props) {
   const blockList = useSelector(({ base }) => base.blockList);
   const yardContainerList = useSelector(({ base }) => base.yardContainerList);
   useEffect(() => {
-    if (blockList.length === 0) {
+    // if (blockList.length === 0) {
       dispatch(getBlockListApiCall(facility, authToken, handleCallbackBlock));
-    }
+    // }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [blockList]);
+  }, []);
 
   useEffect(() => {
     handleSearch();
@@ -273,9 +275,9 @@ export default function YardOperation(props) {
     setLoading(true);
     let data = {
       facilityid: facility,
-      operationtype : 'PICKUP'
+      operationtype : 'GROUNDING'
     };
-    dispatch(getRefreshContainer(data, authToken, handleCallbackRefresh));
+    dispatch(getRefreshYardContainer(data, authToken, handleCallbackRefresh));
     
   }
   const handleCallbackRefresh = (response) => {
@@ -301,7 +303,7 @@ export default function YardOperation(props) {
       />
       {open && (
         <div className={classes.filterSearch}>
-        <Card style={{padding: 10, backgroundColor:"#ffffff"}}>
+        <Card >
             <Grid container spacing={1} alignItems="center">
               <Grid item xs={6}>
                 <Typography className={classes.searchTitle}>

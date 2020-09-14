@@ -166,12 +166,6 @@ export const getRefreshContainer = (data, authToken, callback) => {
     querystring = querystring + `&operationtype=${data.operationtype}`;
   }
 
-  if (data.vehical === "truck") {
-    querystring = querystring + `&trucknumber=${data.number}`;
-  }
-  if (data.vehical === "container") {
-    querystring = querystring + `&containernumber=${data.number}`;
-  }
   url = url + querystring;
   return (dispatch) => {
     get(url, authToken)
@@ -179,9 +173,6 @@ export const getRefreshContainer = (data, authToken, callback) => {
         const {
           data: { status, data },
         } = response;
-        if (status) {
-          dispatch(GateMoveContainerList(data));
-        }
         callback(response);
       })
       .catch((err) => {
@@ -194,13 +185,5 @@ export const getRefreshContainer = (data, authToken, callback) => {
         };
         callback(responseNew);
       });
-
-    dispatch(
-      selectGateMoveOperationOption({
-        vehical: data.vehical,
-        number: data.number,
-        gatetype: data.gatetype,
-      })
-    );
   };
 };

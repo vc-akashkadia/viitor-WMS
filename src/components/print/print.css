@@ -39,6 +39,7 @@ th.price {
     font-size: 10px;
     font-family: "Roboto";
     margin-left:10px;
+    max-height: 460px;
 }
 
 .ticket img {
@@ -53,5 +54,8 @@ th.price {
     .hidden-print,
     .hidden-print * {
         display: none !important;
+    }
+    html, body {
+        height: 50%;
     }
 }

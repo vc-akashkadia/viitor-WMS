@@ -21,10 +21,11 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 900,
     fontFamily: "Roboto",
     textTransform: "uppercase",
-    paddingTop: 12,
-    paddingLeft: 10,
-    paddingRight: 10,
-    paddingBottom: 5,
+    padding:"5px 10px",
+    // paddingTop: 12,
+    // paddingLeft: 10,
+    // paddingRight: 10,
+    // paddingBottom: 5,
     margin: "auto",
   },
   content: {
@@ -244,6 +245,62 @@ export default function AlertDialog(props) {
               >
                 {data ? data :"----"}
                 {/* HYD-PFT-DRP-001 */}
+              </InputLabel>
+            </div>
+          </DialogContent>
+          <DialogActions className={classes.actionbutton}>
+            <Button
+              onClick={() => handleClose(false)}
+              variant="contained"
+              size="small"
+              color="primary"
+              autoFocus
+              className={classes.button}
+            >
+              Ok
+            </Button>
+          </DialogActions>
+        </Dialog>
+      )} 
+
+    {modalData === "user" && (
+        <Dialog
+          open={open}
+          onClose={() => handleClose(false)}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title" className={classes.title}>
+            User Access
+          </DialogTitle>
+          <Divider className={classes.dividerStyle} />
+          <DialogContent className={classes.content}>
+            <img src={crane} alt="container-popup" />
+            <RoomSharpIcon 
+                  size="small"
+                  color="action"
+                  style={{
+                    position: "absolute",
+                    top: "-3px",
+                    left: "90px",
+                    width: 22,
+                    color:"#5c5c5c",
+                    // backgroundColor: "#ffffff",
+                    // borderRadius: '50%'
+                  }}
+                />
+            <div className={classes.LocationLabel}>
+              <InputLabel
+                shrink
+                htmlFor="bootstrap-input"
+                className={classes.label}
+                style={{  transform: "translateX(0)",
+                  display: "inline-block",
+                  lineHeight: "24px"
+                }}
+              >
+                {/* {data ? data :"----"} */}
+                HYD-PFT-DRP-001
               </InputLabel>
             </div>
           </DialogContent>

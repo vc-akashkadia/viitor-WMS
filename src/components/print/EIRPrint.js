@@ -44,7 +44,7 @@ export default function EIRPrint(props) {
                 {/* / FULL / OUT */}
               </td>
             </tr>
-            <br />
+            
 
             <tr>
               <td className="description">Consignee:</td>

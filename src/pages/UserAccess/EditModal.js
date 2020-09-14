@@ -49,7 +49,7 @@ const BootstrapInput = withStyles((theme) => ({
     },
   },
   input: {
-    borderRadius: 4,
+    borderRadius: 3,
     position: "relative",
     backgroundColor: "#f6f6f6",
     border: "1px solid #ced4da",
@@ -70,7 +70,7 @@ const BootstrapInput = withStyles((theme) => ({
     // Use the system font instead of the default Roboto font.
     fontFamily: ["Roboto"].join(","),
     "&:focus": {
-      borderRadius: 4,
+      borderRadius: 3,
       borderColor: "#80bdff",
       // boxShadow: "0 0 0 0.2rem rgba(0,123,255,.25)",
     },
@@ -388,10 +388,8 @@ export default function EditModal(props) {
           )}
           {/* Access user */}
           <form onSubmit={handleSubmit}>
-            
-
             <Typography style={{ fontWeight: "500", marginTop: "6px", color: "#777777" }}>
-              Access
+              Access:
             </Typography>
             <div className={classes.boxStyle}>
               <List style={{ paddingTop: "0px", paddingBottom: "0px" }}>

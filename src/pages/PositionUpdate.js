@@ -46,7 +46,7 @@ const BootstrapInput = withStyles((theme) => ({
     },
   },
   input: {
-    borderRadius: 4,
+    borderRadius: 3,
     position: "relative",
     backgroundColor: "#f6f6f6",
     border: "1px solid #ced4da",
@@ -65,7 +65,7 @@ const BootstrapInput = withStyles((theme) => ({
     // Use the system font instead of the default Roboto font.
     fontFamily: ["Roboto"].join(","),
     "&:focus": {
-      borderRadius: 4,
+      borderRadius: 3,
       borderColor: "#80bdff",
       boxShadow: "0 0 0 0.2rem rgba(0,123,255,.25)",
     },
@@ -105,12 +105,13 @@ const useStyles = makeStyles((theme) => ({
     lineHeight: "20px",
     textTransform: "uppercase",
   },
-    filterSearch: {
-      padding: "12px 5px 0",
-      backgroundColor: "#fafafa",
-      position: "fixed",
-      zIndex: "1",
-  },
+  // filterSearch: {
+  //   margin: "1px 1px",
+  //   padding: 10,
+  //   position: "fixed",
+  //   backgroundColor: "#ffff",
+  //   zIndex: "2",
+  // },
   // searchTitle: {
   //   fontSize: 15,
   //   color: "#5c5c5c",
@@ -249,47 +250,47 @@ export default function PositionUpdate(props) {
       />
       {open && (
         <div className={classes.filterSearch}>
-          <Card style={{padding: 10, backgroundColor:"#ffffff"}}>
-            <Grid container spacing={1} alignItems="center">
-              <Grid item xs={6}>
-                <Typography className={classes.searchTitle}>
-                  Search Here
-                </Typography>
-              </Grid>
-              <Grid item xs={6}>
-                <FormControl fullWidth>
-                  <Select
-                    selectedValue={block === "" ? "Block" : block}
-                    handleChange={setBlock}
-                    options={[...blockConst, ...blockList]}
-                    placeholder={constants.formPlaceHolder.block}
-                    inputStyle={<BootstrapInput />}
-                  />
-                </FormControl>
-              </Grid>
-              <Grid item xs={8}>
-                <TextField
-                  className={classes.searchInput}
-                  id="outlined-basic"
-                  placeholder="Enter Container No."
-                  label=""
-                  variant="outlined"
-                  value={containerNumber}
-                  onChange={(e) => setContainerNumber(e.target.value)}
-                />
-              </Grid>
-              <Grid item xs={4}>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  className={classes.searchBtn}
-                  onClick={() => getContainerList()}
-                >
-                  Search
-                </Button>
-              </Grid>
+        <Card className={classes.filterPadding}>
+          <Grid container spacing={1} alignItems="center">
+            <Grid item xs={6}>
+              <Typography className={classes.searchTitle}>
+                Search Here
+              </Typography>
             </Grid>
-          </Card>
+            <Grid item xs={6}>
+              <FormControl fullWidth>
+                <Select
+                  selectedValue={block === "" ? "Block" : block}
+                  handleChange={setBlock}
+                  options={[...blockConst, ...blockList]}
+                  placeholder={constants.formPlaceHolder.block}
+                  inputStyle={<BootstrapInput />}
+                />
+              </FormControl>
+            </Grid>
+            <Grid item xs={8}>
+              <TextField
+                className={classes.searchInput}
+                id="outlined-basic"
+                placeholder="Enter Container No."
+                label=""
+                variant="outlined"
+                value={containerNumber}
+                onChange={(e) => setContainerNumber(e.target.value)}
+              />
+            </Grid>
+            <Grid item xs={4}>
+              <Button
+                variant="contained"
+                color="primary"
+                className={classes.searchBtn}
+                onClick={() => getContainerList()}
+              >
+                Search
+              </Button>
+            </Grid>
+          </Grid>
+        </Card>
         </div>
       )}
       <div
