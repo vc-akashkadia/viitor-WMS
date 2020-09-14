@@ -1,5 +1,5 @@
 import { getUrl } from "../services/network/urls";
-import { get } from "../services/network/requests";
+import { get,post } from "../services/network/requests";
 import { FacilityList, selectFacility } from "../actions/actions";
 
 export const facilityListApiCall = (authToken, callback) => {
@@ -30,8 +30,30 @@ export const facilityListApiCall = (authToken, callback) => {
   };
 };
 
-export const selectedFacility = (facility) => {
-  return (dispatch) => {
-    dispatch(selectFacility(facility));
-  };
+export const selectedFacility = (facility,authToken,callback) => {
+  
+    let url = getUrl("facilityCheck");
+    let data = {
+      facility_id : facility
+    }
+    return (dispatch) => {
+      post(url, data, authToken)
+        .then((response) => {
+          callback(response);
+          dispatch(selectFacility(facility));
+        })
+        .catch((err) => {
+          console.log("error", err);
+          let responseNew = {
+            data: {
+              status: false,
+              // code: err.response.status,
+            },
+          };
+          callback(responseNew);
+        });
+    };
+  
+
+  
 };

@@ -20,8 +20,10 @@ import GroundingModal from "./../components/GroundingContainer";
 import { getContainerListForLocationUpdate } from "../apicalls/ModuleAccessApiCalls";
 import {
   getBlockListApiCall,
-  
 } from "../apicalls/YardApiCalls";
+import {
+  getRefreshContainer,
+} from "../apicalls/GateApiCalls";
 import TitleHeader from "../components/TitleHeader";
 import ScrollToTop from "../components/ScrollToTop";
 import Modal from "../components/modal";
@@ -34,8 +36,9 @@ import Loader from "../components/Loader";
 import Select from "../components/Select";
 import FormControl from "@material-ui/core/FormControl";
 import InputBase from "@material-ui/core/InputBase";
+import useGlobalStyle from "@common-style"
+import {constants} from '@config/constant'
 // import Modal from "../../components/modal"
-
 const BootstrapInput = withStyles((theme) => ({
   root: {
     "label + &": {
@@ -48,7 +51,7 @@ const BootstrapInput = withStyles((theme) => ({
     backgroundColor: "#f6f6f6",
     border: "1px solid #ced4da",
     fontSize: 14,
-    padding: "0px 26px 0px 12px",
+    padding: "0px 26px 0px 7px",
     transition: theme.transitions.create(["border-color", "box-shadow"]),
     width: "100%",
     height: 26,
@@ -73,11 +76,11 @@ const useStyles = makeStyles((theme) => ({
   root: {
     position: "fixed",
   },
-  yardTitle: {
-    margin: "15px 10px 10px 10px",
-    fontSize: 15,
-    color: "#5c5c5c",
-  },
+  // yardTitle: {
+  //   margin: "15px 10px 10px 10px",
+  //   fontSize: 15,
+  //   color: "#5c5c5c",
+  // },
   yardCard: {
     padding: 5,
     marginBottom: 5,
@@ -102,17 +105,17 @@ const useStyles = makeStyles((theme) => ({
     lineHeight: "20px",
     textTransform: "uppercase",
   },
-  filterSearch: {
-    margin: "12px 5px",
-    padding: 10,
-    position: "fixed",
-    backgroundColor: "#ffff",
-    zIndex: "2",
-  },
-  searchTitle: {
-    fontSize: 15,
-    color: "#5c5c5c",
-  },
+  // filterSearch: {
+  //   margin: "1px 1px",
+  //   padding: 10,
+  //   position: "fixed",
+  //   backgroundColor: "#ffff",
+  //   zIndex: "2",
+  // },
+  // searchTitle: {
+  //   fontSize: 15,
+  //   color: "#5c5c5c",
+  // },
 
   searchInput: {
     width: "100%",
@@ -141,7 +144,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 const blockConst = [{ value: "Block", label: "Block" }];
 export default function PositionUpdate(props) {
-  const classes = useStyles();
+  const classes = {...useGlobalStyle(),...useStyles()};
   const history = useHistory();
   const authToken = useSelector(({ auth }) => auth.authToken);
   const facility = useSelector(({ base }) => base.facility);
@@ -198,7 +201,7 @@ export default function PositionUpdate(props) {
 
   const handleOpenModal = (type,item) => {
     setModal(true);
-    if(type==="c"){
+    if(type==="container"){
       setData(item.containerNumber);
       setModalData("container")
     }else{
@@ -214,7 +217,28 @@ export default function PositionUpdate(props) {
     }
   };
 
-  
+  const handleRefresh = ()=>{
+    setLoading(true);
+    let data = {
+      facilityid: facility,
+      // operationtype : `Gate_${props.gateType}`.toUpperCase()
+    };
+    dispatch(getRefreshContainer(data, authToken, handleCallbackRefresh));
+    
+  }
+  const handleCallbackRefresh = (response) => {
+    const {
+      data: { status },
+    } = response;
+    if (status) {
+      getContainerList();
+    } else {
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000);
+    }
+    
+  }
 
   return (
     <>
@@ -238,7 +262,7 @@ export default function PositionUpdate(props) {
                   selectedValue={block === "" ? "Block" : block}
                   handleChange={setBlock}
                   options={[...blockConst, ...blockList]}
-                  placeholder="Select Block"
+                  placeholder={constants.formPlaceHolder.block}
                   inputStyle={<BootstrapInput />}
                 />
               </FormControl>
@@ -273,7 +297,7 @@ export default function PositionUpdate(props) {
       >
         <div style={{position:'relative'}}>
         <Typography className={classes.yardTitle}>Work Order</Typography>
-        <RefreshIcon onClick={()=> getContainerList()} fontSize="small" style={{position:'absolute',top: '-1px',right:'10px',color:'#5c5c5c'}}  />
+        <RefreshIcon onClick={()=> handleRefresh()} fontSize="small" className={classes.refreshStyle} />
         </div>
         <Divider style={{ marginBottom: "7px" }} />
         {loading && <Loader />}
@@ -281,7 +305,7 @@ export default function PositionUpdate(props) {
           <Typography className={classes.yardNoData}>No Data Found</Typography>
         )}
         {!loading && containerList && containerList.length > 0 && containerList.map((container,index) => (
-          <Card key={index} className={classes.yardCard} style={{ border: "1px solid #929eaa",margin: "5px" }}>
+          <Card key={index} className={classes.yardCard} style={{ border: "1px solid #929eaa",margin:"3px" }}>
           <Box
             display="flex"
             alignItems="center"
@@ -294,8 +318,8 @@ export default function PositionUpdate(props) {
                     container.containerNumber.length - 4
                   ) : ''}
                   // size="small"
-                  style={{ width: "65px" ,color:  "#000000" }}
-                  onClick={() => handleOpenModal("c",container)}
+                  style={{ width: "59px" ,color:  "#000000" }}
+                  onClick={() => handleOpenModal("container",container)}
                   
                 />
                 <img
@@ -310,13 +334,13 @@ export default function PositionUpdate(props) {
                 ></img>
               </div>
               <div style={{ position: "relative" }}>
-                <Chip label={container.location} style={{ width: "110px",color: "#000000"  }} onClick={() => handleOpenModal("l",container)}/>
+                <Chip label={container.location} style={{ width: "120px",color: "#000000"  }} onClick={() => handleOpenModal("location",container)}/>
                 <LocationOnOutlinedIcon
                   style={{
                     position: "absolute",
                     top: "-10px",
                     left: "0px",
-                    width: 15,
+                    width: 13,
                     color:"#0000004d"
                     // backgroundColor: "#ffffff"
                   }}

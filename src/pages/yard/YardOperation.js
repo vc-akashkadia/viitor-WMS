@@ -25,12 +25,17 @@ import {
   getBlockListApiCall,
   getYardOperationApiCall,
 } from "../../apicalls/YardApiCalls";
+import {
+  getRefreshContainer,
+} from "../../apicalls/GateApiCalls";
 import TitleHeader from "../../components/TitleHeader";
 import ScrollToTop from "../../components/ScrollToTop";
 import Loader from "../../components/Loader";
 import Divider from "@material-ui/core/Divider";
 import GroundingModal from "../../components/GroundingContainer";
 import RefreshIcon from '@material-ui/icons/Refresh';
+import useGlobalStyle from "@common-style"
+import {constants} from '@config/constant'
 
 let toasterOption = {
   varient: "success",
@@ -50,7 +55,7 @@ const BootstrapInput = withStyles((theme) => ({
     border: "1px solid #ced4da",
     fontSize: 14,
     color:"#1f1f21",
-    padding: "0px 26px 0px 12px",
+    padding: "0px 26px 0px 7px",
     transition: theme.transitions.create(["border-color", "box-shadow"]),
     width: "100%",
     height: 26,
@@ -79,11 +84,11 @@ const useStyles = makeStyles((theme) => ({
     color: "#173a64",
     fontSize: 15,
   },
-  yardTitle: {
-    margin: "15px 10px 10px 10px",
-    fontSize: 15,
-    color: "#5c5c5c",
-  },
+  // yardTitle: {
+  //   margin: "15px 10px 10px 10px",
+  //   fontSize: 15,
+  //   color: "#5c5c5c",
+  // },
   yardNoData: {
     width: "100%",
     marginTop: "93px",
@@ -119,17 +124,17 @@ const useStyles = makeStyles((theme) => ({
     height: 61,
     padding: 0,
   },
-  filterSearch: {
-    margin: "12px 5px",
-    padding: 10,
-    position: "fixed",
-    backgroundColor: "#ffff",
-    zIndex: "2",
-  },
-  searchTitle: {
-    fontSize: 15,
-    color: "#5c5c5c",
-  },
+  // filterSearch: {
+  //   margin: "1px 1px",
+  //   padding: 10,
+  //   position: "fixed",
+  //   backgroundColor: "#ffff",
+  //   zIndex: "2",
+  // },
+  // searchTitle: {
+  //   fontSize: 15,
+  //   color: "#5c5c5c",
+  // },
   searchInput: {
     width: "100%",
   },
@@ -141,23 +146,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const vehicalOption = [
-  {
-    value: "Criteria",
-    label: "Criteria",
-  },
-  { value: "truck", label: "Truck" },
-  { value: "container", label: "Container" },
-];
-
-const gateTypeOptions = [
-  { value: "ALL", label: "Both" },
-  { value: "GROUNDING", label: "Ground" },
-  { value: "PICKUP", label: "Pick Up" },
-];
+const vehicalOption = constants.vehicle;
+const gateTypeOptions = constants.yardType
 const blockConst = [{ value: "Block", label: "Block" }];
 export default function YardOperation(props) {
-  const classes = useStyles();
+  const classes = {...useGlobalStyle(),...useStyles()};
 
   const [loading, setLoading] = useState(false);
   const [toaster, setToaster] = useState(false);
@@ -216,11 +209,11 @@ export default function YardOperation(props) {
     }
     if (vehical !== "" && vehical !== "Criteria") {
       if (number === "") {
-        alert("Please add search text");
+        alert(constants.vehicleNumber.error);
         return;
       }
       if (number.length < 4) {
-        alert("Please add minimum 4 character");
+        alert(constants.vehicleNumber.minError);
         return;
       } else {
         data.vehical = vehical;
@@ -252,7 +245,7 @@ export default function YardOperation(props) {
     if (status) {
       toasterOption = {
         varient: "success",
-        message: "Container Pickup Successfully",
+        message: constants.yardOperation.pickupsuccess,
       };
       setToaster(true);
       handleSearch();
@@ -270,18 +263,41 @@ export default function YardOperation(props) {
     if (status) {
       toasterOption = {
         varient: "success",
-        message: "Container Ground Successfully",
+        message: constants.yardOperation.groundsuccess,
       };
       setToaster(true);
       handleSearch();
     }
   };
+
+  const handleRefresh = ()=>{
+    setLoading(true);
+    let data = {
+      facilityid: facility,
+      operationtype : 'PICKUP'
+    };
+    dispatch(getRefreshContainer(data, authToken, handleCallbackRefresh));
+    
+  }
+  const handleCallbackRefresh = (response) => {
+    const {
+      data: { status },
+    } = response;
+    if (status) {
+      handleSearch();
+    } else {
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000);
+    }
+    
+  }
   return (
     <>
       <TitleHeader
         open={open}
         setOpen={setOpen}
-        title={"Yard Operation"}
+        title={constants.yardOperation.title}
         backPath={"/operations"}
       />
       {open && (
@@ -298,7 +314,7 @@ export default function YardOperation(props) {
                   selectedValue={block === "" ? "Block" : block}
                   handleChange={setBlock}
                   options={[...blockConst, ...blockList]}
-                  placeholder="Select Block"
+                  placeholder={constants.formPlaceHolder.block}
                   inputStyle={<BootstrapInput />}
                 />
               </FormControl>
@@ -309,7 +325,7 @@ export default function YardOperation(props) {
                   selectedValue={gateType === "" ? "ALL" : gateType}
                   handleChange={setGetType}
                   options={gateTypeOptions}
-                  placeholder="Select Type"
+                  placeholder={constants.formPlaceHolder.gateType}
                   inputStyle={<BootstrapInput />}
                 />
               </FormControl>
@@ -325,7 +341,7 @@ export default function YardOperation(props) {
                     }
                   }}
                   options={vehicalOption}
-                  placeholder="Select Type"
+                  placeholder={constants.formPlaceHolder.vehical}
                   inputStyle={<BootstrapInput />}
                 />
               </FormControl>
@@ -369,7 +385,7 @@ export default function YardOperation(props) {
       >
          <div style={{position:'relative'}}>
         <Typography className={classes.yardTitle}>Work Order</Typography>
-        <RefreshIcon onClick={handleSearch} fontSize="small" style={{position:'absolute',top: '-2px',right:'10px',color:"#5c5c5c"}}  />
+        <RefreshIcon onClick={handleRefresh} fontSize="small" className={classes.refreshStyle}/>
         </div>
         <Divider style={{ marginBottom: "7px" }} />
         {loading && <Loader />}

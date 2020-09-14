@@ -8,12 +8,14 @@ import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
+import Alert from '@material-ui/lab/Alert';
 // import Checkbox from "@material-ui/core/Checkbox";
 // import Typography from "@material-ui/core/Typography";
 import InputLabel from "@material-ui/core/InputLabel";
 import { LoginApi } from "../../apicalls/authCall";
 import { useDispatch } from "react-redux";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import {constants} from "@config/constant";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -130,10 +132,10 @@ const useStyles = makeStyles((theme) => ({
 //   email: "",
 //   password: "",
 // };
-// let toasterOption = {
-//   option: "error",
-//   message: "Invalid Login",
-// };
+let toasterOption = {
+  option: "error",
+  message: constants.login.invalid,
+};
 
 export default function Login() {
   const classes = useStyles();
@@ -141,7 +143,7 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   // const [remember_me, setCheckbox] = useState(false);
-  // const [alert, setAlert] = useState(false);
+  const [alert, setAlert] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({
     email: "",
@@ -151,10 +153,10 @@ export default function Login() {
     event.preventDefault();
     let error = { email: "", password: "" };
     if (email === "") {
-      error.email = "User Name is required";
+      error.email = constants.login.error.username;
     }
     if (password === "") {
-      error.password = "Password is required";
+      error.password = constants.login.error.password;
     }
     setErrors(error);
     if (email !== "" && password !== "") {
@@ -176,8 +178,10 @@ export default function Login() {
       //   option: "success",
       //   message: "Login Successfull",
       // };
+    }else{
+      setAlert(true);
     }
-    // setAlert(true);
+    //setAlert(true);
     setLoading(false);
   };
 
@@ -191,11 +195,11 @@ export default function Login() {
 
       <Card className={classes.root}>
         <CardContent className={classes.card}>
-        {/* {alert && (
+        {alert && (
             <Alert severity={toasterOption.option}>
               {toasterOption.message}
             </Alert>
-          )} */}
+          )}
           <form onSubmit={handleSubmit} className={classes.loginForm}>
             <Grid item xs={12} className={classes.listItemsChild}>
               {/* <FormControl className={classes.field}> */}

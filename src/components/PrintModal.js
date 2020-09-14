@@ -5,12 +5,13 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { makeStyles } from "@material-ui/core/styles";
-import { Divider } from "@material-ui/core";
 import LocationSlip from "./print/LocationPrint";
 import EIRSlip from "./print/EIRPrint";
 import { LocationSlipApi, EIRPrintApi } from "./../apicalls/GateApiCalls";
 import Loader from "./Loader";
 import Toaster from "./Toaster";
+import  Divider  from "@material-ui/core/Divider";
+import useGlobalStyle from "@common-style"
 let toasterOption = {
   varient: "success",
   message: "",
@@ -113,7 +114,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function AlertDialog(props) {
-  const classes = useStyles();
+  const classes = {...useGlobalStyle(),...useStyles()};
   const [loading, setLoading] = useState(false);
   const { open, setOpen, modalData, container, gateType } = props;
   const [printType, setPrintType] = useState("");
@@ -222,6 +223,7 @@ export default function AlertDialog(props) {
               <DialogTitle id="alert-dialog-title" className={classes.title}>
                 Choose the Print Type
               </DialogTitle>
+              <Divider className={classes.dividerStyle} />
               {loading && <Loader />}
               {!loading && (
                 <>

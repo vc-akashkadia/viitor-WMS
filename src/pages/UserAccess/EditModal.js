@@ -31,7 +31,8 @@ import {
 import Select from "../../components/Select";
 import Toaster from "../../components/Toaster";
 import Loader from "../../components/Loader";
-
+import useGlobalStyle from "@common-style"
+import {constants} from '@config/constant'
 const GreenCheckbox = withStyles({
   root: {
     "&$checked": {
@@ -55,7 +56,7 @@ const BootstrapInput = withStyles((theme) => ({
     fontSize: 14,
     fontWeight: 500,
     color:"#1f1f21",
-    padding: "0px 26px 0px 12px",
+    padding: "0px 26px 0px 7px",
     transition: theme.transitions.create(["border-color", "box-shadow"]),
     width: "100%",
     height: 26,
@@ -99,7 +100,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     // justifyContent: "space-between",
     marginBottom: 10,
-    marginTop: "3px",
+    marginTop: "0px",
     color: "#777777",
   },
   innerContentActive: {
@@ -189,23 +190,9 @@ const accessValue = {
   }
   // "ROLE_ADMIN" : "Admin"
 };
-// const accessValue = [
-//   {
-//     title: "Yard Operation",
-//     roleName : "YARD_JOB",
-//     icon: <YardIcon />,
-//     startIcon: <YardIcon style={{ width: "21px" }} />,
-//   },
-//   {
-//     title: "Gate Operation",
-//     roleName : "GATE_JOB",
-//     icon: <GateInIcon style={{ width: "18px", marginLeft: "3px" }} />,
-//     startIcon: <GateInIcon style={{ width: "18px", marginLeft: "3px" }} />,
-//   },
-// ];
 
 export default function EditModal(props) {
-  const classes = useStyles();
+  const classes = {...useGlobalStyle(),...useStyles()};
   const { open, setOpen, type, user } = props;
   const [userName, setUserName] = useState(user.userName);
   const [facility, setFacility] = useState(user.facilityId);
@@ -250,17 +237,17 @@ export default function EditModal(props) {
     let validate = true;
     let error = { userName: "", facility: "" };
     if (userName === "") {
-      error.userName = "User Name is required";
+      error.userName = constants.userAccess.error.username;
       validate = false;
     }
     if (facility === undefined) {
-      error.facility = "Please select the facility";
+      error.facility = constants.userAccess.error.facility;
       validate = false;
     }
+    if(access.length === 0){
+      errors.anyone = constants.userAccess.error.atleastOne;
+    }
     setErrors(error);
-    // if (!values.gateIn && !values.yardOperation) {
-    //   errors.anyone = "Please give atleast one access";
-    // }
     return validate;
   };
   const handleSubmit = (e) => {
@@ -290,12 +277,12 @@ export default function EditModal(props) {
     if (status) {
       toasterOption = {
         varient: "success",
-        message: type === "add" ? "User Add Sucessful" : "User Edit Sucessful",
+        message: type === "add" ? constants.userAccess.addUser : constants.userAccess.editUser,
       };
     } else {
       toasterOption = {
         varient: "error",
-        message: "Something went wrong try after sometime",
+        message: constants.apiError.error,
       };
     }
     setToaster(true);
@@ -333,6 +320,7 @@ export default function EditModal(props) {
         <DialogTitle id="alert-dialog-title" className={classes.title}>
           {type === "add" ? "Add User Access" : "Update User Access"}
         </DialogTitle>
+        <Divider className={classes.dividerStyle} />
         <DialogContent className={classes.content}>
           {type === "edit" ? (
             <>
@@ -369,7 +357,7 @@ export default function EditModal(props) {
                 error={errors.userName !== ""}
                 className={classes.searchInput}
                 id="outlined-basic"
-                placeholder="Enter User Name"
+                placeholder={constants.formPlaceHolder.userName}
                 label=""
                 value={
                   userName !== "" && userName !== undefined ? userName : ""
@@ -389,7 +377,7 @@ export default function EditModal(props) {
                 }
                 handleChange={handleFacility}
                 options={facilityList}
-                placeholder="Select Facility"
+                placeholder={constants.formPlaceHolder.facility}
                 inputStyle={<BootstrapInput />}
                 style={{ width: "100%", marginTop: "5px" }}
               />

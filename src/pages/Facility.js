@@ -7,15 +7,16 @@ import CardContent from "@material-ui/core/CardContent";
 import { makeStyles, withStyles} from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
-import Alert from "@material-ui/lab/Alert";
-import CircularProgress from "@material-ui/core/CircularProgress";
+
 // import InputLabel from "@material-ui/core/InputLabel";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import FormControl from "@material-ui/core/FormControl";
 // import Select from "@material-ui/core/Select";
 import bottomImage from "@assests/img/pattern.svg";
 import Select from "../components/Select";
+import Toaster from "../components/Toaster";
 import InputBase from "@material-ui/core/InputBase";
+import {constants} from "@config/constant";
 
 import {
   facilityListApiCall,
@@ -26,7 +27,7 @@ import Loader from "../components/Loader";
 
 let toasterOption = {
   option: "error",
-  message: "Please select Facility",
+  message: constants.facility.error,
 };
 
 const BootstrapInput = withStyles((theme) => ({
@@ -44,7 +45,7 @@ const BootstrapInput = withStyles((theme) => ({
     padding: "0px 26px 0px 7px",
     transition: theme.transitions.create(["border-color", "box-shadow"]),
     width: "100%",
-    height: 26,
+    height: 30,
     // display: "flex",
     color:"#1f1f21",
     alignItems: "center",
@@ -118,7 +119,7 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 500,
     fontFamily: "Roboto",
     width: "100%",
-    height: 26,
+    height: 30,
     backgroundColor: "#0c79c1",
     textTransform: "inherit",
   },
@@ -151,16 +152,31 @@ export default function Facility() {
 
     setLoading(true);
     if (facility !== "") {
-      dispatch(selectedFacility(facility));
-      history.push("/operations");
+      dispatch(selectedFacility(facility,authToken,handleCallback));
+      
     } else {
-      setErrors("Please select facility");
+      setErrors(constants.facility.error);
       //setAlert(true)
       setLoading(false);
     }
 
     //dispatch(LoginApi(data,remember_me, handleCallback));
   };
+  const handleCallback = (response) => {
+    const {data : {status}} =response
+    //if(status){
+      history.push("/operations");
+    // }else{
+    //   toasterOption = {
+    //     option: "error",
+    //     message: 'Wrong Facility Selected',
+    //   };
+    //   setAlert(true);
+      
+    // }
+    setLoading(false);
+    
+  }
   useEffect(() => {
     if (facilityList.length === 0) {
       dispatch(facilityListApiCall(authToken, handleCallbackFacilityList));
@@ -175,7 +191,7 @@ export default function Facility() {
     } else {
       toasterOption = {
         option: "error",
-        message: "Try After Some Time",
+        message: constants.apiError.error,
       };
       setAlert(true);
       setLoading(false);
@@ -191,22 +207,16 @@ export default function Facility() {
 
       <Card className={classes.root}>
         <CardContent style={{minHeight: '250px'}}>
-          {alert && (
+          {/* {alert && (
             <Alert severity={toasterOption.option}>
               {toasterOption.message}
             </Alert>
-          )}
+          )} */}
           <form onSubmit={handleSubmit} className={classes.facilityForm}>
             <Grid item xs={12} className={classes.listItemsChild}>
               {loading && <Loader />}
               {!loading && (
                 <>
-                  {/* <Typography
-                    className={classes.formControl}
-                    style={{ textAlign: "center", paddingBottom: 5 }}
-                  >
-                    Facility
-                  </Typography> */}
                   <FormControl
                     variant="filled"
                     className={classes.formControl}
@@ -216,7 +226,7 @@ export default function Facility() {
                       selectedValue={facility !== '' ? facility : 'none'}
                       handleChange={setSelectFacility}
                       options={facilityList}
-                      placeholder="Select Facility"
+                      placeholder={constants.formPlaceHolder.facility}
                       inputStyle={<BootstrapInput />}
                     />
                     <FormHelperText>{errors}</FormHelperText>
@@ -233,13 +243,19 @@ export default function Facility() {
                 className={classes.button}
                 disabled={loading}
               >
-                Ok {loading && <CircularProgress size={24} />}
+                Go 
               </Button>
             </Grid>
           </form>
           <img src={bottomImage} alt="bottom" className={classes.bottomImage} />
         </CardContent>
       </Card>
+      <Toaster 
+      open={alert}
+      handleClose={setAlert}
+      option={toasterOption.option}
+      message={toasterOption.message}
+      />
     </>
   );
 }

@@ -41,7 +41,7 @@ const BootstrapInput = withStyles((theme) => ({
     backgroundColor: "#f6f6f6",
     border: "1px solid #ced4da",
     fontSize: 14,
-    padding: "0px 26px 0px 12px",
+    padding: "0px 26px 0px 7px",
     transition: theme.transitions.create(["border-color", "box-shadow"]),
     width: "100%",
     height: 28,

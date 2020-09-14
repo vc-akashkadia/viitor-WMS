@@ -7,8 +7,6 @@ import Box from "@material-ui/core/Box";
 import Card from "@material-ui/core/Card";
 import Chip from "@material-ui/core/Chip";
 import Button from "@material-ui/core/Button";
-import Grid from "@material-ui/core/Grid";
-import TextField from "@material-ui/core/TextField";
 import EditIcon from "@material-ui/icons/Edit";
 import TitleHeader from "../../components/TitleHeader";
 import ScrollToTop from "../../components/ScrollToTop";
@@ -16,16 +14,17 @@ import AddCircleIcon from "@material-ui/icons/AddCircle";
 import EditUserModal from "./EditModal";
 import { getUserList } from "../../apicalls/ModuleAccessApiCalls";
 import Divider from "@material-ui/core/Divider";
+import useGlobalStyle from "@common-style"
 
 const useStyles = makeStyles((theme) => ({
   root: {
     position: "fixed",
   },
-  yardTitle: {
-    margin: "15px 10px 10px 10px",
-    fontSize: 15,
-    color: "#5c5c5c",
-  },
+  // yardTitle: {
+  //   margin: "15px 10px 10px 10px",
+  //   fontSize: 15,
+  //   color: "#5c5c5c",
+  // },
   yardCard: {
     padding: 5,
     marginBottom: 5,
@@ -50,17 +49,17 @@ const useStyles = makeStyles((theme) => ({
     lineHeight: "20px",
     textTransform: "uppercase",
   },
-  filterSearch: {
-    margin: "1px 1px",
-    padding: 10,
-    position: "fixed",
-    backgroundColor: "#ffff",
-    zIndex: "2",
-  },
-  searchTitle: {
-    fontSize: 15,
-    color: "#5c5c5c",
-  },
+  // filterSearch: {
+  //   margin: "1px 1px",
+  //   padding: 10,
+  //   position: "fixed",
+  //   backgroundColor: "#ffff",
+  //   zIndex: "2",
+  // },
+  // searchTitle: {
+  //   fontSize: 15,
+  //   color: "#5c5c5c",
+  // },
 
   searchInput: {
     width: "100%",
@@ -83,7 +82,7 @@ const access = {
 };
 
 export default function UserList(props) {
-  const classes = useStyles();
+  const classes = {...useGlobalStyle(),...useStyles()};
   //   const history = useHistory();
   const [open, setOpen] = useState(false);
   const [selectUser, setSelectUser] = useState({});
@@ -159,7 +158,8 @@ export default function UserList(props) {
           <Typography className={classes.yardTitle}>User List</Typography>
           <AddCircleIcon
           fontSize="small" 
-            style={{position:'absolute',top: '-2px',right:'10px',color:"#5c5c5c"}}
+            // style={{position:'absolute',top: '-2px',right:'10px',color:"#5c5c5c"}}
+            className={classes.refreshStyle}
             onClick={() => handleGModal("add", {})}
           />
         </div>
@@ -171,8 +171,7 @@ export default function UserList(props) {
               className={classes.yardCard}
               style={{
                 border: "1px solid #929eaa",
-                marginLeft: "1px",
-                marginRight: "1px",
+               margin:"3px"
               }}
             >
               <Box
@@ -183,7 +182,7 @@ export default function UserList(props) {
                 <Box className={classes.chipMain}>
                   <Chip
                     label={user.userName}
-                    style={{ width: "107px", color:  "#000000" }}
+                    style={{ width: "106px", color:  "#000000" }}
                   />
                   <Chip
                     label={user.facilityId}
@@ -199,7 +198,7 @@ export default function UserList(props) {
                       size="medium"
                       style={{ width: "90px", color:  "#000000" }}
                     />
-})}
+                  })}
                   <Button
                     className={classes.confirmBtn}
                     onClick={() => handleGModal("edit", user)}

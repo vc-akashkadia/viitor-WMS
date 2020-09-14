@@ -13,6 +13,8 @@ export const getUrl = (type) => {
       return `${baseUrl}/user/auth-verification`;
     case 'facilityList':
       return `${baseUrl}/facilitynames`;
+    case 'facilityCheck':
+      return `${baseUrl}/updateuserrole`;
     case 'damageCodeList':
       return `${baseUrl}/damage/showdamagecodes`;
     case 'craneList':
@@ -46,6 +48,8 @@ export const getUrl = (type) => {
       return `${baseUrl}/addUser`;
     case 'editUser':
       return `${baseUrl}/editUser`;
+    case 'refreshContainer':
+      return `${baseUrl}/container/refreshcontainer`;
     default:
       return baseUrl;
   }

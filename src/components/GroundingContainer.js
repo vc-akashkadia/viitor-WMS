@@ -12,6 +12,9 @@ import Loader from "./Loader";
 import Toaster from "./Toaster"
 import { GroundingContianerApiCall } from "../apicalls/YardApiCalls";
 import { LocationUpdatePost } from "../apicalls/ModuleAccessApiCalls";
+import  Divider  from "@material-ui/core/Divider";
+import useGlobalStyle from "@common-style"
+import {constants} from '@config/constant'
 let toasterOption = {
   varient: "success",
   message: "",
@@ -24,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: 12,
     paddingLeft: 10,
     paddingRight: 10,
-    paddingBottom: 0,
+    paddingBottom: 2,
     margin: "auto",
   },
   content: {
@@ -70,7 +73,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function GroundingContainers(props) {
-  const classes = useStyles();
+  const classes = {...useGlobalStyle(),...useStyles()};
   const { open, setOpen, type, api, data, container } = props;
   const [location, setLocation] = useState(container &&container.location);
   const [error, setError] = useState("");
@@ -98,7 +101,7 @@ export default function GroundingContainers(props) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (location === "") {
-      setError("pelase enter the location");
+      setError(constants.yardOperation.locationError);
     } else {
       if (type === "location") {
         let data = {
@@ -137,7 +140,7 @@ export default function GroundingContainers(props) {
     if (status) {
       toasterOption = {
         varient: "success",
-        message: type=== "location" ? "Location Updated Successfull" : "Gorunding Successfull"
+        message: type=== "location" ? constants.yardOperation.locationSucess : constants.yardOperation.groundsuccess
       };
       setToaster(true);
       setTimeout(() => {
@@ -147,7 +150,7 @@ export default function GroundingContainers(props) {
     } else {
       toasterOption = {
         varient: "error",
-        message: "Something went wrong try after sometime",
+        message: constants.apiError.error
       };
       setToaster(true);
       setTimeout(() => {
@@ -173,6 +176,7 @@ export default function GroundingContainers(props) {
         <DialogTitle id="alert-dialog-title" className={classes.title}>
           {type !== "location" ? "Grounding Container" : "Location Update"}
         </DialogTitle>
+        <Divider className={classes.dividerStyle} />
         <DialogContent className={classes.content}>
           <Typography className={classes.innerContent}>
             Cont#: <span style={{ color:"#1f1f21",textAlign:"right" }}>{container && container.containerNumber}</span>{" "}

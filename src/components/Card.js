@@ -26,7 +26,7 @@ const BootstrapInput = withStyles((theme) => ({
     fontSize: 14,
     color:"#1f1f21",
     fontWeight: 500,
-    padding: "0px 26px 0px 12px",
+    padding: "0px 26px 0px 7px",
     transition: theme.transitions.create(["border-color", "box-shadow"]),
     width: "100%",
     height: 26,
@@ -148,7 +148,7 @@ export default function CardGrid(props) {
             " " +
             (item.gateOperationCompleted ? classes.damageCode : "")
           }
-          style={{ border: "1px solid #929eaa",margin:"5px" }}
+          style={{ border: "1px solid #929eaa",margin:"3px" }}
         >
           <Box
             display="flex"
@@ -194,7 +194,7 @@ export default function CardGrid(props) {
                     handleOpenModal("container", item.containerNumber)
                   }
                   size="medium"
-                  style={{ width: 80, color: "#000000" }}
+                  style={{ width: 82, color: "#000000" }}
                 />
                 <img
                   src={ContainerIcon}
@@ -210,7 +210,7 @@ export default function CardGrid(props) {
               <div style={{ position: "relative",width: "100%" }}>
               <Chip
                 label={item.location}
-                style={{ width: "99%", color: "#000000"}}
+                style={{ width: "97%", color: "#000000"}}
                 onClick={() =>
                   handleOpenModal("location", item.location)
                 }

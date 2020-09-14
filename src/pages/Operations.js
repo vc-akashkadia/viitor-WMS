@@ -24,10 +24,15 @@ import FormHelperText from "@material-ui/core/FormHelperText";
 // import Toolbar from "@material-ui/core/Toolbar";
 // import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 // import IconButton from "@material-ui/core/IconButton";
-import { GetYardCraneList, selectYardCraneApi,selectLocationCraneApi } from "../apicalls/YardApiCalls";
+import {
+  GetYardCraneList,
+  selectYardCraneApi,
+  selectLocationCraneApi,
+} from "../apicalls/YardApiCalls";
 import Select from "../components/Select";
 import Loader from "../components/Loader";
-import TitleHeader from "../components/TitleHeader"
+import TitleHeader from "../components/TitleHeader";
+import { constants } from "@config/constant";
 
 const BootstrapInput = withStyles((theme) => ({
   root: {
@@ -42,7 +47,7 @@ const BootstrapInput = withStyles((theme) => ({
     border: "1px solid #ced4da",
     fontSize: 14,
     color:"#1f1f21",
-    padding: "0px 26px 0px 12px",
+    padding: "0px 26px 0px 7px",
     transition: theme.transitions.create(["border-color", "box-shadow"]),
     width: "100%",
     height: 26,
@@ -99,28 +104,28 @@ const content = [
   {
     title: "Gate In",
     route: "/gate/in",
-    value:'gateIn',
+    value: constants.operation.gatein,
     img: GateInIcon,
     isAccordion: false,
   },
   {
     title: "Yard Operation",
     route: "/yard/operation",
-    value:'yardOperation',
+    value: constants.operation.yardOperation,
     img: OperationIcon,
     isAccordion: true,
   },
   {
     title: "Location Update",
-    value:'location',
     route: "/location/update",
+    value: constants.operation.location,
     img: PositionIcon,
     isAccordion: true,
   },
   {
     title: "Gate Out",
     route: "/gate/out",
-    value:'gateout',
+    value: constants.operation.gateout,
     img: GateOutIcon,
     isAccordion: false,
   },
@@ -129,48 +134,59 @@ const content = [
 export default function Dashboard() {
   const classes = useStyles();
   const history = useHistory();
-  const [errors, setErrors] = useState("");
+  const [errors, setErrors] = useState({
+    [`${constants.operation.location}`]: "",
+    [`${constants.operation.yardOperation}`]: "",
+  });
   const [loading, setLoading] = useState(true);
   const [crane, setCrane] = useState(useSelector(({ base }) => base.yardCrane));
-  const [locationCrane, setLocationCrane] = useState(useSelector(({ base }) => base.locationCrane));
+  const [locationCrane, setLocationCrane] = useState(
+    useSelector(({ base }) => base.locationCrane)
+  );
   const authToken = useSelector(({ auth }) => auth.authToken);
   const facility = useSelector(({ base }) => base.facility);
   let yardCraneList = useSelector(({ base }) => base.yardCraneList);
   const dispatch = useDispatch();
 
-  const handleSubmit = (event,item) => {
+  const handleSubmit = (event, item) => {
     event.preventDefault();
     setLoading(true);
-    if(item.value !== 'location'){
+    if (item.value !== constants.operation.location) {
       if (crane !== "") {
         dispatch(selectYardCraneApi(crane));
         setTimeout(() => {
           history.push(item.route);
         }, 500);
       } else {
-        setErrors("Please Select Crane");
+        setErrors({
+          yardOperation: constants.operation.craneError,
+          location: "",
+        });
+
         setLoading(false);
       }
-    }else{
+    } else {
       if (locationCrane !== "") {
         dispatch(selectLocationCraneApi(locationCrane));
         setTimeout(() => {
           history.push(item.route);
         }, 500);
       } else {
-        setErrors("Please Select Crane");
+        setErrors({
+          yardOperation: "",
+          location: constants.operation.craneError,
+        });
         setLoading(false);
       }
     }
-    
   };
-  const handleCranselect = (type,value) => {
-    if(type=== 'location'){
-      setLocationCrane(value)
-    }else{
-      setCrane(value)
+  const handleCranselect = (type, value) => {
+    if (type === constants.operation.location) {
+      setLocationCrane(value);
+    } else {
+      setCrane(value);
     }
-  }
+  };
   const handleCallBackYardCraneList = (response) => {
     const {
       data: { status },
@@ -193,7 +209,7 @@ export default function Dashboard() {
       {/* <Header /> */}
       <TitleHeader
         key="operation-header"
-        title="Operations"
+        title={constants.operation.title}
         backPath={"/facility"}
         isSearch={false}
       />
@@ -260,21 +276,36 @@ export default function Dashboard() {
                       {loading && <Loader />}
                       {!loading && (
                         <Box className={classes.operationDetails}>
-                          <FormControl fullWidth error={errors !== ""}>
+                          <FormControl
+                            fullWidth
+                            error={errors[`${item.value}`] !== ""}
+                          >
                             <Select
-                              selectedValue={item.value === 'yardOperation' ? (crane !== "" ? crane : "none") : (locationCrane !== "" ? locationCrane : "none")}
-                              handleChange={(value) => handleCranselect(item.value,value)}
+                              selectedValue={
+                                item.value === constants.operation.yardOperation
+                                  ? crane !== ""
+                                    ? crane
+                                    : "none"
+                                  : locationCrane !== ""
+                                  ? locationCrane
+                                  : "none"
+                              }
+                              handleChange={(value) =>
+                                handleCranselect(item.value, value)
+                              }
                               options={yardCraneList}
                               placeholder={"Select Crane"}
                               inputStyle={<BootstrapInput />}
                             />
-                            <FormHelperText>{errors}</FormHelperText>
+                            <FormHelperText>
+                              {errors[item.value]}
+                            </FormHelperText>
                           </FormControl>
                           <Button
                             className={classes.operationBtn}
                             variant="contained"
                             color="primary"
-                            onClick={(event) => handleSubmit(event,item)}
+                            onClick={(event) => handleSubmit(event, item)}
                           >
                             Ok
                           </Button>

@@ -59,6 +59,7 @@ const useStyles = makeStyles((theme) => ({
 const StyledMenu = withStyles({
   paper: {
     borderRadius: 0,
+    border: '1px solid #d3d4d5',
     boxShadow: "0px 3px 4px rgba(0,0,0,0.16)",
     width: "auto",
     "& ul": {
@@ -84,20 +85,20 @@ const StyledMenu = withStyles({
   />
 ));
 const StyledMenuItem = withStyles((theme) => ({
-  root: {
-    "&:focus": {
-      backgroundColor: theme.palette.primary.main,
-      "& .MuiListItemIcon-root, & .MuiListItemText-primary": {
-        color: theme.palette.common.white,
-      },
-    },
-  },
-  selected: {
-    backgroundColor: theme.palette.primary.main,
-    "& .MuiListItemIcon-root, & .MuiListItemText-primary": {
-      color: theme.palette.common.black,
-    },
-  },
+  // root: {
+  //   "&:focus": {
+  //     backgroundColor: theme.palette.primary.main,
+  //     "& .MuiListItemIcon-root, & .MuiListItemText-primary": {
+  //       color: theme.palette.common.white,
+  //     },
+  //   },
+  // },
+  // selected: {
+  //   backgroundColor: theme.palette.primary.main,
+  //   "& .MuiListItemIcon-root, & .MuiListItemText-primary": {
+  //     color: theme.palette.common.black,
+  //   },
+  // },
 }))(MenuItem);
 
 export default function TitleHeader(props) {
@@ -185,7 +186,7 @@ export default function TitleHeader(props) {
               keepMounted
               open={Boolean(anchorEl)}
               onClose={handleClose}
-              style={{ marginLeft: "14px", marginTop: "0px" }}
+              style={{ marginLeft: "14px", marginTop: "0px",top:"-10px" }}
               disableAutoFocusItem={true}
             >
               {facility && (

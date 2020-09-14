@@ -1,6 +1,5 @@
 import { getUrl } from "../services/network/urls";
 import { post, get } from "../services/network/requests";
-import axios from "axios";
 import {
   DamageCodeList,
   GateMoveContainerList,
@@ -87,7 +86,7 @@ export const getContainerListApi = (data, authToken, callback) => {
   };
 };
 
-export const GateMoveContainerApi = (data, authToken, callback) => {
+export const gateMoveContainerApi = (data, authToken, callback) => {
   let url = getUrl("gatemoveapi");
   return (dispatch) => {
     post(url, data, authToken)
@@ -157,5 +156,51 @@ export const EIRPrintApi = (callData, authToken, callback) => {
          };
         callback(response, callData.printType);
       });
+  };
+};
+
+export const getRefreshContainer = (data, authToken, callback) => {
+  let url = getUrl("refreshContainer");
+  let querystring = `?facilityid=${data.facilityid}`;
+  if (data.operationtype !== undefined) {
+    querystring = querystring + `&operationtype=${data.operationtype}`;
+  }
+
+  if (data.vehical === "truck") {
+    querystring = querystring + `&trucknumber=${data.number}`;
+  }
+  if (data.vehical === "container") {
+    querystring = querystring + `&containernumber=${data.number}`;
+  }
+  url = url + querystring;
+  return (dispatch) => {
+    get(url, authToken)
+      .then((response) => {
+        const {
+          data: { status, data },
+        } = response;
+        if (status) {
+          dispatch(GateMoveContainerList(data));
+        }
+        callback(response);
+      })
+      .catch((err) => {
+        console.log("error", err);
+        let responseNew = {
+          data: {
+            status: false,
+            // code: err.response.status,
+          },
+        };
+        callback(responseNew);
+      });
+
+    dispatch(
+      selectGateMoveOperationOption({
+        vehical: data.vehical,
+        number: data.number,
+        gatetype: data.gatetype,
+      })
+    );
   };
 };

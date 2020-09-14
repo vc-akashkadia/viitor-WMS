@@ -9,6 +9,8 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import { AddPickUpApiCall } from "../../apicalls/YardApiCalls";
 import { makeStyles } from "@material-ui/core/styles";
 import Loader from "../../components/Loader";
+import Divider from '@material-ui/core/Divider';
+import useGlobalStyle from "@common-style"
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -89,7 +91,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function PickUpModal(props) {
   const { open, setOpen, container } = props;
-  const classes = useStyles();
+  const classes = {...useGlobalStyle(),...useStyles()};
   const dispatch = useDispatch();
   const authToken = useSelector(({ auth }) => auth.authToken);
   const yardCrane = useSelector(({ base }) => base.yardCrane);
@@ -128,6 +130,7 @@ export default function PickUpModal(props) {
         <DialogTitle id="alert-dialog-title" className={classes.title}>
           CONFIRMATION
         </DialogTitle>
+        <Divider className={classes.dividerStyle} />
         <DialogContent className={classes.content}>
           <DialogContentText id="alert-dialog-description">
             Do you want to confirm Pick up for{" "}

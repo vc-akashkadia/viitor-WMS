@@ -54,6 +54,7 @@ const useStyles = makeStyles((theme) => ({
 const StyledMenu = withStyles({
   paper: {
     borderRadius: 0,
+    border: '1px solid #d3d4d5',
     boxShadow: "0px 3px 4px rgba(0,0,0,0.16)",
     "& ul": {
       padding: 0,
@@ -64,7 +65,6 @@ const StyledMenu = withStyles({
   },
 })((props) => (
   <Menu
-   
     elevation={0}
     getContentAnchorEl={null}
     anchorOrigin={{

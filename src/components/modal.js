@@ -11,6 +11,8 @@ import container from "@assests/img/popup-container.svg";
 import license from "@assests/img/popup-licence.svg";
 import RoomSharpIcon from '@material-ui/icons/RoomSharp';
 import crane from "@assests/img/LocationContainer.svg";
+import Divider from "@material-ui/core/Divider"
+import useGlobalStyle from "@common-style"
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -115,7 +117,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function AlertDialog(props) {
-  const classes = useStyles();
+  const classes = {...useGlobalStyle(),...useStyles()};
   const { open, setOpen, modalData, data } = props;
   const handleClose = (status = false) => {
     setOpen(status);
@@ -134,6 +136,7 @@ export default function AlertDialog(props) {
           <DialogTitle id="alert-dialog-title" className={classes.title}>
             TRUCK LICENCE
           </DialogTitle>
+          <Divider className={classes.dividerStyle} />
           <DialogContent className={classes.content}>
             <img src={license} alt="container-popup" />
             <div className={classes.licenseLabel}>
@@ -171,6 +174,7 @@ export default function AlertDialog(props) {
           <DialogTitle id="alert-dialog-title" className={classes.title}>
             CONTAINER NO.
           </DialogTitle>
+          <Divider className={classes.dividerStyle} />
           <DialogContent className={classes.content}>
             <img src={container} alt="container-popup" />
             <div className={classes.containerLabel}>
@@ -212,6 +216,7 @@ export default function AlertDialog(props) {
           <DialogTitle id="alert-dialog-title" className={classes.title}>
             LOCATION NO.
           </DialogTitle>
+          <Divider className={classes.dividerStyle} />
           <DialogContent className={classes.content}>
             <img src={crane} alt="container-popup" />
             <RoomSharpIcon 
@@ -284,7 +289,7 @@ export default function AlertDialog(props) {
           </DialogActions>
         </Dialog>
          ) */}
-      {modalData === "filterPopup" && (
+      {(modalData === "filterPopup" || modalData === "refreshContainer" ) && (
         <Dialog
 
           open={open}
@@ -295,6 +300,7 @@ export default function AlertDialog(props) {
           <DialogTitle id="alert-dialog-title" className={classes.title}>
             CONFIRMATION
           </DialogTitle>
+          <Divider className={classes.dividerStyle} />
           <DialogContent className={classes.content}>
             <DialogContentText id="alert-dialog-description">
               Damage Captured on <span style={{ color: "#000000" }}>{data}</span> will be lost

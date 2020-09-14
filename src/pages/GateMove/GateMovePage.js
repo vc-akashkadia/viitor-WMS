@@ -19,7 +19,8 @@ import DamageModal from "../../components/DamageCapture"
 // import CircularProgress from "@material-ui/core/CircularProgress";
 import {
   getContainerListApi,
-  GateMoveContainerApi,
+  gateMoveContainerApi,
+  getRefreshContainer
 } from "../../apicalls/GateApiCalls";
 import CradGrid from "../../components/Card";
 import TitleHeader from "../../components/TitleHeader";
@@ -34,8 +35,10 @@ import GateInIcon from "@assests/img/gate-in1.svg";
 import GateOutIcon from "@assests/img/gate-out1.svg";
 import Select from "../../components/Select";
 import RefreshIcon from '@material-ui/icons/Refresh';
-import Divider from '@material-ui/core/Divider';
 import Toaster from '../../components/Toaster'
+import Divider from '@material-ui/core/Divider';
+import useGlobalStyle from "@common-style"
+import {constants} from '@config/constant'
 const BootstrapInput = withStyles((theme) => ({
   root: {
     "label + &": {
@@ -48,7 +51,7 @@ const BootstrapInput = withStyles((theme) => ({
     backgroundColor: "#f6f6f6",
     border: "1px solid #ced4da",
     fontSize: 14,
-    padding: "0px 26px 0px 12px",
+    padding: "0px 26px 0px 7px",
     transition: theme.transitions.create(["border-color", "box-shadow"]),
     width: "100%",
     height: 26,
@@ -78,11 +81,11 @@ const useStyles = makeStyles({
     color: "#173a64",
     fontSize: 15,
   },
-  yardTitle: {
-    margin: "15px 10px 10px 10px",
-    fontSize: 15,
-    color: "#5c5c5c",
-  },
+  // yardTitle: {
+  //   margin: "15px 10px 10px 10px",
+  //   fontSize: 15,
+  //   color: "#5c5c5c",
+  // },
   yardNoData: {
     width:'100%',
     marginTop:'93px',
@@ -122,17 +125,17 @@ const useStyles = makeStyles({
     height: 61,
     padding: 0,
   },
-  filterSearch: {
-    margin: "12px 5px",
-    padding: 10,
-    position: "fixed",
-    backgroundColor: "#ffff",
-    zIndex: "2",
-  },
-  searchTitle: {
-    fontSize: 15,
-    color: "#5c5c5c",
-  },
+  // filterSearch: {
+  //   margin: "1px 1px",
+  //   padding: 10,
+  //   position: "fixed",
+  //   backgroundColor: "#ffff",
+  //   zIndex: "2",
+  // },
+  // searchTitle: {
+  //   fontSize: 15,
+  //   color: "#5c5c5c",
+  // },
   searchInput: {
     width: "100%",
   },
@@ -222,23 +225,13 @@ let toasterOption = {
   message: "",
 };
 
-const gateTypeOptions = [
-  { value: "Both", label: "Both" },
-  { value: "INBOUND", label: "Inbound" },
-  { value: "OUTBOUND", label: "Outbound" },
-];
+const gateTypeOptions = constants.gateTypes
 
-const vehicalOption = [
-  {
-    value: "Criteria",
-    label: "Criteria",
-  },
-  { value: "truck", label: "Truck" },
-  { value: "container", label: "Container" },
-];
+const vehicalOption = constants.vehicle;
 
 export default function GateMovePage(props) {
-  const classes = useStyles();
+  // const classes = useStyles();
+  const classes = { ...useGlobalStyle(), ...useStyles() };
   
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
@@ -284,16 +277,19 @@ export default function GateMovePage(props) {
 
   const getContainerList = () => {
     if (vehical !== "" && vehical !== "Criteria" && number === "") {
-      alert("Please enter Truck or Container No.");
+      alert(constants.vehicleNumber.error);
       return;
     }
-    // setOpen(false);
-    // operationtype: `Gate_${props.gateType}_${gatetype}`.toUpperCase(),
+    if ( vehical !== "" && vehical !== "Criteria" &&  number.length < 4) {
+      alert(constants.vehicleNumber.minError);
+      return;
+    }
+    
+    
     let data = {
       vehical: vehical,
       number: number,
       facilityid: facility,
-      ///operationtype: `Gate_${props.gateType}_${gatetype}`.toUpperCase(),
     };
     if (gatetype === "Both") {
       data.operationtype = `Gate_${props.gateType}`.toUpperCase();
@@ -301,10 +297,7 @@ export default function GateMovePage(props) {
       data.operationtype = `Gate_${props.gateType}_${gatetype}`.toUpperCase();
     }
     setLoading(true);
-    // if(gatetype !== 'Both'){
-    //data.operationtype = `Gate_${props.gateType}_${gatetype}`.toUpperCase();
-    // }
-    setLoading(true);
+    
     dispatch(getContainerListApi(data, authToken, handleCallback));
   };
   const handleSearch = () => {
@@ -344,7 +337,7 @@ export default function GateMovePage(props) {
     } else {
       toasterOption = {
         varient: "error",
-        message: "Something went wrong try after sometime",
+        message: constants.apiError,
       };
       setToaster(true);
       setTimeout(() => {
@@ -366,7 +359,7 @@ export default function GateMovePage(props) {
     setLoading(true);
 
     dispatch(
-      GateMoveContainerApi(data, authToken, handleCallbackGateOperation)
+      gateMoveContainerApi(data, authToken, handleCallbackGateOperation)
     );
   };
 
@@ -447,7 +440,34 @@ export default function GateMovePage(props) {
     setModalData("print");
     
   }
-
+  const handleRefresh = ()=>{
+    if (damageAdded) {
+      setModalData("refreshContainer");
+      setFilterPopup(true);
+      setDataModal(damagedContainer)
+      return;
+    }
+    setLoading(true);
+    let data = {
+      facilityid: facility,
+      operationtype : `Gate_${props.gateType}`.toUpperCase()
+    };
+    dispatch(getRefreshContainer(data, authToken, handleCallbackRefresh));
+    
+  }
+  const handleCallbackRefresh = (response) => {
+    const {
+      data: { status },
+    } = response;
+    if (status) {
+        getContainerList();
+    } else {
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000);
+    }
+    
+  }
  
   return (
     <>
@@ -471,7 +491,7 @@ export default function GateMovePage(props) {
                   selectedValue={gatetype}
                   handleChange={setGateType}
                   options={gateTypeOptions}
-                  placeholder="Select Type"
+                  placeholder={constants.formPlaceHolder.gateType}
                   inputStyle={<BootstrapInput />}
                 />
               </FormControl>
@@ -488,7 +508,7 @@ export default function GateMovePage(props) {
                     }
                   }}
                   options={vehicalOption}
-                  placeholder="Select Vehical"
+                  placeholder={constants.formPlaceHolder.vehical}
                   inputStyle={<BootstrapInput />}
                 />
               </FormControl>
@@ -523,7 +543,7 @@ export default function GateMovePage(props) {
       >
         <div style={{position:'relative'}}>
         <Typography className={classes.yardTitle}>Work Order</Typography>
-        <RefreshIcon onClick={handleSearch} fontSize="small" style={{position:'absolute',top: '-1px',right:'10px',color:"#5c5c5c"}}  />
+        <RefreshIcon onClick={handleRefresh} fontSize="small" className={classes.refreshStyle}  />
         </div>
         <Divider style={{marginBottom:"7px"}}/>
         {/* <hr /> */}
@@ -628,6 +648,7 @@ export default function GateMovePage(props) {
           <DialogTitle id="alert-dialog-title" className={classes.title}>
             CONFIRMATION
           </DialogTitle>
+          <Divider className={classes.dividerStyle} />
           <DialogContent className={classes.content}>
             <DialogContentText id="alert-dialog-description">
               Do you want to confirm Gate{" "}
