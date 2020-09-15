@@ -23,6 +23,8 @@ import LocationOnOutlinedIcon from "@material-ui/icons/LocationOnOutlined";
 import SupervisorAccountIcon from "@material-ui/icons/SupervisorAccount";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from '@material-ui/core/Typography';
+import user from "@assests/img/user.svg";
+
 
 const useStyles = makeStyles((theme) => ({
   listItemText: {
@@ -347,12 +349,13 @@ export default function AlertDialog(props) {
                           <IconButton edge="start" aria-label="comments">
                             {/* {d.startIcon} */}
                             {access[role.roleName] === "Admin" ? (
-                              <SupervisorAccountIcon
-                              fontSize="large"
+                              <img src={user}
+                              // fontSize="large"
                                 style={{
-                                  width: "30px",
-                                  marginLeft: "3px",
+                                  width: "23px",
+                                  marginLeft: "5px",
                                   color: "#5c5c5c",
+                                  minHeight: "28px"
                                 }}
                               />
                             ) : access[role.roleName] === "Yard" ? (
@@ -367,7 +370,7 @@ export default function AlertDialog(props) {
                                 style={{
                                   width: "25px",
                                   marginLeft: "3px",
-                                  color: "#5c5c5c",
+                                  // color: "#5c5c5c",
                                 }}
                               />
                             )}

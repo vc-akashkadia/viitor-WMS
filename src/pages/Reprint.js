@@ -52,13 +52,13 @@ const BootstrapInput = withStyles((theme) => ({
   },
 }))(InputBase);
 
-const PickerInput = withStyles((theme) => ({
-  root: {
-    "label + &": {
-      marginTop: "10px",
-    },
-  },
-}));
+// const PickerInput = withStyles((theme) => ({
+//   root: {
+//     "label + &": {
+//       marginTop: "10px",
+//     },
+//   },
+// }));
 
 const useStyles = makeStyles((theme) => ({}));
 
@@ -107,7 +107,7 @@ export default function Reprint() {
                       onChange={(e) => {
                         return e[0];
                       }}
-                      inputStyle={<PickerInput  />}
+                      inputStyle={<BootstrapInput  />}
                       label={"From Date"}
                       style={{ marginTop: "-5px" }}
                       value={new Date()}
