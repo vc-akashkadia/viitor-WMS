@@ -13,10 +13,10 @@ import FormControl from "@material-ui/core/FormControl";
 
 import InputBase from "@material-ui/core/InputBase";
 import Button from "@material-ui/core/Button";
-import OperationIcon from "@assests/img/yard-operation.svg";
-import GateInIcon from "@assests/img/gate-in.svg";
-import GateOutIcon from "@assests/img/gate-out.svg";
-import PositionIcon from "@assests/img/postion-update.svg";
+import {ReactComponent as OperationIcon} from "@assests/img/yard-operation.svg";
+import {ReactComponent as GateInIcon} from "@assests/img/gate-in.svg";
+import {ReactComponent as GateOutIcon} from "@assests/img/gate-out.svg";
+import {ReactComponent as PositionIcon} from "@assests/img/postion-update.svg";
 
 import ArrowRightIcon from "@material-ui/icons/ArrowRight";
 import FormHelperText from "@material-ui/core/FormHelperText";
@@ -33,6 +33,7 @@ import Select from "../components/Select";
 import Loader from "../components/Loader";
 import TitleHeader from "../components/TitleHeader";
 import { constants } from "@config/constant";
+import PrintOutlinedIcon from '@material-ui/icons/PrintOutlined';
 
 const BootstrapInput = withStyles((theme) => ({
   root: {
@@ -105,28 +106,35 @@ const content = [
     title: "Gate In",
     route: "/gate/in",
     value: constants.operation.gatein,
-    img: GateInIcon,
+    img: <GateInIcon />,
     isAccordion: false,
   },
   {
     title: "Yard Operation",
     route: "/yard/operation",
     value: constants.operation.yardOperation,
-    img: OperationIcon,
+    img: <OperationIcon />,
     isAccordion: true,
   },
   {
     title: "Location Update",
     route: "/location/update",
     value: constants.operation.location,
-    img: PositionIcon,
+    img: <PositionIcon />,
     isAccordion: true,
   },
   {
     title: "Gate Out",
     route: "/gate/out",
     value: constants.operation.gateout,
-    img: GateOutIcon,
+    img: <GateOutIcon />,
+    isAccordion: false,
+  },
+  {
+    title: "Re-Print",
+    route: "/reprint",
+    value: constants.operation.reprint,
+    img: <PrintOutlinedIcon style={{color:"#5c5c5c",width:"30px"}}  fontSize="large" />,
     isAccordion: false,
   },
 ];
@@ -234,7 +242,8 @@ export default function Dashboard() {
                     >
                       <Box display="flex" alignItems="center" width="100%">
                         <div style={{ width: "15%" }}>
-                          <img src={item.img} alt="" />
+                          {/* <img src={item.img} alt="" /> */}
+                          {item.img}
                         </div>
                         <div style={{ width: "70%" }}>
                           <Typography
@@ -260,7 +269,8 @@ export default function Dashboard() {
                     >
                       <Box display="flex" alignItems="center" width="100%">
                         <div style={{ width: "15%" }}>
-                          <img src={item.img} alt="" />
+                          {/* <img src={item.img} alt="" /> */}
+                          {item.img}
                         </div>
                         <div style={{ width: "70%" }}>
                           <Typography

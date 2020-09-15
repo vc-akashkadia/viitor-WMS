@@ -39,6 +39,8 @@ import Toaster from '../../components/Toaster'
 import Divider from '@material-ui/core/Divider';
 import useGlobalStyle from "@common-style"
 import {constants} from '@config/constant'
+import clsx from 'clsx';
+
 const BootstrapInput = withStyles((theme) => ({
   root: {
     "label + &": {
@@ -205,6 +207,12 @@ const useStyles = makeStyles({
   actionbutton: {
     paddingBottom: 15,
     justifyContent: "center",
+  },
+  filterOpen:{
+    marginTop: "130px",
+    "@media (min-width:600px)":{
+      marginTop: 75
+    }
   },
   button: {
     // paddingTop: 10,
@@ -541,8 +549,11 @@ export default function GateMovePage(props) {
         </div>
       )}
       <div
-        className={classes.yardMain}
-        style={open ? { marginTop: "130px" } : { marginTop: "0px" }}
+        // className={classes.yardMain}
+        className={clsx({
+          [classes.filterOpen] : open //only when open === true
+        })}
+        // style={open ? { marginTop: "130px" } : { marginTop: "0px" }}
       >
         <div style={{position:'relative'}}>
         <Typography className={classes.yardTitle}>Work Order</Typography>

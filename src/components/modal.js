@@ -353,7 +353,6 @@ export default function AlertDialog(props) {
                                   width: "30px",
                                   marginLeft: "3px",
                                   color: "#5c5c5c",
-                                  // maxHeight: 28
                                 }}
                               />
                             ) : access[role.roleName] === "Yard" ? (

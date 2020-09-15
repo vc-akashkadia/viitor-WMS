@@ -38,6 +38,7 @@ import GroundingModal from "../../components/GroundingContainer";
 import RefreshIcon from '@material-ui/icons/Refresh';
 import useGlobalStyle from "@common-style"
 import {constants} from '@config/constant'
+import clsx from 'clsx';
 
 let toasterOption = {
   varient: "success",
@@ -85,6 +86,12 @@ const useStyles = makeStyles((theme) => ({
   backText: {
     color: "#173a64",
     fontSize: 15,
+  },
+  filterOpen:{
+    marginTop: "140px",
+    "@media (min-width:600px)":{
+      marginTop: 75
+    }
   },
   // yardTitle: {
   //   margin: "15px 10px 10px 10px",
@@ -303,7 +310,7 @@ export default function YardOperation(props) {
       />
       {open && (
         <div className={classes.filterSearch}>
-        <Card >
+        <Card className={classes.filterPadding}>
             <Grid container spacing={1} alignItems="center">
               <Grid item xs={6}>
                 <Typography className={classes.searchTitle}>
@@ -383,8 +390,11 @@ export default function YardOperation(props) {
         </div>
       )}
       <div
-        className={classes.yardMain}
-        style={open ? { marginTop: "140px" } : { marginTop: "0px" }}
+        // className={classes.yardMain}
+        // style={open ? { marginTop: "140px" } : { marginTop: "0px" }}
+        className={clsx({
+          [classes.filterOpen] : open //only when open === true
+        })}
       >
          <div style={{position:'relative'}}>
         <Typography className={classes.yardTitle}>Work Order</Typography>

@@ -23,6 +23,9 @@ export const constants = {
   gateMove: {
     title: "Operation",
   },
+  reprint:{
+    title:"Reprint"
+  },
   yardOperation: {
     title: "Yard Operation",
     pickupsuccess: "Container Pickup Successfully",
@@ -35,6 +38,11 @@ export const constants = {
     { value: "Both", label: "Both" },
     { value: "INBOUND", label: "Inbound" },
     { value: "OUTBOUND", label: "Outbound" },
+  ],
+  rePrintTypes: [
+    { value: "Both", label: "Both" },
+    { value: "Gate", label: "Gate" },
+    { value: "Yard", label: "Yard" },
   ],
   vehicle: [
     { value: "Criteria", label: "Criteria" },

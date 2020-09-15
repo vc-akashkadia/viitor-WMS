@@ -328,96 +328,6 @@ export default function PositionUpdate(props) {
         {!loading && containerList && containerList.length === 0 && (
           <Typography className={classes.yardNoData}>No Data Found</Typography>
         )}
-        <Card className={classes.yardCard} style={{ border: "1px solid #929eaa",margin:"3px" }}>
-          <Box
-            display="flex"
-            alignItems="center"
-            justifyContent="space-between"
-          >
-            <Box className={classes.chipMain}>
-              <div style={{ position: "relative" }}>
-                <Chip
-                  label={ "1234"}
-                  // size="small"
-                  style={{ width: "59px" ,color:  "#000000" }}
-                  // onClick={() => handleOpenModal("container",container)}
-                  className={classes.chip}
-                />
-                <img
-                  src={ContainerIcon}
-                  alt="container"
-                  style={{
-                    position: "absolute",
-                    top: "-5.5px",
-                    left: "3px",
-                    width: 13,
-                  }}
-                ></img>
-              </div>
-              <div style={{ position: "relative" }}>
-                <Chip label={"122222"} style={{ width: "120px",color: "#000000"  }} className={classes.chip}/>
-                <LocationOnOutlinedIcon
-                  style={{
-                    position: "absolute",
-                    top: "-10px",
-                    left: "0px",
-                    width: 13,
-                    color:"#0000004d"
-                    // backgroundColor: "#ffffff"
-                  }}
-                  />
-                </div>
-              <Button className={classes.confirmBtn} >
-                <EditIcon fontSize="small" />
-              </Button>
-            </Box>
-          </Box>
-        </Card>
-        <Card className={classes.yardCard} style={{ border: "1px solid #929eaa",margin:"3px" }}>
-          <Box
-            display="flex"
-            alignItems="center"
-            justifyContent="space-between"
-          >
-            <Box className={classes.chipMain}>
-              <div style={{ position: "relative" }}>
-                <Chip
-                  label={ "1234"}
-                  // size="small"
-                  style={{ width: "59px" ,color:  "#000000" }}
-                  // onClick={() => handleOpenModal("container",container)}
-                  className={classes.chip}
-                />
-                <img
-                  src={ContainerIcon}
-                  alt="container"
-                  style={{
-                    position: "absolute",
-                    top: "-5.5px",
-                    left: "3px",
-                    width: 13,
-                  }}
-                ></img>
-              </div>
-              <div style={{ position: "relative" }}>
-                <Chip label={"122222"} style={{ width: "120px",color: "#000000"  }} className={classes.chip}/>
-                <LocationOnOutlinedIcon
-                  style={{
-                    position: "absolute",
-                    top: "-10px",
-                    left: "0px",
-                    width: 13,
-                    color:"#0000004d"
-                    // backgroundColor: "#ffffff"
-                  }}
-                  />
-                </div>
-              <Button className={classes.confirmBtn}>
-                <EditIcon fontSize="small" />
-              </Button>
-            </Box>
-          </Box>
-        </Card>
         {!loading && containerList && containerList.length > 0 && containerList.map((container,index) => (
           <Card key={index} className={classes.yardCard} style={{ border: "1px solid #929eaa",margin:"3px" }}>
           <Box
@@ -433,6 +343,7 @@ export default function PositionUpdate(props) {
                   ) : ''}
                   // size="small"
                   style={{ width: "59px" ,color:  "#000000" }}
+                  className={classes.chip}
                   onClick={() => handleOpenModal("container",container)}
                   
                 />
@@ -448,7 +359,10 @@ export default function PositionUpdate(props) {
                 ></img>
               </div>
               <div style={{ position: "relative" }}>
-                <Chip label={container.location} style={{ width: "120px",color: "#000000"  }} onClick={() => handleOpenModal("location",container)}/>
+                <Chip label={container.location}
+                 style={{ width: "120px",color: "#000000"  }} 
+                 className={classes.chip}
+                 onClick={() => handleOpenModal("location",container)}/>
                 <LocationOnOutlinedIcon
                   style={{
                     position: "absolute",

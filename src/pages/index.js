@@ -9,6 +9,7 @@ import GateMovePage from "./GateMove/GateMovePage";
 import LocationPrint from "../components/print/LocationPrint";
 import EIRPrint from "../components/print/EIRPrint";
 import UserList from "./UserAccess/UserList";
+import Reprint from "./Reprint"
 export default function BasePage() {
   return (
     <Switch>
@@ -60,6 +61,7 @@ export default function BasePage() {
       <Route exact path="/eir/print" render={(props) => <EIRPrint />} />
       <Route exact path="/position" component={PositionUpdate} />
       <Route exact path="/user" component={UserList} />
+      <Route exact path="/reprint" component={Reprint} />
       <Redirect to="/error"/>
     </Switch>
   );

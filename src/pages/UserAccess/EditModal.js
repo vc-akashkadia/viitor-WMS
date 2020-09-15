@@ -18,11 +18,11 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import { ReactComponent as GateInIcon } from "@assests/img/gate-in-user.svg";
 import { ReactComponent as YardIcon } from "@assests/img/yard-operation-user.svg";
+import LocationOnOutlinedIcon from '@material-ui/icons/LocationOnOutlined';
+import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import IconButton from "@material-ui/core/IconButton";
 import FormHelperText from "@material-ui/core/FormHelperText";
-import LocationOnOutlinedIcon from '@material-ui/icons/LocationOnOutlined';
-import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 import {
   AddRoleApi,
   getUserRoleList,
@@ -162,7 +162,7 @@ const useStyles = makeStyles((theme) => ({
 let toasterOption = {
   varient: "success",
   message: "",
-};
+};  
 const accessValue = {
   ROLE_YARD: {
     title: "Yard Operation",

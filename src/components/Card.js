@@ -266,7 +266,6 @@ export default function CardGrid(props) {
               )}
               {children}
             </Box>
-            
           </Box>
         </Card>
       )}
@@ -316,7 +315,6 @@ export default function CardGrid(props) {
               <Chip
                 label={item.description}
                 style={{ width: "203px", justifyContent: "left",color: "#000000" }}
-                
               />
             </Box>
             <Box
