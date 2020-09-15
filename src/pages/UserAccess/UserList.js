@@ -36,9 +36,24 @@ const useStyles = makeStyles((theme) => ({
   chipMain: {
     display: "flex",
     flexWrap: "wrap",
+    width:"100%",
+    alignItems: "center",
     "& > *": {
       margin: "2px 1px",
     },
+    "@media (min-width:360px)":{
+      flexWrap: "nowrap",
+      "& > *": {
+        margin: "2px 2px",
+      },
+    }
+  },
+  chip:{
+    height:26,
+    color: "#000000",
+    "@media (min-width:360px)":{
+      height: 52
+    }
   },
   confirmBtn: {
     backgroundColor: "#40d759",
@@ -191,18 +206,21 @@ export default function UserList(props) {
                 <Box className={classes.chipMain}>
                   <Chip
                     label={user.userName}
-                    style={{ width: "106px", color:  "#000000" }}
+                    style={{ width: "106px" }}
+                    className={classes.chip}
                   />
                   <Chip
                     label={user.facilityId}
-                    style={{ width: "112px", color:  "#000000" }}
+                    style={{ width: "112px"}}
+                    className={classes.chip}
                   />
                   <Chip
                       // key={key + "_" + role.roleName}
                       label={user && user.userRoleId.map((role, key) => (key ? ", ":"")+access[role.roleName])}
                       size="medium"
-                      style={{ width: "182px", color:  "#000000" }}
+                      style={{ width: "182px" }}
                       onClick={() => handleOpenModal("user",user && user.userRoleId)}
+                      className={classes.chip}
                     />
                   {/* {user.userRoleId.map((role, key) => {
                     if(access[role.roleName] === undefined){

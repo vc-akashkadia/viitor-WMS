@@ -131,7 +131,11 @@ const theme = createMuiTheme({
       },
       gutters: {
         paddingLeft: 10,
-        paddingRight: 10
+        paddingRight: 10,
+        "@media (min-width: 600px)":{
+          paddingLeft: 10,
+          paddingRight: 10,
+        }
       }
     },
 
@@ -156,6 +160,11 @@ const theme = createMuiTheme({
     //     width: "70%"
     //   }
     // }
+    MuiIconButton:{
+      edgeEnd:{
+        marginRight: "-23px"
+      }
+    }
   }
 });
 export default theme;

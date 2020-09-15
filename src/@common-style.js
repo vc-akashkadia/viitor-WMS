@@ -17,9 +17,17 @@ const useGobalStyle = makeStyles(theme => ({
       backgroundColor: "#fafafa",
       position: "fixed",
       zIndex: "1",
+      width: "100%"
     },
     filterPadding:{
-      padding: 10, backgroundColor:"#ffffff"
+      padding: 10, backgroundColor:"#ffffff",
+      width: "100%",
+      // maxWidth: 600,
+      "@media (min-width:600px)":{
+        "& > *":{
+          flexWrap: "noWrap"
+        }
+      }
     },
       searchTitle: {
         fontSize: 15,

@@ -77,8 +77,20 @@ const useStyles = makeStyles({
     "& > *": {
       margin: "2px 1px",
     },
+    "@media (min-width:400px)":{
+      flexWrap: "nowrap",
+      "& > *": {
+        margin: "2px 2px",
+      },
+    }
   },
-
+  chip:{
+    height:26,
+    color: "#000000",
+    "@media (min-width:400px)":{
+      height: 52
+    }
+  },
   confirmBtn: {
     minWidth: 37,
     height: 26,
@@ -168,8 +180,9 @@ export default function CardGrid(props) {
                     item.truckNumber.length - 4
                   ) : '' }
                   size="medium"
-                  style={{ width: 78, color: "#000000" }}
+                  style={{ width: 78 }}
                   onClick={() => handleOpenModal("truck", item.truckNumber)}
+                  className={classes.chip}
                 />
                 {/* <img src={TruckICon} alt="truck" style={{position:'absolute',top:'-11px',left:'7px',width:23}}></img> */}
                 <LocalShippingOutlinedIcon
@@ -194,7 +207,8 @@ export default function CardGrid(props) {
                     handleOpenModal("container", item.containerNumber)
                   }
                   size="medium"
-                  style={{ width: 78, color: "#000000" }}
+                  style={{ width: 78 }}
+                  className={classes.chip}
                 />
                 <img
                   src={ContainerIcon}
@@ -207,13 +221,14 @@ export default function CardGrid(props) {
                   }}
                 ></img>
               </div>
-              <div style={{ position: "relative",width: "100%" }}>
+              <div style={{ position: "relative" }}>
               <Chip
                 label={item.location}
-                style={{ width: "97%", color: "#000000"}}
+                style={{ width: "160px"}}
                 onClick={() =>
                   handleOpenModal("location", item.location)
                 }
+                className={classes.chip}
               />
               <LocationOnOutlinedIcon
                 style={{
@@ -226,7 +241,7 @@ export default function CardGrid(props) {
                   />
               </div>
             </Box>
-            <Box>
+            <Box display="flex">
               {!item.gateOperationCompleted &&
               (item.operationCode === "GATE_IN_INBOUND" ||
                 item.operationCode === "GATE_OUT_OUTBOUND") ? (
@@ -249,8 +264,9 @@ export default function CardGrid(props) {
                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 </label>
               )}
+              {children}
             </Box>
-            {children}
+            
           </Box>
         </Card>
       )}
@@ -300,6 +316,7 @@ export default function CardGrid(props) {
               <Chip
                 label={item.description}
                 style={{ width: "203px", justifyContent: "left",color: "#000000" }}
+                
               />
             </Box>
             <Box

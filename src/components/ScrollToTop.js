@@ -9,10 +9,13 @@ const useStyles = makeStyles((theme) => ({
     root: {
         // position:"fixed",
         // bottom: theme.spacing(2),
-        right: theme.spacing(2),
+        // right: theme.spacing(2),
         position:"fixed",
           bottom: 0,
-          left: 100,
+          // left: 100,
+          display: "flex",
+          justifyContent: "center",
+          width: "100%"
       },
 }));
 

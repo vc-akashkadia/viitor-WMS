@@ -38,6 +38,7 @@ import FormControl from "@material-ui/core/FormControl";
 import InputBase from "@material-ui/core/InputBase";
 import useGlobalStyle from "@common-style"
 import {constants} from '@config/constant'
+import clsx from 'clsx';
 // import Modal from "../../components/modal"
 const BootstrapInput = withStyles((theme) => ({
   root: {
@@ -91,9 +92,21 @@ const useStyles = makeStyles((theme) => ({
   chipMain: {
     display: "flex",
     flexWrap: "wrap",
-    "& > *": {
-      margin: "2px 1px",
-    },
+    width:"100%",
+    alignItems: "center",
+    "@media (min-width:360px)":{
+      flexWrap: "nowrap",
+      "& > *": {
+        margin: "2px 2px",
+      },
+    }
+  },
+  chip:{
+    height:26,
+    color: "#000000",
+    "@media (min-width:360px)":{
+      height: 52
+    }
   },
   confirmBtn: {
     backgroundColor: "#40d759",
@@ -104,6 +117,7 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 500,
     lineHeight: "20px",
     textTransform: "uppercase",
+    marginLeft:"auto"
   },
   // filterSearch: {
   //   margin: "1px 1px",
@@ -140,7 +154,13 @@ const useStyles = makeStyles((theme) => ({
         margin: 12
       }
     }
-  }
+  },
+  filterOpen:{
+    marginTop: 105,
+    "@media (min-width:600px)":{
+      marginTop: 75
+    }
+  },
 }));
 const blockConst = [{ value: "Block", label: "Block" }];
 export default function PositionUpdate(props) {
@@ -294,8 +314,10 @@ export default function PositionUpdate(props) {
         </div>
       )}
       <div
-        className={classes.yardMain}
-        style={open ? { marginTop: "105px" } : { marginTop: "0px" }}
+        className={clsx({
+          [classes.filterOpen] : open //only when open === true
+        })}
+        // style={open ? { marginTop: "105px" } : { marginTop: "0px" }}
       >
         <div style={{position:'relative'}}>
         <Typography className={classes.yardTitle}>Work Order</Typography>
@@ -306,6 +328,96 @@ export default function PositionUpdate(props) {
         {!loading && containerList && containerList.length === 0 && (
           <Typography className={classes.yardNoData}>No Data Found</Typography>
         )}
+        <Card className={classes.yardCard} style={{ border: "1px solid #929eaa",margin:"3px" }}>
+          <Box
+            display="flex"
+            alignItems="center"
+            justifyContent="space-between"
+          >
+            <Box className={classes.chipMain}>
+              <div style={{ position: "relative" }}>
+                <Chip
+                  label={ "1234"}
+                  // size="small"
+                  style={{ width: "59px" ,color:  "#000000" }}
+                  // onClick={() => handleOpenModal("container",container)}
+                  className={classes.chip}
+                />
+                <img
+                  src={ContainerIcon}
+                  alt="container"
+                  style={{
+                    position: "absolute",
+                    top: "-5.5px",
+                    left: "3px",
+                    width: 13,
+                  }}
+                ></img>
+              </div>
+              <div style={{ position: "relative" }}>
+                <Chip label={"122222"} style={{ width: "120px",color: "#000000"  }} className={classes.chip}/>
+                <LocationOnOutlinedIcon
+                  style={{
+                    position: "absolute",
+                    top: "-10px",
+                    left: "0px",
+                    width: 13,
+                    color:"#0000004d"
+                    // backgroundColor: "#ffffff"
+                  }}
+                  />
+                </div>
+              <Button className={classes.confirmBtn} >
+                <EditIcon fontSize="small" />
+              </Button>
+            </Box>
+          </Box>
+        </Card>
+        <Card className={classes.yardCard} style={{ border: "1px solid #929eaa",margin:"3px" }}>
+          <Box
+            display="flex"
+            alignItems="center"
+            justifyContent="space-between"
+          >
+            <Box className={classes.chipMain}>
+              <div style={{ position: "relative" }}>
+                <Chip
+                  label={ "1234"}
+                  // size="small"
+                  style={{ width: "59px" ,color:  "#000000" }}
+                  // onClick={() => handleOpenModal("container",container)}
+                  className={classes.chip}
+                />
+                <img
+                  src={ContainerIcon}
+                  alt="container"
+                  style={{
+                    position: "absolute",
+                    top: "-5.5px",
+                    left: "3px",
+                    width: 13,
+                  }}
+                ></img>
+              </div>
+              <div style={{ position: "relative" }}>
+                <Chip label={"122222"} style={{ width: "120px",color: "#000000"  }} className={classes.chip}/>
+                <LocationOnOutlinedIcon
+                  style={{
+                    position: "absolute",
+                    top: "-10px",
+                    left: "0px",
+                    width: 13,
+                    color:"#0000004d"
+                    // backgroundColor: "#ffffff"
+                  }}
+                  />
+                </div>
+              <Button className={classes.confirmBtn}>
+                <EditIcon fontSize="small" />
+              </Button>
+            </Box>
+          </Box>
+        </Card>
         {!loading && containerList && containerList.length > 0 && containerList.map((container,index) => (
           <Card key={index} className={classes.yardCard} style={{ border: "1px solid #929eaa",margin:"3px" }}>
           <Box
