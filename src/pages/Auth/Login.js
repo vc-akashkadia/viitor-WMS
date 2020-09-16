@@ -16,6 +16,7 @@ import { LoginApi } from "../../apicalls/authCall";
 import { useDispatch } from "react-redux";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import {constants} from "@config/constant";
+import Toaster from '../../components/Toaster'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -180,6 +181,7 @@ export default function Login() {
       // };
     }else{
       setAlert(true);
+      setLoading(false);
     }
     //setAlert(true);
     setLoading(false);
@@ -195,11 +197,17 @@ export default function Login() {
 
       <Card className={classes.root}>
         <CardContent className={classes.card}>
-        {alert && (
+        {/* {alert && (
             <Alert severity={toasterOption.option}>
               {toasterOption.message}
             </Alert>
-          )}
+          )} */}
+          <Toaster
+        open={alert}
+        handleClose={setAlert}
+        option={toasterOption.option}
+        message={toasterOption.message}
+      />
           <form onSubmit={handleSubmit} className={classes.loginForm}>
             <Grid item xs={12} className={classes.listItemsChild}>
               {/* <FormControl className={classes.field}> */}

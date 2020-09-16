@@ -52,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
   },
   menuIcon: {
     minWidth: "auto",
-    paddingRight: 15,
+    paddingRight: 5,
   },
 }));
 

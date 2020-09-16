@@ -3,7 +3,7 @@ export const constants = {
     error: "Try After Some Time",
   },
   login: {
-    invalid: "Invalid Login",
+    invalid: "Please Enter Valid Username and Password",
     error: {
       username: "User Name is required",
       password: "Password is required",
@@ -28,11 +28,10 @@ export const constants = {
   },
   yardOperation: {
     title: "Yard Operation",
-    pickupsuccess: "Container Pickup Successfully",
-    groundsuccess: "Container Ground Successfully",
-    locationSucess:"Location Updated Successfull",
-    locationError:"Please enter the location",
-
+    pickupsuccess: "Container Pickup Successful",
+    groundsuccess: "Container Ground Successful",
+    locationSucess: "Location Updated Successful",
+    locationError: "Please enter the location",
   },
   gateTypes: [
     { value: "Both", label: "Both" },
@@ -62,18 +61,24 @@ export const constants = {
     block: "Select Block",
     gateType: "Select Type",
     vehical: "Select Criteria",
-    userName:"Enter User Name",
-    facility:"Select Facility",
+    userName: "Enter User Name",
+    facility: "Select Facility",
   },
   userAccess: {
     error: {
       username: "User Name is required",
       facility: "Please select the facility",
-      atleastOne:"Please give atleast one access"
+      atleastOne: "Please give atleast one access",
     },
-    success:{
-        addUser : "User Add Sucessful",
-        editUser : "User Edit Sucessful"
-    }
+    success: {
+      addUser: "User Add Sucessful",
+      editUser: "User Edit Sucessful",
+    },
+  },
+  roles: {
+    ROLE_YARD: "ROLE_YARD",
+    ROLE_GATE: "ROLE_GATE",
+    ROLE_LOCATION_UPDATE: "ROLE_LOCATION_UPDATE",
+    ROLE_ADMIN: "ROLE_ADMIN",
   },
 };

@@ -25,7 +25,6 @@ import IconButton from "@material-ui/core/IconButton";
 import Typography from '@material-ui/core/Typography';
 import user from "@assests/img/user.svg";
 
-
 const useStyles = makeStyles((theme) => ({
   listItemText: {
     marginLeft: "-13px",
@@ -351,6 +350,7 @@ export default function AlertDialog(props) {
                             {access[role.roleName] === "Admin" ? (
                               <img src={user}
                               // fontSize="large"
+                                alt="user"
                                 style={{
                                   width: "23px",
                                   marginLeft: "5px",

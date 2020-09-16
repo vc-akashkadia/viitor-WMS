@@ -17,6 +17,7 @@ import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
 } from "@material-ui/pickers";
+import TextField from '@material-ui/core/TextField';
 
 const BootstrapInput = withStyles((theme) => ({
   root: {
@@ -52,13 +53,13 @@ const BootstrapInput = withStyles((theme) => ({
   },
 }))(InputBase);
 
-// const PickerInput = withStyles((theme) => ({
-//   root: {
-//     "label + &": {
-//       marginTop: "10px",
-//     },
-//   },
-// }));
+const PickerInput = withStyles((theme) => ({
+  root: {
+    "label + &": {
+      marginTop: "10px",
+    },
+  },
+}));
 
 const useStyles = makeStyles((theme) => ({}));
 
@@ -67,6 +68,10 @@ export default function Reprint() {
   const classes = { ...useGobalStyle(), ...useStyles() };
   const [open, setOpen] = useState(false);
   const [block, setBlock] = useState("Both");
+  const [fromDate,setFromDate] =useState(new Date())
+  const [toDate,setToDate] =useState(new Date())
+  console.log("fromDate",fromDate)
+
   return (
     <>
       <TitleHeader
@@ -81,7 +86,7 @@ export default function Reprint() {
             <Grid container spacing={1} alignItems="center">
               <Grid item xs={6}>
                 <Typography className={classes.searchTitle}>
-                  Search Her e
+                  Search Here
                 </Typography>
               </Grid>
               <Grid item xs={6}>
@@ -97,53 +102,82 @@ export default function Reprint() {
               </Grid>
               <Grid item xs={12}>
                 <FormControl fullWidth>
-                  <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                <TextField
+                  id="date"
+                  label="From Date"
+                  type="date"
+                  // defaultValue="2017-05-24"
+                  value={fromDate}
+                  onChange={(e)=>setFromDate(e.target.value)}
+                //  autoOk={true}
+                 format="dd/MM/yyyy"
+                  className={classes.textField}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                />
+                  {/* <MuiPickersUtilsProvider utils={DateFnsUtils}>
                     <KeyboardDatePicker
                       name="startDate"
                       variant="inline"
-                      format="MM/dd/yyyy"
+                      format="dd/MM/yyyy"
                       margin="normal"
                       id="date-picker-inline"
                       onChange={(e) => {
-                        return e[0];
+                         setFromDate(e);
                       }}
-                      inputStyle={<BootstrapInput  />}
+                      inputStyle={<PickerInput  />}
                       label={"From Date"}
                       style={{ marginTop: "-5px" }}
-                      value={new Date()}
+                      value={fromDate}
                       KeyboardButtonProps={{
                         "aria-label": "change date",
                       }}
-                      // style={{ marginBottom: 25 }}
                       autoOk
                       views={["year", "month", "date"]}
                     />
-                  </MuiPickersUtilsProvider>
+                  </MuiPickersUtilsProvider> */}
                 </FormControl>
               </Grid>
               <Grid item xs={12}>
                 <FormControl fullWidth>
-                  <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                  {/* <MuiPickersUtilsProvider utils={DateFnsUtils}>
                     <KeyboardDatePicker
                       name="startDate"
                       variant="inline"
-                      format="MM/dd/yyyy"
+                      format="dd/MM/yyyy"
                       margin="normal"
                       id="date-picker-inline"
                       onChange={(e) => {
-                        return e[0];
+                        console.log("eee",e)
+                         setToDate(e);
                       }}
+                      minDate={fromDate}
                       label={"To Date"}
                       style={{ marginTop: "-7px" }}
-                      value={new Date()}
+                      value={toDate}
                       KeyboardButtonProps={{
                         "aria-label": "change date",
                       }}
-                      // style={{ marginBottom: 25 }}
                       autoOk
                       views={["year", "month", "date"]}
                     />
-                  </MuiPickersUtilsProvider>
+                  </MuiPickersUtilsProvider> */}
+                  <TextField
+                  id="date"
+                  label="To Date"
+                  type="date"
+                  // defaultValue="2017-05-24"
+                  value={toDate}
+                  format="dd/MM/yyyy"
+                  minDate={fromDate}
+                  onChange={(e)=>setToDate(e.target.value)}
+                //  autoOk={true}
+                  className={classes.textField}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                />
                 </FormControl>
               </Grid>
             </Grid>

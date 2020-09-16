@@ -24,12 +24,10 @@ import CardGrid from "../../components/Card";
 import {
   getBlockListApiCall,
   getYardOperationApiCall,
-  getRefreshYardContainer
+  getRefreshYardContainer,
 } from "../../apicalls/YardApiCalls";
 
-import {
-  getRefreshContainer,
-} from "../../apicalls/GateApiCalls";
+import { getRefreshContainer } from "../../apicalls/GateApiCalls";
 import TitleHeader from "../../components/TitleHeader";
 import ScrollToTop from "../../components/ScrollToTop";
 import Loader from "../../components/Loader";
@@ -57,7 +55,7 @@ const BootstrapInput = withStyles((theme) => ({
     backgroundColor: "#f6f6f6",
     border: "1px solid #ced4da",
     fontSize: 14,
-    color:"#1f1f21",
+    color: "#1f1f21",
     padding: "0px 26px 0px 7px",
     transition: theme.transitions.create(["border-color", "box-shadow"]),
     width: "100%",
@@ -155,10 +153,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const vehicalOption = constants.vehicle;
-const gateTypeOptions = constants.yardType
+const gateTypeOptions = constants.yardType;
 const blockConst = [{ value: "Block", label: "Block" }];
 export default function YardOperation(props) {
-  const classes = {...useGlobalStyle(),...useStyles()};
+  const classes = { ...useGlobalStyle(), ...useStyles() };
 
   const [loading, setLoading] = useState(false);
   const [toaster, setToaster] = useState(false);
@@ -179,22 +177,14 @@ export default function YardOperation(props) {
   const facility = useSelector(({ base }) => base.facility);
   const blockList = useSelector(({ base }) => base.blockList);
   const yardContainerList = useSelector(({ base }) => base.yardContainerList);
-  useEffect(() => {
-    // if (blockList.length === 0) {
-      dispatch(getBlockListApiCall(facility, authToken, handleCallbackBlock));
-    // }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const getBlockList = () => {
+    //if (blockList.length === 0) {
+    dispatch(getBlockListApiCall(facility, authToken, handleCallbackBlock));
+    //}
+  };
+  useEffect(getBlockList, []);
 
-  useEffect(() => {
-    handleSearch();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [block, gateType]);
-
-  useEffect(() => {
-    handleSearch();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  
   const handleCallbackBlock = () => {};
 
   // const handleFilterOpen = () => {
@@ -209,7 +199,7 @@ export default function YardOperation(props) {
 
   const handleSearch = () => {
     let data = {
-      facilityId: facility,
+      facility_id: facility,
       gatetype: gateType,
     };
     if (block !== "Block") {
@@ -233,6 +223,11 @@ export default function YardOperation(props) {
     getYardContainerList(data);
   };
 
+  
+  useEffect(handleSearch, [block, gateType]);
+
+  useEffect(handleSearch, []);
+  
   const getYardContainerList = (data) => {
     dispatch(getYardOperationApiCall(data, authToken, handleCallbackList));
   };
@@ -278,15 +273,16 @@ export default function YardOperation(props) {
     }
   };
 
-  const handleRefresh = ()=>{
+  const handleRefresh = () => {
     setLoading(true);
     let data = {
-      facilityid: facility,
-      operationtype : 'GROUNDING'
+      facility_id: facility,
     };
+    if (gateType !== "ALL") {
+      data.operationtype = gateType;
+    }
     dispatch(getRefreshYardContainer(data, authToken, handleCallbackRefresh));
-    
-  }
+  };
   const handleCallbackRefresh = (response) => {
     const {
       data: { status },
@@ -298,8 +294,7 @@ export default function YardOperation(props) {
         setLoading(false);
       }, 1000);
     }
-    
-  }
+  };
   return (
     <>
       <TitleHeader
@@ -396,9 +391,13 @@ export default function YardOperation(props) {
           [classes.filterOpen] : open //only when open === true
         })}
       >
-         <div style={{position:'relative'}}>
-        <Typography className={classes.yardTitle}>Work Order</Typography>
-        <RefreshIcon onClick={handleRefresh} fontSize="small" className={classes.refreshStyle}/>
+        <div style={{ position: "relative" }}>
+          <Typography className={classes.yardTitle}>Work Order</Typography>
+          <RefreshIcon
+            onClick={handleRefresh}
+            fontSize="small"
+            className={classes.refreshStyle}
+          />
         </div>
         <Divider style={{ marginBottom: "7px" }} />
         {loading && <Loader />}
@@ -461,12 +460,12 @@ export default function YardOperation(props) {
           setOpen={handleClosePickUp}
         />
       )}
-      <Toaster 
+      <Toaster
         open={toaster}
         handleClose={setToaster}
         option={toasterOption.varient}
         message={toasterOption.message}
-        />
+      />
       <ScrollToTop />
     </>
   );

@@ -2,12 +2,16 @@ import React from "react";
 import "./print.css";
 import brandLogo from "@assests/img/logo-new.svg";
 export default function EIRPrint(props) {
-  const { gateType,data } = props;
+  const { gateType, data } = props;
 
   return (
     <>
       <div className="ticket">
-        <img src={brandLogo} alt="Logo" style={{ display: "block", width: 100, margin: "10px auto"}}/>
+        <img
+          src={brandLogo}
+          alt="Logo"
+          style={{ display: "block", width: 100, margin: "10px auto" }}
+        />
         <br />
         <p className="centered" style={{ marginTop: "0px" }}>
           EQUIPMENT INTERCHANGE RECEIPT
@@ -15,7 +19,9 @@ export default function EIRPrint(props) {
         <table>
           <tbody>
             <tr>
-              <td className="description" style={{width:"103px"}}>CAMCO VISIT ID:</td>
+              <td className="description" style={{ width: "103px" }}>
+                CAMCO VISIT ID:
+              </td>
               <td className="price">{data.SeqNo}</td>
             </tr>
             <tr>
@@ -40,14 +46,16 @@ export default function EIRPrint(props) {
             </tr>
             <tr>
               <td className="description">Contr. No.:</td>
-              <td className="price">{data.ContainerNumber}
+              <td className="price">
+                {data.ContainerNumber}
                 {/* / FULL / OUT */}
               </td>
             </tr>
-            
 
             <tr>
-              <td className="description">Consignee:</td>
+              <td style={{ paddingTop: "10px" }} className="description">
+                Consignee:
+              </td>
               <td className="price">{data.Consignee}</td>
             </tr>
             <tr>
@@ -70,10 +78,10 @@ export default function EIRPrint(props) {
               <td className="description">Agent Seal:</td>
               <td className="price">{data.AgentSeal}</td>
             </tr>
-            <br />
-
             <tr>
-              <td className="description">EIR No:</td>
+              <td className="description" style={{ paddingTop: "10px" }}>
+                EIR No:
+              </td>
               <td className="price">{data.EIRNo}</td>
             </tr>
             <tr>

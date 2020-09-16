@@ -1,55 +1,57 @@
 const getBaseUrl = () => {
   //return '';
-  return process.env.REACT_APP_BASE_URL_API
+  return process.env.REACT_APP_BASE_URL_API;
 };
-
 
 export const getUrl = (type) => {
   const baseUrl = getBaseUrl();
   switch (type) {
-    case 'signin':
+    case "signin":
       return `${baseUrl}/login`;
-    case 'authVerification':
+    case "authVerification":
       return `${baseUrl}/user/auth-verification`;
-    case 'facilityList':
+    case "facilityList":
       return `${baseUrl}/facilitynames`;
-    case 'facilityCheck':
-      return `${baseUrl}/updateuserrole`;
-    case 'damageCodeList':
+    case "facilityCheck":
+      return `${baseUrl}/facilityRole`;
+    case "damageCodeList":
       return `${baseUrl}/damage/showdamagecodes`;
-    case 'craneList':
-      return `${baseUrl}/cranedetails?facilityId=`;
-    case 'yardBlockList':
-      return `${baseUrl}/yardBlockdetails?facilityId=`;
-    case 'yardContainerList':
+    case "craneList":
+      return `${baseUrl}/cranedetails`;
+    case "yardBlockList":
+      return `${baseUrl}/yardBlockdetails`;
+    case "yardContainerList":
       return `${baseUrl}/yard/showcontainers`;
-    case 'gatemovecontainer':
+    case "gatemovecontainer":
       return `${baseUrl}/container/showcontainerlist`;
-    case 'pickupConfirm':
+    case "pickupConfirm":
       return `${baseUrl}/yard/pickup`;
-    case 'gatemoveapi':
+    case "gatemoveapi":
       return `${baseUrl}/gateoperation/getinconfirmation`;
-    
-    case 'groundingAddapi':
+    case "groundingAddapi":
       return `${baseUrl}/yard/grounding`;
-    case 'locationUpdateGetApi':
+    case "locationUpdateGetApi":
       return `${baseUrl}/yard/showlocationupdatecontainers`;
-    case 'locationUpdatePost':
+    case "locationUpdatePost":
       return `${baseUrl}/yard/locationUpdate`;
-    case 'locationSlipPrint':
+    case "locationSlipPrint":
       return `${baseUrl}/gateoperation/getPrintDetails`;
-    case 'EIRPrint':
+    case "EIRPrint":
       return `${baseUrl}/gateoperation/printeir`;
-    case 'userlist':
+    case "userlist":
       return `${baseUrl}/userlist`;
-    case 'userRolelist':
+    case "userRolelist":
       return `${baseUrl}/rolelist`;
-    case 'addUser':
+    case "addUser":
       return `${baseUrl}/addUser`;
-    case 'editUser':
+    case "editUser":
       return `${baseUrl}/editUser`;
-    case 'refreshContainer':
+    case "refreshContainer":
       return `${baseUrl}/container/refreshcontainer`;
+    case "refreshYardContainer":
+      return `${baseUrl}/container/refreshpickupcontainer`;
+    case "refreshLocationUpdate":
+      return `${baseUrl}/container/refreshlocationupdate`;
     default:
       return baseUrl;
   }

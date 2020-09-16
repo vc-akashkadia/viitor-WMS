@@ -142,14 +142,14 @@ export default function DamageCapture(props) {
   const authToken = useSelector(({ auth }) => auth.authToken);
   const damageCodes = useSelector(({ base }) => base.damageCodeList);
 
-  useEffect(() => {
+  const getDamageCodeList = () => {
     if (damageCodes.length === 0) {
       enableLoading();
       dispatch(DamageCodeListApi(authToken, handleCallbackDamageCodeList));
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-  useEffect(() => {
+  }
+  useEffect(getDamageCodeList, []);
+  const checkExistDamage = () => {
     if (container.damage !== undefined && container.damage !== "") {
       let selectedDamageCodes = container.damage.split(",");
       let filterDamageCodes = damageCodes.filter((item) =>
@@ -163,8 +163,9 @@ export default function DamageCapture(props) {
       }));
       setDamage(selecftDamageList);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [open]);
+  }
+  useEffect(checkExistDamage, [open]);
+  
   const handleCallbackDamageCodeList = (response) => {
     disableLoading();
   };

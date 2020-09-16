@@ -1,5 +1,6 @@
 import React from "react";
 import { Redirect, Switch, Route } from "react-router-dom";
+
 import Facility from "./Facility";
 import Operations from "./Operations";
 // import YardOperation from "./yarn/YarnOperation"
@@ -9,6 +10,8 @@ import GateMovePage from "./GateMove/GateMovePage";
 import LocationPrint from "../components/print/LocationPrint";
 import EIRPrint from "../components/print/EIRPrint";
 import UserList from "./UserAccess/UserList";
+import PrivateRoute from "../routes/PrivateRoutes";
+import { constants } from "@config/constant";
 import Reprint from "./Reprint"
 export default function BasePage() {
   return (
@@ -20,49 +23,57 @@ export default function BasePage() {
 
       <Route key="facility" exact path="/facility" component={Facility} />
       <Route key="operations" exact path="/operations" component={Operations} />
-      <Route
+      <PrivateRoute
+        roles={constants.roles.ROLE_YARD}
         key="yard-operation"
         exact
         path="/yard/operation"
         component={YardOperations}
       />
-      <Route
+
+      <PrivateRoute
+        roles={constants.roles.ROLE_LOCATION_UPDATE}
         key="position-update"
         exact
         path="/location/update"
         component={PositionUpdate}
       />
-      <Route
-        exact
-        path="/new/gate/in"
-        render={(props) => <GateMovePage {...props} gateType="In" />}
-      />
-      <Route
+      <PrivateRoute
+        roles={constants.roles.ROLE_GATE}
         exact
         path="/gate/in"
-        render={(props) => <GateMovePage {...props} gateType="In" />}
+        gateType="In"
+        component={GateMovePage}
+        // render={(props) => <GateMovePage {...props} gateType="In" />}
       />
-      <Route
+      <PrivateRoute
+        roles={constants.roles.ROLE_GATE}
         exact
         path="/gate/out"
         render={(props) => <GateMovePage {...props} gateType="Out" />}
       />
-      <Route
-        exact
-        path="/new/gate/out"
-        render={(props) => <GateMovePage {...props} gateType="Out" />}
-      />
-      {/* <Route exact path="/print" render={(props) => <PrintSample />} /> */}
-      <Route
+      <PrivateRoute
+        roles={constants.roles.ROLE_GATE}
         exact
         path="/location/print"
         render={(props) => <LocationPrint />}
       />
-      <Route exact path="/eir/print" render={(props) => <EIRPrint />} />
-      <Route exact path="/position" component={PositionUpdate} />
-      <Route exact path="/user" component={UserList} />
-      <Route exact path="/reprint" component={Reprint} />
-      <Redirect to="/error"/>
+      <PrivateRoute
+        roles={constants.roles.ROLE_GATE}
+        exact
+        path="/eir/print"
+        render={(props) => <EIRPrint />}
+      />
+      {/* <PrivateRoute
+        roles={constants.roles.ROLE_LOCATION_UPDATE} exact path="/position" component={PositionUpdate} /> */}
+      <PrivateRoute
+        roles={constants.roles.ROLE_ADMIN}
+        exact
+        path="/user"
+        component={UserList}
+      />
+      <PrivateRoute exact path="/reprint" component={Reprint} />
+      <Redirect to="/error" />
     </Switch>
   );
 }

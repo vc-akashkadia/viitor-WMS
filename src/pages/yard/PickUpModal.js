@@ -107,7 +107,7 @@ export default function PickUpModal(props) {
       locationNumber: container.location,
       craneNumber: yardCrane,
       truckNumber: container.truckNumber,
-      facilityId:facility
+      facility_id:facility
     };
     setLoading(true);
     dispatch(AddPickUpApiCall(data, authToken, handleCallback));

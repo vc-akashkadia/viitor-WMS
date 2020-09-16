@@ -17,13 +17,11 @@ import TextField from "@material-ui/core/TextField";
 // import CloseIcon from "@material-ui/icons/Close";
 import EditIcon from "@material-ui/icons/Edit";
 import GroundingModal from "./../components/GroundingContainer";
-import { getContainerListForLocationUpdate } from "../apicalls/ModuleAccessApiCalls";
+import { getContainerListForLocationUpdate,getRefreshLocationUpdateContainer } from "../apicalls/ModuleAccessApiCalls";
 import {
   getBlockListApiCall,
 } from "../apicalls/YardApiCalls";
-import {
-  getRefreshContainer,
-} from "../apicalls/GateApiCalls";
+
 import TitleHeader from "../components/TitleHeader";
 import ScrollToTop from "../components/ScrollToTop";
 import Modal from "../components/modal";
@@ -186,11 +184,11 @@ export default function PositionUpdate(props) {
   const dispatch = useDispatch();
   //   const [open, setOpen] = useState(false);
   const getContainerList = () => {
-      setOpen(false);
+      //setOpen(false);
       setLoading(true)
       let data ={
         containerNumber:containerNumber,
-        facility:facility
+        facility_id:facility
       }
       if (block !== "Block") {
         data.blockNumber = block;
@@ -201,12 +199,13 @@ export default function PositionUpdate(props) {
     
   };
   useEffect(getContainerList, []);
-  useEffect(() => {
-    if (blockList.length === 0) {
+
+  const getBlockList = () => {
+    //if (blockList.length === 0) {
       dispatch(getBlockListApiCall(facility, authToken, handleCallbackBlock));
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [blockList]);
+    //}
+  }
+  useEffect(getBlockList, []);
 
   const handleCallbackBlock = () => {};
 
@@ -240,10 +239,10 @@ export default function PositionUpdate(props) {
   const handleRefresh = ()=>{
     setLoading(true);
     let data = {
-      facilityid: facility,
-      // operationtype : `Gate_${props.gateType}`.toUpperCase()
+      facility_id: facility,
+      
     };
-    dispatch(getRefreshContainer(data, authToken, handleCallbackRefresh));
+    dispatch(getRefreshLocationUpdateContainer(data, authToken, handleCallbackRefresh));
     
   }
   const handleCallbackRefresh = (response) => {

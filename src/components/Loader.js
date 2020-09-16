@@ -1,7 +1,7 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import Backdrop from '@material-ui/core/Backdrop';
+import Backdrop from "@material-ui/core/Backdrop";
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
@@ -9,11 +9,11 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     minHeight: "20px",
   },
-  backDrop : {
+  backDrop: {
     zIndex: 9999,
-    color: '#fff',
-    opacity:'0.5 !important',
-  }
+    color: "#fff",
+    opacity: "0.5 !important",
+  },
 }));
 
 export default function Loader() {
@@ -24,6 +24,5 @@ export default function Loader() {
         <CircularProgress size={24} color="inherit" />
       </div>
     </Backdrop>
-    
   );
 }

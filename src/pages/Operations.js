@@ -108,6 +108,7 @@ const content = [
     value: constants.operation.gatein,
     img: <GateInIcon />,
     isAccordion: false,
+    roleName:"ROLE_GATE"
   },
   {
     title: "Yard Operation",
@@ -115,6 +116,7 @@ const content = [
     value: constants.operation.yardOperation,
     img: <OperationIcon />,
     isAccordion: true,
+    roleName:"ROLE_YARD"
   },
   {
     title: "Location Update",
@@ -122,6 +124,7 @@ const content = [
     value: constants.operation.location,
     img: <PositionIcon />,
     isAccordion: true,
+    roleName:"ROLE_LOCATION_UPDATE"
   },
   {
     title: "Gate Out",
@@ -136,6 +139,7 @@ const content = [
     value: constants.operation.reprint,
     img: <PrintOutlinedIcon style={{color:"#5c5c5c",width:"30px"}}  fontSize="large" />,
     isAccordion: false,
+    roleName:"ROLE_GATE"
   },
 ];
 
@@ -152,6 +156,7 @@ export default function Dashboard() {
     useSelector(({ base }) => base.locationCrane)
   );
   const authToken = useSelector(({ auth }) => auth.authToken);
+  const userRoles = useSelector(({ auth }) => auth.userRole);
   const facility = useSelector(({ base }) => base.facility);
   let yardCraneList = useSelector(({ base }) => base.yardCraneList);
   const dispatch = useDispatch();
@@ -224,9 +229,11 @@ export default function Dashboard() {
 
       <div className={classes.mainContainer}>
         {content &&
-          content.map((item) => (
-            <>
-              {!item.isAccordion && (
+          content.map((item,index) => (
+
+            <React.Fragment key={index}>
+
+              {userRoles.indexOf(item.roleName) > -1 && !item.isAccordion && (
                 <Card
                   key={item.title}
                   className={classes.operationCard}
@@ -258,7 +265,7 @@ export default function Dashboard() {
                   </Accordion>
                 </Card>
               )}
-              {item.isAccordion && (
+              {userRoles.indexOf(item.roleName) > -1 && item.isAccordion && (
                 <Card className={classes.operationCard} key={item.title}>
                   <Accordion>
                     <AccordionSummary
@@ -293,12 +300,12 @@ export default function Dashboard() {
                             <Select
                               selectedValue={
                                 item.value === constants.operation.yardOperation
-                                  ? crane !== ""
+                                  ? (crane !== ""
                                     ? crane
-                                    : "none"
-                                  : locationCrane !== ""
+                                    : "none")
+                                  : (locationCrane !== ""
                                   ? locationCrane
-                                  : "none"
+                                  : "none")
                               }
                               handleChange={(value) =>
                                 handleCranselect(item.value, value)
@@ -325,7 +332,7 @@ export default function Dashboard() {
                   </Accordion>
                 </Card>
               )}
-            </>
+            </React.Fragment>
           ))}
       </div>
     </>

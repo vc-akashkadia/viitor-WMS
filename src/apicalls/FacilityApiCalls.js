@@ -1,6 +1,6 @@
 import { getUrl } from "../services/network/urls";
-import { get,post } from "../services/network/requests";
-import { FacilityList, selectFacility } from "../actions/actions";
+import { get, post } from "../services/network/requests";
+import { FacilityList, selectFacility,userRoles } from "../actions/actions";
 
 export const facilityListApiCall = (authToken, callback) => {
   let url = getUrl("facilityList");
@@ -21,39 +21,41 @@ export const facilityListApiCall = (authToken, callback) => {
       })
       .catch((err) => {
         console.log("error", err);
-      let response = {
-        status : false,
-        code : err.response.status
-      }
-      callback(response)
+        let response = {
+          status: false,
+          code: err.response.status,
+        };
+        callback(response);
       });
   };
 };
 
-export const selectedFacility = (facility,authToken,callback) => {
-  
-    let url = getUrl("facilityCheck");
-    let data = {
-      facility_id : facility
-    }
-    return (dispatch) => {
-      post(url, data, authToken)
-        .then((response) => {
-          callback(response);
-          dispatch(selectFacility(facility));
-        })
-        .catch((err) => {
-          console.log("error", err);
-          let responseNew = {
-            data: {
-              status: false,
-              // code: err.response.status,
-            },
-          };
-          callback(responseNew);
-        });
-    };
-  
-
-  
+export const selectedFacility = (facility, authToken, callback) => {
+  let url = getUrl("facilityCheck");
+  let querystring = `?facility_id=${facility}`;
+  url = url + querystring
+  return (dispatch) => {
+    get(url, authToken)
+      .then((response) => {
+        const {
+          data: { status, data },
+        } = response;
+        
+        dispatch(selectFacility(facility));
+        console.log(data)
+        dispatch(userRoles(data))
+        callback(response);
+      })
+      .catch((err) => {
+        console.log("error", err);
+        let responseNew = {
+          data: {
+            status: false,
+            // code: err.response.status,
+          },
+        };
+        dispatch(selectFacility(facility));
+        callback(responseNew);
+      });
+  };
 };

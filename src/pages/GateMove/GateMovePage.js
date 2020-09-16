@@ -298,7 +298,7 @@ export default function GateMovePage(props) {
     let data = {
       vehical: vehical,
       number: number,
-      facilityid: facility,
+      facility_id: facility,
     };
     if (gatetype === "Both") {
       data.operationtype = `Gate_${props.gateType}`.toUpperCase();
@@ -306,7 +306,6 @@ export default function GateMovePage(props) {
       data.operationtype = `Gate_${props.gateType}_${gatetype}`.toUpperCase();
     }
     setLoading(true);
-    
     dispatch(getContainerListApi(data, authToken, handleCallback));
   };
   const handleSearch = () => {
@@ -458,7 +457,7 @@ export default function GateMovePage(props) {
     }
     setLoading(true);
     let data = {
-      facilityid: facility,
+      facility_id: facility,
       operationtype : `Gate_${props.gateType}`.toUpperCase()
     };
     dispatch(getRefreshContainer(data, authToken, handleCallbackRefresh));

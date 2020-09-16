@@ -176,9 +176,9 @@ const accessValue = {
     icon: <GateInIcon style={{ width: "15px", marginLeft: "3px" }} />,
     startIcon: <GateInIcon style={{ width: "15px", marginLeft: "3px" }} />,
   },
-  ROLE_LOCATION: {
+  ROLE_LOCATION_UPDATE: {
     title: "Location Update",
-    roleName: "ROLE_LOCATION",
+    roleName: "ROLE_LOCATION_UPDATE",
     icon: <LocationOnOutlinedIcon style={{ width: "18px", marginLeft: "3px",color:"#5c5c5c"  }} />,
     startIcon: <LocationOnOutlinedIcon style={{ width: "18px", marginLeft: "3px",color:"#5c5c5c"  }} />,
   },
@@ -203,7 +203,7 @@ export default function EditModal(props) {
   );
   const [toaster, setToaster] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [active, setActive] = useState((user.isactive) ? user.isactive : true);
+  const [active, setActive] = useState((user.active) ? user.active : true);
   const [errors, setErrors] = useState({
     userName: "",
     facility: "",
@@ -255,7 +255,7 @@ export default function EditModal(props) {
     if (validateData) {
       let data = {
         username: userName,
-        facilityName: facility,
+        facility_id: facility,
         roleList: access.toString(),
         IsActive:active ? 1 : 0
       };
@@ -277,7 +277,7 @@ export default function EditModal(props) {
     if (status) {
       toasterOption = {
         varient: "success",
-        message: type === "add" ? constants.userAccess.addUser : constants.userAccess.editUser,
+        message: type === "add" ? constants.userAccess.success.addUser : constants.userAccess.success.editUser,
       };
     } else {
       toasterOption = {
@@ -307,6 +307,7 @@ export default function EditModal(props) {
     }
     setAccess(newAccess);
   };
+  
   return (
     <div>
       <Dialog
@@ -400,17 +401,18 @@ export default function EditModal(props) {
                       return null;
                     }
                     return (
-                      <React.Fragment key={roleIndex} style={{"&:last-child":{
-                        "divider":{
-                          display:"none"
-                        }
-                      }}}>
+                      <React.Fragment key={roleIndex} >
                         <ListItem
                           key={roleData.title}
                           role={undefined}
                           dense
                           button
                           className={classes.listItem}
+                          style={{"&:lastChild":{
+                            "divider":{
+                              display:"none"
+                            }
+                          }}}
                           // style={index !==0 ?{borderTop:"1px solid #ced4da"}:{}}
                           // onClick={handleToggle(value)}
                         >

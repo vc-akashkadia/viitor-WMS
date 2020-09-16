@@ -9,12 +9,12 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
 import Loader from "./Loader";
-import Toaster from "./Toaster"
+import Toaster from "./Toaster";
 import { GroundingContianerApiCall } from "../apicalls/YardApiCalls";
 import { LocationUpdatePost } from "../apicalls/ModuleAccessApiCalls";
-import  Divider  from "@material-ui/core/Divider";
-import useGlobalStyle from "@common-style"
-import {constants} from '@config/constant'
+import Divider from "@material-ui/core/Divider";
+import useGlobalStyle from "@common-style";
+import { constants } from "@config/constant";
 let toasterOption = {
   varient: "success",
   message: "",
@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: 12,
     // paddingLeft: 10,
     // paddingRight: 10,
-    padding:"5px 10px",
+    padding: "5px 10px",
     // paddingBottom: 2,
     margin: "auto",
   },
@@ -74,9 +74,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function GroundingContainers(props) {
-  const classes = {...useGlobalStyle(),...useStyles()};
-  const { open, setOpen, type, api, data, container } = props;
-  const [location, setLocation] = useState(container &&container.location);
+  const classes = { ...useGlobalStyle(), ...useStyles() };
+  const { open, setOpen, type, container } = props;
+  const [location, setLocation] = useState(container && container.location);
   const [error, setError] = useState("");
   const [toaster, setToaster] = useState(false);
   const dispatch = useDispatch();
@@ -109,7 +109,7 @@ export default function GroundingContainers(props) {
           containerNumber: container.containerNumber,
           locationNumber: location,
           craneNumber: locationCrane,
-          facilityId:facility
+          facility_id: facility,
         };
         setLoading(true);
         dispatch(LocationUpdatePost(data, authToken, handleCallback));
@@ -121,10 +121,10 @@ export default function GroundingContainers(props) {
           locationNumber: location,
           craneNumber: yardCrane,
           truckNumber: container.truckNumber,
-          facilityId:facility
+          facility_id: facility,
         };
         setLoading(true);
-        
+
         // setTimeout(() => {
         //   handleCallback({});
         // }, 1000);
@@ -134,14 +134,16 @@ export default function GroundingContainers(props) {
   };
 
   const handleCallback = (response) => {
-    
     const {
       data: { status },
     } = response;
     if (status) {
       toasterOption = {
         varient: "success",
-        message: type=== "location" ? constants.yardOperation.locationSucess : constants.yardOperation.groundsuccess
+        message:
+          type === "location"
+            ? constants.yardOperation.locationSucess
+            : constants.yardOperation.groundsuccess,
       };
       setToaster(true);
       setTimeout(() => {
@@ -151,7 +153,7 @@ export default function GroundingContainers(props) {
     } else {
       toasterOption = {
         varient: "error",
-        message: constants.apiError.error
+        message: constants.apiError.error,
       };
       setToaster(true);
       setTimeout(() => {
@@ -159,8 +161,6 @@ export default function GroundingContainers(props) {
         setOpen(true);
       }, 1000);
     }
-    
-
   };
 
   return (
@@ -180,7 +180,10 @@ export default function GroundingContainers(props) {
         <Divider className={classes.dividerStyle} />
         <DialogContent className={classes.content}>
           <Typography className={classes.innerContent}>
-            Cont#: <span style={{ color:"#1f1f21",textAlign:"right" }}>{container && container.containerNumber}</span>{" "}
+            Cont#:{" "}
+            <span style={{ color: "#1f1f21", textAlign: "right" }}>
+              {container && container.containerNumber}
+            </span>{" "}
           </Typography>
           {type !== "location" && (
             <Typography className={classes.innerContent}>
@@ -188,15 +191,23 @@ export default function GroundingContainers(props) {
             </Typography>
           )}
           <Typography className={classes.innerContent}>
-            Location: <span style={{ color: "#1f1f21",textAlign:"right" }}>{container && container.location}</span>{" "}
+            Location:{" "}
+            <span style={{ color: "#1f1f21", textAlign: "right" }}>
+              {container && container.location}
+            </span>{" "}
           </Typography>
           <Typography className={classes.innerContent}>
-            Crane: <span style={{ color:"#1f1f21",textAlign:"right" }}>{type === 'location' ? locationCrane : yardCrane}</span>{" "}
+            Crane:{" "}
+            <span style={{ color: "#1f1f21", textAlign: "right" }}>
+              {type === "location" ? locationCrane : yardCrane}
+            </span>{" "}
           </Typography>
         </DialogContent>
         <form onSubmit={handleSubmit}>
           <DialogContent className={classes.content2}>
-            <Typography className={classes.innerContent}>New Location</Typography>
+            <Typography className={classes.innerContent}>
+              New Location
+            </Typography>
             <TextField
               error={error !== ""}
               id="newLocation"
@@ -204,7 +215,7 @@ export default function GroundingContainers(props) {
               variant="outlined"
               placeholder="Enter New Location"
               style={{ width: "100%", marginTop: "-6px" }}
-              value={(location !== null ) ? location : ''}
+              value={location !== null ? location : ""}
               onChange={handleChange}
               InputProps={{
                 classes: {
@@ -240,7 +251,7 @@ export default function GroundingContainers(props) {
           )}
         </form>
       </Dialog>
-      <Toaster 
+      <Toaster
         open={toaster}
         handleClose={setToaster}
         option={toasterOption.varient}

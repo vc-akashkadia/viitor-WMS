@@ -83,3 +83,9 @@ export const userRoleList = (data) => ({
   type: actionTypes.GET_USER_ROLE_LIST,
   data: data,
 });
+
+
+export const userRoles = (data) => ({
+  type: actionTypes.USER_ROLE,
+  data: data,
+});

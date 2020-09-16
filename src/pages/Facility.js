@@ -144,6 +144,7 @@ export default function Facility() {
   );
   const [errors, setErrors] = useState("");
   const authToken = useSelector(({ auth }) => auth.authToken);
+  const user = useSelector(({ auth }) => auth.user);
   let facilityList = useSelector(({ base }) => base.facilityList);
   const dispatch = useDispatch();
   const history = useHistory();
@@ -160,28 +161,29 @@ export default function Facility() {
       setLoading(false);
     }
 
-    //dispatch(LoginApi(data,remember_me, handleCallback));
+    
   };
   const handleCallback = (response) => {
     const {data : {status}} =response
-    //if(status){
+    if(status){
       history.push("/operations");
-    // }else{
-    //   toasterOption = {
-    //     option: "error",
-    //     message: 'Wrong Facility Selected',
-    //   };
-    //   setAlert(true);
-      
-    // }
-    setLoading(false);
+     }else{
+      toasterOption = {
+        option: "error",
+        message: 'Wrong Facility Selected',
+      };
+      setAlert(true);
+      setLoading(false);
+    }
+   
     
   }
-  useEffect(() => {
+  const getFacilityApi = () => {
     if (facilityList.length === 0) {
       dispatch(facilityListApiCall(authToken, handleCallbackFacilityList));
     }
-  },[]);
+  }
+  useEffect(getFacilityApi,[]);
   const handleCallbackFacilityList = (response) => {
     const {
       data: { status },
@@ -200,7 +202,7 @@ export default function Facility() {
 
   return (
     <>
-      <Header />
+      <Header isAdmin={user.isAdmin}/>
       <br />
       <br />
       <br />

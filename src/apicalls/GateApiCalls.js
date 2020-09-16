@@ -42,7 +42,7 @@ export const DamageCodeListApi = (authToken, callback) => {
 
 export const getContainerListApi = (data, authToken, callback) => {
   let url = getUrl("gatemovecontainer");
-  let querystring = `?facilityid=${data.facilityid}`;
+  let querystring = `?facility_id=${data.facility_id}`;
   if (data.operationtype !== undefined) {
     querystring = querystring + `&operationtype=${data.operationtype}`;
   }
@@ -135,7 +135,7 @@ export const LocationSlipApi = (callData, authToken, callback) => {
 };
 export const EIRPrintApi = (callData, authToken, callback) => {
   let url = getUrl("EIRPrint");
-  let querystring = `?container_number=${callData.containerNumber}&operation_type=${callData.operationCode}&facility_id=${callData.facility}`;
+  let querystring = `?container_number=${callData.containerNumber}&operation_type=${callData.operationCode}&facility_id=${callData.facility_id}`;
   url = url + querystring;
   return (dispatch) => {
     get(url, authToken)
@@ -151,9 +151,8 @@ export const EIRPrintApi = (callData, authToken, callback) => {
       .catch((err) => {
         console.log("error", err);
         let response = {
-          data : { status: false,}
-           
-         };
+          data: { status: false },
+        };
         callback(response, callData.printType);
       });
   };
@@ -161,7 +160,7 @@ export const EIRPrintApi = (callData, authToken, callback) => {
 
 export const getRefreshContainer = (data, authToken, callback) => {
   let url = getUrl("refreshContainer");
-  let querystring = `?facilityid=${data.facilityid}`;
+  let querystring = `?facility_id=${data.facility_id}`;
   if (data.operationtype !== undefined) {
     querystring = querystring + `&operationtype=${data.operationtype}`;
   }

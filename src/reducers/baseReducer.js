@@ -23,20 +23,7 @@ const initialstate = {
   containerListForLocation: [],
   locationSlip: {},
   userList: [],
-  userRoleList: [
-    {
-      roleName: "ROLE_YARD",
-    },
-    {
-      roleName: "ROLE_GATE",
-    },
-    {
-      roleName: "ROLE_ADMIN",
-    },
-    {
-      roleName: "ROLE_LOCATION",
-    },
-  ],
+  userRoleList: [],
 };
 const base = persistReducer(
   {

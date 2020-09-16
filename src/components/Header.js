@@ -3,7 +3,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import AppBar from "@material-ui/core/AppBar";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { Link, useHistory } from "react-router-dom";
-import { makeStyles, useTheme,withStyles } from "@material-ui/core/styles";
+import { makeStyles, useTheme, withStyles } from "@material-ui/core/styles";
 import brandLogo from "@assests/img/Dp-world.png";
 import IconButton from "@material-ui/core/IconButton";
 import AccountCircle from "@material-ui/icons/AccountCircle";
@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
     minWidth: "auto",
     paddingRight: 5,
     display: "block",
-    lineHeight: "12px"
+    lineHeight: "12px",
   },
   regular: {
     minHeight: "40px",
@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
     // necessary for content to be below app bar
     // ...theme.mixins.toolbar,
     justifyContent: "space-between",
-    minHeight: "auto"
+    minHeight: "auto",
   },
   logo: {
     display: "block",
@@ -55,7 +55,7 @@ const useStyles = makeStyles((theme) => ({
 const StyledMenu = withStyles({
   paper: {
     borderRadius: 0,
-    border: '1px solid #d3d4d5',
+    border: "1px solid #d3d4d5",
     boxShadow: "0px 3px 4px rgba(0,0,0,0.16)",
     "& ul": {
       padding: 0,
@@ -153,13 +153,17 @@ export default function Header() {
               color="primary"
               onClick={handleDrawer}
             >
-              <MenuIcon style={{color:"#5c5c5c"}}/>
+              <MenuIcon style={{ color: "#5c5c5c" }} />
             </IconButton>
             <Link to="/" className="brand-logo">
               <img src={brandLogo} alt="Logo" className={classes.logo} />
             </Link>
-            <IconButton aria-haspopup="true" onClick={handleClick} style={{marginLeft: "auto",padding:"12px 0"}}>
-              <AccountCircle style={{color:"#5c5c5c"}}/>
+            <IconButton
+              aria-haspopup="true"
+              onClick={handleClick}
+              style={{ marginLeft: "auto", padding: "12px 0" }}
+            >
+              <AccountCircle style={{ color: "#5c5c5c" }} />
             </IconButton>
           </Box>
           <StyledMenu
@@ -173,7 +177,7 @@ export default function Header() {
           >
             <StyledMenuItem onClick={() => history.push("/logout")}>
               <ListItemIcon className={classes.menuIcon}>
-                <ExitToAppIcon fontSize="small" style={{color:"#5c5c5c"}}/>
+                <ExitToAppIcon fontSize="small" style={{ color: "#5c5c5c" }} />
               </ListItemIcon>
               <ListItemText primary="Logout" />
             </StyledMenuItem>
@@ -190,23 +194,32 @@ export default function Header() {
         }}
       >
         <div className={classes.drawerHeader}>
-          <Typography style={{ textAlign: "center",color: "#120e5b", }}>WMS</Typography>
-          <IconButton onClick={handleDrawerClose} style={{paddingRight :0,marginRight: '-10px'}}>
+          <Typography style={{ textAlign: "center", color: "#120e5b" }}>
+            WMS
+          </Typography>
+          <IconButton
+            onClick={handleDrawerClose}
+            style={{ paddingRight: 0, marginRight: "-10px" }}
+          >
             {theme.direction === "ltr" ? (
-              <ChevronLeftIcon  style={{color:"#5c5c5c"}}/>
+              <ChevronLeftIcon style={{ color: "#5c5c5c" }} />
             ) : (
-              <ChevronRightIcon style={{color:"#5c5c5c"}} />
+              <ChevronRightIcon style={{ color: "#5c5c5c" }} />
             )}
           </IconButton>
         </div>
         <Divider />
-        <List style={{padding: 0}}>
+        <List style={{ padding: 0 }}>
           <ListItem button onClick={() => history.push("/user")}>
-            <ListItemIcon className={classes.menuIcon}>{<PersonIcon />}</ListItemIcon>
+            <ListItemIcon className={classes.menuIcon}>
+              {<PersonIcon />}
+            </ListItemIcon>
             <ListItemText primary={"User Access"} />
           </ListItem>
           <ListItem button onClick={handleLogout}>
-            <ListItemIcon className={classes.menuIcon}>{<ExitToAppIcon />}</ListItemIcon>
+            <ListItemIcon className={classes.menuIcon}>
+              {<ExitToAppIcon />}
+            </ListItemIcon>
             <ListItemText primary={"Logout"} />
           </ListItem>
         </List>

@@ -7,11 +7,11 @@ export const LoginApi = (userData, remember_me, callback) => {
   return (dispatch) => {
     post(url, userData, {})
       .then((response) => {
+        
         const {
           data: { status, data },
         } = response;
         if (status) {
-          callback(response);
           // dispatch(remember({remember_username : userData}));
           dispatch(
             login({
@@ -23,6 +23,7 @@ export const LoginApi = (userData, remember_me, callback) => {
             })
           );
         }
+        callback(response);
       })
       .catch((err) => {
         console.log("error", err);

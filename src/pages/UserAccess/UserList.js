@@ -16,6 +16,7 @@ import { getUserList } from "../../apicalls/ModuleAccessApiCalls";
 import Divider from "@material-ui/core/Divider";
 import useGlobalStyle from "@common-style"
 import Modal from "components/modal"
+import Loader from "components/Loader"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -107,15 +108,16 @@ export default function UserList(props) {
   const [data, setData] = useState();
   const [modalData,setModalData]=useState()
   const [type, setType] = useState();
-
+  const [loading, setLoading] = useState(false);
   const authToken = useSelector(({ auth }) => auth.authToken);
   let userList = useSelector(({ base }) => base.userList);
   const dispatch = useDispatch();
   const getUserListApi = () => {
+    setLoading(true)
     let data = {};
     dispatch(getUserList(data, authToken, handleCallbackUserList));
   };
-  useEffect(() => getUserListApi(), []);
+  useEffect(getUserListApi, []);
 
   const handleGModal = (type, user) => {
     setGModal(true);
@@ -128,7 +130,9 @@ export default function UserList(props) {
     setData(item)
   };
 
-  const handleCallbackUserList = (response) => {};
+  const handleCallbackUserList = (response) => {
+    setLoading(false)
+  };
 
   const handleCloseModal = (status) => {
     setGModal(false);
@@ -145,35 +149,7 @@ export default function UserList(props) {
         title={"User Access"}
         backPath={"/facility"}
       />
-      {/* {open && (
-        <Card className={classes.filterSearch}>
-          <Grid container spacing={1} alignItems="center">
-            <Grid item xs={6}>
-              <Typography className={classes.searchTitle}>
-                Search Here
-              </Typography>
-            </Grid>
-            <Grid item xs={8}>
-              <TextField
-                className={classes.searchInput}
-                id="outlined-basic"
-                placeholder="Enter No."
-                label=""
-                variant="outlined"
-              />
-            </Grid>
-            <Grid item xs={4}>
-              <Button
-                variant="contained"
-                color="primary"
-                className={classes.searchBtn}
-              >
-                Search
-              </Button>
-            </Grid>
-          </Grid>
-        </Card>
-      )} */}
+      
       <div
         className={classes.yardMain}
         style={open ? { marginTop: "82px" } : { marginTop: "0px" }}
@@ -188,11 +164,12 @@ export default function UserList(props) {
           />
         </div>
         <Divider style={{ marginBottom: "7px" }} />
+        {loading && <Loader />}
         {userList &&
           userList.map((user, index) => (
             <Card
               key={index}
-              className={classes.yardCard}
+              className={classes.yardCard }
               style={{
                 border: "1px solid #929eaa",
                margin:"3px"

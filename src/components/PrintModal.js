@@ -137,7 +137,7 @@ export default function AlertDialog(props) {
       let data = {
         containerNumber: container.containerNumber,
         operationCode: container.operationCode,
-        facility: facility,
+        facility_id: facility,
         printType:printType
       };
       dispatch(EIRPrintApi(data, authToken, handleCallback));

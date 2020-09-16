@@ -1,9 +1,15 @@
 import { getUrl } from "../services/network/urls";
 import { post, get } from "../services/network/requests";
-import { yardCraneList, selectYardCrane,blockList,YardContainerList,selectLocationcrane } from "../actions/actions";
+import {
+  yardCraneList,
+  selectYardCrane,
+  blockList,
+  YardContainerList,
+  selectLocationcrane,
+} from "../actions/actions";
 
 export const GetYardCraneList = (facility, authToken, callback) => {
-  let url = getUrl("craneList") + facility;
+  let url = getUrl("craneList") + `?facility_id=${facility}`;
   return (dispatch) => {
     get(url, authToken).then((response) => {
       const {
@@ -22,19 +28,19 @@ export const GetYardCraneList = (facility, authToken, callback) => {
 };
 
 export const selectYardCraneApi = (yardCrane) => {
-    return (dispatch) => {
-        dispatch(selectYardCrane(yardCrane));
-      };
-}
+  return (dispatch) => {
+    dispatch(selectYardCrane(yardCrane));
+  };
+};
 
 export const selectLocationCraneApi = (yardCrane) => {
-    return (dispatch) => {
-        dispatch(selectLocationcrane(yardCrane));
-      };
-}
+  return (dispatch) => {
+    dispatch(selectLocationcrane(yardCrane));
+  };
+};
 
-export const getBlockListApiCall = (facility,authToken,callback) => {
-  let url = getUrl("yardBlockList") + facility;
+export const getBlockListApiCall = (facility, authToken, callback) => {
+  let url = getUrl("yardBlockList") + `?facility_id=${facility}`;
   return (dispatch) => {
     get(url, authToken).then((response) => {
       const {
@@ -50,17 +56,17 @@ export const getBlockListApiCall = (facility,authToken,callback) => {
       callback(response);
     });
   };
-}
+};
 
 export const getYardOperationApiCall = (data, authToken, callback) => {
   let url = getUrl("yardContainerList");
-  let querystring = `?facilityId=${data.facilityId}`;
-  if (data.gatetype !== "" &&  data.gatetype !== undefined) {
+  let querystring = `?facility_id=${data.facility_id}`;
+  if (data.gatetype !== "" && data.gatetype !== undefined) {
     querystring = querystring + `&containerStatus=${data.gatetype}`;
-  }else{
+  } else {
     querystring = querystring + `&containerStatus=ALL`;
   }
-  
+
   if (data.blockNumber !== "" && data.blockNumber !== undefined) {
     querystring = querystring + `&blockNumber=${data.blockNumber}`;
   }
@@ -83,34 +89,29 @@ export const getYardOperationApiCall = (data, authToken, callback) => {
       callback(response);
     });
   };
-}
-
+};
 
 export const AddPickUpApiCall = (data, authToken, callback) => {
-  
   let url = getUrl("pickupConfirm");
   return (dispatch) => {
-    post(url,data, authToken).then((response) => {
+    post(url, data, authToken).then((response) => {
       callback(response);
     });
   };
-}
-
-
+};
 
 export const GroundingContianerApiCall = (data, authToken, callback) => {
-  
   let url = getUrl("groundingAddapi");
   return (dispatch) => {
-    post(url,data, authToken).then((response) => {
+    post(url, data, authToken).then((response) => {
       callback(response);
     });
   };
-}
+};
 
 export const getRefreshYardContainer = (data, authToken, callback) => {
-  let url = getUrl("refreshContainer");
-  let querystring = `?facilityid=${data.facilityid}`;
+  let url = getUrl("refreshYardContainer");
+  let querystring = `?facility_id=${data.facility_id}`;
   if (data.operationtype !== undefined) {
     querystring = querystring + `&operationtype=${data.operationtype}`;
   }
@@ -119,9 +120,6 @@ export const getRefreshYardContainer = (data, authToken, callback) => {
   return (dispatch) => {
     get(url, authToken)
       .then((response) => {
-        const {
-          data: { status, data },
-        } = response;
         callback(response);
       })
       .catch((err) => {
@@ -136,5 +134,3 @@ export const getRefreshYardContainer = (data, authToken, callback) => {
       });
   };
 };
-
-

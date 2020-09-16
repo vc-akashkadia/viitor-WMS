@@ -39,7 +39,7 @@ export default function LocationPrint(props) {
               <td className="price">{data.reqestNumber}</td>
             </tr>
             <tr>
-              <td className="description">Terminal ID:</td>
+              <td className="description">Facility Code:</td>
               <td className="price">{data.facilityName}</td>
             </tr>
             <tr>
