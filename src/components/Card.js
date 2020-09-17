@@ -10,7 +10,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import InputBase from "@material-ui/core/InputBase";
 import ContainerIcon from "@assests/img/container.svg";
 import LocalShippingOutlinedIcon from "@material-ui/icons/LocalShippingOutlined";
-import LocationOnOutlinedIcon from '@material-ui/icons/LocationOnOutlined';
+import LocationOnOutlinedIcon from "@material-ui/icons/LocationOnOutlined";
 
 const BootstrapInput = withStyles((theme) => ({
   root: {
@@ -24,7 +24,7 @@ const BootstrapInput = withStyles((theme) => ({
     backgroundColor: "#f6f6f6",
     border: "none",
     fontSize: 14,
-    color:"#1f1f21",
+    color: "#1f1f21",
     fontWeight: 500,
     padding: "0px 26px 0px 7px",
     transition: theme.transitions.create(["border-color", "box-shadow"]),
@@ -77,19 +77,19 @@ const useStyles = makeStyles({
     "& > *": {
       margin: "2px 1px",
     },
-    "@media (min-width:400px)":{
+    "@media (min-width:400px)": {
       flexWrap: "nowrap",
       "& > *": {
         margin: "2px 2px",
       },
-    }
+    },
   },
-  chip:{
-    height:26,
+  chip: {
+    height: 26,
     color: "#000000",
-    "@media (min-width:400px)":{
-      height: 52
-    }
+    "@media (min-width:400px)": {
+      height: 52,
+    },
   },
   confirmBtn: {
     minWidth: 37,
@@ -160,7 +160,7 @@ export default function CardGrid(props) {
             " " +
             (item.gateOperationCompleted ? classes.damageCode : "")
           }
-          style={{ border: "1px solid #929eaa",margin:"3px" }}
+          style={{ border: "1px solid #929eaa", margin: "3px" }}
         >
           <Box
             display="flex"
@@ -176,9 +176,11 @@ export default function CardGrid(props) {
               /> */}
               <div style={{ position: "relative" }}>
                 <Chip
-                  label={(item.truckNumber !== null) ? item.truckNumber.substring(
-                    item.truckNumber.length - 4
-                  ) : '' }
+                  label={
+                    item.truckNumber !== null && item.truckNumber !== undefined
+                      ? item.truckNumber.substring(item.truckNumber.length - 4)
+                      : ""
+                  }
                   size="medium"
                   style={{ width: 78 }}
                   onClick={() => handleOpenModal("truck", item.truckNumber)}
@@ -193,16 +195,20 @@ export default function CardGrid(props) {
                     top: "-10px",
                     left: "4px",
                     width: 15,
-                    color:"#0000004d"
+                    color: "#0000004d",
                     // backgroundColor: "#ffffff"
                   }}
                 />
               </div>
               <div style={{ position: "relative" }}>
                 <Chip
-                  label={(item.containerNumber !== null) ? item.containerNumber.substring(
-                    item.containerNumber.length - 4
-                  ) : '' }
+                  label={
+                    item.containerNumber !== null
+                      ? item.containerNumber.substring(
+                          item.containerNumber.length - 4
+                        )
+                      : ""
+                  }
                   onClick={() =>
                     handleOpenModal("container", item.containerNumber)
                   }
@@ -222,23 +228,21 @@ export default function CardGrid(props) {
                 ></img>
               </div>
               <div style={{ position: "relative" }}>
-              <Chip
-                label={item.location}
-                style={{ width: "160px"}}
-                onClick={() =>
-                  handleOpenModal("location", item.location)
-                }
-                className={classes.chip}
-              />
-              <LocationOnOutlinedIcon
-                style={{
-                  position: "absolute",
-                  top: "-10.5px",
-                  left: "4px",
-                  width: 15,
-                  color:"#0000004d"
-                }}
-                  />
+                <Chip
+                  label={item.location}
+                  style={{ width: "160px" }}
+                  onClick={() => handleOpenModal("location", item.location)}
+                  className={classes.chip}
+                />
+                <LocationOnOutlinedIcon
+                  style={{
+                    position: "absolute",
+                    top: "-10.5px",
+                    left: "4px",
+                    width: 15,
+                    color: "#0000004d",
+                  }}
+                />
               </div>
             </Box>
             <Box display="flex">
@@ -260,9 +264,7 @@ export default function CardGrid(props) {
                   D
                 </Button>
               ) : (
-                <label>
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                </label>
+                <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
               )}
               {children}
             </Box>
@@ -277,7 +279,7 @@ export default function CardGrid(props) {
             justifyContent="space-between"
           >
             <Box className={classes.chipMain}>
-              <Chip label="Code" style={{ width: "57px",color: "#000000" }} />
+              <Chip label="Code" style={{ width: "57px", color: "#000000" }} />
               {/* <Select
                   selectedValue={item.damageCode}
                   handleChange={(value) => {
@@ -314,7 +316,11 @@ export default function CardGrid(props) {
 
               <Chip
                 label={item.description}
-                style={{ width: "203px", justifyContent: "left",color: "#000000" }}
+                style={{
+                  width: "203px",
+                  justifyContent: "left",
+                  color: "#000000",
+                }}
               />
             </Box>
             <Box

@@ -21,16 +21,13 @@ let toasterOption = {
 };
 
 const useStyles = makeStyles((theme) => ({
-  title: {
-    color: "#0c79c1",
-    textTransform: "uppercase",
-    paddingTop: 12,
-    // paddingLeft: 10,
-    // paddingRight: 10,
-    padding: "5px 10px",
-    // paddingBottom: 2,
-    margin: "auto",
-  },
+  // title: {
+  //   color: "#0c79c1",
+  //   textTransform: "uppercase",
+  //   paddingTop: 12,
+  //   padding: "5px 10px",
+  //   margin: "auto",
+  // },
   content: {
     fontFamily: "Roboto",
     paddingLeft: 10,
@@ -76,7 +73,7 @@ const useStyles = makeStyles((theme) => ({
 export default function GroundingContainers(props) {
   const classes = { ...useGlobalStyle(), ...useStyles() };
   const { open, setOpen, type, container } = props;
-  const [location, setLocation] = useState(container && container.location);
+  const [location, setLocation] = useState(container && container.locationBarcode);
   const [error, setError] = useState("");
   const [toaster, setToaster] = useState(false);
   const dispatch = useDispatch();
@@ -206,7 +203,7 @@ export default function GroundingContainers(props) {
         <form onSubmit={handleSubmit}>
           <DialogContent className={classes.content2}>
             <Typography className={classes.innerContent}>
-              New Location
+              New Location:
             </Typography>
             <TextField
               error={error !== ""}

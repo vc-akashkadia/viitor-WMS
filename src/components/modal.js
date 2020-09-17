@@ -20,14 +20,14 @@ import ListItemText from "@material-ui/core/ListItemText";
 import { ReactComponent as GateInIcon } from "@assests/img/gate-in-user.svg";
 import { ReactComponent as YardIcon } from "@assests/img/yard-operation-user.svg";
 import LocationOnOutlinedIcon from "@material-ui/icons/LocationOnOutlined";
-import SupervisorAccountIcon from "@material-ui/icons/SupervisorAccount";
+// import SupervisorAccountIcon from "@material-ui/icons/SupervisorAccount";
 import IconButton from "@material-ui/core/IconButton";
-import Typography from '@material-ui/core/Typography';
-import user from "@assests/img/user.svg";
+import Typography from "@material-ui/core/Typography";
+import { ReactComponent as User } from "@assests/img/user.svg";
 
 const useStyles = makeStyles((theme) => ({
   listItemText: {
-    marginLeft: "-13px",
+    marginLeft: "-15px",
   },
   listItem: {
     marginBottom: "0px",
@@ -37,19 +37,15 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: "0px",
     paddingBottom: "0px",
   },
-  title: {
-    fontSize: 16,
-    color: "#0c79c1",
-    fontWeight: 900,
-    fontFamily: "Roboto",
-    textTransform: "uppercase",
-    padding: "5px 10px",
-    // paddingTop: 12,
-    // paddingLeft: 10,
-    // paddingRight: 10,
-    // paddingBottom: 5,
-    margin: "auto",
-  },
+  // title: {
+  //   fontSize: 16,
+  //   color: "#0c79c1",
+  //   fontWeight: 900,
+  //   fontFamily: "Roboto",
+  //   textTransform: "uppercase",
+  //   padding: "5px 10px",
+  //   margin: "auto",
+  // },
   content: {
     color: "#5c5c5c",
     fontFamily: "Roboto",
@@ -110,15 +106,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "white",
     justifyContent: "center",
     alignItems: "center",
-    // fontSize:20
   },
-  // boxStyle: {
-  //   // width: "100%",
-  //   minWidth:"150px",
-  //   borderBottom: "1px solid #ced4da",
-  //   paddingLeft: "2px",
-  //   margin: "4px 0px 0px 0px",
-  // },
   actionbutton: {
     paddingBottom: 10,
     justifyContent: "center",
@@ -145,10 +133,59 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+// const access = {
+//   ROLE_YARD: "Yard",
+//   ROLE_GATE: "Gate",
+//   ROLE_ADMIN: "Admin",
+//   ROLE_LOCATION_UPDATE: "Location Update",
+// };
 const access = {
-  ROLE_YARD: "Yard",
-  ROLE_GATE: "Gate",
-  ROLE_ADMIN: "Admin",
+  ROLE_YARD: {
+    title: "Yard Operation",
+    roleName: "ROLE_YARD",
+    icon: <YardIcon />,
+    startIcon: <YardIcon style={{ width: "25px" }} />,
+  },
+  ROLE_GATE: {
+    title: "Gate Operation",
+    roleName: "ROLE_GATE",
+    icon: <GateInIcon style={{ width: "25px", marginLeft: "3px" }} />,
+    startIcon: <GateInIcon style={{ width: "25px", marginLeft: "3px" }} />,
+  },
+  ROLE_LOCATION_UPDATE: {
+    title: "Location Update",
+    roleName: "ROLE_LOCATION_UPDATE",
+    icon: (
+      <LocationOnOutlinedIcon
+        fontSize="large"
+        style={{ width: "26px", marginLeft: "3px" }}
+      />
+    ),
+    startIcon: (
+      <LocationOnOutlinedIcon
+        fontSize="large"
+        style={{ width: "26px", marginLeft: "3px" }}
+      />
+    ),
+  },
+  ROLE_ADMIN: {
+    title: "Admin",
+    roleName: "ROLE_ADMIN",
+    icon: (
+      <User style={{ width: "18px", marginLeft: "3px", color: "#5c5c5c" }} />
+    ),
+    startIcon: (
+      <User
+        style={{
+          width: "21px",
+          marginLeft: "5px",
+          color: "#5c5c5c",
+          minHeight: "28px",
+        }}
+      />
+    ),
+  },
+  // "ROLE_ADMIN" : "Admin"
 };
 
 export default function AlertDialog(props) {
@@ -157,7 +194,6 @@ export default function AlertDialog(props) {
   const handleClose = (status = false) => {
     setOpen(status);
   };
-  console.log("data", data);
 
   return (
     <div>
@@ -301,6 +337,7 @@ export default function AlertDialog(props) {
       {modalData === "user" && (
         <Dialog
           open={open}
+          fullScreen
           onClose={() => handleClose(false)}
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
@@ -308,93 +345,75 @@ export default function AlertDialog(props) {
           <DialogTitle id="alert-dialog-title" className={classes.title}>
             User Access
           </DialogTitle>
-          <Divider className={classes.dividerStyle} />
-          <DialogContent style={{padding:"3px 2px",}}>
-            <div style={{minWidth:"190px",backgroundColor: "#f6f6f6"}}>
-              {/* <InputLabel
-                shrink
-                htmlFor="bootstrap-input"
-                className={classes.label}
-                style={{  transform: "translateX(0)",
-                  display: "inline-block",
-                  lineHeight: "24px"
-                }}
-              > */}
-              {/* </InputLabel> */}
+          <Divider style={{ marginTop: "-5px" }} />
+          <DialogContent style={{ padding: "0px" }}>
+            <div style={{ minWidth: "205px", backgroundColor: "#f6f6f6" }}>
               {data &&
-                data.map((role, key) => (
-                  
-                  <List style={{ paddingTop: "0px", paddingBottom: "0px", }}>
-                    <React.Fragment
-                      key={key}
-                      style={{
-                        "&:last-child": {
-                          divider: {
-                            display: "none",
-                          },
-                        },
-                      }}
-                    >
-                      <ListItem
+                data.map((role, key) => {
+                  let roleData = access[role.roleName];
+                  if (roleData === undefined) {
+                    return null;
+                  }
+                  return (
+                    <List style={{ paddingTop: "0px", paddingBottom: "0px" }}>
+                      <React.Fragment
                         key={key}
-                        role={undefined}
-                        dense
-                        button
-                        className={classes.listItem}
-                        // style={index !==0 ?{borderTop:"1px solid #ced4da"}:{}}
-                        // onClick={handleToggle(value)}
+                        style={{
+                          "&:last-child": {
+                            divider: {
+                              display: "none",
+                            },
+                          },
+                        }}
                       >
-                        <ListItemIcon style={{ paddingLeft: "2px" }}>
-                          <IconButton edge="start" aria-label="comments">
-                            {/* {d.startIcon} */}
-                            {access[role.roleName] === "Admin" ? (
-                              <img src={user}
-                              // fontSize="large"
-                                alt="user"
+                        <ListItem
+                          key={key}
+                          role={undefined}
+                          dense
+                          button
+                          className={classes.listItem}
+                          style={{ paddingRight: "7px" }}
+                        >
+                          <ListItemIcon style={{ paddingLeft: "2px" }}>
+                            <IconButton edge="start" aria-label="comments">
+                              {roleData.startIcon}
+                            </IconButton>
+                          </ListItemIcon>
+                          <ListItemText
+                            primary={
+                              <Typography
                                 style={{
-                                  width: "23px",
-                                  marginLeft: "5px",
-                                  color: "#5c5c5c",
-                                  minHeight: "28px"
+                                  fontSize: "20px",
+                                  fontWeight: "900",
+                                  color: "#1f1f21",
                                 }}
-                              />
-                            ) : access[role.roleName] === "Yard" ? (
-                              <YardIcon style={{ width: "25px" }} />
-                            ) : access[role.roleName] === "Gate" ? (
-                              <GateInIcon
-                                style={{ width: "28px", marginLeft: "3px" }}
-                              />
-                            ) : (
-                              <LocationOnOutlinedIcon
-                              fontSize="large"
-                                style={{
-                                  width: "25px",
-                                  marginLeft: "3px",
-                                  // color: "#5c5c5c",
-                                }}
-                              />
-                            )}
-                          </IconButton>
-                        </ListItemIcon>
-                        <ListItemText
-                          primary={<Typography style={{fontSize:"20px",fontWeight:"900",lineHeight:"0px",color:"#1f1f21"}}>{
-                            access[role.roleName]
-                            }</Typography> }
-                          className={classes.listItemText}
-                          style={{ color: "#1f1f21" }}
+                              >
+                                {
+                                  // access[role.roleName]
+                                  roleData.title
+                                }
+                              </Typography>
+                            }
+                            className={classes.listItemText}
+                            style={{
+                              color: "#1f1f21",
+                              width: "80%",
+                              wordBreak: "break-all",
+                              display: "inline-flex",
+                            }}
+                          />
+                        </ListItem>
+                        <Divider
+                          className={classes.divider}
+                          style={{
+                            marginLeft: "-1px",
+                            height: "0.5px",
+                          }}
                         />
-                      </ListItem>
-                    <Divider
-                      className={classes.divider}
-                      style={{
-                        // backgroundColor: "black",
-                        marginLeft: "-1px",
-                        height: "0.5px",
-                      }}
-                    />
-                    </React.Fragment>
-                  </List>
-                ))}
+                      </React.Fragment>
+                    </List>
+                  );
+                })}
             </div>
           </DialogContent>
           <DialogActions className={classes.actionbutton}>

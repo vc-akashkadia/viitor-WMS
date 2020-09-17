@@ -1,6 +1,7 @@
 import { getUrl } from "../services/network/urls";
-import { get, post } from "../services/network/requests";
+import { get } from "../services/network/requests";
 import { FacilityList, selectFacility,userRoles } from "../actions/actions";
+import { logout } from "../actions/authActions";
 
 export const facilityListApiCall = (authToken, callback) => {
   let url = getUrl("facilityList");
@@ -23,8 +24,16 @@ export const facilityListApiCall = (authToken, callback) => {
         console.log("error", err);
         let response = {
           status: false,
-          code: err.response.status,
+          code: err.response !== undefined ? err.response.status : "OK",
         };
+        if(err.response !== undefined){
+          const {
+            data: { code },
+          } = err.response;
+          if(code === 'UNAUTHORIZED'){
+            dispatch(logout());
+          }
+        }
         callback(response);
       });
   };
@@ -38,22 +47,40 @@ export const selectedFacility = (facility, authToken, callback) => {
     get(url, authToken)
       .then((response) => {
         const {
-          data: { status, data },
+          data: { code,status, data },
         } = response;
-        
-        dispatch(selectFacility(facility));
+        console.log(code)
+        console.log(status)
         console.log(data)
-        dispatch(userRoles(data))
-        callback(response);
+        if(status){
+          dispatch(selectFacility(facility));
+          dispatch(userRoles(data))
+          callback(response);
+        }else{
+          if(code === 'UNAUTHORIZED'){
+            dispatch(logout());
+          }else{
+            callback(response);
+          }
+        }
+        
       })
       .catch((err) => {
-        console.log("error", err);
+        console.log("error", err.response);
         let responseNew = {
           data: {
             status: false,
             // code: err.response.status,
           },
         };
+        if(err.response !== undefined){
+          const {
+            data: { code },
+          } = err.response;
+          if(code === 'UNAUTHORIZED'){
+            dispatch(logout());
+          }
+        }
         dispatch(selectFacility(facility));
         callback(responseNew);
       });

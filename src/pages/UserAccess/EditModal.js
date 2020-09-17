@@ -18,8 +18,8 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import { ReactComponent as GateInIcon } from "@assests/img/gate-in-user.svg";
 import { ReactComponent as YardIcon } from "@assests/img/yard-operation-user.svg";
-import LocationOnOutlinedIcon from '@material-ui/icons/LocationOnOutlined';
-import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
+import LocationOnOutlinedIcon from "@material-ui/icons/LocationOnOutlined";
+import SupervisorAccountIcon from "@material-ui/icons/SupervisorAccount";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import IconButton from "@material-ui/core/IconButton";
 import FormHelperText from "@material-ui/core/FormHelperText";
@@ -31,8 +31,8 @@ import {
 import Select from "../../components/Select";
 import Toaster from "../../components/Toaster";
 import Loader from "../../components/Loader";
-import useGlobalStyle from "@common-style"
-import {constants} from '@config/constant'
+import useGlobalStyle from "@common-style";
+import { constants } from "@config/constant";
 const GreenCheckbox = withStyles({
   root: {
     "&$checked": {
@@ -55,7 +55,7 @@ const BootstrapInput = withStyles((theme) => ({
     border: "1px solid #ced4da",
     fontSize: 14,
     fontWeight: 500,
-    color:"#1f1f21",
+    color: "#1f1f21",
     padding: "0px 26px 0px 7px",
     transition: theme.transitions.create(["border-color", "box-shadow"]),
     width: "100%",
@@ -67,29 +67,28 @@ const BootstrapInput = withStyles((theme) => ({
     textOverflow: "ellipsis",
     display: "inline-block",
     lineHeight: "26px",
-    // Use the system font instead of the default Roboto font.
     fontFamily: ["Roboto"].join(","),
     "&:focus": {
       borderRadius: 3,
       borderColor: "#80bdff",
-      // boxShadow: "0 0 0 0.2rem rgba(0,123,255,.25)",
     },
   },
 }))(InputBase);
 
 const useStyles = makeStyles((theme) => ({
-  title: {
-    fontSize: 16,
-    color: "#0c79c1",
-    fontWeight: 900,
-    fontFamily: "Roboto",
-    textTransform: "uppercase",
-    paddingTop: 12,
-    paddingLeft: 10,
-    paddingRight: 10,
-    paddingBottom: 5,
-    margin: "auto",
-  },
+  // title: {
+  //   fontSize: 16,
+  //   color: "#0c79c1",
+  //   fontWeight: 900,
+  //   fontFamily: "Roboto",
+  //   textTransform: "uppercase",
+  //   padding: "5px 10px",
+  //   // paddingTop: 12,
+  //   // paddingLeft: 10,
+  //   // paddingRight: 10,
+  //   // paddingBottom: 5,
+  //   margin: "auto",
+  // },
   content: {
     fontFamily: "Roboto",
     paddingLeft: 23,
@@ -143,7 +142,7 @@ const useStyles = makeStyles((theme) => ({
   },
   listItem: {
     marginBottom: "-7px",
-    marginTop:"-5px",
+    marginTop: "-5px",
     paddingLeft: "0px",
     paddingRight: "16px",
     paddingTop: "0px",
@@ -162,7 +161,7 @@ const useStyles = makeStyles((theme) => ({
 let toasterOption = {
   varient: "success",
   message: "",
-};  
+};
 const accessValue = {
   ROLE_YARD: {
     title: "Yard Operation",
@@ -179,20 +178,36 @@ const accessValue = {
   ROLE_LOCATION_UPDATE: {
     title: "Location Update",
     roleName: "ROLE_LOCATION_UPDATE",
-    icon: <LocationOnOutlinedIcon style={{ width: "18px", marginLeft: "3px",color:"#5c5c5c"  }} />,
-    startIcon: <LocationOnOutlinedIcon style={{ width: "18px", marginLeft: "3px",color:"#5c5c5c"  }} />,
+    icon: (
+      <LocationOnOutlinedIcon
+        style={{ width: "18px", marginLeft: "3px", color: "#5c5c5c" }}
+      />
+    ),
+    startIcon: (
+      <LocationOnOutlinedIcon
+        style={{ width: "18px", marginLeft: "3px", color: "#5c5c5c" }}
+      />
+    ),
   },
   ROLE_ADMIN: {
     title: "Admin",
     roleName: "ROLE_ADMIN",
-    icon: <SupervisorAccountIcon style={{ width: "18px", marginLeft: "3px", color:"#5c5c5c" }} />,
-    startIcon: <SupervisorAccountIcon style={{ width: "18px", marginLeft: "3px",color:"#5c5c5c"  }} />,
-  }
+    icon: (
+      <SupervisorAccountIcon
+        style={{ width: "18px", marginLeft: "3px", color: "#5c5c5c" }}
+      />
+    ),
+    startIcon: (
+      <SupervisorAccountIcon
+        style={{ width: "18px", marginLeft: "3px", color: "#5c5c5c" }}
+      />
+    ),
+  },
   // "ROLE_ADMIN" : "Admin"
 };
 
 export default function EditModal(props) {
-  const classes = {...useGlobalStyle(),...useStyles()};
+  const classes = { ...useGlobalStyle(), ...useStyles() };
   const { open, setOpen, type, user } = props;
   const [userName, setUserName] = useState(user.userName);
   const [facility, setFacility] = useState(user.facilityId);
@@ -203,7 +218,7 @@ export default function EditModal(props) {
   );
   const [toaster, setToaster] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [active, setActive] = useState((user.active) ? user.active : true);
+  const [active, setActive] = useState(user.active ? user.active : true);
   const [errors, setErrors] = useState({
     userName: "",
     facility: "",
@@ -244,7 +259,7 @@ export default function EditModal(props) {
       error.facility = constants.userAccess.error.facility;
       validate = false;
     }
-    if(access.length === 0){
+    if (access.length === 0) {
       errors.anyone = constants.userAccess.error.atleastOne;
     }
     setErrors(error);
@@ -257,7 +272,7 @@ export default function EditModal(props) {
         username: userName,
         facility_id: facility,
         roleList: access.toString(),
-        IsActive:active ? 1 : 0
+        IsActive: active ? 1 : 0,
       };
       if (type === "add") {
         setLoading(true);
@@ -277,7 +292,10 @@ export default function EditModal(props) {
     if (status) {
       toasterOption = {
         varient: "success",
-        message: type === "add" ? constants.userAccess.success.addUser : constants.userAccess.success.editUser,
+        message:
+          type === "add"
+            ? constants.userAccess.success.addUser
+            : constants.userAccess.success.editUser,
       };
     } else {
       toasterOption = {
@@ -307,7 +325,7 @@ export default function EditModal(props) {
     }
     setAccess(newAccess);
   };
-  
+
   return (
     <div>
       <Dialog
@@ -327,30 +345,36 @@ export default function EditModal(props) {
             <>
               <Typography className={classes.innerContent}>
                 User Name:
-                <span style={{ color:"#1f1f21", marginLeft: "2px" }}>
+                <span style={{ color: "#1f1f21", marginLeft: "2px" }}>
                   {user.userName}
                 </span>
               </Typography>
               <Typography className={classes.innerContent}>
                 Facility Code:
-                <span style={{ color:"#1f1f21", marginLeft: "2px" }}>
+                <span style={{ color: "#1f1f21", marginLeft: "2px" }}>
                   {user.facilityId}
                 </span>
               </Typography>
               <Typography className={classes.innerContentActive}>
-              Active:
-              <span style={{ color:"#1f1f21", marginLeft: "-8px", marginTop: "-12px"  }}>
-                {" "}
-                <GreenCheckbox
-                  edge="end"
-                  name={"isactive"}
-                  tabIndex={-1}
-                  onChange={(e) => setActive(e.target.checked)}
-                  checked={active}
-                  style={{paddingTop: 8,paddingBottom: 0}}
-                />
-              </span>
-            </Typography>
+                Active:
+                <span
+                  style={{
+                    color: "#1f1f21",
+                    marginLeft: "-8px",
+                    marginTop: "-12px",
+                  }}
+                >
+                  {" "}
+                  <GreenCheckbox
+                    edge="end"
+                    name={"isactive"}
+                    tabIndex={-1}
+                    onChange={(e) => setActive(e.target.checked)}
+                    checked={active}
+                    style={{ paddingTop: 8, paddingBottom: 0 }}
+                  />
+                </span>
+              </Typography>
             </>
           ) : (
             <>
@@ -389,7 +413,9 @@ export default function EditModal(props) {
           )}
           {/* Access user */}
           <form onSubmit={handleSubmit}>
-            <Typography style={{ fontWeight: "500", marginTop: "6px", color: "#777777" }}>
+            <Typography
+              style={{ fontWeight: "500", marginTop: "6px", color: "#777777" }}
+            >
               Access:
             </Typography>
             <div className={classes.boxStyle}>
@@ -401,20 +427,20 @@ export default function EditModal(props) {
                       return null;
                     }
                     return (
-                      <React.Fragment key={roleIndex} >
+                      <React.Fragment key={roleIndex}>
                         <ListItem
                           key={roleData.title}
                           role={undefined}
                           dense
                           button
                           className={classes.listItem}
-                          style={{"&:lastChild":{
-                            "divider":{
-                              display:"none"
-                            }
-                          }}}
-                          // style={index !==0 ?{borderTop:"1px solid #ced4da"}:{}}
-                          // onClick={handleToggle(value)}
+                          style={{
+                            "&:lastChild": {
+                              divider: {
+                                display: "none",
+                              },
+                            },
+                          }}
                         >
                           <ListItemIcon style={{ paddingLeft: "2px" }}>
                             <IconButton edge="start" aria-label="comments">
@@ -424,7 +450,7 @@ export default function EditModal(props) {
                           <ListItemText
                             primary={roleData.title}
                             className={classes.listItemText}
-                            style={{color:"#1f1f21"}}
+                            style={{ color: "#1f1f21" }}
                           />
                           <ListItemSecondaryAction>
                             <GreenCheckbox
@@ -438,7 +464,14 @@ export default function EditModal(props) {
                             />
                           </ListItemSecondaryAction>
                         </ListItem>
-                        <Divider className={classes.divider} style={{backgroundColor:"#ced4da",marginLeft:'-1px',height:"0.5px"}} />
+                        <Divider
+                          className={classes.divider}
+                          style={{
+                            backgroundColor: "#ced4da",
+                            marginLeft: "-1px",
+                            height: "0.5px",
+                          }}
+                        />
                       </React.Fragment>
                     );
                   })}

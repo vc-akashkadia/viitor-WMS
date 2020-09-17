@@ -150,6 +150,13 @@ const theme = createMuiTheme({
         fontSize: 16
       }
     },
+    MuiInput: {
+      formControl: {
+        "label + &": {
+          marginTop: "8px"
+        }
+      }
+    },
    // MuiOutlinedInput:{
     //   notchedOutline:{
     //     borderColor: '#f6f6f6'

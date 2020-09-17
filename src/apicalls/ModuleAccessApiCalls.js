@@ -5,7 +5,7 @@ import {
   userList,
   userRoleList,
 } from "../actions/actions";
-
+import {logout} from '../actions/authActions';
 export const AddRoleApi = (data, authtoken, callback) => {
   let url = getUrl("addUser");
   return (dispatch) => {
@@ -21,6 +21,14 @@ export const AddRoleApi = (data, authtoken, callback) => {
             // code: err.response.status,
           },
         };
+        if(err.response !== undefined){
+          const {
+            data: { code },
+          } = err.response;
+          if(code === 'UNAUTHORIZED'){
+            dispatch(logout());
+          }
+        }
         callback(responseNew);
       });
   };
@@ -41,6 +49,14 @@ export const EditRoleApi = (data, authtoken, callback) => {
             // code: err.response.status,
           },
         };
+        if(err.response !== undefined){
+          const {
+            data: { code },
+          } = err.response;
+          if(code === 'UNAUTHORIZED'){
+            dispatch(logout());
+          }
+        }
         callback(responseNew);
       });
   };
@@ -64,6 +80,14 @@ export const getUserList = (data, authToken, callback) => {
         let response = {
           data: { status: false },
         };
+        if(err.response !== undefined){
+          const {
+            data: { code },
+          } = err.response;
+          if(code === 'UNAUTHORIZED'){
+            dispatch(logout());
+          }
+        }
         callback(response);
       });
   };
@@ -89,7 +113,14 @@ export const getUserRoleList = (authToken, callback) => {
             // code: err.response.status,
           },
         };
-
+        if(err.response !== undefined){
+          const {
+            data: { code },
+          } = err.response;
+          if(code === 'UNAUTHORIZED'){
+            dispatch(logout());
+          }
+        }
         callback(responseNew);
       });
   };
@@ -119,13 +150,21 @@ export const getContainerListForLocationUpdate = (
       })
       .catch((err) => {
         console.log("error", err);
-        console.log("error", err.response);
+        // console.log("error", err.response);
         let responseNew = {
           data: {
             status: false,
             // code: err.response.status,
           },
         };
+        if(err.response !== undefined){
+          const {
+            data: { code },
+          } = err.response;
+          if(code === 'UNAUTHORIZED'){
+            dispatch(logout());
+          }
+        }
         callback(responseNew);
       });
   };
@@ -146,6 +185,14 @@ export const LocationUpdatePost = (data, authtoken, callback) => {
             // code: err.response.status,
           },
         };
+        if(err.response !== undefined){
+          const {
+            data: { code },
+          } = err.response;
+          if(code === 'UNAUTHORIZED'){
+            dispatch(logout());
+          }
+        }
         callback(responseNew);
       });
   };
@@ -172,6 +219,14 @@ export const getRefreshLocationUpdateContainer = (
             // code: err.response.status,
           },
         };
+        if(err.response !== undefined){
+          const {
+            data: { code },
+          } = err.response;
+          if(code === 'UNAUTHORIZED'){
+            dispatch(logout());
+          }
+        }
         callback(responseNew);
       });
   };

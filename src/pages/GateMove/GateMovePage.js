@@ -11,7 +11,7 @@ import FormControl from "@material-ui/core/FormControl";
 
 import InputBase from "@material-ui/core/InputBase";
 import TextField from "@material-ui/core/TextField";
-// import DamageModal from "../../components/DamageModal";
+
 import Modal from "../../components/modal";
 import PrintModal from "../../components/PrintModal";
 
@@ -283,7 +283,7 @@ export default function GateMovePage(props) {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gatetype]);
-
+  
   const getContainerList = () => {
     if (vehical !== "" && vehical !== "Criteria" && number === "") {
       alert(constants.vehicleNumber.error);
@@ -345,7 +345,7 @@ export default function GateMovePage(props) {
     } else {
       toasterOption = {
         varient: "error",
-        message: constants.apiError,
+        message: constants.apiError.error,
       };
       setToaster(true);
       setTimeout(() => {
@@ -476,7 +476,13 @@ export default function GateMovePage(props) {
     }
     
   }
- 
+
+  const handleClosePrintModal = (status) => {
+    setOpenPrintModal(false)
+    if(status){
+      getContainerList();
+    }
+  }
   return (
     <>
       <TitleHeader
@@ -643,7 +649,7 @@ export default function GateMovePage(props) {
       {openPrintModal && (
         <PrintModal
           open={openPrintModal}
-          setOpen={setOpenPrintModal}
+          setOpen={handleClosePrintModal}
           modalData={modalData}
           data={dataModal}
           container={selectContainer}

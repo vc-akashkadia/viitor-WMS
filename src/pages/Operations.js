@@ -132,6 +132,7 @@ const content = [
     value: constants.operation.gateout,
     img: <GateOutIcon />,
     isAccordion: false,
+    roleName:"ROLE_GATE"
   },
   {
     title: "Re-Print",
@@ -206,6 +207,7 @@ export default function Dashboard() {
     } = response;
     if (status) {
     } else {
+      
     }
     setLoading(false);
   };

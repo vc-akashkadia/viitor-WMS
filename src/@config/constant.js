@@ -40,8 +40,8 @@ export const constants = {
   ],
   rePrintTypes: [
     { value: "Both", label: "Both" },
-    { value: "Gate", label: "Gate" },
-    { value: "Yard", label: "Yard" },
+    { value: "GATE_IN", label: "Gate In" },
+    { value: "GATE_OUT", label: "Gate Out" },
   ],
   vehicle: [
     { value: "Criteria", label: "Criteria" },
@@ -55,7 +55,7 @@ export const constants = {
   ],
   vehicleNumber: {
     error: "Please enter Truck or Container No.",
-    minError: "Please enter Truck or Container No.",
+    minError: "Please enter minimum 4 character.",
   },
   formPlaceHolder: {
     block: "Select Block",

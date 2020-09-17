@@ -2,19 +2,13 @@ import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { makeStyles,withStyles } from "@material-ui/core/styles";
-// import AppBar from "@material-ui/core/AppBar";
-// import Toolbar from "@material-ui/core/Toolbar";
-// import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import Card from "@material-ui/core/Card";
 import Chip from "@material-ui/core/Chip";
-// import ArrowBackIcon from "@material-ui/icons/ArrowBack";
-// import SearchIcon from "@material-ui/icons/Search";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
-// import CloseIcon from "@material-ui/icons/Close";
 import EditIcon from "@material-ui/icons/Edit";
 import GroundingModal from "./../components/GroundingContainer";
 import { getContainerListForLocationUpdate,getRefreshLocationUpdateContainer } from "../apicalls/ModuleAccessApiCalls";
@@ -27,7 +21,6 @@ import ScrollToTop from "../components/ScrollToTop";
 import Modal from "../components/modal";
 import Divider from "@material-ui/core/Divider";
 import ContainerIcon from "@assests/img/container.svg";
-// import LocalShippingOutlinedIcon from "@material-ui/icons/LocalShippingOutlined";
 import RefreshIcon from '@material-ui/icons/Refresh';
 import LocationOnOutlinedIcon from '@material-ui/icons/LocationOnOutlined';
 import Loader from "../components/Loader";
@@ -166,7 +159,7 @@ export default function PositionUpdate(props) {
   const history = useHistory();
   const authToken = useSelector(({ auth }) => auth.authToken);
   const facility = useSelector(({ base }) => base.facility);
-  const [block, setBlock] = useState("Block");
+  const [block, setBlock] = useState("none");
   const [open, setOpen] = useState(false);
   const [gModal, setGModal] = useState(false);
   const [openModal, setModal] = useState(false);
@@ -190,7 +183,7 @@ export default function PositionUpdate(props) {
         containerNumber:containerNumber,
         facility_id:facility
       }
-      if (block !== "Block") {
+      if (block !== "none") {
         data.blockNumber = block;
       }
       dispatch(
@@ -279,9 +272,9 @@ export default function PositionUpdate(props) {
             <Grid item xs={6}>
               <FormControl fullWidth>
                 <Select
-                  selectedValue={block === "" ? "Block" : block}
+                  selectedValue={block === "" ? "none" : block}
                   handleChange={setBlock}
-                  options={[...blockConst, ...blockList]}
+                  options={blockList}
                   placeholder={constants.formPlaceHolder.block}
                   inputStyle={<BootstrapInput />}
                 />

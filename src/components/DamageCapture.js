@@ -15,7 +15,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import { DamageCodeListApi } from "../apicalls/GateApiCalls";
 // import CircularProgress from "@material-ui/core/CircularProgress";
 import Loader from "./Loader";
+import Divider from "@material-ui/core/Divider";
 import Toaster from './Toaster'
+import useGobalStyle from "@common-style";
 
 const useStyles = makeStyles((theme) => ({
     root:{
@@ -23,11 +25,10 @@ const useStyles = makeStyles((theme) => ({
     },
   title: {
     color: "#0c79c1",
-    // textTransform: "uppercase",
-    paddingTop: 0,
-    paddingLeft: 10,
-    paddingRight: 10,
-    paddingBottom: 0,
+    fontFamily: "Roboto",
+    fontSize: 16,
+    textTransform: "uppercase",
+    padding: "5px 10px",
     margin: "auto",
   },
   content: {
@@ -132,7 +133,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function DamageCapture(props) {
   const { open, setOpen, container, addDamage } = props;
-  const classes = useStyles();
+  const classes = {...useGobalStyle(),...useStyles()};
   const [showAdd, setAddButton] = useState(true);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
@@ -306,7 +307,7 @@ export default function DamageCapture(props) {
           {" "}
           Damage Capture
         </DialogTitle>
-
+        <Divider className={classes.dividerStyle} />
         <DialogContent className={classes.content}>
           <Box
             style={{

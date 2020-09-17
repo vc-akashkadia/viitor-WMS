@@ -7,7 +7,7 @@ import {
   YardContainerList,
   selectLocationcrane,
 } from "../actions/actions";
-
+import {logout} from '../actions/authActions'
 export const GetYardCraneList = (facility, authToken, callback) => {
   let url = getUrl("craneList") + `?facility_id=${facility}`;
   return (dispatch) => {
@@ -23,6 +23,23 @@ export const GetYardCraneList = (facility, authToken, callback) => {
         dispatch(yardCraneList(yardCraneListObject));
       }
       callback(response);
+    }).catch((err) => {
+      console.log("error", err);
+      let responseNew = {
+        data: {
+          status: false,
+          // code: err.response.status,
+        },
+      };
+      if(err.response !== undefined){
+        const {
+          data: { code },
+        } = err.response;
+        if(code === 'UNAUTHORIZED'){
+          dispatch(logout());
+        }
+      }
+      callback(responseNew);
     });
   };
 };
@@ -54,6 +71,23 @@ export const getBlockListApiCall = (facility, authToken, callback) => {
         dispatch(blockList(yardCraneListObject));
       }
       callback(response);
+    }).catch((err) => {
+      console.log("error", err);
+      let responseNew = {
+        data: {
+          status: false,
+          // code: err.response.status,
+        },
+      };
+      if(err.response !== undefined){
+        const {
+          data: { code },
+        } = err.response;
+        if(code === 'UNAUTHORIZED'){
+          dispatch(logout());
+        }
+      }
+      callback(responseNew);
     });
   };
 };
@@ -84,10 +118,28 @@ export const getYardOperationApiCall = (data, authToken, callback) => {
         data: { status, data },
       } = response;
       if (status) {
-        dispatch(YardContainerList(data.yardContainerList));
+        let yardList = data !== null ? data.yardContainerList : []
+        dispatch(YardContainerList(yardList));
       }
       callback(response);
-    });
+    }).catch((err) => {
+      console.log("error", err);
+      let responseNew = {
+        data: {
+          status: false,
+          // code: err.response.status,
+        },
+      };
+      if(err.response !== undefined){
+        const {
+          data: { code },
+        } = err.response;
+        if(code === 'UNAUTHORIZED'){
+          dispatch(logout());
+        }
+      }
+      callback(responseNew);
+    });;
   };
 };
 
@@ -96,7 +148,24 @@ export const AddPickUpApiCall = (data, authToken, callback) => {
   return (dispatch) => {
     post(url, data, authToken).then((response) => {
       callback(response);
-    });
+    }).catch((err) => {
+      console.log("error", err);
+      let responseNew = {
+        data: {
+          status: false,
+          // code: err.response.status,
+        },
+      };
+      if(err.response !== undefined){
+        const {
+          data: { code },
+        } = err.response;
+        if(code === 'UNAUTHORIZED'){
+          dispatch(logout());
+        }
+      }
+      callback(responseNew);
+    });;
   };
 };
 
@@ -105,6 +174,23 @@ export const GroundingContianerApiCall = (data, authToken, callback) => {
   return (dispatch) => {
     post(url, data, authToken).then((response) => {
       callback(response);
+    }).catch((err) => {
+      console.log("error", err);
+      let responseNew = {
+        data: {
+          status: false,
+          // code: err.response.status,
+        },
+      };
+      if(err.response !== undefined){
+        const {
+          data: { code },
+        } = err.response;
+        if(code === 'UNAUTHORIZED'){
+          dispatch(logout());
+        }
+      }
+      callback(responseNew);
     });
   };
 };
@@ -130,6 +216,14 @@ export const getRefreshYardContainer = (data, authToken, callback) => {
             // code: err.response.status,
           },
         };
+        if(err.response !== undefined){
+          const {
+            data: { code },
+          } = err.response;
+          if(code === 'UNAUTHORIZED'){
+            dispatch(logout());
+          }
+        }
         callback(responseNew);
       });
   };

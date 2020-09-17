@@ -96,6 +96,7 @@ const access = {
   ROLE_YARD: "Yard",
   ROLE_GATE: "Gate",
   ROLE_ADMIN: "Admin",
+  ROLE_LOCATION_UPDATE: "Location Update",
 };
 
 export default function UserList(props) {

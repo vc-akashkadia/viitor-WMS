@@ -50,19 +50,20 @@ export default function BasePage() {
         roles={constants.roles.ROLE_GATE}
         exact
         path="/gate/out"
-        render={(props) => <GateMovePage {...props} gateType="Out" />}
+        component={GateMovePage}
+        gateType="Out"
       />
       <PrivateRoute
         roles={constants.roles.ROLE_GATE}
         exact
         path="/location/print"
-        render={(props) => <LocationPrint />}
+        component={<LocationPrint />}
       />
       <PrivateRoute
         roles={constants.roles.ROLE_GATE}
         exact
         path="/eir/print"
-        render={(props) => <EIRPrint />}
+        component={<EIRPrint />}
       />
       {/* <PrivateRoute
         roles={constants.roles.ROLE_LOCATION_UPDATE} exact path="/position" component={PositionUpdate} /> */}
@@ -70,6 +71,7 @@ export default function BasePage() {
         roles={constants.roles.ROLE_ADMIN}
         exact
         path="/user"
+        userAccess={true}
         component={UserList}
       />
       <PrivateRoute exact path="/reprint" component={Reprint} />

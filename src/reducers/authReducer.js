@@ -17,7 +17,7 @@ const auth = persistReducer(
     switch (action.type) {
       case actionTypes.LOGIN: {
         const { authToken, user } = action.payload;
-        return { authToken, user: user };
+        return { ...state, authToken, user: user };
       }
       case actionTypes.LOGOUT: {
         // TODO: Change this code. Actions in reducer aren't allowed.

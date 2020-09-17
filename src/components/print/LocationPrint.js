@@ -25,7 +25,7 @@ export default function LocationPrint(props) {
         <table>
           <tbody>
             <tr>
-              <td className="description">CAMCO VISIT ID:</td>
+              <td className="description" style={{ width: "103px" }}>CAMCO VISIT ID:</td>
               <td className="price">{data.visitId}</td>
             </tr>
             <tr>

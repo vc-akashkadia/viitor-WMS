@@ -1,24 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import TitleHeader from "../components/TitleHeader";
 import { constants } from "@config/constant";
 import Typography from "@material-ui/core/Typography";
-import Box from "@material-ui/core/Box";
 import Card from "@material-ui/core/Card";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
-import useGlobalStyle from "@common-style";
 import useGobalStyle from "@common-style";
 import Select from "../components/Select";
-import DateFnsUtils from "@date-io/date-fns";
+import Box from "@material-ui/core/Box";
+import LocalPrintshopOutlinedIcon from "@material-ui/icons/LocalPrintshopOutlined";
 import InputBase from "@material-ui/core/InputBase";
 import FormControl from "@material-ui/core/FormControl";
-import {
-  MuiPickersUtilsProvider,
-  KeyboardDatePicker,
-} from "@material-ui/pickers";
-import TextField from '@material-ui/core/TextField';
-
+import Divider from "@material-ui/core/Divider";
+import TextField from "@material-ui/core/TextField";
+import clsx from "clsx";
+import { getReprintContainerListApi } from "../apicalls/GateApiCalls";
+import Loader from "../components/Loader";
+import CradGrid from "../components/Card";
+import Modal from "../components/modal";
+import PrintModal from "../components/PrintModal";
 const BootstrapInput = withStyles((theme) => ({
   root: {
     "label + &": {
@@ -53,25 +55,216 @@ const BootstrapInput = withStyles((theme) => ({
   },
 }))(InputBase);
 
-const PickerInput = withStyles((theme) => ({
-  root: {
-    "label + &": {
-      marginTop: "10px",
+const useStyles = makeStyles({
+  backIcon: {
+    color: "#173a64",
+  },
+  backText: {
+    color: "#173a64",
+    fontSize: 15,
+  },
+  // yardTitle: {
+  //   margin: "15px 10px 10px 10px",
+  //   fontSize: 15,
+  //   color: "#5c5c5c",
+  // },
+  yardNoData: {
+    width: "100%",
+    marginTop: "93px",
+    paddingLeft: 70,
+  },
+  yardCard: {
+    padding: 12,
+    marginBottom: 15,
+    "&:last-child": {
+      marginBottom: 0,
     },
   },
-}));
+  damageCode: {
+    backgroundColor: "#efefef",
+  },
+  chipMain: {
+    display: "flex",
+    flexWrap: "wrap",
+    "& > *": {
+      margin: "2px 1px",
+    },
+  },
+  confirmBtn: {
+    backgroundColor: "#40d759",
+    minWidth: 37,
+    height: 26,
+    color: "#fff",
+    fontSize: 15,
+    fontWeight: 500,
+    lineHeight: "20px",
+    textTransform: "uppercase",
+    marginLeft: "5px",
+  },
+  rightBoxArrow: {
+    backgroundColor: "#2991d6",
+    minWidth: 28,
+    height: 61,
+    padding: 0,
+  },
+  // filterSearch: {
+  //   margin: "1px 1px",
+  //   padding: 10,
+  //   position: "fixed",
+  //   backgroundColor: "#ffff",
+  //   zIndex: "2",
+  // },
+  // searchTitle: {
+  //   fontSize: 15,
+  //   color: "#5c5c5c",
+  // },
+  searchInput: {
+    width: "100%",
+  },
+  searchBtn: {
+    minWidth: "100%",
+    textTransform: "capitalize",
+    padding: 0,
+    height: 26,
+  },
+  title: {
+    fontSize: 16,
+    color: "#0c79c1",
+    fontWeight: 900,
+    fontFamily: "Roboto",
+    textTransform: "uppercase",
+    // paddingTop: 12,
+    // paddingLeft: 10,
+    padding: "5px 10px",
+    // paddingRight: 10,
+    // paddingBottom: 5,
+    margin: "auto",
+  },
+  content: {
+    color: "#5c5c5c",
+    fontFamily: "Roboto",
+    textAlign: "center",
+    paddingLeft: 10,
+    paddingRight: 10,
+    backgroundColor: "#f6f6f6",
+    position: "relative",
+  },
+  licenseLabel: {
+    position: "absolute",
+    bottom: 20,
+    left: "50%",
+    transform: "translateX(-50%)",
+    marginLeft: 40,
+    width: "auto",
+    overflow: "hidden",
+    textAlign: "center",
+    display: "flex",
+    justifyContent: "center",
+    whiteSpace: "nowrap",
+  },
+  label: {
+    fontSize: 15,
+    fontWeight: 900,
+    color: "#000000",
+  },
 
-const useStyles = makeStyles((theme) => ({}));
+  containerLabel: {
+    position: "absolute",
+    bottom: 40,
+    left: "45%",
+    transform: "translateX(-50%)",
+    marginLeft: 15,
+    width: "auto",
+    overflow: "hidden",
+    textAlign: "center",
+    display: "flex",
+    backgroundColor: "white",
+    paddingLeft: "15px",
+    justifyContent: "center",
+    whiteSpace: "nowrap",
+  },
+
+  actionbutton: {
+    paddingBottom: 15,
+    justifyContent: "center",
+  },
+  filterOpen: {
+    marginTop: "190px",
+    "@media (min-width:600px)": {
+      marginTop: 75,
+    },
+  },
+  button: {
+    // paddingTop: 10,
+    // paddingBottom: 10,
+    // paddingLeft: 15,
+    // paddingRight: 15,
+    // fontSize: 14,
+    // fontWeight: 400,
+    // fontFamily: "Roboto",
+    // lineHeight: "16px",
+    // textTransform: "inherit",
+    textTransform: "capitalize",
+    padding: 0,
+    height: 26,
+  },
+});
+function GetFormattedDate() {
+  var todayTime = new Date();
+  var month = ("0" + (todayTime.getMonth() + 1)).slice(-2);
+  var day = ("0" + todayTime.getDate()).slice(-2);
+  var year = todayTime.getFullYear();
+  return year + "-" + month + "-" + day;
+}
 
 const rePrintOption = constants.rePrintTypes;
 export default function Reprint() {
   const classes = { ...useGobalStyle(), ...useStyles() };
   const [open, setOpen] = useState(false);
   const [block, setBlock] = useState("Both");
-  const [fromDate,setFromDate] =useState(new Date())
-  const [toDate,setToDate] =useState(new Date())
-  console.log("fromDate",fromDate)
+  const [fromDate, setFromDate] = useState(GetFormattedDate());
+  const [toDate, setToDate] = useState(GetFormattedDate());
+  const [loading, setLoading] = useState(false);
+  const [modalData, setModalData] = useState();
+  const [dataModal, setDataModal] = useState("");
+  const [openModal, setOpenMdal] = useState(false);
+  const [selectContainer, setSelectContainer] = useState({});
+  const [openPrintModal, setOpenPrintModal] = useState(false);
+  const authToken = useSelector(({ auth }) => auth.authToken);
+  const facility = useSelector(({ base }) => base.facility);
+  const dispatch = useDispatch();
+  const getContainerList = () => {
+    let data = {
+      fromDate: fromDate.toString().split("-").reverse().join("-"),
+      toDate: toDate.toString().split("-").reverse().join("-"),
+      facility_id: facility,
+      operationtype: block,
+    };
+    setLoading(true);
+    dispatch(getReprintContainerListApi(data, authToken, handleCallback));
+  };
+  useEffect(getContainerList, []);
+  const handleSearch = () => {
+    getContainerList();
+    setOpen(false);
+  };
 
+  const handleCallback = (response) => {
+    setLoading(false);
+  };
+  const gateMoveContainerList = useSelector(
+    ({ base }) => base.gateMoveContainerList
+  );
+  const handleOpenModal = (title, data) => {
+    setOpenMdal(true);
+    setModalData(title);
+    setDataModal(data);
+  };
+  const handleOpenPrint = (container, index) => {
+    setSelectContainer(container);
+    setOpenPrintModal(true);
+    setModalData("print");
+  };
   return (
     <>
       <TitleHeader
@@ -102,87 +295,132 @@ export default function Reprint() {
               </Grid>
               <Grid item xs={12}>
                 <FormControl fullWidth>
-                <TextField
-                  id="date"
-                  label="From Date"
-                  type="date"
-                  // defaultValue="2017-05-24"
-                  value={fromDate}
-                  onChange={(e)=>setFromDate(e.target.value)}
-                //  autoOk={true}
-                 format="dd/MM/yyyy"
-                  className={classes.textField}
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                />
-                  {/* <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                    <KeyboardDatePicker
-                      name="startDate"
-                      variant="inline"
-                      format="dd/MM/yyyy"
-                      margin="normal"
-                      id="date-picker-inline"
-                      onChange={(e) => {
-                         setFromDate(e);
-                      }}
-                      inputStyle={<PickerInput  />}
-                      label={"From Date"}
-                      style={{ marginTop: "-5px" }}
-                      value={fromDate}
-                      KeyboardButtonProps={{
-                        "aria-label": "change date",
-                      }}
-                      autoOk
-                      views={["year", "month", "date"]}
-                    />
-                  </MuiPickersUtilsProvider> */}
+                  <TextField
+                    id="date"
+                    label="From Date"
+                    type="date"
+                    value={fromDate}
+                    style={{ marginTop: "-8px" }}
+                    onChange={(e) => setFromDate(e.target.value)}
+                    className={classes.textField}
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                  />
                 </FormControl>
               </Grid>
               <Grid item xs={12}>
                 <FormControl fullWidth>
-                  {/* <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                    <KeyboardDatePicker
-                      name="startDate"
-                      variant="inline"
-                      format="dd/MM/yyyy"
-                      margin="normal"
-                      id="date-picker-inline"
-                      onChange={(e) => {
-                        console.log("eee",e)
-                         setToDate(e);
-                      }}
-                      minDate={fromDate}
-                      label={"To Date"}
-                      style={{ marginTop: "-7px" }}
-                      value={toDate}
-                      KeyboardButtonProps={{
-                        "aria-label": "change date",
-                      }}
-                      autoOk
-                      views={["year", "month", "date"]}
-                    />
-                  </MuiPickersUtilsProvider> */}
                   <TextField
-                  id="date"
-                  label="To Date"
-                  type="date"
-                  // defaultValue="2017-05-24"
-                  value={toDate}
-                  format="dd/MM/yyyy"
-                  minDate={fromDate}
-                  onChange={(e)=>setToDate(e.target.value)}
-                //  autoOk={true}
-                  className={classes.textField}
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                />
+                    id="date"
+                    label="To Date"
+                    type="date"
+                    value={toDate}
+                    format="dd/MM/yyyy"
+                    onChange={(e) => setToDate(e.target.value)}
+                    className={classes.textField}
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    inputProps={{ min: fromDate, max: GetFormattedDate() }}
+                  />
+                </FormControl>
+              </Grid>
+              <Grid item xs={4}>
+                <FormControl fullWidth>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    className={classes.searchBtn}
+                    onClick={handleSearch}
+                  >
+                    Search
+                  </Button>
                 </FormControl>
               </Grid>
             </Grid>
           </Card>
         </div>
+      )}
+      <div
+        className={clsx({
+          [classes.filterOpen]: open, //only when open === true
+        })}
+      >
+        <div style={{ position: "relative" }}>
+          <Typography className={classes.yardTitle}>Work Order</Typography>
+          {/* <RefreshIcon onClick={handleRefresh} fontSize="small" className={classes.refreshStyle}  /> */}
+        </div>
+        <Divider style={{ marginBottom: "7px" }} />
+        {/* <hr /> */}
+
+        {/* <Card
+          className={classes.yardCard}
+          style={{ border: "1px solid #929eaa", margin: "3px" }}
+        >
+          <Box
+            display="flex"
+            alignItems="center"
+            justifyContent="space-between"
+          >
+            <Box className={classes.chipMain}>
+              <div style={{ position: "relative" }}>
+              <Chip
+                  label={"1234"}
+                  
+                />
+              </div>
+            </Box>
+          </Box>
+        </Card> */}
+        {loading && <Loader />}
+        {!loading &&
+          gateMoveContainerList &&
+          gateMoveContainerList.length === 0 && (
+            <Typography className={classes.yardNoData}>
+              No Data Found
+            </Typography>
+          )}
+
+        {!loading &&
+          gateMoveContainerList &&
+          gateMoveContainerList.length > 0 &&
+          gateMoveContainerList.map((item, key) => (
+            <CradGrid
+              key={key}
+              index={key}
+              item={item}
+              handleOpenModal={handleOpenModal}
+              cardFor="gateOperation"
+            >
+              <Box style={{ marginLeft: "3px" }}>
+                <Button
+                  className={classes.rightBoxArrow}
+                  onClick={() => handleOpenPrint(item, key)}
+                >
+                  <LocalPrintshopOutlinedIcon color="secondary" />
+                </Button>
+              </Box>
+            </CradGrid>
+          ))}
+      </div>
+      {openModal && (
+        <Modal
+          open={openModal}
+          setOpen={setOpenMdal}
+          modalData={modalData}
+          data={dataModal}
+        />
+      )}
+      {openPrintModal && (
+        <PrintModal
+          open={openPrintModal}
+          setOpen={() => setOpenPrintModal(false)}
+          modalData={modalData}
+          data={dataModal}
+          container={selectContainer}
+          // handleAction={handlePrintData}
+        />
       )}
     </>
   );

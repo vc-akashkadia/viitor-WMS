@@ -7,29 +7,28 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import { makeStyles } from "@material-ui/core/styles";
 import LocationSlip from "./print/LocationPrint";
 import EIRSlip from "./print/EIRPrint";
-import { LocationSlipApi, EIRPrintApi } from "./../apicalls/GateApiCalls";
+import { LocationSlipApi, EIRPrintApi ,updateContainerPrintStatus} from "./../apicalls/GateApiCalls";
 import Loader from "./Loader";
 import Toaster from "./Toaster";
 import  Divider  from "@material-ui/core/Divider";
 import useGlobalStyle from "@common-style"
+import {constants} from "@config/constant";
 let toasterOption = {
   varient: "success",
   message: "",
 };
+
+
 const useStyles = makeStyles((theme) => ({
-  title: {
-    fontSize: 16,
-    color: "#0c79c1",
-    fontWeight: 900,
-    fontFamily: "Roboto",
-    textTransform: "uppercase",
-    // paddingTop: 12,
-    // paddingLeft: 10,
-    padding:"5px 10px",
-    // paddingRight: 10,
-    // paddingBottom: 5,
-    margin: "auto",
-  },
+  // title: {
+  //   fontSize: 16,
+  //   color: "#0c79c1",
+  //   fontWeight: 900,
+  //   fontFamily: "Roboto",
+  //   textTransform: "uppercase",
+  //   padding:"5px 10px",
+  //   margin: "auto",
+  // },
   content: {
     color: "#5c5c5c",
     fontFamily: "Roboto",
@@ -114,7 +113,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function AlertDialog(props) {
+export default function PrintModal(props) {
   const classes = {...useGlobalStyle(),...useStyles()};
   const [loading, setLoading] = useState(false);
   const { open, setOpen, modalData, container, gateType } = props;
@@ -126,10 +125,13 @@ export default function AlertDialog(props) {
   const locationSlipData = useSelector(({ base }) => base.locationSlip);
   const handlePrintType = (printType) => {
     setLoading(true)
-    if (printType === "locationSlip") {
+    if (printType === "LOCATION") {
       let data = {
         shipmentId: container.shipmentId,
         operationCode: container.operationCode,
+        operationStatus: container.operationCode,
+        facilityId: facility,
+        containerNumber: container.containerNumber,
         printType:printType
       };
       dispatch(LocationSlipApi(data, authToken, handleCallback));
@@ -157,7 +159,7 @@ export default function AlertDialog(props) {
   }else{
     toasterOption = {
       varient: "error",
-      message: "Something went wrong try after sometime",
+      message: constants.apiError.error,
     };
     setToaster(true);
     setPrintType('');
@@ -169,8 +171,18 @@ export default function AlertDialog(props) {
   };
 
   const handlePrint = () => {
-    window.print();
+    let data ={
+      printType:printType,
+      containerNumber:container.containerNumber,
+      operationStatus:container.operationCode,
+      
+    }
+    dispatch(updateContainerPrintStatus(data, authToken, handleCallbackPrint));
   };
+
+  const handleCallbackPrint =(response) => {
+    window.print();
+  }
 
   return (
     <div>
@@ -181,9 +193,9 @@ export default function AlertDialog(props) {
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
           className={classes.muiDialog}
-          fullScreen={printType === "locationSlip" || printType === "EIR"}
+          fullScreen={printType === "LOCATION" || printType === "EIR"}
         >
-          {printType === "locationSlip" && gateType === "In" && (
+          {printType === "LOCATION" && (container.operationCode === 'GATE_IN_INBOUND' || container.operationCode === 'GATE_IN_OUTBOUND') && (
             <>
               <LocationSlip data={locationSlipData} />
             </>
@@ -197,12 +209,13 @@ export default function AlertDialog(props) {
             <>
               <DialogActions className={classes.actionbutton}>
                 <Button
-                  onClick={() => handleClose(false)}
+                  onClick={() => handleClose(true)}
                   variant="contained"
                   size="small"
                   color="secondary"
                   autoFocus
                   className={classes.button + " " + classes.hiddenPrint}
+                  
                 >
                   Close
                 </Button>
@@ -228,15 +241,16 @@ export default function AlertDialog(props) {
               {loading && <Loader />}
               {!loading && (
                 <>
-                  {gateType === "In" && (
+                  {(container.operationCode === 'GATE_IN_INBOUND' || container.operationCode === 'GATE_IN_OUTBOUND') && (
                     <Button
-                      onClick={(e) => handlePrintType("locationSlip")}
+                      onClick={(e) => handlePrintType("LOCATION")}
                       variant="contained"
                       size="small"
                       color="primary"
                       autoFocus
                       className={classes.buttonPrint}
                       // style={{width:"110px"}}
+                      disabled={container.print_location}
                     >
                       Location Slip
                     </Button>
@@ -250,6 +264,7 @@ export default function AlertDialog(props) {
                     autoFocus
                     className={classes.buttonPrint}
                     // style={{width:"110px"}}
+                    disabled={container.print_eir}
                   >
                     EIR Slip
                   </Button>

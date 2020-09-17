@@ -38,6 +38,8 @@ export const getUrl = (type) => {
       return `${baseUrl}/gateoperation/getPrintDetails`;
     case "EIRPrint":
       return `${baseUrl}/gateoperation/printeir`;
+    case "updateContainerStatus":
+      return `${baseUrl}/gateoperation/printConfirmation`;
     case "userlist":
       return `${baseUrl}/userlist`;
     case "userRolelist":
@@ -52,6 +54,8 @@ export const getUrl = (type) => {
       return `${baseUrl}/container/refreshpickupcontainer`;
     case "refreshLocationUpdate":
       return `${baseUrl}/container/refreshlocationupdate`;
+    case "reprint":
+      return `${baseUrl}/gateoperation/reprintlist`;
     default:
       return baseUrl;
   }

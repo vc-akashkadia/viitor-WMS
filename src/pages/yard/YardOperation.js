@@ -165,7 +165,7 @@ export default function YardOperation(props) {
   const [openPickUpModal, setopenPickUpModal] = useState(false);
   const [selectedContainer, setselectedContainer] = useState({});
   const [openGrounding, setOpenGrounding] = React.useState(false);
-  const [block, setBlock] = useState("Block");
+  const [block, setBlock] = useState("none");
   const [gateType, setGetType] = useState("ALL");
   const [vehical, setVehical] = useState("");
   const [number, setNumber] = useState("");
@@ -315,9 +315,9 @@ export default function YardOperation(props) {
               <Grid item xs={6}>
                 <FormControl fullWidth>
                   <Select
-                    selectedValue={block === "" ? "Block" : block}
+                    selectedValue={block === "" ? "none" : block}
                     handleChange={setBlock}
-                    options={[...blockConst, ...blockList]}
+                    options={blockList}
                     placeholder={constants.formPlaceHolder.block}
                     inputStyle={<BootstrapInput />}
                   />

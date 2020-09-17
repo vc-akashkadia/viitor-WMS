@@ -7,6 +7,8 @@ import {
   GetLocationSlipDetail,
 } from "../actions/actions";
 
+import {logout} from '../actions/authActions';
+
 export const DamageCodeListApi = (authToken, callback) => {
   let url = getUrl("damageCodeList");
   return (dispatch) => {
@@ -35,6 +37,14 @@ export const DamageCodeListApi = (authToken, callback) => {
             // code: err.response.status,
           },
         };
+        if(err.response !== undefined){
+          const {
+            data: { code },
+          } = err.response;
+          if(code === 'UNAUTHORIZED'){
+            dispatch(logout());
+          }
+        }
         callback(responseNew);
       });
   };
@@ -73,6 +83,14 @@ export const getContainerListApi = (data, authToken, callback) => {
             // code: err.response.status,
           },
         };
+        if(err.response !== undefined){
+          const {
+            data: { code },
+          } = err.response;
+          if(code === 'UNAUTHORIZED'){
+            dispatch(logout());
+          }
+        }
         callback(responseNew);
       });
 
@@ -101,6 +119,14 @@ export const gateMoveContainerApi = (data, authToken, callback) => {
             // code: err.response.status,
           },
         };
+        if(err.response !== undefined){
+          const {
+            data: { code },
+          } = err.response;
+          if(code === 'UNAUTHORIZED'){
+            dispatch(logout());
+          }
+        }
         callback(responseNew);
       });
   };
@@ -108,7 +134,12 @@ export const gateMoveContainerApi = (data, authToken, callback) => {
 
 export const LocationSlipApi = (callData, authToken, callback) => {
   let url = getUrl("locationSlipPrint");
-  let querystring = `?shipmentId=${callData.shipmentId}&operationStatus=${callData.operationCode}`;
+  // shipmentId: container.shipmentId,
+  //       operationCode: container.operationCode,
+  //       operationStatus: container.operationCode,
+  //       facilityId: facility,
+  //       containerNumber: container.containerNumber,
+  let querystring = `?shipmentId=${callData.shipmentId}&operationStatus=${callData.operationCode}&facilityId=${callData.facilityId}&containerNumber=${callData.containerNumber}`;
   url = url + querystring;
   return (dispatch) => {
     get(url, authToken)
@@ -129,6 +160,14 @@ export const LocationSlipApi = (callData, authToken, callback) => {
             // code: err.response.status,
           },
         };
+        if(err.response !== undefined){
+          const {
+            data: { code },
+          } = err.response;
+          if(code === 'UNAUTHORIZED'){
+            dispatch(logout());
+          }
+        }
         callback(responseNew, callData.printType);
       });
   };
@@ -153,6 +192,14 @@ export const EIRPrintApi = (callData, authToken, callback) => {
         let response = {
           data: { status: false },
         };
+        if(err.response !== undefined){
+          const {
+            data: { code },
+          } = err.response;
+          if(code === 'UNAUTHORIZED'){
+            dispatch(logout());
+          }
+        }
         callback(response, callData.printType);
       });
   };
@@ -182,7 +229,88 @@ export const getRefreshContainer = (data, authToken, callback) => {
             // code: err.response.status,
           },
         };
+        if(err.response !== undefined){
+          const {
+            data: { code },
+          } = err.response;
+          if(code === 'UNAUTHORIZED'){
+            dispatch(logout());
+          }
+        }
         callback(responseNew);
       });
+  };
+};
+
+
+export const updateContainerPrintStatus = (callData, authToken, callback) => {
+  let url = getUrl("updateContainerStatus");
+  let querystring = `?containerNumber=${callData.containerNumber}&operationStatus=${callData.operationStatus}&printType=${callData.printType}`;
+  url = url + querystring;
+  return (dispatch) => {
+    post(url, {}, authToken)
+      .then((response) => {
+        callback(response);
+      })
+      .catch((err) => {
+        console.log("error", err);
+        let responseNew = {
+          data: {
+            status: false,
+            // code: err.response.status,
+          },
+        };
+        if(err.response !== undefined){
+          const {
+            data: { code },
+          } = err.response;
+          if(code === 'UNAUTHORIZED'){
+            dispatch(logout());
+          }
+        }
+        callback(responseNew);
+      });
+  };
+};
+
+export const getReprintContainerListApi = (data, authToken, callback) => {
+  let url = getUrl("reprint");
+  let querystring = `?facilityName=${data.facility_id}&fromDate=${data.fromDate}&toDate=${data.toDate}`;
+  if(data.operationtype !== "Both"){
+    querystring = querystring+`&operationType=${data.operationtype}`
+  }
+  url = url + querystring;
+  return (dispatch) => {
+    get(url, authToken)
+      .then((response) => {
+        const {
+          data: { status, data },
+        } = response;
+        if (status) {
+          if(typeof data !== 'string')
+            dispatch(GateMoveContainerList(data));
+        }
+        callback(response);
+      })
+      .catch((err) => {
+        console.log("error", err);
+        let responseNew = {
+          data: {
+            status: false,
+            // code: err.response.status,
+          },
+        };
+        if(err.response !== undefined){
+          const {
+            data: { code },
+          } = err.response;
+          if(code === 'UNAUTHORIZED'){
+            dispatch(logout());
+          }
+        }
+        callback(responseNew);
+      });
+
+    
   };
 };
