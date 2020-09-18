@@ -116,7 +116,7 @@ const useStyles = makeStyles(theme=>({
   },
   rightBoxArrow: {
     backgroundColor: "#2991d6",
-    minWidth: 28,
+    minWidth: 26,
     height: 61,
     padding: 0,
   },

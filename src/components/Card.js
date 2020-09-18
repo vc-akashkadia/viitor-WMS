@@ -46,7 +46,7 @@ const BootstrapInput = withStyles((theme) => ({
 }))(InputBase);
 const useStyles = makeStyles({
   yardCard: {
-    padding: 4,
+    padding: 3,
     marginBottom: 8,
     "&:last-child": {
       marginBottom: 0,
@@ -72,6 +72,7 @@ const useStyles = makeStyles({
   chipMain: {
     display: "flex",
     flexWrap: "wrap",
+    width: "75%",
     "& > *": {
       margin: "2px 1px",
     },
@@ -97,17 +98,17 @@ const useStyles = makeStyles({
     fontWeight: 500,
     lineHeight: "20px",
     textTransform: "uppercase",
-    marginLeft: "5px",
+    // marginLeft: "5px",
   },
   rightBoxArrow: {
     backgroundColor: "#2991d6",
-    minWidth: 28,
+    minWidth: 26,
     height: 61,
     padding: 0,
   },
   rightBoxArrowDelete: {
     backgroundColor: "#ff0000bd",
-    minWidth: 28,
+    minWidth: 26,
     height: 56,
     color: "white",
     padding: 0,
@@ -237,7 +238,7 @@ export default function CardGrid(props) {
                 />
               </div>
             </Box>
-            <Box display="flex">
+            <Box display="flex" width="25%" justifyContent="flex-end">
               {!item.gateOperationCompleted &&
               (item.operationCode === "GATE_IN_INBOUND" ||
                 item.operationCode === "GATE_OUT_OUTBOUND") ? (
