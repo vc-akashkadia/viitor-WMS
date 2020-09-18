@@ -12,7 +12,6 @@ export default function PrivateRoute({
   const { isAuthorized } = useSelector(
     ({ auth }) => ({
       isAuthorized: auth.user != null,
-      //isAuthorized: true,
     }),
     shallowEqual
   );
@@ -36,7 +35,7 @@ export default function PrivateRoute({
           (roles && userRoles.length > 0 && userRoles.indexOf(roles) === -1) ||
           (userAccess && !isAdmin)
         ) {
-          // role not authorised so redirect to home page
+          // role not authorised so redirect to error page
           return <Redirect to={{ pathname: "/error" }} />;
         }
 

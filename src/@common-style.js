@@ -26,7 +26,6 @@ const useGobalStyle = makeStyles((theme) => ({
     padding: 10,
     backgroundColor: "#ffffff",
     width: "100%",
-    // maxWidth: 600,
     "@media (min-width:600px)": {
       "& > *": {
         flexWrap: "noWrap",

@@ -20,7 +20,6 @@ import ListItemText from "@material-ui/core/ListItemText";
 import { ReactComponent as GateInIcon } from "@assests/img/gate-in-user.svg";
 import { ReactComponent as YardIcon } from "@assests/img/yard-operation-user.svg";
 import LocationOnOutlinedIcon from "@material-ui/icons/LocationOnOutlined";
-// import SupervisorAccountIcon from "@material-ui/icons/SupervisorAccount";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import { ReactComponent as User } from "@assests/img/user.svg";
@@ -37,15 +36,7 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: "0px",
     paddingBottom: "0px",
   },
-  // title: {
-  //   fontSize: 16,
-  //   color: "#0c79c1",
-  //   fontWeight: 900,
-  //   fontFamily: "Roboto",
-  //   textTransform: "uppercase",
-  //   padding: "5px 10px",
-  //   margin: "auto",
-  // },
+
   content: {
     color: "#5c5c5c",
     fontFamily: "Roboto",
@@ -118,27 +109,12 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   button: {
-    // paddingTop: 10,
-    // paddingBottom: 10,
-    // paddingLeft: 15,
-    // paddingRight: 15,
-    // fontSize: 14,
-    // fontWeight: 400,
-    // fontFamily: "Roboto",
-    // lineHeight: "16px",
-    // textTransform: "inherit"
     textTransform: "capitalize",
     padding: 0,
     height: 26,
   },
 }));
 
-// const access = {
-//   ROLE_YARD: "Yard",
-//   ROLE_GATE: "Gate",
-//   ROLE_ADMIN: "Admin",
-//   ROLE_LOCATION_UPDATE: "Location Update",
-// };
 const access = {
   ROLE_YARD: {
     title: "Yard Operation",
@@ -185,7 +161,6 @@ const access = {
       />
     ),
   },
-  // "ROLE_ADMIN" : "Admin"
 };
 
 export default function AlertDialog(props) {
@@ -299,8 +274,6 @@ export default function AlertDialog(props) {
                 left: "90px",
                 width: 22,
                 color: "#5c5c5c",
-                // backgroundColor: "#ffffff",
-                // borderRadius: '50%'
               }}
             />
             <div className={classes.LocationLabel}>
@@ -315,7 +288,6 @@ export default function AlertDialog(props) {
                 }}
               >
                 {data ? data : "----"}
-                {/* HYD-PFT-DRP-001 */}
               </InputLabel>
             </div>
           </DialogContent>
@@ -388,10 +360,7 @@ export default function AlertDialog(props) {
                                   color: "#1f1f21",
                                 }}
                               >
-                                {
-                                  // access[role.roleName]
-                                  roleData.title
-                                }
+                                {roleData.title}
                               </Typography>
                             }
                             className={classes.listItemText}
@@ -431,32 +400,6 @@ export default function AlertDialog(props) {
         </Dialog>
       )}
 
-      {/* (
-          <Dialog
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-        >
-          <DialogTitle id="alert-dialog-title" className={classes.title}>CONFIRMATION</DialogTitle>
-          <DialogContent className={classes.content}>
-            <DialogContentText id="alert-dialog-description"  >
-            Are you sure you want to confirm Work Order For Container : <br />
-            {data}
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions className={classes.actionbutton}>
-            <Button onClick={handleClose}variant="contained"
-                  size="small"  color="secondary" className={classes.button}>
-              Cancel
-            </Button>
-            <Button onClick={handleClose} variant="contained"
-                  size="small" color="primary" autoFocus className={classes.button}>
-              Confirm
-            </Button>
-          </DialogActions>
-        </Dialog>
-         ) */}
       {(modalData === "filterPopup" || modalData === "refreshContainer") && (
         <Dialog
           open={open}

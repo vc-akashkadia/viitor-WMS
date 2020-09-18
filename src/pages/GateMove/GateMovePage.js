@@ -16,7 +16,7 @@ import Modal from "../../components/modal";
 import PrintModal from "../../components/PrintModal";
 
 import DamageModal from "../../components/DamageCapture";
-// import CircularProgress from "@material-ui/core/CircularProgress";
+
 import {
   getContainerListApi,
   gateMoveContainerApi,
@@ -39,7 +39,6 @@ import Toaster from "../../components/Toaster";
 import Divider from "@material-ui/core/Divider";
 import useGlobalStyle from "@common-style";
 import { constants } from "@config/constant";
-import Chip from "@material-ui/core/Chip";
 import clsx from "clsx";
 
 const BootstrapInput = withStyles((theme) => ({
@@ -59,14 +58,12 @@ const BootstrapInput = withStyles((theme) => ({
     width: "100%",
     height: 26,
     color: "#1f1f21",
-    // display: "flex",
     alignItems: "center",
     whiteSpace: "nowrap",
     overflow: "hidden",
     textOverflow: "ellipsis",
     display: "inline-block",
     lineHeight: "28px",
-    // Use the system font instead of the default Roboto font.
     fontFamily: ["Roboto"].join(","),
     "&:focus": {
       borderRadius: 3,
@@ -84,11 +81,6 @@ const useStyles = makeStyles(theme=>({
     color: "#173a64",
     fontSize: 15,
   },
-  // yardTitle: {
-  //   margin: "15px 10px 10px 10px",
-  //   fontSize: 15,
-  //   color: "#5c5c5c",
-  // },
   yardNoData: {
     width: "100%",
     marginTop: "93px",
@@ -158,11 +150,7 @@ const useStyles = makeStyles(theme=>({
     fontWeight: 900,
     fontFamily: "Roboto",
     textTransform: "uppercase",
-    // paddingTop: 12,
-    // paddingLeft: 10,
     padding: "5px 10px",
-    // paddingRight: 10,
-    // paddingBottom: 5,
     margin: "auto",
   },
   content: {
@@ -220,15 +208,6 @@ const useStyles = makeStyles(theme=>({
     },
   },
   button: {
-    // paddingTop: 10,
-    // paddingBottom: 10,
-    // paddingLeft: 15,
-    // paddingRight: 15,
-    // fontSize: 14,
-    // fontWeight: 400,
-    // fontFamily: "Roboto",
-    // lineHeight: "16px",
-    // textTransform: "inherit",
     textTransform: "capitalize",
     padding: 0,
     height: 26,
@@ -244,7 +223,6 @@ const gateTypeOptions = constants.gateTypes;
 const vehicalOption = constants.vehicle;
 
 export default function GateMovePage(props) {
-  // const classes = useStyles();
   const classes = { ...useGlobalStyle(), ...useStyles() };
   const scrollRef = React.createRef()
 
@@ -274,9 +252,6 @@ export default function GateMovePage(props) {
   const gateMoveContainerList = useSelector(
     ({ base }) => base.gateMoveContainerList
   );
-  // const handleFilterOpen = () => {
-  //   setOpen(!open);
-  // };
 
   useEffect(() => {
     if (damageAdded) {
@@ -304,6 +279,7 @@ export default function GateMovePage(props) {
       vehical: vehical,
       number: number,
       facility_id: facility,
+      gate_type: `GATE_${props.gateType}`.toUpperCase(),
     };
     if (gatetype === "Both") {
       data.operationtype = `Gate_${props.gateType}`.toUpperCase();
@@ -421,9 +397,6 @@ export default function GateMovePage(props) {
       );
       setContainerIndex(containerIndexDamage);
     }
-
-    // setSelectContainer({});
-
     setOpenDamageModal(false);
   };
 
@@ -462,7 +435,6 @@ export default function GateMovePage(props) {
     setLoading(true);
     let data = {
       facility_id: facility,
-      operationtype: `Gate_${props.gateType}`.toUpperCase(),
     };
     dispatch(getRefreshContainer(data, authToken, handleCallbackRefresh));
   };
@@ -558,9 +530,7 @@ export default function GateMovePage(props) {
       <div
         className={clsx({
           [classes.filterOpen]: open, //only when open === true
-          // [classes.scroobar]:true
         })}
-        // className={classes.scroobar}
       >
         <div style={{ position: "relative" }}>
           <Typography className={classes.yardTitle}>Work Order</Typography>
@@ -571,9 +541,8 @@ export default function GateMovePage(props) {
           />
         </div>
         <Divider style={{ marginBottom: "7px" }} />
-        {/* <hr /> */}
-        {loading && <Loader />}
 
+        {loading && <Loader />}
         {!loading &&
           gateMoveContainerList &&
           gateMoveContainerList.length === 0 && (
@@ -581,39 +550,6 @@ export default function GateMovePage(props) {
               No Data Found
             </Typography>
           )}
-          <Card
-              // key={index}
-              className={classes.yardCard}
-              style={{ border: "1px solid #929eaa", margin: "3px" }}
-            >
-                <Box
-                display="flex"
-                alignItems="center"
-                justifyContent="space-between"
-              >
-                 <Box className={classes.chipMain}>
-                  <div style={{ position: "relative" }}>
-                    <Chip
-                      label={"2233"}
-                      // size="small"
-                      style={{ width: "59px", color: "#000000" }}
-                      className={classes.chip}
-                    />
-                  </div>
-                  <div style={{ position: "relative" }}>
-                    <Chip
-                      label={"123"}
-                      style={{ width: "120px", color: "#000000" }}
-                      className={classes.chip}
-                    />
-                  </div>
-                  <Button
-                    className={classes.confirmBtn}
-                  >
-                  </Button>
-                </Box>
-              </Box>
-            </Card>
         {!loading &&
           gateMoveContainerList &&
           gateMoveContainerList.length > 0 &&
@@ -634,7 +570,6 @@ export default function GateMovePage(props) {
                       className={classes.rightBoxArrow}
                       onClick={() => handleOpenModalGate(item, key)}
                     >
-                      {/* <ArrowDownwardIcon color="secondary" /> */}
                       <img
                         src={GateInIcon}
                         alt="Gate In"
@@ -646,7 +581,6 @@ export default function GateMovePage(props) {
                       className={classes.rightBoxArrow}
                       onClick={() => handleOpenModalGate(item, key)}
                     >
-                      {/* <ArrowUpwardIcon color="secondary" /> */}
                       <img
                         src={GateOutIcon}
                         alt="Gate Out"
@@ -718,7 +652,6 @@ export default function GateMovePage(props) {
             <DialogContentText id="alert-dialog-description">
               Do you want to confirm Gate{" "}
               {props.gateType.charAt(0).toUpperCase() + props.gateType.slice(1)}{" "}
-              {/* for <b>{selectContainer.containerNumber}</b>? */}
               for{" "}
               <span style={{ color: "#000000" }}>
                 {selectContainer.containerNumber}

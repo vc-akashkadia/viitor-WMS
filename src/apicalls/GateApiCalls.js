@@ -34,7 +34,7 @@ export const DamageCodeListApi = (authToken, callback) => {
         let responseNew = {
           data: {
             status: false,
-            // code: err.response.status,
+            code: err.response !== undefined ? err.response.status : "OK",
           },
         };
         if (err.response !== undefined) {
@@ -52,7 +52,7 @@ export const DamageCodeListApi = (authToken, callback) => {
 
 export const getContainerListApi = (data, authToken, callback) => {
   let url = getUrl("gatemovecontainer");
-  let querystring = `?facility_id=${data.facility_id}`;
+  let querystring = `?facility_id=${data.facility_id}&gate_type=${data.gate_type}`;
   if (data.operationtype !== undefined) {
     querystring = querystring + `&operationtype=${data.operationtype}`;
   }
@@ -80,7 +80,7 @@ export const getContainerListApi = (data, authToken, callback) => {
         let responseNew = {
           data: {
             status: false,
-            // code: err.response.status,
+            code: err.response !== undefined ? err.response.status : "OK",
           },
         };
         if (err.response !== undefined) {
@@ -116,7 +116,7 @@ export const gateMoveContainerApi = (data, authToken, callback) => {
         let responseNew = {
           data: {
             status: false,
-            // code: err.response.status,
+            code: err.response !== undefined ? err.response.status : "OK",
           },
         };
         if (err.response !== undefined) {
@@ -134,12 +134,7 @@ export const gateMoveContainerApi = (data, authToken, callback) => {
 
 export const LocationSlipApi = (callData, authToken, callback) => {
   let url = getUrl("locationSlipPrint");
-  // shipmentId: container.shipmentId,
-  //       operationCode: container.operationCode,
-  //       operationStatus: container.operationCode,
-  //       facilityId: facility,
-  //       containerNumber: container.containerNumber,
-  let querystring = `?shipmentId=${callData.shipmentId}&operationStatus=${callData.operationCode}&facilityId=${callData.facilityId}&containerNumber=${callData.containerNumber}`;
+  let querystring = `?shipment_id=${callData.shipmentId}&operationStatus=${callData.operationCode}&facility_id=${callData.facilityId}&containerNumber=${callData.containerNumber}`;
   url = url + querystring;
   return (dispatch) => {
     get(url, authToken)
@@ -157,7 +152,7 @@ export const LocationSlipApi = (callData, authToken, callback) => {
         let responseNew = {
           data: {
             status: false,
-            // code: err.response.status,
+            code: err.response !== undefined ? err.response.status : "OK",
           },
         };
         if (err.response !== undefined) {
@@ -174,7 +169,8 @@ export const LocationSlipApi = (callData, authToken, callback) => {
 };
 export const EIRPrintApi = (callData, authToken, callback) => {
   let url = getUrl("EIRPrint");
-  let querystring = `?container_number=${callData.containerNumber}&operation_type=${callData.operationCode}&facility_id=${callData.facility_id}`;
+  let querystring = `?container_number=${callData.containerNumber}&shipment_id=${callData.shipmentId}&operation_type=${callData.operationCode}&facility_id=${callData.facility_id}&gate_type=${callData.gate_type}`;
+
   url = url + querystring;
   return (dispatch) => {
     get(url, authToken)
@@ -208,10 +204,6 @@ export const EIRPrintApi = (callData, authToken, callback) => {
 export const getRefreshContainer = (data, authToken, callback) => {
   let url = getUrl("refreshContainer");
   let querystring = `?facility_id=${data.facility_id}`;
-  if (data.operationtype !== undefined) {
-    querystring = querystring + `&operationtype=${data.operationtype}`;
-  }
-
   url = url + querystring;
   return (dispatch) => {
     get(url, authToken)
@@ -226,7 +218,7 @@ export const getRefreshContainer = (data, authToken, callback) => {
         let responseNew = {
           data: {
             status: false,
-            // code: err.response.status,
+            code: err.response !== undefined ? err.response.status : "OK",
           },
         };
         if (err.response !== undefined) {
@@ -244,7 +236,7 @@ export const getRefreshContainer = (data, authToken, callback) => {
 
 export const updateContainerPrintStatus = (callData, authToken, callback) => {
   let url = getUrl("updateContainerStatus");
-  let querystring = `?containerNumber=${callData.containerNumber}&operationStatus=${callData.operationStatus}&printType=${callData.printType}`;
+  let querystring = `?containerNumber=${callData.containerNumber}&operationStatus=${callData.operationStatus}&printType=${callData.printType}&facility_id=${callData.facility_id}&gate_type=${callData.gate_type}&shipment_id=${callData.shipmentId}`;
   url = url + querystring;
   return (dispatch) => {
     post(url, {}, authToken)
@@ -256,7 +248,7 @@ export const updateContainerPrintStatus = (callData, authToken, callback) => {
         let responseNew = {
           data: {
             status: false,
-            // code: err.response.status,
+            code: err.response !== undefined ? err.response.status : "OK",
           },
         };
         if (err.response !== undefined) {
@@ -274,8 +266,8 @@ export const updateContainerPrintStatus = (callData, authToken, callback) => {
 
 export const getReprintContainerListApi = (data, authToken, callback) => {
   let url = getUrl("reprint");
-  let querystring = `?facilityName=${data.facility_id}&fromDate=${data.fromDate}&toDate=${data.toDate}`;
-  if (data.operationtype !== "Both") {
+  let querystring = `?facility_id=${data.facility_id}&fromDate=${data.fromDate}&toDate=${data.toDate}`;
+  if (data.operationtype !== "" && data.operationtype !== "none") {
     querystring = querystring + `&operationType=${data.operationtype}`;
   }
   url = url + querystring;
@@ -286,7 +278,11 @@ export const getReprintContainerListApi = (data, authToken, callback) => {
           data: { status, data },
         } = response;
         if (status) {
-          if (typeof data !== "string") dispatch(GateMoveContainerList(data));
+          if (typeof data !== "string") {
+            dispatch(GateMoveContainerList(data));
+          } else {
+            GateMoveContainerList([]);
+          }
         }
         callback(response);
       })
@@ -295,7 +291,37 @@ export const getReprintContainerListApi = (data, authToken, callback) => {
         let responseNew = {
           data: {
             status: false,
-            // code: err.response.status,
+            code: err.response !== undefined ? err.response.status : "OK",
+          },
+        };
+        if (err.response !== undefined) {
+          const {
+            data: { code },
+          } = err.response;
+          if (code === "UNAUTHORIZED") {
+            dispatch(logout());
+          }
+        }
+        callback(responseNew);
+      });
+  };
+};
+
+export const updateContainerRePrintStatus = (callData, authToken, callback) => {
+  let url = getUrl("updateContainerReprintStatus");
+  let querystring = `?containerNumber=${callData.containerNumber}&operationStatus=${callData.operationStatus}&printType=${callData.printType}&facility_id=${callData.facility_id}&gate_type=${callData.gate_type}&shipment_id=${callData.shipmentId}`;
+  url = url + querystring;
+  return (dispatch) => {
+    post(url, {}, authToken)
+      .then((response) => {
+        callback(response);
+      })
+      .catch((err) => {
+        console.log("error", err);
+        let responseNew = {
+          data: {
+            status: false,
+            code: err.response !== undefined ? err.response.status : "OK",
           },
         };
         if (err.response !== undefined) {

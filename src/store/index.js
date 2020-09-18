@@ -3,11 +3,6 @@ import logger from "redux-logger";
 import { persistStore } from "redux-persist";
 import rootReducer from "../reducers/rootReducer";
 
-// export const store =
-//   process.env.NODE_ENV === "development"
-//     ? createStore(rootReducer, middlewares)
-//     : createStore(rootReducer);
-
 const middleware = [
   ...getDefaultMiddleware({
     immutableCheck: false,

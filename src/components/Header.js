@@ -39,8 +39,6 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     padding: theme.spacing(0, 2),
-    // necessary for content to be below app bar
-    // ...theme.mixins.toolbar,
     justifyContent: "space-between",
     minHeight: "auto",
   },
@@ -124,14 +122,7 @@ export default function Header() {
     history.push("/logout");
   };
 
-  // const prevOpen = React.useRef(open);
-  // React.useEffect(() => {
-  //   if (prevOpen.current === true && open === false) {
-  //     anchorRef.current.focus();
-  //   }
-
-  //   prevOpen.current = open;
-  // }, [open]);
+  
   return (
     <>
       <CssBaseline />

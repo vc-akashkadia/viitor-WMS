@@ -14,9 +14,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: "500px",
     margin: "0 10px",
-    // margin: "auto",
     position: "relative",
-    // paddingBottom: 125,
     "@media (min-width:241px)": {
       paddingBottom: 40,
       margin: "auto",
@@ -33,7 +31,6 @@ const useStyles = makeStyles((theme) => ({
     margin: "10px auto",
   },
   listItemsChild: {
-    // marginBottom: 10,
     display: "block",
     margin: "5px auto",
     textAlign: "center",
@@ -71,7 +68,6 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
   },
   card: {
-    // padding: 20,
     minHeight: "250px",
   },
   label: {

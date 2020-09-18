@@ -30,19 +30,17 @@ const BootstrapInput = withStyles((theme) => ({
     transition: theme.transitions.create(["border-color", "box-shadow"]),
     width: "100%",
     height: 26,
-    // display: "flex",
+
     alignItems: "center",
     whiteSpace: "nowrap",
     overflow: "hidden",
     textOverflow: "ellipsis",
     display: "inline-block",
     lineHeight: "26px",
-    // Use the system font instead of the default Roboto font.
     fontFamily: ["Roboto"].join(","),
     "&:focus": {
       borderRadius: 3,
       borderColor: "#80bdff",
-      // boxShadow: "0 0 0 0.2rem rgba(0,123,255,.25)",
     },
   },
 }))(InputBase);
@@ -168,12 +166,6 @@ export default function CardGrid(props) {
             justifyContent="space-between"
           >
             <Box className={classes.chipMain}>
-              {/* <Chip
-                label={item.truckNumber.substring(item.truckNumber.length - 4)}
-                size="medium"
-                style={{ width: 80, color: "#173a64" }}
-                onClick={() => handleOpenModal("truck", item.truckNumber)}
-              /> */}
               <div style={{ position: "relative" }}>
                 <Chip
                   label={
@@ -186,7 +178,7 @@ export default function CardGrid(props) {
                   onClick={() => handleOpenModal("truck", item.truckNumber)}
                   className={classes.chip}
                 />
-                {/* <img src={TruckICon} alt="truck" style={{position:'absolute',top:'-11px',left:'7px',width:23}}></img> */}
+
                 <LocalShippingOutlinedIcon
                   size="small"
                   color="action"
@@ -280,16 +272,6 @@ export default function CardGrid(props) {
           >
             <Box className={classes.chipMain}>
               <Chip label="Code" style={{ width: "57px", color: "#000000" }} />
-              {/* <Select
-                  selectedValue={item.damageCode}
-                  handleChange={(value) => {
-                    handleChange(value, "damageCode", item.id)
-                  }}
-                  options={selectOption}
-                  placeholder="Select Damage Code"
-                  inputStyle={<BootstrapInput />}
-                  customeStyle={{ width: "70%" }}
-                /> */}
               <Select
                 labelId="demo-customized-select-label"
                 id="demo-customized-select"

@@ -16,7 +16,6 @@ import {
   getRefreshLocationUpdateContainer,
 } from "../apicalls/ModuleAccessApiCalls";
 import { getBlockListApiCall } from "../apicalls/YardApiCalls";
-
 import TitleHeader from "../components/TitleHeader";
 import ScrollToTop from "../components/ScrollToTop";
 import Modal from "../components/modal";
@@ -31,7 +30,7 @@ import InputBase from "@material-ui/core/InputBase";
 import useGlobalStyle from "@common-style";
 import { constants } from "@config/constant";
 import clsx from "clsx";
-// import Modal from "../../components/modal"
+
 const BootstrapInput = withStyles((theme) => ({
   root: {
     "label + &": {
@@ -48,14 +47,12 @@ const BootstrapInput = withStyles((theme) => ({
     transition: theme.transitions.create(["border-color", "box-shadow"]),
     width: "100%",
     height: 26,
-    // display: "flex",
     alignItems: "center",
     whiteSpace: "nowrap",
     overflow: "hidden",
     textOverflow: "ellipsis",
     display: "inline-block",
     lineHeight: "28px",
-    // Use the system font instead of the default Roboto font.
     fontFamily: ["Roboto"].join(","),
     "&:focus": {
       borderRadius: 3,
@@ -79,7 +76,7 @@ const useStyles = makeStyles((theme) => ({
   //   color: "#5c5c5c",
   // },
   yardCard: {
-    padding: 5,
+    padding: 3,
     marginBottom: 5,
     "&:last-child": {
       marginBottom: 0,
@@ -115,17 +112,6 @@ const useStyles = makeStyles((theme) => ({
     textTransform: "uppercase",
     marginLeft: "auto",
   },
-  // filterSearch: {
-  //   margin: "1px 1px",
-  //   padding: 10,
-  //   position: "fixed",
-  //   backgroundColor: "#ffff",
-  //   zIndex: "2",
-  // },
-  // searchTitle: {
-  //   fontSize: 15,
-  //   color: "#5c5c5c",
-  // },
 
   searchInput: {
     width: "100%",
@@ -158,7 +144,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
-const blockConst = [{ value: "Block", label: "Block" }];
+
 export default function PositionUpdate(props) {
   const classes = { ...useGlobalStyle(), ...useStyles() };
   const history = useHistory();
@@ -176,14 +162,11 @@ export default function PositionUpdate(props) {
   const [loading, setLoading] = useState(false);
   const blockList = useSelector(({ base }) => base.blockList);
   const [modalData, setModalData] = useState();
-  // const handleFilterOpen =()=>{
-  //   setOpen(!open)
-  // }
+
   let containerList = useSelector(({ base }) => base.containerListForLocation);
   const dispatch = useDispatch();
-  //   const [open, setOpen] = useState(false);
+
   const getContainerList = () => {
-    //setOpen(false);
     setLoading(true);
     let data = {
       containerNumber: containerNumber,
@@ -199,9 +182,7 @@ export default function PositionUpdate(props) {
   useEffect(getContainerList, []);
 
   const getBlockList = () => {
-    //if (blockList.length === 0) {
     dispatch(getBlockListApiCall(facility, authToken, handleCallbackBlock));
-    //}
   };
   useEffect(getBlockList, []);
 
@@ -313,7 +294,6 @@ export default function PositionUpdate(props) {
         className={clsx({
           [classes.filterOpen]: open, //only when open === true
         })}
-        // style={open ? { marginTop: "105px" } : { marginTop: "0px" }}
       >
         <div style={{ position: "relative" }}>
           <Typography className={classes.yardTitle}>Work Order</Typography>
@@ -343,7 +323,7 @@ export default function PositionUpdate(props) {
                 justifyContent="space-between"
               >
                 <Box className={classes.chipMain}>
-                  <div style={{ position: "relative" }}>
+                  <div style={{ position: "relative",marginRight:"2px" }}>
                     <Chip
                       label={
                         container.containerNumber !== null
@@ -352,7 +332,6 @@ export default function PositionUpdate(props) {
                             )
                           : ""
                       }
-                      // size="small"
                       style={{ width: "59px", color: "#000000" }}
                       className={classes.chip}
                       onClick={() => handleOpenModal("container", container)}
@@ -382,7 +361,6 @@ export default function PositionUpdate(props) {
                         left: "0px",
                         width: 13,
                         color: "#0000004d",
-                        // backgroundColor: "#ffffff"
                       }}
                     />
                   </div>

@@ -56,7 +56,9 @@ export default function EIRPrint(props) {
               <td style={{ paddingTop: "10px" }} className="description">
                 Consignee:
               </td>
-              <td className="price">{data.Consignee}</td>
+              <td style={{ paddingTop: "10px" }} className="price">
+                {data.Consignee}
+              </td>
             </tr>
             <tr>
               <td className="description">Yard Loc:</td>
@@ -82,7 +84,9 @@ export default function EIRPrint(props) {
               <td className="description" style={{ paddingTop: "10px" }}>
                 EIR No:
               </td>
-              <td className="price">{data.EIRNo}</td>
+              <td style={{ paddingTop: "10px" }} className="price">
+                {data.EIRNo}
+              </td>
             </tr>
             <tr>
               <td className="description">EIR Date:</td>

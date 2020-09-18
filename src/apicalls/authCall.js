@@ -1,6 +1,6 @@
 import { getUrl } from "../services/network/urls";
 import { post } from "../services/network/requests";
-import { login, remember } from "../actions/authActions";
+import { login } from "../actions/authActions";
 export const LoginApi = (userData, remember_me, callback) => {
   let url = getUrl("signin");
 
@@ -11,7 +11,6 @@ export const LoginApi = (userData, remember_me, callback) => {
           data: { status, data },
         } = response;
         if (status) {
-          // dispatch(remember({remember_username : userData}));
           dispatch(
             login({
               authToken: data.token,
@@ -29,7 +28,6 @@ export const LoginApi = (userData, remember_me, callback) => {
         let responseNew = {
           data: {
             status: false,
-            // code: err.response.status,
           },
         };
         callback(responseNew);

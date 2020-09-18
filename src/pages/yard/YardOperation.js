@@ -16,7 +16,6 @@ import InputBase from "@material-ui/core/InputBase";
 import TextField from "@material-ui/core/TextField";
 import Modal from "../../components/modal";
 import PickUpModal from "./PickUpModal";
-// import CircularProgress from "@material-ui/core/CircularProgress";
 
 import Select from "../../components/Select";
 import Toaster from "../../components/Toaster";
@@ -27,7 +26,6 @@ import {
   getRefreshYardContainer,
 } from "../../apicalls/YardApiCalls";
 
-import { getRefreshContainer } from "../../apicalls/GateApiCalls";
 import TitleHeader from "../../components/TitleHeader";
 import ScrollToTop from "../../components/ScrollToTop";
 import Loader from "../../components/Loader";
@@ -60,14 +58,13 @@ const BootstrapInput = withStyles((theme) => ({
     transition: theme.transitions.create(["border-color", "box-shadow"]),
     width: "100%",
     height: 26,
-    // display: "flex",
+
     alignItems: "center",
     whiteSpace: "nowrap",
     overflow: "hidden",
     textOverflow: "ellipsis",
     display: "inline-block",
     lineHeight: "28px",
-    // Use the system font instead of the default Roboto font.
     fontFamily: ["Roboto"].join(","),
     "&:focus": {
       borderRadius: 3,
@@ -91,11 +88,6 @@ const useStyles = makeStyles((theme) => ({
       marginTop: 75,
     },
   },
-  // yardTitle: {
-  //   margin: "15px 10px 10px 10px",
-  //   fontSize: 15,
-  //   color: "#5c5c5c",
-  // },
   yardNoData: {
     width: "100%",
     marginTop: "93px",
@@ -131,16 +123,6 @@ const useStyles = makeStyles((theme) => ({
     height: 61,
     padding: 0,
   },
-  // filterSearch: {
-  //   padding: "12px 5px 0",
-  //   backgroundColor: "#fafafa",
-  //   position: "fixed",
-  //   zIndex: "1",
-  // },
-  // searchTitle: {
-  //   fontSize: 15,
-  //   color: "#5c5c5c",
-  // },
   searchInput: {
     width: "100%",
   },
@@ -186,10 +168,6 @@ export default function YardOperation(props) {
 
   const handleCallbackBlock = () => {};
 
-  // const handleFilterOpen = () => {
-  //   setOpen(!open);
-  // };
-
   const handleOpenModal = (title, data) => {
     setOpenMdal(true);
     setModalData(title);
@@ -201,7 +179,7 @@ export default function YardOperation(props) {
       facility_id: facility,
       gatetype: gateType,
     };
-    if (block !== "Block") {
+    if (block !== "none") {
       data.blockNumber = block;
     }
     if (vehical !== "" && vehical !== "Criteria") {
@@ -276,9 +254,6 @@ export default function YardOperation(props) {
     let data = {
       facility_id: facility,
     };
-    if (gateType !== "ALL") {
-      data.operationtype = gateType;
-    }
     dispatch(getRefreshYardContainer(data, authToken, handleCallbackRefresh));
   };
   const handleCallbackRefresh = (response) => {
@@ -383,8 +358,6 @@ export default function YardOperation(props) {
         </div>
       )}
       <div
-        // className={classes.yardMain}
-        // style={open ? { marginTop: "140px" } : { marginTop: "0px" }}
         className={clsx({
           [classes.filterOpen]: open, //only when open === true
         })}
@@ -424,7 +397,6 @@ export default function YardOperation(props) {
                   <Button
                     className={classes.rightBoxArrow}
                     onClick={() => handleOpenPickUpModal(item)}
-                    // onClick={() => handleOpenModal("pickup",item.containerNumber)}
                   >
                     <ArrowUpwardIcon color="secondary" />
                   </Button>

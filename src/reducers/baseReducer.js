@@ -7,7 +7,6 @@ const initialstate = {
   facilityList: [],
   yardCraneList: [],
   blockList: [],
-
   yardCrane: "",
   locationCrane: "",
   yardOperation: {},
@@ -150,7 +149,6 @@ const base = persistReducer(
         };
       }
       case actionTypes.LOGOUT: {
-        // TODO: Change this code. Actions in reducer aren't allowed.
         return initialstate;
       }
       default:

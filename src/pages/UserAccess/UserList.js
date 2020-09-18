@@ -22,11 +22,6 @@ const useStyles = makeStyles((theme) => ({
   root: {
     position: "fixed",
   },
-  // yardTitle: {
-  //   margin: "15px 10px 10px 10px",
-  //   fontSize: 15,
-  //   color: "#5c5c5c",
-  // },
   yardCard: {
     padding: 5,
     marginBottom: 5,
@@ -164,7 +159,6 @@ export default function UserList(props) {
           <Typography className={classes.yardTitle}>User List</Typography>
           <AddCircleIcon
             fontSize="small"
-            // style={{position:'absolute',top: '-2px',right:'10px',color:"#5c5c5c"}}
             className={classes.refreshStyle}
             onClick={() => handleGModal("add", {})}
           />
@@ -198,7 +192,6 @@ export default function UserList(props) {
                     className={classes.chip}
                   />
                   <Chip
-                    // key={key + "_" + role.roleName}
                     label={
                       user &&
                       user.userRoleId.map(
@@ -206,23 +199,12 @@ export default function UserList(props) {
                       )
                     }
                     size="medium"
-                    style={{ width: "177px" }}
+                    style={{ width: "175px" }}
                     onClick={() =>
                       handleOpenModal("user", user && user.userRoleId)
                     }
                     className={classes.chip}
                   />
-                  {/* {user.userRoleId.map((role, key) => {
-                    if(access[role.roleName] === undefined){
-                      return null
-                    }
-                    return <Chip
-                      key={key + "_" + role.roleName}
-                      label={access[role.roleName]}
-                      size="medium"
-                      style={{ width: "90px", color:  "#000000" }}
-                    />
-                  })} */}
                   <Button
                     className={classes.confirmBtn}
                     onClick={() => handleGModal("edit", user)}
@@ -250,7 +232,6 @@ export default function UserList(props) {
         <Modal
           open={openModal}
           setOpen={setModal}
-          // modalData={"container"}
           modalData={modalData}
           data={data}
         />

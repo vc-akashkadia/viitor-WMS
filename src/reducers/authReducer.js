@@ -20,12 +20,7 @@ const auth = persistReducer(
         return { ...state, authToken, user: user };
       }
       case actionTypes.LOGOUT: {
-        // TODO: Change this code. Actions in reducer aren't allowed.
-        return {
-          ...state,
-          user: undefined,
-          authToken: undefined,
-        };
+        return initialAuthState;
       }
       case actionTypes.USER_LOADED: {
         const { user } = action.payload;

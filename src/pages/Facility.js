@@ -8,10 +8,9 @@ import { makeStyles, withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 
-// import InputLabel from "@material-ui/core/InputLabel";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import FormControl from "@material-ui/core/FormControl";
-// import Select from "@material-ui/core/Select";
+
 import bottomImage from "@assests/img/pattern.svg";
 import Select from "../components/Select";
 import Toaster from "../components/Toaster";
@@ -205,11 +204,6 @@ export default function Facility() {
 
       <Card className={classes.root}>
         <CardContent style={{ minHeight: "250px" }}>
-          {/* {alert && (
-            <Alert severity={toasterOption.option}>
-              {toasterOption.message}
-            </Alert>
-          )} */}
           <form onSubmit={handleSubmit} className={classes.facilityForm}>
             <Grid item xs={12} className={classes.listItemsChild}>
               {loading && <Loader />}

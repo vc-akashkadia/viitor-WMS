@@ -69,7 +69,7 @@ export const selectedFacility = (facility, authToken, callback) => {
         let responseNew = {
           data: {
             status: false,
-            // code: err.response.status,
+            code: err.response !== undefined ? err.response.status : "OK",
           },
         };
         if (err.response !== undefined) {

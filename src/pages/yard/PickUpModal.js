@@ -19,10 +19,6 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 900,
     fontFamily: "Roboto",
     textTransform: "uppercase",
-    // paddingTop: 12,
-    // paddingLeft: 10,
-    // paddingRight: 10,
-    // paddingBottom: 5,
     padding: "5px 10px",
     margin: "auto",
   },
@@ -75,15 +71,6 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
   },
   button: {
-    // paddingTop: 10,
-    // paddingBottom: 10,
-    // paddingLeft: 15,
-    // paddingRight: 15,
-    // fontSize: 14,
-    // fontWeight: 400,
-    // fontFamily: "Roboto",
-    // lineHeight: "16px",
-    // textTransform: "inherit",
     textTransform: "capitalize",
     padding: 0,
     height: 26,
@@ -119,9 +106,6 @@ export default function PickUpModal(props) {
 
   return (
     <div>
-      {/* <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-        Open alert dialog
-      </Button> */}
       <Dialog
         open={open}
         onClose={handleClose}

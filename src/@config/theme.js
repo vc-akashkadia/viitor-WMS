@@ -180,16 +180,6 @@ const theme = createMuiTheme({
         },
       },
     },
-    // MuiOutlinedInput:{
-    //   notchedOutline:{
-    //     borderColor: '#f6f6f6'
-    //   }
-    // }
-    // MuiDrawer:{
-    //   paper: {
-    //     width: "70%"
-    //   }
-    // }
     MuiIconButton: {
       edgeEnd: {
         marginRight: "-23px",

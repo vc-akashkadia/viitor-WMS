@@ -60,7 +60,6 @@ const BootstrapInput = withStyles((theme) => ({
     transition: theme.transitions.create(["border-color", "box-shadow"]),
     width: "100%",
     height: 26,
-    // display: "flex",
     alignItems: "center",
     whiteSpace: "nowrap",
     overflow: "hidden",
@@ -76,19 +75,6 @@ const BootstrapInput = withStyles((theme) => ({
 }))(InputBase);
 
 const useStyles = makeStyles((theme) => ({
-  // title: {
-  //   fontSize: 16,
-  //   color: "#0c79c1",
-  //   fontWeight: 900,
-  //   fontFamily: "Roboto",
-  //   textTransform: "uppercase",
-  //   padding: "5px 10px",
-  //   // paddingTop: 12,
-  //   // paddingLeft: 10,
-  //   // paddingRight: 10,
-  //   // paddingBottom: 5,
-  //   margin: "auto",
-  // },
   content: {
     fontFamily: "Roboto",
     paddingLeft: 23,
@@ -97,14 +83,12 @@ const useStyles = makeStyles((theme) => ({
   },
   innerContent: {
     display: "flex",
-    // justifyContent: "space-between",
     marginBottom: 10,
     marginTop: "0px",
     color: "#777777",
   },
   innerContentActive: {
     display: "flex",
-    // justifyContent: "space-between",
     marginBottom: 3,
     marginTop: "3px",
     color: "#707070",
@@ -203,7 +187,6 @@ const accessValue = {
       />
     ),
   },
-  // "ROLE_ADMIN" : "Admin"
 };
 
 export default function EditModal(props) {
@@ -278,7 +261,6 @@ export default function EditModal(props) {
         setLoading(true);
         dispatch(AddRoleApi(data, authToken, handleCallback));
       } else {
-        // call edit user api //getUserRoleList
         setLoading(true);
         dispatch(EditRoleApi(data, authToken, handleCallback));
       }
@@ -311,7 +293,6 @@ export default function EditModal(props) {
   };
 
   const handleCheckbox = (e, targetName) => {
-    // setFieldValue(targetName, e.target.checked);
     let newAccess = [...access];
     let index = newAccess.indexOf(targetName);
     if (e.target.checked) {
@@ -475,9 +456,6 @@ export default function EditModal(props) {
                       </React.Fragment>
                     );
                   })}
-                {/* {accessValue.map((item,index) => (
-                  
-                ))} */}
               </List>
             </div>
 

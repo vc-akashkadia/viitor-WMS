@@ -30,7 +30,7 @@ export const GetYardCraneList = (facility, authToken, callback) => {
         let responseNew = {
           data: {
             status: false,
-            // code: err.response.status,
+            code: err.response !== undefined ? err.response.status : "OK",
           },
         };
         if (err.response !== undefined) {
@@ -80,7 +80,7 @@ export const getBlockListApiCall = (facility, authToken, callback) => {
         let responseNew = {
           data: {
             status: false,
-            // code: err.response.status,
+            code: err.response !== undefined ? err.response.status : "OK",
           },
         };
         if (err.response !== undefined) {
@@ -133,7 +133,7 @@ export const getYardOperationApiCall = (data, authToken, callback) => {
         let responseNew = {
           data: {
             status: false,
-            // code: err.response.status,
+            code: err.response !== undefined ? err.response.status : "OK",
           },
         };
         if (err.response !== undefined) {
@@ -161,7 +161,7 @@ export const AddPickUpApiCall = (data, authToken, callback) => {
         let responseNew = {
           data: {
             status: false,
-            // code: err.response.status,
+            code: err.response !== undefined ? err.response.status : "OK",
           },
         };
         if (err.response !== undefined) {
@@ -189,7 +189,7 @@ export const GroundingContianerApiCall = (data, authToken, callback) => {
         let responseNew = {
           data: {
             status: false,
-            // code: err.response.status,
+            code: err.response !== undefined ? err.response.status : "OK",
           },
         };
         if (err.response !== undefined) {
@@ -208,10 +208,6 @@ export const GroundingContianerApiCall = (data, authToken, callback) => {
 export const getRefreshYardContainer = (data, authToken, callback) => {
   let url = getUrl("refreshYardContainer");
   let querystring = `?facility_id=${data.facility_id}`;
-  if (data.operationtype !== undefined) {
-    querystring = querystring + `&operationtype=${data.operationtype}`;
-  }
-
   url = url + querystring;
   return (dispatch) => {
     get(url, authToken)
@@ -223,7 +219,7 @@ export const getRefreshYardContainer = (data, authToken, callback) => {
         let responseNew = {
           data: {
             status: false,
-            // code: err.response.status,
+            code: err.response !== undefined ? err.response.status : "OK",
           },
         };
         if (err.response !== undefined) {

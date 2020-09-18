@@ -18,7 +18,7 @@ export const AddRoleApi = (data, authtoken, callback) => {
         let responseNew = {
           data: {
             status: false,
-            // code: err.response.status,
+            code: err.response !== undefined ? err.response.status : "OK",
           },
         };
         if (err.response !== undefined) {
@@ -46,7 +46,7 @@ export const EditRoleApi = (data, authtoken, callback) => {
         let responseNew = {
           data: {
             status: false,
-            // code: err.response.status,
+            code: err.response !== undefined ? err.response.status : "OK",
           },
         };
         if (err.response !== undefined) {
@@ -78,7 +78,10 @@ export const getUserList = (data, authToken, callback) => {
       .catch((err) => {
         console.log("error", err);
         let response = {
-          data: { status: false },
+          data: {
+            status: false,
+            code: err.response !== undefined ? err.response.status : "OK",
+          },
         };
         if (err.response !== undefined) {
           const {
@@ -110,7 +113,7 @@ export const getUserRoleList = (authToken, callback) => {
         let responseNew = {
           data: {
             status: false,
-            // code: err.response.status,
+            code: err.response !== undefined ? err.response.status : "OK",
           },
         };
         if (err.response !== undefined) {
@@ -150,11 +153,10 @@ export const getContainerListForLocationUpdate = (
       })
       .catch((err) => {
         console.log("error", err);
-        // console.log("error", err.response);
         let responseNew = {
           data: {
             status: false,
-            // code: err.response.status,
+            code: err.response !== undefined ? err.response.status : "OK",
           },
         };
         if (err.response !== undefined) {
@@ -182,7 +184,7 @@ export const LocationUpdatePost = (data, authtoken, callback) => {
         let responseNew = {
           data: {
             status: false,
-            // code: err.response.status,
+            code: err.response !== undefined ? err.response.status : "OK",
           },
         };
         if (err.response !== undefined) {
@@ -216,7 +218,7 @@ export const getRefreshLocationUpdateContainer = (
         let responseNew = {
           data: {
             status: false,
-            // code: err.response.status,
+            code: err.response !== undefined ? err.response.status : "OK",
           },
         };
         if (err.response !== undefined) {

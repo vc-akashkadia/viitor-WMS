@@ -3,7 +3,6 @@ import { Redirect, Switch, Route } from "react-router-dom";
 
 import Facility from "./Facility";
 import Operations from "./Operations";
-// import YardOperation from "./yarn/YarnOperation"
 import PositionUpdate from "./PositionUpdate";
 import YardOperations from "./yard/YardOperation";
 import GateMovePage from "./GateMove/GateMovePage";
@@ -65,8 +64,6 @@ export default function BasePage() {
         path="/eir/print"
         component={<EIRPrint />}
       />
-      {/* <PrivateRoute
-        roles={constants.roles.ROLE_LOCATION_UPDATE} exact path="/position" component={PositionUpdate} /> */}
       <PrivateRoute
         roles={constants.roles.ROLE_ADMIN}
         exact

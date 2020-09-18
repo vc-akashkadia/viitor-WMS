@@ -7,13 +7,10 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import AddIcon from "@material-ui/icons/Add";
-// import SaveRoundedIcon from "@material-ui/icons/SaveRounded";
 import DialogTitle from "@material-ui/core/DialogTitle";
-// import Table from "./Table"
 import CardGrid from "./Card";
 import { makeStyles } from "@material-ui/core/styles";
 import { DamageCodeListApi } from "../apicalls/GateApiCalls";
-// import CircularProgress from "@material-ui/core/CircularProgress";
 import Loader from "./Loader";
 import Divider from "@material-ui/core/Divider";
 import Toaster from "./Toaster";
@@ -56,16 +53,6 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
   },
   button: {
-    // paddingTop: 10,
-    // paddingBottom: 10,
-    // paddingLeft: 15,
-    // paddingRight: 15,
-    // fontSize: 14,
-    // fontWeight: 400,
-    // fontFamily: "Roboto",
-    // lineHeight: "16px",
-    // // textTransform: "inherit",
-    // minWidth: "100%",
     textTransform: "capitalize",
     padding: 0,
     height: 26,
@@ -103,8 +90,6 @@ const useStyles = makeStyles((theme) => ({
     boxSizing: "border-box",
     // padding: "11px"
     padding: " 0px 0 0px 14px",
-    // paddingLeft:"15px",
-    // paddingTop:"0px",
   },
   chipMain: {
     display: "flex",
@@ -192,7 +177,6 @@ export default function DamageCapture(props) {
       setLastIndex(newDamageList[newDamageList.length - 1]);
     } else {
       if (lastIndex && lastIndex.damageCode === "") {
-        // alert("please fill the card value");
         setError(true);
       } else {
         let newDamageList = [
@@ -247,20 +231,6 @@ export default function DamageCapture(props) {
     setLastIndex(newDamageList[newDamageList.length - 1]);
   };
 
-  // const handleSave = (damageId) => {
-  //   //let damage = damageList.find((item) => item.id === damageId);
-  //   let newDamageList = [...damageList];
-  //   newDamageList.map((item) => {
-  //     item.editable = false;
-  //     return item;
-  //   });
-  //   enableLoading();
-  //   setTimeout(() => {
-  //     setDamage(newDamageList);
-  //     setAddButton(!showAdd);
-  //     disableLoading();
-  //   }, 1000);
-  // };
   const handleRemove = (damageId) => {
     let newDamageList = [...damageList];
     setDamage(newDamageList.filter((item) => item.id !== damageId));

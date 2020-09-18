@@ -8,22 +8,15 @@ import AccordionSummary from "@material-ui/core/AccordionSummary";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
-
 import FormControl from "@material-ui/core/FormControl";
-
 import InputBase from "@material-ui/core/InputBase";
 import Button from "@material-ui/core/Button";
 import { ReactComponent as OperationIcon } from "@assests/img/yard-operation.svg";
 import { ReactComponent as GateInIcon } from "@assests/img/gate-in.svg";
 import { ReactComponent as GateOutIcon } from "@assests/img/gate-out.svg";
 import { ReactComponent as PositionIcon } from "@assests/img/postion-update.svg";
-
 import ArrowRightIcon from "@material-ui/icons/ArrowRight";
 import FormHelperText from "@material-ui/core/FormHelperText";
-// import AppBar from "@material-ui/core/AppBar";
-// import Toolbar from "@material-ui/core/Toolbar";
-// import ArrowBackIcon from "@material-ui/icons/ArrowBack";
-// import IconButton from "@material-ui/core/IconButton";
 import {
   GetYardCraneList,
   selectYardCraneApi,
@@ -54,7 +47,6 @@ const BootstrapInput = withStyles((theme) => ({
     height: 26,
     display: "flex",
     alignItems: "center",
-    // Use the system font instead of the default Roboto font.
     fontFamily: ["Roboto"].join(","),
     "&:focus": {
       borderRadius: 3,
@@ -254,10 +246,7 @@ export default function Dashboard() {
                       id="additional-actions1-header"
                     >
                       <Box display="flex" alignItems="center" width="100%">
-                        <div style={{ width: "15%" }}>
-                          {/* <img src={item.img} alt="" /> */}
-                          {item.img}
-                        </div>
+                        <div style={{ width: "15%" }}>{item.img}</div>
                         <div style={{ width: "70%" }}>
                           <Typography
                             color="primary"
@@ -281,10 +270,7 @@ export default function Dashboard() {
                       id="additional-actions1-header"
                     >
                       <Box display="flex" alignItems="center" width="100%">
-                        <div style={{ width: "15%" }}>
-                          {/* <img src={item.img} alt="" /> */}
-                          {item.img}
-                        </div>
+                        <div style={{ width: "15%" }}>{item.img}</div>
                         <div style={{ width: "70%" }}>
                           <Typography
                             color="primary"

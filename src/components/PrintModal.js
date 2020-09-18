@@ -11,6 +11,7 @@ import {
   LocationSlipApi,
   EIRPrintApi,
   updateContainerPrintStatus,
+  updateContainerRePrintStatus,
 } from "./../apicalls/GateApiCalls";
 import Loader from "./Loader";
 import Toaster from "./Toaster";
@@ -23,15 +24,6 @@ let toasterOption = {
 };
 
 const useStyles = makeStyles((theme) => ({
-  // title: {
-  //   fontSize: 16,
-  //   color: "#0c79c1",
-  //   fontWeight: 900,
-  //   fontFamily: "Roboto",
-  //   textTransform: "uppercase",
-  //   padding:"5px 10px",
-  //   margin: "auto",
-  // },
   content: {
     color: "#5c5c5c",
     fontFamily: "Roboto",
@@ -87,15 +79,6 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   button: {
-    // paddingTop: 10,
-    // paddingBottom: 10,
-    // paddingLeft: 15,
-    // paddingRight: 15,
-    // fontSize: 14,
-    // fontWeight: 400,
-    // fontFamily: "Roboto",
-    // lineHeight: "16px",
-    // textTransform: "inherit"
     textTransform: "capitalize",
     padding: 0,
     height: 26,
@@ -119,7 +102,14 @@ const useStyles = makeStyles((theme) => ({
 export default function PrintModal(props) {
   const classes = { ...useGlobalStyle(), ...useStyles() };
   const [loading, setLoading] = useState(false);
-  const { open, setOpen, modalData, container, gateType } = props;
+  const {
+    open,
+    setOpen,
+    modalData,
+    container,
+    gateType,
+    checkingPageType,
+  } = props;
   const [printType, setPrintType] = useState("");
   const dispatch = useDispatch();
   const [toaster, setToaster] = useState(false);
@@ -128,6 +118,7 @@ export default function PrintModal(props) {
   const locationSlipData = useSelector(({ base }) => base.locationSlip);
   const handlePrintType = (printType) => {
     setLoading(true);
+
     if (printType === "LOCATION") {
       let data = {
         shipmentId: container.shipmentId,
@@ -143,6 +134,8 @@ export default function PrintModal(props) {
         containerNumber: container.containerNumber,
         operationCode: container.operationCode,
         facility_id: facility,
+        shipmentId: container.shipmentId,
+        gate_type: `GATE_${gateType}`.toUpperCase(),
         printType: printType,
       };
       dispatch(EIRPrintApi(data, authToken, handleCallback));
@@ -176,12 +169,25 @@ export default function PrintModal(props) {
   };
 
   const handlePrint = () => {
-    let data = {
-      printType: printType,
-      containerNumber: container.containerNumber,
-      operationStatus: container.operationCode,
-    };
-    dispatch(updateContainerPrintStatus(data, authToken, handleCallbackPrint));
+    if (checkingPageType !== "reprint") {
+      let data = {
+        printType: printType,
+        containerNumber: container.containerNumber,
+        operationStatus: container.operationCode,
+        facility_id: facility,
+        shipmentId: container.shipmentId,
+        gate_type: `GATE_${gateType}`.toUpperCase(),
+      };
+      dispatch(
+        updateContainerPrintStatus(data, authToken, handleCallbackPrint)
+      );
+    } else {
+      let data = {};
+
+      dispatch(
+        updateContainerRePrintStatus(data, authToken, handleCallbackPrint)
+      );
+    }
   };
 
   const handleCallbackPrint = (response) => {
@@ -201,7 +207,9 @@ export default function PrintModal(props) {
         >
           {printType === "LOCATION" &&
             (container.operationCode === "GATE_IN_INBOUND" ||
-              container.operationCode === "GATE_IN_OUTBOUND") && (
+              container.operationCode === "GATE_IN_OUTBOUND" ||
+              (container.operationCode === "GATE_OUT_INBOUND" &&
+                gateType === "In")) && (
               <>
                 <LocationSlip data={locationSlipData} />
               </>
@@ -247,7 +255,9 @@ export default function PrintModal(props) {
               {!loading && (
                 <>
                   {(container.operationCode === "GATE_IN_INBOUND" ||
-                    container.operationCode === "GATE_IN_OUTBOUND") && (
+                    container.operationCode === "GATE_IN_OUTBOUND" ||
+                    (container.operationCode === "GATE_OUT_INBOUND" &&
+                      gateType === "In")) && (
                     <Button
                       onClick={(e) => handlePrintType("LOCATION")}
                       variant="contained"

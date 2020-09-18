@@ -21,13 +21,6 @@ let toasterOption = {
 };
 
 const useStyles = makeStyles((theme) => ({
-  // title: {
-  //   color: "#0c79c1",
-  //   textTransform: "uppercase",
-  //   paddingTop: 12,
-  //   padding: "5px 10px",
-  //   margin: "auto",
-  // },
   content: {
     fontFamily: "Roboto",
     paddingLeft: 10,
@@ -52,15 +45,6 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
   },
   button: {
-    // paddingTop: 10,
-    // paddingBottom: 10,
-    // paddingLeft: 15,
-    // paddingRight: 15,
-    // fontSize: 14,
-    // fontWeight: 400,
-    // fontFamily: "Roboto",
-    // lineHeight: "16px",
-    // textTransform: "inherit",
     textTransform: "capitalize",
     padding: 0,
     height: 26,
@@ -84,11 +68,6 @@ export default function GroundingContainers(props) {
   const locationCrane = useSelector(({ base }) => base.locationCrane);
   const facility = useSelector(({ base }) => base.facility);
   const [loading, setLoading] = useState(false);
-  //   const [open, setOpen] = React.useState(open);
-
-  //   const handleClickOpen = () => {
-  //     setOpen(true);
-  //   };
 
   const handleClose = () => {
     setOpen(false);
@@ -112,9 +91,7 @@ export default function GroundingContainers(props) {
         };
         setLoading(true);
         dispatch(LocationUpdatePost(data, authToken, handleCallback));
-        // setOpen(false);
       } else {
-        //call other API
         let data = {
           containerNumber: container.containerNumber,
           locationNumber: location,
@@ -124,9 +101,6 @@ export default function GroundingContainers(props) {
         };
         setLoading(true);
 
-        // setTimeout(() => {
-        //   handleCallback({});
-        // }, 1000);
         dispatch(GroundingContianerApiCall(data, authToken, handleCallback));
       }
     }
@@ -164,9 +138,6 @@ export default function GroundingContainers(props) {
 
   return (
     <div>
-      {/* <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-        Open alert dialog
-      </Button> */}
       <Dialog
         open={open}
         onClose={handleClose}

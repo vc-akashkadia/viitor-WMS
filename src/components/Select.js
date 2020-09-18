@@ -4,30 +4,6 @@ import Select from "@material-ui/core/Select";
 import InputBase from "@material-ui/core/InputBase";
 import MenuItem from "@material-ui/core/MenuItem";
 
-// const BootstrapInput = withStyles((theme) => ({
-//     root: {
-//       "label + &": {
-//         marginTop: theme.spacing(3),
-//       },
-//     },
-//     input: {
-//       borderRadius: 4,
-//       position: "relative",
-//       backgroundColor: "#f6f6f6",
-//       border: "1px solid #ced4da",
-//       fontSize: 16,
-//       padding: "10px 26px 10px 12px",
-//       transition: theme.transitions.create(["border-color", "box-shadow"]),
-//       width: "100%",
-//       // Use the system font instead of the default Roboto font.
-//       fontFamily: ["Roboto"].join(","),
-//       "&:focus": {
-//         borderRadius: 4,
-//         borderColor: "#80bdff",
-//         boxShadow: "0 0 0 0.2rem rgba(0,123,255,.25)",
-//       },
-//     },
-//   }))(InputBase);
 const BootstrapInput = withStyles((theme) => ({
   root: {
     "label + &": {
@@ -47,7 +23,6 @@ const BootstrapInput = withStyles((theme) => ({
     height: 28,
     display: "flex",
     alignItems: "center",
-    // Use the system font instead of the default Roboto font.
     fontFamily: ["Roboto"].join(","),
     "&:focus": {
       borderRadius: 3,

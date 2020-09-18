@@ -84,29 +84,13 @@ const StyledMenu = withStyles({
     {...props}
   />
 ));
-const StyledMenuItem = withStyles((theme) => ({
-  // root: {
-  //   "&:focus": {
-  //     backgroundColor: theme.palette.primary.main,
-  //     "& .MuiListItemIcon-root, & .MuiListItemText-primary": {
-  //       color: theme.palette.common.white,
-  //     },
-  //   },
-  // },
-  // selected: {
-  //   backgroundColor: theme.palette.primary.main,
-  //   "& .MuiListItemIcon-root, & .MuiListItemText-primary": {
-  //     color: theme.palette.common.black,
-  //   },
-  // },
-}))(MenuItem);
+const StyledMenuItem = withStyles((theme) => ({}))(MenuItem);
 
 export default function TitleHeader(props) {
   const { open, setOpen, title, backPath, isSearch } = props;
   const facility = useSelector(({ base }) => base.facility);
   const history = useHistory();
   const classes = useStyles();
-  // const anchorRef = React.useRef(null);
   const [anchorEl, setAnchorEl] = useState(null);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -125,12 +109,7 @@ export default function TitleHeader(props) {
       <CssBaseline />
       <AppBar position="fixed" color="secondary">
         <Toolbar>
-          <Box
-            display="flex"
-            alignItems="center"
-            // justifyContent="space-between"
-            style={{ width: "100%" }}
-          >
+          <Box display="flex" alignItems="center" style={{ width: "100%" }}>
             <Box display="flex" className={classes.mainbox} alignItems="center">
               <IconButton
                 aria-label="back"
@@ -173,7 +152,6 @@ export default function TitleHeader(props) {
                   isSearch === false ? { paddingRight: 0 } : { paddingRight: 0 }
                 }
                 onClick={handleClick}
-                // ref={anchorRef}
               >
                 <AccountCircle
                   style={{

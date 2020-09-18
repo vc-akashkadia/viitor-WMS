@@ -8,9 +8,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
-import Alert from "@material-ui/lab/Alert";
-// import Checkbox from "@material-ui/core/Checkbox";
-// import Typography from "@material-ui/core/Typography";
 import InputLabel from "@material-ui/core/InputLabel";
 import { LoginApi } from "../../apicalls/authCall";
 import { useDispatch } from "react-redux";
@@ -25,7 +22,6 @@ const useStyles = makeStyles((theme) => ({
     // height: "calc(100vh - 75px)",
     // margin: "auto",
     position: "relative",
-    // paddingBottom: 125,
     "@media (min-width:241px)": {
       // paddingBottom: 40,
       margin: '0 15px 10px',
@@ -49,10 +45,6 @@ const useStyles = makeStyles((theme) => ({
   listItemsChild: {
     marginBottom: 10,
   },
-  // cardContent: {
-  //   paddingBottom: "5px",
-  //   marginTop: "25px",
-  // },
   icon: {
     borderRadius: 3,
     width: 16,
@@ -135,10 +127,6 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
-// let errors = {
-//   email: "",
-//   password: "",
-// };
 let toasterOption = {
   option: "error",
   message: constants.login.invalid,
@@ -149,7 +137,6 @@ export default function Login() {
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  // const [remember_me, setCheckbox] = useState(false);
   const [alert, setAlert] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({
@@ -180,16 +167,9 @@ export default function Login() {
     const {
       data: { status },
     } = response;
-    if (status) {
-      // toasterOption = {
-      //   option: "success",
-      //   message: "Login Successfull",
-      // };
-    } else {
+    if (!status) {
       setAlert(true);
-      setLoading(false);
     }
-    //setAlert(true);
     setLoading(false);
   };
 
@@ -203,11 +183,6 @@ export default function Login() {
 
       <Card className={classes.root}>
         <CardContent className={classes.card}>
-          {/* {alert && (
-            <Alert severity={toasterOption.option}>
-              {toasterOption.message}
-            </Alert>
-          )} */}
           <Toaster
             open={alert}
             handleClose={setAlert}
@@ -224,14 +199,6 @@ export default function Login() {
               >
                 User Name
               </InputLabel>
-              {/* <BootstrapInput
-                  error
-                  id="username"
-                  placeholder="Enter User Name"
-                  helperText={errors.email}
-                  value={email}
-                  onInput={(e) => setEmail(e.target.value)}
-                /> */}
               <TextField
                 error={errors.email !== ""}
                 id="username"
@@ -241,12 +208,9 @@ export default function Login() {
                 helperText={errors.email}
                 value={email}
                 onInput={(e) => setEmail(e.target.value)}
-                // style={{width: '100%'}}
                 fullWidth
                 size="small"
-                // className={classes.loginField}
               />
-              {/* </FormControl> */}
             </Grid>
             <Grid item xs={12} className={classes.listItemsChild}>
               <InputLabel
@@ -269,24 +233,6 @@ export default function Login() {
               />
             </Grid>
 
-            {/* <Grid item xs={12} className={classes.listItemsChild}>
-              <Checkbox
-                className={clsx(classes.checkBox, classes.paddingRemove)}
-                color="primary"
-                name="rememberme"
-                icon={<span className={classes.icon} />}
-                checkedIcon={
-                  <span className={clsx(classes.icon, classes.checkedIcon)} />
-                }
-              />
-              <Typography
-                variant="body1"
-                component="span"
-                className={classes.rememberText}
-              >
-                Remember Me
-              </Typography>
-            </Grid> */}
             <Grid item xs={12} className={classes.listItemsChild}>
               <Button
                 type="submit"

@@ -39,7 +39,6 @@ export const constants = {
     { value: "OUTBOUND", label: "Outbound" },
   ],
   rePrintTypes: [
-    { value: "Both", label: "Both" },
     { value: "GATE_IN", label: "Gate In" },
     { value: "GATE_OUT", label: "Gate Out" },
   ],

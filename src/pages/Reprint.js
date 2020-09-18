@@ -63,11 +63,6 @@ const useStyles = makeStyles({
     color: "#173a64",
     fontSize: 15,
   },
-  // yardTitle: {
-  //   margin: "15px 10px 10px 10px",
-  //   fontSize: 15,
-  //   color: "#5c5c5c",
-  // },
   yardNoData: {
     width: "100%",
     marginTop: "93px",
@@ -107,17 +102,6 @@ const useStyles = makeStyles({
     height: 61,
     padding: 0,
   },
-  // filterSearch: {
-  //   margin: "1px 1px",
-  //   padding: 10,
-  //   position: "fixed",
-  //   backgroundColor: "#ffff",
-  //   zIndex: "2",
-  // },
-  // searchTitle: {
-  //   fontSize: 15,
-  //   color: "#5c5c5c",
-  // },
   searchInput: {
     width: "100%",
   },
@@ -133,11 +117,7 @@ const useStyles = makeStyles({
     fontWeight: 900,
     fontFamily: "Roboto",
     textTransform: "uppercase",
-    // paddingTop: 12,
-    // paddingLeft: 10,
     padding: "5px 10px",
-    // paddingRight: 10,
-    // paddingBottom: 5,
     margin: "auto",
   },
   content: {
@@ -195,15 +175,6 @@ const useStyles = makeStyles({
     },
   },
   button: {
-    // paddingTop: 10,
-    // paddingBottom: 10,
-    // paddingLeft: 15,
-    // paddingRight: 15,
-    // fontSize: 14,
-    // fontWeight: 400,
-    // fontFamily: "Roboto",
-    // lineHeight: "16px",
-    // textTransform: "inherit",
     textTransform: "capitalize",
     padding: 0,
     height: 26,
@@ -221,7 +192,7 @@ const rePrintOption = constants.rePrintTypes;
 export default function Reprint() {
   const classes = { ...useGobalStyle(), ...useStyles() };
   const [open, setOpen] = useState(false);
-  const [block, setBlock] = useState("Both");
+  const [block, setBlock] = useState("");
   const [fromDate, setFromDate] = useState(GetFormattedDate());
   const [toDate, setToDate] = useState(GetFormattedDate());
   const [loading, setLoading] = useState(false);
@@ -285,7 +256,7 @@ export default function Reprint() {
               <Grid item xs={6}>
                 <FormControl fullWidth>
                   <Select
-                    selectedValue={block === "" ? "Both" : block}
+                    selectedValue={block === "" ? "none" : block}
                     handleChange={setBlock}
                     options={rePrintOption}
                     placeholder={constants.formPlaceHolder.gateType}
@@ -349,30 +320,8 @@ export default function Reprint() {
       >
         <div style={{ position: "relative" }}>
           <Typography className={classes.yardTitle}>Work Order</Typography>
-          {/* <RefreshIcon onClick={handleRefresh} fontSize="small" className={classes.refreshStyle}  /> */}
         </div>
         <Divider style={{ marginBottom: "7px" }} />
-        {/* <hr /> */}
-
-        {/* <Card
-          className={classes.yardCard}
-          style={{ border: "1px solid #929eaa", margin: "3px" }}
-        >
-          <Box
-            display="flex"
-            alignItems="center"
-            justifyContent="space-between"
-          >
-            <Box className={classes.chipMain}>
-              <div style={{ position: "relative" }}>
-              <Chip
-                  label={"1234"}
-                  
-                />
-              </div>
-            </Box>
-          </Box>
-        </Card> */}
         {loading && <Loader />}
         {!loading &&
           gateMoveContainerList &&
@@ -419,7 +368,7 @@ export default function Reprint() {
           modalData={modalData}
           data={dataModal}
           container={selectContainer}
-          // handleAction={handlePrintData}
+          checkingPageType={"reprint"}
         />
       )}
     </>
