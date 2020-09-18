@@ -100,7 +100,6 @@ export default function Header() {
   const classes = useStyles();
   const history = useHistory();
   const theme = useTheme();
-  const [open, setOpen] = useState(false);
   const [openDrawer, setOpenDrawer] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const handleClick = (event) => {
@@ -111,9 +110,7 @@ export default function Header() {
     setAnchorEl(null);
   };
 
-  const handleToggle = () => {
-    setOpen((prevOpen) => !prevOpen);
-  };
+ 
 
   const handleDrawer = () => {
     setOpenDrawer(true);

@@ -73,7 +73,9 @@ const useStyles = makeStyles((theme) => ({
 export default function GroundingContainers(props) {
   const classes = { ...useGlobalStyle(), ...useStyles() };
   const { open, setOpen, type, container } = props;
-  const [location, setLocation] = useState(container && container.locationBarcode);
+  const [location, setLocation] = useState(
+    container && container.locationBarcode
+  );
   const [error, setError] = useState("");
   const [toaster, setToaster] = useState(false);
   const dispatch = useDispatch();

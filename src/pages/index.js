@@ -12,7 +12,7 @@ import EIRPrint from "../components/print/EIRPrint";
 import UserList from "./UserAccess/UserList";
 import PrivateRoute from "../routes/PrivateRoutes";
 import { constants } from "@config/constant";
-import Reprint from "./Reprint"
+import Reprint from "./Reprint";
 export default function BasePage() {
   return (
     <Switch>

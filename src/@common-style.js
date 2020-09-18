@@ -43,9 +43,9 @@ const useGobalStyle = makeStyles((theme) => ({
     fontWeight: 900,
     fontFamily: "Roboto",
     textTransform: "uppercase",
-    padding:"5px 10px",
+    padding: "5px 10px",
     margin: "auto",
-  }
+  },
 }));
 
 export default useGobalStyle;

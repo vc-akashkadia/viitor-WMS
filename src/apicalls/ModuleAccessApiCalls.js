@@ -5,7 +5,7 @@ import {
   userList,
   userRoleList,
 } from "../actions/actions";
-import {logout} from '../actions/authActions';
+import { logout } from "../actions/authActions";
 export const AddRoleApi = (data, authtoken, callback) => {
   let url = getUrl("addUser");
   return (dispatch) => {
@@ -21,11 +21,11 @@ export const AddRoleApi = (data, authtoken, callback) => {
             // code: err.response.status,
           },
         };
-        if(err.response !== undefined){
+        if (err.response !== undefined) {
           const {
             data: { code },
           } = err.response;
-          if(code === 'UNAUTHORIZED'){
+          if (code === "UNAUTHORIZED") {
             dispatch(logout());
           }
         }
@@ -49,11 +49,11 @@ export const EditRoleApi = (data, authtoken, callback) => {
             // code: err.response.status,
           },
         };
-        if(err.response !== undefined){
+        if (err.response !== undefined) {
           const {
             data: { code },
           } = err.response;
-          if(code === 'UNAUTHORIZED'){
+          if (code === "UNAUTHORIZED") {
             dispatch(logout());
           }
         }
@@ -80,11 +80,11 @@ export const getUserList = (data, authToken, callback) => {
         let response = {
           data: { status: false },
         };
-        if(err.response !== undefined){
+        if (err.response !== undefined) {
           const {
             data: { code },
           } = err.response;
-          if(code === 'UNAUTHORIZED'){
+          if (code === "UNAUTHORIZED") {
             dispatch(logout());
           }
         }
@@ -113,11 +113,11 @@ export const getUserRoleList = (authToken, callback) => {
             // code: err.response.status,
           },
         };
-        if(err.response !== undefined){
+        if (err.response !== undefined) {
           const {
             data: { code },
           } = err.response;
-          if(code === 'UNAUTHORIZED'){
+          if (code === "UNAUTHORIZED") {
             dispatch(logout());
           }
         }
@@ -157,11 +157,11 @@ export const getContainerListForLocationUpdate = (
             // code: err.response.status,
           },
         };
-        if(err.response !== undefined){
+        if (err.response !== undefined) {
           const {
             data: { code },
           } = err.response;
-          if(code === 'UNAUTHORIZED'){
+          if (code === "UNAUTHORIZED") {
             dispatch(logout());
           }
         }
@@ -185,11 +185,11 @@ export const LocationUpdatePost = (data, authtoken, callback) => {
             // code: err.response.status,
           },
         };
-        if(err.response !== undefined){
+        if (err.response !== undefined) {
           const {
             data: { code },
           } = err.response;
-          if(code === 'UNAUTHORIZED'){
+          if (code === "UNAUTHORIZED") {
             dispatch(logout());
           }
         }
@@ -219,11 +219,11 @@ export const getRefreshLocationUpdateContainer = (
             // code: err.response.status,
           },
         };
-        if(err.response !== undefined){
+        if (err.response !== undefined) {
           const {
             data: { code },
           } = err.response;
-          if(code === 'UNAUTHORIZED'){
+          if (code === "UNAUTHORIZED") {
             dispatch(logout());
           }
         }

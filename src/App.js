@@ -1,15 +1,12 @@
 import React from "react";
 import { Provider } from "react-redux";
 import { MuiThemeProvider } from "@material-ui/core/styles";
-import {
-  BrowserRouter,
-} from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import theme from "@config/theme";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { PersistGate } from "redux-persist/integration/react";
 import { Routes } from "./routes/index";
 import "./App.css";
-
 
 function App({ store, persistor }) {
   return (

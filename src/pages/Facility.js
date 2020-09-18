@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import { makeStyles, withStyles} from "@material-ui/core/styles";
+import { makeStyles, withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 
@@ -16,7 +16,7 @@ import bottomImage from "@assests/img/pattern.svg";
 import Select from "../components/Select";
 import Toaster from "../components/Toaster";
 import InputBase from "@material-ui/core/InputBase";
-import {constants} from "@config/constant";
+import { constants } from "@config/constant";
 
 import {
   facilityListApiCall,
@@ -47,7 +47,7 @@ const BootstrapInput = withStyles((theme) => ({
     width: "100%",
     height: 30,
     // display: "flex",
-    color:"#1f1f21",
+    color: "#1f1f21",
     alignItems: "center",
     whiteSpace: "nowrap",
     overflow: "hidden",
@@ -74,15 +74,16 @@ const useStyles = makeStyles((theme) => ({
     // paddingBottom: 125,
     "@media (min-width:241px)": {
       // paddingBottom: 40,
-      margin: '0 15px',
-      maxWidth: '100%'
+      margin: "0 15px",
+      maxWidth: "100%",
     },
-    "@media (min-width:768px)": {
-      paddingBottom: 100,
-      margin: 'auto',
-      height: 'fit-content',
-      maxWidth: "500px"
-    }
+    "@media (min-width:490px)": {
+      paddingBottom: 50,
+      margin: "auto",
+      height: "fit-content",
+      maxWidth: "500px",
+      marginBottom: 10,
+    },
   },
   logo: {
     display: "block",
@@ -105,14 +106,8 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     left: 0,
     display: "block",
-    padding: "0 10px"
+    padding: "0 10px",
   },
-  // label: {
-  //   fontSize: 14,
-  //   color: "#707070",
-  //   fontWeight: 500,
-  //   fontFamily: "Roboto",
-  // },
   button: {
     fontSize: 13,
     color: "#ffffff",
@@ -127,12 +122,16 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: "5px",
     marginTop: "25px",
   },
-  facilityForm:{
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    minHeight: 210
-  }
+  facilityForm: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    // minHeight: 210
+    minHeight: "calc(100vh - 120px)",
+    "@media (min-width:600px)": {
+      minHeight: "inherit",
+    },
+  },
 }));
 
 export default function Facility() {
@@ -153,37 +152,34 @@ export default function Facility() {
 
     setLoading(true);
     if (facility !== "") {
-      dispatch(selectedFacility(facility,authToken,handleCallback));
-      
+      dispatch(selectedFacility(facility, authToken, handleCallback));
     } else {
       setErrors(constants.facility.error);
       //setAlert(true)
       setLoading(false);
     }
-
-    
   };
   const handleCallback = (response) => {
-    const {data : {status}} =response
-    if(status){
+    const {
+      data: { status },
+    } = response;
+    if (status) {
       history.push("/operations");
-     }else{
+    } else {
       toasterOption = {
         option: "error",
-        message: 'Wrong Facility Selected',
+        message: "Wrong Facility Selected",
       };
       setAlert(true);
       setLoading(false);
     }
-   
-    
-  }
+  };
   const getFacilityApi = () => {
     if (facilityList.length === 0) {
       dispatch(facilityListApiCall(authToken, handleCallbackFacilityList));
     }
-  }
-  useEffect(getFacilityApi,[]);
+  };
+  useEffect(getFacilityApi, []);
   const handleCallbackFacilityList = (response) => {
     const {
       data: { status },
@@ -202,13 +198,13 @@ export default function Facility() {
 
   return (
     <>
-      <Header isAdmin={user.isAdmin}/>
+      <Header isAdmin={user.isAdmin} />
       <br />
       <br />
       <br />
 
       <Card className={classes.root}>
-        <CardContent style={{minHeight: '250px'}}>
+        <CardContent style={{ minHeight: "250px" }}>
           {/* {alert && (
             <Alert severity={toasterOption.option}>
               {toasterOption.message}
@@ -225,7 +221,7 @@ export default function Facility() {
                     error={errors !== ""}
                   >
                     <Select
-                      selectedValue={facility !== '' ? facility : 'none'}
+                      selectedValue={facility !== "" ? facility : "none"}
                       handleChange={setSelectFacility}
                       options={facilityList}
                       placeholder={constants.formPlaceHolder.facility}
@@ -245,18 +241,18 @@ export default function Facility() {
                 className={classes.button}
                 disabled={loading}
               >
-                Go 
+                Go
               </Button>
             </Grid>
           </form>
           <img src={bottomImage} alt="bottom" className={classes.bottomImage} />
         </CardContent>
       </Card>
-      <Toaster 
-      open={alert}
-      handleClose={setAlert}
-      option={toasterOption.option}
-      message={toasterOption.message}
+      <Toaster
+        open={alert}
+        handleClose={setAlert}
+        option={toasterOption.option}
+        message={toasterOption.message}
       />
     </>
   );

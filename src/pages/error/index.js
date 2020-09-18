@@ -34,9 +34,9 @@ const useStyles = makeStyles((theme) => ({
   },
   listItemsChild: {
     // marginBottom: 10,
-    display:"block",
-    margin:"5px auto",
-    textAlign:"center"
+    display: "block",
+    margin: "5px auto",
+    textAlign: "center",
   },
   cardContent: {
     paddingBottom: "5px",
@@ -128,17 +128,27 @@ export default function Login() {
       <Card className={classes.root}>
         <CardContent className={classes.card}>
           <div className={classes.loginForm}>
-          <Grid item xs={12} className={classes.listItemsChild}>
-              <Typography variant="h5" style={{fontWeight:"500",color: "#000000"}}>404</Typography>
-              <Typography variant="h5"  style={{fontWeight:"500",color: "#000000"}}>Page Not Found</Typography>
-          </Grid>
+            <Grid item xs={12} className={classes.listItemsChild}>
+              <Typography
+                variant="h5"
+                style={{ fontWeight: "500", color: "#000000" }}
+              >
+                404
+              </Typography>
+              <Typography
+                variant="h5"
+                style={{ fontWeight: "500", color: "#000000" }}
+              >
+                Page Not Found
+              </Typography>
+            </Grid>
             <Grid item xs={12} className={classes.listItemsChild}>
               <Button
                 type="submit"
                 variant="contained"
                 size="small"
                 className={classes.button}
-                onClick={()=>history.push("/")}
+                onClick={() => history.push("/")}
               >
                 Back To Home
               </Button>

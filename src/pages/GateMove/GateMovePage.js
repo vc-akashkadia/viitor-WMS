@@ -6,7 +6,7 @@ import Box from "@material-ui/core/Box";
 import Card from "@material-ui/core/Card";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
-import LocalPrintshopOutlinedIcon from '@material-ui/icons/LocalPrintshopOutlined';
+import LocalPrintshopOutlinedIcon from "@material-ui/icons/LocalPrintshopOutlined";
 import FormControl from "@material-ui/core/FormControl";
 
 import InputBase from "@material-ui/core/InputBase";
@@ -15,12 +15,12 @@ import TextField from "@material-ui/core/TextField";
 import Modal from "../../components/modal";
 import PrintModal from "../../components/PrintModal";
 
-import DamageModal from "../../components/DamageCapture"
+import DamageModal from "../../components/DamageCapture";
 // import CircularProgress from "@material-ui/core/CircularProgress";
 import {
   getContainerListApi,
   gateMoveContainerApi,
-  getRefreshContainer
+  getRefreshContainer,
 } from "../../apicalls/GateApiCalls";
 import CradGrid from "../../components/Card";
 import TitleHeader from "../../components/TitleHeader";
@@ -34,12 +34,13 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import GateInIcon from "@assests/img/gate-in1.svg";
 import GateOutIcon from "@assests/img/gate-out1.svg";
 import Select from "../../components/Select";
-import RefreshIcon from '@material-ui/icons/Refresh';
-import Toaster from '../../components/Toaster'
-import Divider from '@material-ui/core/Divider';
-import useGlobalStyle from "@common-style"
-import {constants} from '@config/constant'
-import clsx from 'clsx';
+import RefreshIcon from "@material-ui/icons/Refresh";
+import Toaster from "../../components/Toaster";
+import Divider from "@material-ui/core/Divider";
+import useGlobalStyle from "@common-style";
+import { constants } from "@config/constant";
+import Chip from "@material-ui/core/Chip";
+import clsx from "clsx";
 
 const BootstrapInput = withStyles((theme) => ({
   root: {
@@ -57,7 +58,7 @@ const BootstrapInput = withStyles((theme) => ({
     transition: theme.transitions.create(["border-color", "box-shadow"]),
     width: "100%",
     height: 26,
-    color:"#1f1f21",
+    color: "#1f1f21",
     // display: "flex",
     alignItems: "center",
     whiteSpace: "nowrap",
@@ -75,7 +76,7 @@ const BootstrapInput = withStyles((theme) => ({
   },
 }))(InputBase);
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme=>({
   backIcon: {
     color: "#173a64",
   },
@@ -89,9 +90,9 @@ const useStyles = makeStyles({
   //   color: "#5c5c5c",
   // },
   yardNoData: {
-    width:'100%',
-    marginTop:'93px',
-    paddingLeft:70
+    width: "100%",
+    marginTop: "93px",
+    paddingLeft: 70,
   },
   yardCard: {
     padding: 12,
@@ -127,6 +128,10 @@ const useStyles = makeStyles({
     height: 61,
     padding: 0,
   },
+  scroobar:{
+    ...theme.layout.scrollbarStyles,
+    height: theme.layout.mainDivHeight
+  },
   // filterSearch: {
   //   margin: "1px 1px",
   //   padding: 10,
@@ -155,7 +160,7 @@ const useStyles = makeStyles({
     textTransform: "uppercase",
     // paddingTop: 12,
     // paddingLeft: 10,
-    padding:"5px 10px",
+    padding: "5px 10px",
     // paddingRight: 10,
     // paddingBottom: 5,
     margin: "auto",
@@ -208,11 +213,11 @@ const useStyles = makeStyles({
     paddingBottom: 15,
     justifyContent: "center",
   },
-  filterOpen:{
+  filterOpen: {
     marginTop: "130px",
-    "@media (min-width:600px)":{
-      marginTop: 75
-    }
+    "@media (min-width:600px)": {
+      marginTop: 75,
+    },
   },
   button: {
     // paddingTop: 10,
@@ -228,20 +233,21 @@ const useStyles = makeStyles({
     padding: 0,
     height: 26,
   },
-});
+}));
 let toasterOption = {
   varient: "success",
   message: "",
 };
 
-const gateTypeOptions = constants.gateTypes
+const gateTypeOptions = constants.gateTypes;
 
 const vehicalOption = constants.vehicle;
 
 export default function GateMovePage(props) {
   // const classes = useStyles();
   const classes = { ...useGlobalStyle(), ...useStyles() };
-  
+  const scrollRef = React.createRef()
+
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const [toaster, setToaster] = useState(false);
@@ -276,25 +282,24 @@ export default function GateMovePage(props) {
     if (damageAdded) {
       setModalData("filterPopup");
       setFilterPopup(true);
-      setDataModal(damagedContainer)
+      setDataModal(damagedContainer);
       return;
     }
     getContainerList();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gatetype]);
-  
+
   const getContainerList = () => {
     if (vehical !== "" && vehical !== "Criteria" && number === "") {
       alert(constants.vehicleNumber.error);
       return;
     }
-    if ( vehical !== "" && vehical !== "Criteria" &&  number.length < 4) {
+    if (vehical !== "" && vehical !== "Criteria" && number.length < 4) {
       alert(constants.vehicleNumber.minError);
       return;
     }
-    
-    
+
     let data = {
       vehical: vehical,
       number: number,
@@ -312,10 +317,10 @@ export default function GateMovePage(props) {
     if (damageAdded) {
       setModalData("filterPopup");
       setFilterPopup(true);
-      setDataModal(damagedContainer)
+      setDataModal(damagedContainer);
       return;
     }
-    setOpen(false)
+    setOpen(false);
     getContainerList();
   };
   const handleCallback = (response) => {
@@ -394,7 +399,7 @@ export default function GateMovePage(props) {
           delete item.damage;
           return item;
         });
-        setDamagedContainer('');
+        setDamagedContainer("");
         setOpenDamageModal(true);
       } else if (modalData === "gateOperation") {
         setopenConfirmGateOperation(true);
@@ -411,7 +416,9 @@ export default function GateMovePage(props) {
         (item) => item.containerId === selectContainer.containerId
       );
       gateMoveContainerList[containerIndexDamage].damage = damageCode;
-      setDamagedContainer(gateMoveContainerList[containerIndexDamage].containerNumber);
+      setDamagedContainer(
+        gateMoveContainerList[containerIndexDamage].containerNumber
+      );
       setContainerIndex(containerIndexDamage);
     }
 
@@ -426,13 +433,11 @@ export default function GateMovePage(props) {
     if (damageAdded && index !== containerIndex) {
       setModalData("gateOperation");
       setFilterPopup(true);
-      setDataModal(damagedContainer)
+      setDataModal(damagedContainer);
     } else {
       setopenConfirmGateOperation(true);
     }
   };
-
-
 
   const handleCloseGateModal = (status) => {
     if (status) {
@@ -442,49 +447,46 @@ export default function GateMovePage(props) {
     setopenConfirmGateOperation(false);
   };
 
-  const handleOpenPrint = (container,index)=>{
+  const handleOpenPrint = (container, index) => {
     setSelectContainer(container);
-    setOpenPrintModal(true)
+    setOpenPrintModal(true);
     setModalData("print");
-    
-  }
-  const handleRefresh = ()=>{
+  };
+  const handleRefresh = () => {
     if (damageAdded) {
       setModalData("refreshContainer");
       setFilterPopup(true);
-      setDataModal(damagedContainer)
+      setDataModal(damagedContainer);
       return;
     }
     setLoading(true);
     let data = {
       facility_id: facility,
-      operationtype : `Gate_${props.gateType}`.toUpperCase()
+      operationtype: `Gate_${props.gateType}`.toUpperCase(),
     };
     dispatch(getRefreshContainer(data, authToken, handleCallbackRefresh));
-    
-  }
+  };
   const handleCallbackRefresh = (response) => {
     const {
       data: { status },
     } = response;
     if (status) {
-        getContainerList();
+      getContainerList();
     } else {
       setTimeout(() => {
         setLoading(false);
       }, 1000);
     }
-    
-  }
+  };
 
   const handleClosePrintModal = (status) => {
-    setOpenPrintModal(false)
-    if(status){
+    setOpenPrintModal(false);
+    if (status) {
       getContainerList();
     }
-  }
+  };
   return (
-    <>
+    <div className={classes.scroobar} ref={scrollRef}>
       <TitleHeader
         open={open}
         setOpen={setOpen}
@@ -493,80 +495,85 @@ export default function GateMovePage(props) {
       />
       {open && (
         <div className={classes.filterSearch}>
-        <Card className={classes.filterPadding}>
-          <Grid container spacing={1} alignItems="center">
-            <Grid item xs={12}>
-              <Typography className={classes.searchTitle}>
-                Search Here
-              </Typography>
-            </Grid>
-            <Grid item xs={6}>
-              <FormControl fullWidth>
-                <Select
-                  selectedValue={gatetype}
-                  handleChange={setGateType}
-                  options={gateTypeOptions}
-                  placeholder={constants.formPlaceHolder.gateType}
-                  inputStyle={<BootstrapInput />}
+          <Card className={classes.filterPadding}>
+            <Grid container spacing={1} alignItems="center">
+              <Grid item xs={12}>
+                <Typography className={classes.searchTitle}>
+                  Search Here
+                </Typography>
+              </Grid>
+              <Grid item xs={6}>
+                <FormControl fullWidth>
+                  <Select
+                    selectedValue={gatetype}
+                    handleChange={setGateType}
+                    options={gateTypeOptions}
+                    placeholder={constants.formPlaceHolder.gateType}
+                    inputStyle={<BootstrapInput />}
+                  />
+                </FormControl>
+              </Grid>
+              <Grid item xs={6}>
+                <FormControl fullWidth>
+                  <Select
+                    selectedValue={vehical}
+                    handleChange={(value) => {
+                      setVehical(value);
+                      if (value === "Criteria") {
+                        setNumber("");
+                        handleSearch();
+                      }
+                    }}
+                    options={vehicalOption}
+                    placeholder={constants.formPlaceHolder.vehical}
+                    inputStyle={<BootstrapInput />}
+                  />
+                </FormControl>
+              </Grid>
+              <Grid item xs={8}>
+                <TextField
+                  className={classes.searchInput}
+                  id="outlined-basic"
+                  placeholder="Enter No."
+                  label=""
+                  variant="outlined"
+                  value={number}
+                  onInput={(e) => setNumber(e.target.value)}
                 />
-              </FormControl>
+              </Grid>
+              <Grid item xs={4}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  className={classes.searchBtn}
+                  onClick={handleSearch}
+                >
+                  Search
+                </Button>
+              </Grid>
             </Grid>
-            <Grid item xs={6}>
-              <FormControl fullWidth>
-                <Select
-                  selectedValue={vehical}
-                  handleChange={(value) => {
-                    setVehical(value);
-                    if (value === "Criteria") {
-                      setNumber("");
-                      handleSearch()
-                    }
-                  }}
-                  options={vehicalOption}
-                  placeholder={constants.formPlaceHolder.vehical}
-                  inputStyle={<BootstrapInput />}
-                />
-              </FormControl>
-            </Grid>
-            <Grid item xs={8}>
-              <TextField
-                className={classes.searchInput}
-                id="outlined-basic"
-                placeholder="Enter No."
-                label=""
-                variant="outlined"
-                value={number}
-                onInput={(e) => setNumber(e.target.value)}
-              />
-            </Grid>
-            <Grid item xs={4}>
-              <Button
-                variant="contained"
-                color="primary"
-                className={classes.searchBtn}
-                onClick={handleSearch}
-              >
-                Search
-              </Button>
-            </Grid>
-          </Grid>
-        </Card>
+          </Card>
         </div>
       )}
       <div
-        // className={classes.yardMain}
         className={clsx({
-          [classes.filterOpen] : open //only when open === true
+          [classes.filterOpen]: open, //only when open === true
+          // [classes.scroobar]:true
         })}
-        // style={open ? { marginTop: "130px" } : { marginTop: "0px" }}
+        // className={classes.scroobar}
       >
-        <div style={{position:'relative'}}>
-        <Typography className={classes.yardTitle}>Work Order</Typography>
-        <RefreshIcon onClick={handleRefresh} fontSize="small" className={classes.refreshStyle}  />
+        <div style={{ position: "relative" }}>
+          <Typography className={classes.yardTitle}>Work Order</Typography>
+          <RefreshIcon
+            onClick={handleRefresh}
+            fontSize="small"
+            className={classes.refreshStyle}
+          />
         </div>
-        <Divider style={{marginBottom:"7px"}}/>
+        <Divider style={{ marginBottom: "7px" }} />
         {/* <hr /> */}
         {loading && <Loader />}
+
         {!loading &&
           gateMoveContainerList &&
           gateMoveContainerList.length === 0 && (
@@ -574,6 +581,39 @@ export default function GateMovePage(props) {
               No Data Found
             </Typography>
           )}
+          <Card
+              // key={index}
+              className={classes.yardCard}
+              style={{ border: "1px solid #929eaa", margin: "3px" }}
+            >
+                <Box
+                display="flex"
+                alignItems="center"
+                justifyContent="space-between"
+              >
+                 <Box className={classes.chipMain}>
+                  <div style={{ position: "relative" }}>
+                    <Chip
+                      label={"2233"}
+                      // size="small"
+                      style={{ width: "59px", color: "#000000" }}
+                      className={classes.chip}
+                    />
+                  </div>
+                  <div style={{ position: "relative" }}>
+                    <Chip
+                      label={"123"}
+                      style={{ width: "120px", color: "#000000" }}
+                      className={classes.chip}
+                    />
+                  </div>
+                  <Button
+                    className={classes.confirmBtn}
+                  >
+                  </Button>
+                </Box>
+              </Box>
+            </Card>
         {!loading &&
           gateMoveContainerList &&
           gateMoveContainerList.length > 0 &&
@@ -587,7 +627,7 @@ export default function GateMovePage(props) {
               cardFor="gateOperation"
             >
               {!item.gateOperationCompleted ? (
-                <Box style={{'marginLeft': '3px'}}>
+                <Box style={{ marginLeft: "3px" }}>
                   {item.operationCode === "GATE_IN_INBOUND" ||
                   item.operationCode === "GATE_IN_OUTBOUND" ? (
                     <Button
@@ -595,7 +635,11 @@ export default function GateMovePage(props) {
                       onClick={() => handleOpenModalGate(item, key)}
                     >
                       {/* <ArrowDownwardIcon color="secondary" /> */}
-                      <img src={GateInIcon} alt="Gate In"  style={{paddingLeft:"5px"}}/>
+                      <img
+                        src={GateInIcon}
+                        alt="Gate In"
+                        style={{ paddingLeft: "5px" }}
+                      />
                     </Button>
                   ) : (
                     <Button
@@ -603,31 +647,33 @@ export default function GateMovePage(props) {
                       onClick={() => handleOpenModalGate(item, key)}
                     >
                       {/* <ArrowUpwardIcon color="secondary" /> */}
-                      <img src={GateOutIcon} alt="Gate Out" style={{paddingLeft:"5px"}} />
+                      <img
+                        src={GateOutIcon}
+                        alt="Gate Out"
+                        style={{ paddingLeft: "5px" }}
+                      />
                     </Button>
                   )}
                 </Box>
               ) : (
-                <Box style={{'marginLeft': '3px'}}>
-                    <Button
-                      className={classes.rightBoxArrow}
-                      onClick={() => handleOpenPrint(item, key)}
-                    >
-                      <LocalPrintshopOutlinedIcon color="secondary"/>
-                    </Button>
-                 
+                <Box style={{ marginLeft: "3px" }}>
+                  <Button
+                    className={classes.rightBoxArrow}
+                    onClick={() => handleOpenPrint(item, key)}
+                  >
+                    <LocalPrintshopOutlinedIcon color="secondary" />
+                  </Button>
                 </Box>
               )}
             </CradGrid>
           ))}
       </div>
       {openDamageModal && (
-        <DamageModal 
-        container={selectContainer}
+        <DamageModal
+          container={selectContainer}
           open={openDamageModal}
           setOpen={setOpenDamageModal}
           addDamage={handleDamage}
-        
         />
       )}
       {openModal && (
@@ -673,7 +719,11 @@ export default function GateMovePage(props) {
               Do you want to confirm Gate{" "}
               {props.gateType.charAt(0).toUpperCase() + props.gateType.slice(1)}{" "}
               {/* for <b>{selectContainer.containerNumber}</b>? */}
-              for <span style={{ color: "#000000" }}>{selectContainer.containerNumber}</span>?
+              for{" "}
+              <span style={{ color: "#000000" }}>
+                {selectContainer.containerNumber}
+              </span>
+              ?
             </DialogContentText>
           </DialogContent>
           <DialogActions className={classes.actionbutton}>
@@ -699,14 +749,13 @@ export default function GateMovePage(props) {
           </DialogActions>
         </Dialog>
       )}
-      <ScrollToTop />
-      <Toaster 
-      open={toaster}
-      handleClose={setToaster}
-      option={toasterOption.varient}
-      message={toasterOption.message}
+      <ScrollToTop refClass={scrollRef} />
+      <Toaster
+        open={toaster}
+        handleClose={setToaster}
+        option={toasterOption.varient}
+        message={toasterOption.message}
       />
-      
-    </>
+    </div>
   );
 }

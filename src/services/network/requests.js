@@ -10,41 +10,40 @@ const servicesForData = axios.create({
   withCredentials: true,
   headers: {
     "Content-Type": "application/x-www-form-urlencoded",
-    
   },
-  crossDomain : true,
+  crossDomain: true,
   xhrFields: {
-      withCredentials: true
+    withCredentials: true,
   },
 });
 
 export const get = (url, useToken) => {
   const headers = tokenHeaders(useToken);
-  return services.get(url,headers);
+  return services.get(url, headers);
 };
 
-const tokenHeaders = (useToken) =>{
-  let token ;
-  if (typeof(useToken) === 'string'){
+const tokenHeaders = (useToken) => {
+  let token;
+  if (typeof useToken === "string") {
     token = {
       headers: {
-        'Authorization': 'Bearer '+ useToken,
-      }
-    }
-  }else{
-    token = useToken
+        Authorization: "Bearer " + useToken,
+      },
+    };
+  } else {
+    token = useToken;
   }
   return token;
-}
+};
 
 export const post = (url, data, useToken) => {
   const headers = tokenHeaders(useToken);
-  return services.post(url, data,headers);
+  return services.post(url, data, headers);
 };
 
 export const postFormData = (url, data, useToken = false) => {
   const headers = tokenHeaders(useToken);
-  return servicesForData.post(url, data,headers);
+  return servicesForData.post(url, data, headers);
 };
 
 export const putFormData = (url, data, useToken = false) => {

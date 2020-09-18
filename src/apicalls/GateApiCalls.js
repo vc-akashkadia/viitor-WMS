@@ -7,7 +7,7 @@ import {
   GetLocationSlipDetail,
 } from "../actions/actions";
 
-import {logout} from '../actions/authActions';
+import { logout } from "../actions/authActions";
 
 export const DamageCodeListApi = (authToken, callback) => {
   let url = getUrl("damageCodeList");
@@ -37,11 +37,11 @@ export const DamageCodeListApi = (authToken, callback) => {
             // code: err.response.status,
           },
         };
-        if(err.response !== undefined){
+        if (err.response !== undefined) {
           const {
             data: { code },
           } = err.response;
-          if(code === 'UNAUTHORIZED'){
+          if (code === "UNAUTHORIZED") {
             dispatch(logout());
           }
         }
@@ -83,11 +83,11 @@ export const getContainerListApi = (data, authToken, callback) => {
             // code: err.response.status,
           },
         };
-        if(err.response !== undefined){
+        if (err.response !== undefined) {
           const {
             data: { code },
           } = err.response;
-          if(code === 'UNAUTHORIZED'){
+          if (code === "UNAUTHORIZED") {
             dispatch(logout());
           }
         }
@@ -119,11 +119,11 @@ export const gateMoveContainerApi = (data, authToken, callback) => {
             // code: err.response.status,
           },
         };
-        if(err.response !== undefined){
+        if (err.response !== undefined) {
           const {
             data: { code },
           } = err.response;
-          if(code === 'UNAUTHORIZED'){
+          if (code === "UNAUTHORIZED") {
             dispatch(logout());
           }
         }
@@ -160,11 +160,11 @@ export const LocationSlipApi = (callData, authToken, callback) => {
             // code: err.response.status,
           },
         };
-        if(err.response !== undefined){
+        if (err.response !== undefined) {
           const {
             data: { code },
           } = err.response;
-          if(code === 'UNAUTHORIZED'){
+          if (code === "UNAUTHORIZED") {
             dispatch(logout());
           }
         }
@@ -192,11 +192,11 @@ export const EIRPrintApi = (callData, authToken, callback) => {
         let response = {
           data: { status: false },
         };
-        if(err.response !== undefined){
+        if (err.response !== undefined) {
           const {
             data: { code },
           } = err.response;
-          if(code === 'UNAUTHORIZED'){
+          if (code === "UNAUTHORIZED") {
             dispatch(logout());
           }
         }
@@ -216,9 +216,9 @@ export const getRefreshContainer = (data, authToken, callback) => {
   return (dispatch) => {
     get(url, authToken)
       .then((response) => {
-        const {
-          data: { status, data },
-        } = response;
+        // const {
+        //   data: { status, data },
+        // } = response;
         callback(response);
       })
       .catch((err) => {
@@ -229,11 +229,11 @@ export const getRefreshContainer = (data, authToken, callback) => {
             // code: err.response.status,
           },
         };
-        if(err.response !== undefined){
+        if (err.response !== undefined) {
           const {
             data: { code },
           } = err.response;
-          if(code === 'UNAUTHORIZED'){
+          if (code === "UNAUTHORIZED") {
             dispatch(logout());
           }
         }
@@ -241,7 +241,6 @@ export const getRefreshContainer = (data, authToken, callback) => {
       });
   };
 };
-
 
 export const updateContainerPrintStatus = (callData, authToken, callback) => {
   let url = getUrl("updateContainerStatus");
@@ -260,11 +259,11 @@ export const updateContainerPrintStatus = (callData, authToken, callback) => {
             // code: err.response.status,
           },
         };
-        if(err.response !== undefined){
+        if (err.response !== undefined) {
           const {
             data: { code },
           } = err.response;
-          if(code === 'UNAUTHORIZED'){
+          if (code === "UNAUTHORIZED") {
             dispatch(logout());
           }
         }
@@ -276,8 +275,8 @@ export const updateContainerPrintStatus = (callData, authToken, callback) => {
 export const getReprintContainerListApi = (data, authToken, callback) => {
   let url = getUrl("reprint");
   let querystring = `?facilityName=${data.facility_id}&fromDate=${data.fromDate}&toDate=${data.toDate}`;
-  if(data.operationtype !== "Both"){
-    querystring = querystring+`&operationType=${data.operationtype}`
+  if (data.operationtype !== "Both") {
+    querystring = querystring + `&operationType=${data.operationtype}`;
   }
   url = url + querystring;
   return (dispatch) => {
@@ -287,8 +286,7 @@ export const getReprintContainerListApi = (data, authToken, callback) => {
           data: { status, data },
         } = response;
         if (status) {
-          if(typeof data !== 'string')
-            dispatch(GateMoveContainerList(data));
+          if (typeof data !== "string") dispatch(GateMoveContainerList(data));
         }
         callback(response);
       })
@@ -300,17 +298,15 @@ export const getReprintContainerListApi = (data, authToken, callback) => {
             // code: err.response.status,
           },
         };
-        if(err.response !== undefined){
+        if (err.response !== undefined) {
           const {
             data: { code },
           } = err.response;
-          if(code === 'UNAUTHORIZED'){
+          if (code === "UNAUTHORIZED") {
             dispatch(logout());
           }
         }
         callback(responseNew);
       });
-
-    
   };
 };

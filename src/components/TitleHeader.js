@@ -59,7 +59,7 @@ const useStyles = makeStyles((theme) => ({
 const StyledMenu = withStyles({
   paper: {
     borderRadius: 0,
-    border: '1px solid #d3d4d5',
+    border: "1px solid #d3d4d5",
     boxShadow: "0px 3px 4px rgba(0,0,0,0.16)",
     width: "auto",
     "& ul": {
@@ -138,12 +138,10 @@ export default function TitleHeader(props) {
                 size="small"
                 onClick={() => history.push(backPath)}
               >
-                <ArrowBackIcon  style={{color:"#5c5c5c"}}/>
+                <ArrowBackIcon style={{ color: "#5c5c5c" }} />
               </IconButton>
 
-              <div
-                className={ classes.headerDiv }
-              >
+              <div className={classes.headerDiv}>
                 <Typography
                   className={classes.backText + " " + classes.headerText}
                 >
@@ -163,8 +161,8 @@ export default function TitleHeader(props) {
                   size="small"
                   style={{ paddingRight: 0 }}
                 >
-                  {!open && <SearchIcon style={{color:"#5c5c5c"}} />}
-                  {open && <CloseIcon style={{color:"#5c5c5c"}} />}
+                  {!open && <SearchIcon style={{ color: "#5c5c5c" }} />}
+                  {open && <CloseIcon style={{ color: "#5c5c5c" }} />}
                 </IconButton>
               </Box>
             )}
@@ -177,7 +175,13 @@ export default function TitleHeader(props) {
                 onClick={handleClick}
                 // ref={anchorRef}
               >
-                <AccountCircle style={{color:"#5c5c5c",marginLeft: "auto",paddingRight:0}}/>
+                <AccountCircle
+                  style={{
+                    color: "#5c5c5c",
+                    marginLeft: "auto",
+                    paddingRight: 0,
+                  }}
+                />
               </IconButton>
             </Box>
             <StyledMenu
@@ -186,20 +190,26 @@ export default function TitleHeader(props) {
               keepMounted
               open={Boolean(anchorEl)}
               onClose={handleClose}
-              style={{ marginLeft: "14px", marginTop: "0px",top:"-10px" }}
+              style={{ marginLeft: "14px", marginTop: "0px", top: "-10px" }}
               disableAutoFocusItem={true}
             >
               {facility && (
                 <StyledMenuItem>
                   <ListItemIcon className={classes.menuIcon}>
-                    <AccountBalanceIcon fontSize="small" style={{color:"#5c5c5c"}} />
+                    <AccountBalanceIcon
+                      fontSize="small"
+                      style={{ color: "#5c5c5c" }}
+                    />
                   </ListItemIcon>
                   <ListItemText primary={facility} />
                 </StyledMenuItem>
               )}
               <StyledMenuItem onClick={() => history.push("/logout")}>
                 <ListItemIcon className={classes.menuIcon}>
-                  <ExitToAppIcon fontSize="small" style={{color:"#5c5c5c"}}/>
+                  <ExitToAppIcon
+                    fontSize="small"
+                    style={{ color: "#5c5c5c" }}
+                  />
                 </ListItemIcon>
                 <ListItemText primary="Logout" />
               </StyledMenuItem>

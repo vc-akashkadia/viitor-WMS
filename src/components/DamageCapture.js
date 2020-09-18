@@ -16,13 +16,13 @@ import { DamageCodeListApi } from "../apicalls/GateApiCalls";
 // import CircularProgress from "@material-ui/core/CircularProgress";
 import Loader from "./Loader";
 import Divider from "@material-ui/core/Divider";
-import Toaster from './Toaster'
+import Toaster from "./Toaster";
 import useGobalStyle from "@common-style";
 
 const useStyles = makeStyles((theme) => ({
-    root:{
-        marginBottom:"-4px"
-    },
+  root: {
+    marginBottom: "-4px",
+  },
   title: {
     color: "#0c79c1",
     fontFamily: "Roboto",
@@ -129,11 +129,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
-
 export default function DamageCapture(props) {
   const { open, setOpen, container, addDamage } = props;
-  const classes = {...useGobalStyle(),...useStyles()};
+  const classes = { ...useGobalStyle(), ...useStyles() };
   const [showAdd, setAddButton] = useState(true);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
@@ -148,7 +146,7 @@ export default function DamageCapture(props) {
       enableLoading();
       dispatch(DamageCodeListApi(authToken, handleCallbackDamageCodeList));
     }
-  }
+  };
   useEffect(getDamageCodeList, []);
   const checkExistDamage = () => {
     if (container.damage !== undefined && container.damage !== "") {
@@ -164,9 +162,9 @@ export default function DamageCapture(props) {
       }));
       setDamage(selecftDamageList);
     }
-  }
+  };
   useEffect(checkExistDamage, [open]);
-  
+
   const handleCallbackDamageCodeList = (response) => {
     disableLoading();
   };
@@ -228,7 +226,7 @@ export default function DamageCapture(props) {
     if (lastIndex) {
       scrollToTop();
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [lastIndex]);
 
   const handleOnChange = (value, valueFor, damageId) => {
@@ -236,9 +234,7 @@ export default function DamageCapture(props) {
     newDamageList.map((item) => {
       if (item.id === damageId) {
         item.damageCode = value;
-        let singleDamageCode = damageCodes.find(
-          (item) => item.value === value
-        );
+        let singleDamageCode = damageCodes.find((item) => item.value === value);
         if (singleDamageCode !== undefined) {
           item.description = singleDamageCode.label;
         } else {
@@ -283,9 +279,9 @@ export default function DamageCapture(props) {
   const handleClose = () => {
     setOpen(false);
   };
-  const handleErrorClose =()=>{
-      setError(false)
-  }
+  const handleErrorClose = () => {
+    setError(false);
+  };
 
   const handleConfirm = () => {
     let damageCodeSelected = damageList.map(function (damage) {
@@ -320,17 +316,32 @@ export default function DamageCapture(props) {
               zIndex: "2",
             }}
           >
-            <DialogContentText style={{ color:  "#777777" }} className={classes.root}>
+            <DialogContentText
+              style={{ color: "#777777" }}
+              className={classes.root}
+            >
               Truck Number:{" "}
-              {<span style={{ color: "#1f1f21" }}>{container && container.truckNumber}</span>}
-            </DialogContentText >
+              {
+                <span style={{ color: "#1f1f21" }}>
+                  {container && container.truckNumber}
+                </span>
+              }
+            </DialogContentText>
             <Box
               display="flex"
               alignItems="center"
               justifyContent="space-between"
             >
-              <DialogContentText className={classes.root} style={{ color:  "#777777",marginTop:"7px",display:"flex" }}>
-                Container:{<span style={{ color: "#1f1f21",marginLeft:"4px"}}>{container.containerNumber}</span>}
+              <DialogContentText
+                className={classes.root}
+                style={{ color: "#777777", marginTop: "7px", display: "flex" }}
+              >
+                Container:
+                {
+                  <span style={{ color: "#1f1f21", marginLeft: "4px" }}>
+                    {container.containerNumber}
+                  </span>
+                }
               </DialogContentText>
               <Box
                 style={{ marginRight: "-4px", borderRadius: "50%" }}
@@ -341,14 +352,22 @@ export default function DamageCapture(props) {
             </Box>
           </Box>
 
-          {loading && <Loader key={Math.random()}/>}
+          {loading && <Loader key={Math.random()} />}
           <Box key="boxdiv" style={{ marginTop: "50px" }}>
             {!loading &&
               showAdd &&
               damageList &&
               damageList.map((damage) => (
-               <> 
-               <CardGrid index={damage.id} item={damage} key={damage.id} handleChange={handleOnChange} selectOption={damageCodes}  cardFor={"damageCapture"} handleRemove={handleRemove}/>
+                <>
+                  <CardGrid
+                    index={damage.id}
+                    item={damage}
+                    key={damage.id}
+                    handleChange={handleOnChange}
+                    selectOption={damageCodes}
+                    cardFor={"damageCapture"}
+                    handleRemove={handleRemove}
+                  />
                 </>
               ))}
           </Box>
@@ -376,13 +395,12 @@ export default function DamageCapture(props) {
         </DialogActions>
       </Dialog>
       {error && (
-        <Toaster 
-        open={error}
-        handleClose={handleErrorClose}
-        option={error}
-        message={'Please Fill the Damage Code'}
+        <Toaster
+          open={error}
+          handleClose={handleErrorClose}
+          option={error}
+          message={"Please Fill the Damage Code"}
         />
-       
       )}
     </div>
   );

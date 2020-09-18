@@ -13,10 +13,10 @@ import FormControl from "@material-ui/core/FormControl";
 
 import InputBase from "@material-ui/core/InputBase";
 import Button from "@material-ui/core/Button";
-import {ReactComponent as OperationIcon} from "@assests/img/yard-operation.svg";
-import {ReactComponent as GateInIcon} from "@assests/img/gate-in.svg";
-import {ReactComponent as GateOutIcon} from "@assests/img/gate-out.svg";
-import {ReactComponent as PositionIcon} from "@assests/img/postion-update.svg";
+import { ReactComponent as OperationIcon } from "@assests/img/yard-operation.svg";
+import { ReactComponent as GateInIcon } from "@assests/img/gate-in.svg";
+import { ReactComponent as GateOutIcon } from "@assests/img/gate-out.svg";
+import { ReactComponent as PositionIcon } from "@assests/img/postion-update.svg";
 
 import ArrowRightIcon from "@material-ui/icons/ArrowRight";
 import FormHelperText from "@material-ui/core/FormHelperText";
@@ -33,7 +33,7 @@ import Select from "../components/Select";
 import Loader from "../components/Loader";
 import TitleHeader from "../components/TitleHeader";
 import { constants } from "@config/constant";
-import PrintOutlinedIcon from '@material-ui/icons/PrintOutlined';
+import PrintOutlinedIcon from "@material-ui/icons/PrintOutlined";
 
 const BootstrapInput = withStyles((theme) => ({
   root: {
@@ -47,7 +47,7 @@ const BootstrapInput = withStyles((theme) => ({
     backgroundColor: "#f6f6f6",
     border: "1px solid #ced4da",
     fontSize: 14,
-    color:"#1f1f21",
+    color: "#1f1f21",
     padding: "0px 26px 0px 7px",
     transition: theme.transitions.create(["border-color", "box-shadow"]),
     width: "100%",
@@ -64,9 +64,11 @@ const BootstrapInput = withStyles((theme) => ({
   },
 }))(InputBase);
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme=>({
   mainContainer: {
-    margin: "20px 10px 10px 10px",
+    padding: "20px 10px 10px 10px",
+    ...theme.layout.scrollbarStyles,
+    height: theme.layout.mainDivHeight
   },
   mainTitle: {
     paddingLeft: 14,
@@ -99,7 +101,7 @@ const useStyles = makeStyles({
   accordiondetails: {
     padding: "0px 11px 7px 10px",
   },
-});
+}));
 
 const content = [
   {
@@ -108,7 +110,7 @@ const content = [
     value: constants.operation.gatein,
     img: <GateInIcon />,
     isAccordion: false,
-    roleName:"ROLE_GATE"
+    roleName: "ROLE_GATE",
   },
   {
     title: "Yard Operation",
@@ -116,7 +118,7 @@ const content = [
     value: constants.operation.yardOperation,
     img: <OperationIcon />,
     isAccordion: true,
-    roleName:"ROLE_YARD"
+    roleName: "ROLE_YARD",
   },
   {
     title: "Location Update",
@@ -124,7 +126,7 @@ const content = [
     value: constants.operation.location,
     img: <PositionIcon />,
     isAccordion: true,
-    roleName:"ROLE_LOCATION_UPDATE"
+    roleName: "ROLE_LOCATION_UPDATE",
   },
   {
     title: "Gate Out",
@@ -132,15 +134,20 @@ const content = [
     value: constants.operation.gateout,
     img: <GateOutIcon />,
     isAccordion: false,
-    roleName:"ROLE_GATE"
+    roleName: "ROLE_GATE",
   },
   {
     title: "Re-Print",
     route: "/reprint",
     value: constants.operation.reprint,
-    img: <PrintOutlinedIcon style={{color:"#5c5c5c",width:"30px"}}  fontSize="large" />,
+    img: (
+      <PrintOutlinedIcon
+        style={{ color: "#5c5c5c", width: "30px" }}
+        fontSize="large"
+      />
+    ),
     isAccordion: false,
-    roleName:"ROLE_GATE"
+    roleName: "ROLE_GATE",
   },
 ];
 
@@ -207,7 +214,6 @@ export default function Dashboard() {
     } = response;
     if (status) {
     } else {
-      
     }
     setLoading(false);
   };
@@ -220,7 +226,7 @@ export default function Dashboard() {
   useEffect(getCraneList, []);
 
   return (
-    <>
+    <div className={classes.mainContainer}>
       {/* <Header /> */}
       <TitleHeader
         key="operation-header"
@@ -229,12 +235,10 @@ export default function Dashboard() {
         isSearch={false}
       />
 
-      <div className={classes.mainContainer}>
+      <div >
         {content &&
-          content.map((item,index) => (
-
+          content.map((item, index) => (
             <React.Fragment key={index}>
-
               {userRoles.indexOf(item.roleName) > -1 && !item.isAccordion && (
                 <Card
                   key={item.title}
@@ -302,12 +306,12 @@ export default function Dashboard() {
                             <Select
                               selectedValue={
                                 item.value === constants.operation.yardOperation
-                                  ? (crane !== ""
+                                  ? crane !== ""
                                     ? crane
-                                    : "none")
-                                  : (locationCrane !== ""
+                                    : "none"
+                                  : locationCrane !== ""
                                   ? locationCrane
-                                  : "none")
+                                  : "none"
                               }
                               handleChange={(value) =>
                                 handleCranselect(item.value, value)
@@ -337,6 +341,6 @@ export default function Dashboard() {
             </React.Fragment>
           ))}
       </div>
-    </>
+    </div>
   );
 }

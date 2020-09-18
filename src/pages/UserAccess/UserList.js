@@ -14,9 +14,9 @@ import AddCircleIcon from "@material-ui/icons/AddCircle";
 import EditUserModal from "./EditModal";
 import { getUserList } from "../../apicalls/ModuleAccessApiCalls";
 import Divider from "@material-ui/core/Divider";
-import useGlobalStyle from "@common-style"
-import Modal from "components/modal"
-import Loader from "components/Loader"
+import useGlobalStyle from "@common-style";
+import Modal from "components/modal";
+import Loader from "components/Loader";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -37,24 +37,24 @@ const useStyles = makeStyles((theme) => ({
   chipMain: {
     display: "flex",
     flexWrap: "wrap",
-    width:"100%",
+    width: "100%",
     alignItems: "center",
     "& > *": {
       margin: "2px 1px",
     },
-    "@media (min-width:360px)":{
+    "@media (min-width:360px)": {
       flexWrap: "nowrap",
       "& > *": {
         margin: "2px 2px",
       },
-    }
+    },
   },
-  chip:{
-    height:26,
+  chip: {
+    height: 26,
     color: "#000000",
-    "@media (min-width:360px)":{
-      height: 52
-    }
+    "@media (min-width:360px)": {
+      height: 52,
+    },
   },
   confirmBtn: {
     backgroundColor: "#40d759",
@@ -77,6 +77,10 @@ const useStyles = makeStyles((theme) => ({
   //   fontSize: 15,
   //   color: "#5c5c5c",
   // },
+  scroobar:{
+    ...theme.layout.scrollbarStyles,
+    height: theme.layout.mainDivHeight
+  },
 
   searchInput: {
     width: "100%",
@@ -100,21 +104,22 @@ const access = {
 };
 
 export default function UserList(props) {
-  const classes = {...useGlobalStyle(),...useStyles()};
+  const classes = { ...useGlobalStyle(), ...useStyles() };
   //   const history = useHistory();
+  const scrollRef = React.createRef()
   const [open, setOpen] = useState(false);
   const [selectUser, setSelectUser] = useState({});
   const [gModal, setGModal] = useState(false);
   const [openModal, setModal] = useState(false);
   const [data, setData] = useState();
-  const [modalData,setModalData]=useState()
+  const [modalData, setModalData] = useState();
   const [type, setType] = useState();
   const [loading, setLoading] = useState(false);
   const authToken = useSelector(({ auth }) => auth.authToken);
   let userList = useSelector(({ base }) => base.userList);
   const dispatch = useDispatch();
   const getUserListApi = () => {
-    setLoading(true)
+    setLoading(true);
     let data = {};
     dispatch(getUserList(data, authToken, handleCallbackUserList));
   };
@@ -125,14 +130,14 @@ export default function UserList(props) {
     setType(type);
     setSelectUser(user);
   };
-  const handleOpenModal = (type,item) => {
+  const handleOpenModal = (type, item) => {
     setModal(true);
-    setModalData(type)
-    setData(item)
+    setModalData(type);
+    setData(item);
   };
 
   const handleCallbackUserList = (response) => {
-    setLoading(false)
+    setLoading(false);
   };
 
   const handleCloseModal = (status) => {
@@ -142,7 +147,7 @@ export default function UserList(props) {
     }
   };
   return (
-    <>
+    <div className={classes.scroobar} ref={scrollRef}>
       <TitleHeader
         open={open}
         isSearch={false}
@@ -150,7 +155,7 @@ export default function UserList(props) {
         title={"User Access"}
         backPath={"/facility"}
       />
-      
+
       <div
         className={classes.yardMain}
         style={open ? { marginTop: "82px" } : { marginTop: "0px" }}
@@ -158,7 +163,7 @@ export default function UserList(props) {
         <div style={{ position: "relative" }}>
           <Typography className={classes.yardTitle}>User List</Typography>
           <AddCircleIcon
-          fontSize="small" 
+            fontSize="small"
             // style={{position:'absolute',top: '-2px',right:'10px',color:"#5c5c5c"}}
             className={classes.refreshStyle}
             onClick={() => handleGModal("add", {})}
@@ -170,10 +175,10 @@ export default function UserList(props) {
           userList.map((user, index) => (
             <Card
               key={index}
-              className={classes.yardCard }
+              className={classes.yardCard}
               style={{
                 border: "1px solid #929eaa",
-               margin:"3px"
+                margin: "3px",
               }}
             >
               <Box
@@ -184,22 +189,29 @@ export default function UserList(props) {
                 <Box className={classes.chipMain}>
                   <Chip
                     label={user.userName}
-                    style={{ width: "106px" }}
+                    style={{ width: "101px" }}
                     className={classes.chip}
                   />
                   <Chip
                     label={user.facilityId}
-                    style={{ width: "112px"}}
+                    style={{ width: "112px" }}
                     className={classes.chip}
                   />
                   <Chip
-                      // key={key + "_" + role.roleName}
-                      label={user && user.userRoleId.map((role, key) => (key ? ", ":"")+access[role.roleName])}
-                      size="medium"
-                      style={{ width: "182px" }}
-                      onClick={() => handleOpenModal("user",user && user.userRoleId)}
-                      className={classes.chip}
-                    />
+                    // key={key + "_" + role.roleName}
+                    label={
+                      user &&
+                      user.userRoleId.map(
+                        (role, key) => (key ? ", " : "") + access[role.roleName]
+                      )
+                    }
+                    size="medium"
+                    style={{ width: "177px" }}
+                    onClick={() =>
+                      handleOpenModal("user", user && user.userRoleId)
+                    }
+                    className={classes.chip}
+                  />
                   {/* {user.userRoleId.map((role, key) => {
                     if(access[role.roleName] === undefined){
                       return null
@@ -223,7 +235,7 @@ export default function UserList(props) {
             </Card>
           ))}
       </div>
-      <ScrollToTop />
+      <ScrollToTop   refClass={scrollRef}/>
       {gModal && (
         <EditUserModal
           open={gModal}
@@ -243,6 +255,6 @@ export default function UserList(props) {
           data={data}
         />
       )}
-    </>
+    </div>
   );
 }

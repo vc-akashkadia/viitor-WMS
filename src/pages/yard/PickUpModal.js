@@ -9,8 +9,8 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import { AddPickUpApiCall } from "../../apicalls/YardApiCalls";
 import { makeStyles } from "@material-ui/core/styles";
 import Loader from "../../components/Loader";
-import Divider from '@material-ui/core/Divider';
-import useGlobalStyle from "@common-style"
+import Divider from "@material-ui/core/Divider";
+import useGlobalStyle from "@common-style";
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     // paddingLeft: 10,
     // paddingRight: 10,
     // paddingBottom: 5,
-    padding:"5px 10px",
+    padding: "5px 10px",
     margin: "auto",
   },
   content: {
@@ -92,7 +92,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function PickUpModal(props) {
   const { open, setOpen, container } = props;
-  const classes = {...useGlobalStyle(),...useStyles()};
+  const classes = { ...useGlobalStyle(), ...useStyles() };
   const dispatch = useDispatch();
   const authToken = useSelector(({ auth }) => auth.authToken);
   const yardCrane = useSelector(({ base }) => base.yardCrane);
@@ -107,7 +107,7 @@ export default function PickUpModal(props) {
       locationNumber: container.location,
       craneNumber: yardCrane,
       truckNumber: container.truckNumber,
-      facility_id:facility
+      facility_id: facility,
     };
     setLoading(true);
     dispatch(AddPickUpApiCall(data, authToken, handleCallback));
@@ -136,7 +136,10 @@ export default function PickUpModal(props) {
           <DialogContentText id="alert-dialog-description">
             Do you want to confirm Pick up for{" "}
             {/* <b>{container && container.containerNumber}</b>? */}
-            <span style={{ color: "#000000" }}>{container && container.containerNumber}</span>?
+            <span style={{ color: "#000000" }}>
+              {container && container.containerNumber}
+            </span>
+            ?
           </DialogContentText>
         </DialogContent>
         {loading && <Loader />}

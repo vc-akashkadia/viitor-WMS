@@ -33,10 +33,10 @@ import ScrollToTop from "../../components/ScrollToTop";
 import Loader from "../../components/Loader";
 import Divider from "@material-ui/core/Divider";
 import GroundingModal from "../../components/GroundingContainer";
-import RefreshIcon from '@material-ui/icons/Refresh';
-import useGlobalStyle from "@common-style"
-import {constants} from '@config/constant'
-import clsx from 'clsx';
+import RefreshIcon from "@material-ui/icons/Refresh";
+import useGlobalStyle from "@common-style";
+import { constants } from "@config/constant";
+import clsx from "clsx";
 
 let toasterOption = {
   varient: "success",
@@ -85,11 +85,11 @@ const useStyles = makeStyles((theme) => ({
     color: "#173a64",
     fontSize: 15,
   },
-  filterOpen:{
+  filterOpen: {
     marginTop: "140px",
-    "@media (min-width:600px)":{
-      marginTop: 75
-    }
+    "@media (min-width:600px)": {
+      marginTop: 75,
+    },
   },
   // yardTitle: {
   //   margin: "15px 10px 10px 10px",
@@ -157,7 +157,7 @@ const gateTypeOptions = constants.yardType;
 const blockConst = [{ value: "Block", label: "Block" }];
 export default function YardOperation(props) {
   const classes = { ...useGlobalStyle(), ...useStyles() };
-
+  const scrollRef = React.createRef()
   const [loading, setLoading] = useState(false);
   const [toaster, setToaster] = useState(false);
   const [open, setOpen] = useState(false);
@@ -184,7 +184,6 @@ export default function YardOperation(props) {
   };
   useEffect(getBlockList, []);
 
-  
   const handleCallbackBlock = () => {};
 
   // const handleFilterOpen = () => {
@@ -223,11 +222,10 @@ export default function YardOperation(props) {
     getYardContainerList(data);
   };
 
-  
   useEffect(handleSearch, [block, gateType]);
 
   useEffect(handleSearch, []);
-  
+
   const getYardContainerList = (data) => {
     dispatch(getYardOperationApiCall(data, authToken, handleCallbackList));
   };
@@ -296,7 +294,7 @@ export default function YardOperation(props) {
     }
   };
   return (
-    <>
+    <div className={classes.scroobar} ref={scrollRef}>
       <TitleHeader
         open={open}
         setOpen={setOpen}
@@ -305,7 +303,7 @@ export default function YardOperation(props) {
       />
       {open && (
         <div className={classes.filterSearch}>
-        <Card className={classes.filterPadding}>
+          <Card className={classes.filterPadding}>
             <Grid container spacing={1} alignItems="center">
               <Grid item xs={6}>
                 <Typography className={classes.searchTitle}>
@@ -388,7 +386,7 @@ export default function YardOperation(props) {
         // className={classes.yardMain}
         // style={open ? { marginTop: "140px" } : { marginTop: "0px" }}
         className={clsx({
-          [classes.filterOpen] : open //only when open === true
+          [classes.filterOpen]: open, //only when open === true
         })}
       >
         <div style={{ position: "relative" }}>
@@ -466,7 +464,7 @@ export default function YardOperation(props) {
         option={toasterOption.varient}
         message={toasterOption.message}
       />
-      <ScrollToTop />
-    </>
+      <ScrollToTop   refClass={scrollRef}/>
+    </div>
   );
 }

@@ -29,7 +29,7 @@ const base = persistReducer(
   {
     storage,
     key: "base-wms",
-    whitelist: ["facility", "facilityList", "yardCrane","locationCrane"],
+    whitelist: ["facility", "facilityList", "yardCrane", "locationCrane"],
   },
   (state = initialstate, action) => {
     switch (action.type) {
@@ -66,7 +66,6 @@ const base = persistReducer(
           yardCrane: action.data,
         };
       }
-
 
       case actionTypes.LOCATION_CRANE: {
         return {

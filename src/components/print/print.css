@@ -7,55 +7,52 @@ td,
 th,
 tr,
 table {
-    /* border-top: 1px solid black; */
-    border-collapse: collapse;
-    
+  /* border-top: 1px solid black; */
+  border-collapse: collapse;
 }
 
 td.description,
 th.description {
-    width: 75px;
-    max-width: 75px;
+  width: 75px;
+  max-width: 75px;
 }
-
 
 td.price,
 th.price {
-    width: 180px;
-    max-width: 180px;
-    word-break: break-all;
+  width: 180px;
+  max-width: 180px;
+  word-break: break-all;
 }
 
 .centered {
-    font-size: 20px;
-    font-weight: 500;
-    margin-bottom: 10px;
-    margin-top: 10px;
+  font-size: 20px;
+  font-weight: 500;
+  margin-bottom: 10px;
+  margin-top: 10px;
 }
 
 .ticket {
-    width: 230px;
-    max-width: 302px;
-    font-size: 10px;
-    font-family: "Roboto";
-    margin-left:10px;
-    max-height: 460px;
+  width: 230px;
+  max-width: 302px;
+  font-size: 10px;
+  font-family: "Roboto";
+  margin-left: 10px;
+  max-height: 460px;
 }
 
 .ticket img {
-    width: inherit;
-    max-width: 100px;
-    margin-left: 25px;
+  width: inherit;
+  max-width: 100px;
+  margin-left: 25px;
 }
 
-
-
 @media print {
-    .hidden-print,
-    .hidden-print * {
-        display: none !important;
-    }
-    html, body {
-        height: 50%;
-    }
+  .hidden-print,
+  .hidden-print * {
+    display: none !important;
+  }
+  html,
+  body {
+    height: 50%;
+  }
 }

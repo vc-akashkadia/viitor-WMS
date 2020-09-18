@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { makeStyles,withStyles } from "@material-ui/core/styles";
+import { makeStyles, withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import Card from "@material-ui/core/Card";
@@ -11,25 +11,26 @@ import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import EditIcon from "@material-ui/icons/Edit";
 import GroundingModal from "./../components/GroundingContainer";
-import { getContainerListForLocationUpdate,getRefreshLocationUpdateContainer } from "../apicalls/ModuleAccessApiCalls";
 import {
-  getBlockListApiCall,
-} from "../apicalls/YardApiCalls";
+  getContainerListForLocationUpdate,
+  getRefreshLocationUpdateContainer,
+} from "../apicalls/ModuleAccessApiCalls";
+import { getBlockListApiCall } from "../apicalls/YardApiCalls";
 
 import TitleHeader from "../components/TitleHeader";
 import ScrollToTop from "../components/ScrollToTop";
 import Modal from "../components/modal";
 import Divider from "@material-ui/core/Divider";
 import ContainerIcon from "@assests/img/container.svg";
-import RefreshIcon from '@material-ui/icons/Refresh';
-import LocationOnOutlinedIcon from '@material-ui/icons/LocationOnOutlined';
+import RefreshIcon from "@material-ui/icons/Refresh";
+import LocationOnOutlinedIcon from "@material-ui/icons/LocationOnOutlined";
 import Loader from "../components/Loader";
 import Select from "../components/Select";
 import FormControl from "@material-ui/core/FormControl";
 import InputBase from "@material-ui/core/InputBase";
-import useGlobalStyle from "@common-style"
-import {constants} from '@config/constant'
-import clsx from 'clsx';
+import useGlobalStyle from "@common-style";
+import { constants } from "@config/constant";
+import clsx from "clsx";
 // import Modal from "../../components/modal"
 const BootstrapInput = withStyles((theme) => ({
   root: {
@@ -68,6 +69,10 @@ const useStyles = makeStyles((theme) => ({
   root: {
     position: "fixed",
   },
+  scroobar:{
+    ...theme.layout.scrollbarStyles,
+    height: theme.layout.mainDivHeight
+  },
   // yardTitle: {
   //   margin: "15px 10px 10px 10px",
   //   fontSize: 15,
@@ -83,21 +88,21 @@ const useStyles = makeStyles((theme) => ({
   chipMain: {
     display: "flex",
     flexWrap: "wrap",
-    width:"100%",
+    width: "100%",
     alignItems: "center",
-    "@media (min-width:360px)":{
+    "@media (min-width:360px)": {
       flexWrap: "nowrap",
       "& > *": {
         margin: "2px 2px",
       },
-    }
+    },
   },
-  chip:{
-    height:26,
+  chip: {
+    height: 26,
     color: "#000000",
-    "@media (min-width:360px)":{
-      height: 52
-    }
+    "@media (min-width:360px)": {
+      height: 52,
+    },
   },
   confirmBtn: {
     backgroundColor: "#40d759",
@@ -108,7 +113,7 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 500,
     lineHeight: "20px",
     textTransform: "uppercase",
-    marginLeft:"auto"
+    marginLeft: "auto",
   },
   // filterSearch: {
   //   margin: "1px 1px",
@@ -139,24 +144,25 @@ const useStyles = makeStyles((theme) => ({
     padding: 0,
     height: 26,
   },
-  modal:{
-    '&$MuiDialog':{
-      '&$paper':{
-        margin: 12
-      }
-    }
+  modal: {
+    "&$MuiDialog": {
+      "&$paper": {
+        margin: 12,
+      },
+    },
   },
-  filterOpen:{
+  filterOpen: {
     marginTop: 105,
-    "@media (min-width:600px)":{
-      marginTop: 75
-    }
+    "@media (min-width:600px)": {
+      marginTop: 75,
+    },
   },
 }));
 const blockConst = [{ value: "Block", label: "Block" }];
 export default function PositionUpdate(props) {
-  const classes = {...useGlobalStyle(),...useStyles()};
+  const classes = { ...useGlobalStyle(), ...useStyles() };
   const history = useHistory();
+  const scrollRef = React.createRef()
   const authToken = useSelector(({ auth }) => auth.authToken);
   const facility = useSelector(({ base }) => base.facility);
   const [block, setBlock] = useState("none");
@@ -165,11 +171,11 @@ export default function PositionUpdate(props) {
   const [openModal, setModal] = useState(false);
   const [data, setData] = useState();
   const [gType, setGType] = useState();
-  const [containerNumber, setContainerNumber] = useState('');
-  const [selectedContainer, setSelectedContainer] = useState('');
+  const [containerNumber, setContainerNumber] = useState("");
+  const [selectedContainer, setSelectedContainer] = useState("");
   const [loading, setLoading] = useState(false);
   const blockList = useSelector(({ base }) => base.blockList);
-  const [modalData,setModalData]=useState()
+  const [modalData, setModalData] = useState();
   // const handleFilterOpen =()=>{
   //   setOpen(!open)
   // }
@@ -177,67 +183,66 @@ export default function PositionUpdate(props) {
   const dispatch = useDispatch();
   //   const [open, setOpen] = useState(false);
   const getContainerList = () => {
-      //setOpen(false);
-      setLoading(true)
-      let data ={
-        containerNumber:containerNumber,
-        facility_id:facility
-      }
-      if (block !== "none") {
-        data.blockNumber = block;
-      }
-      dispatch(
-        getContainerListForLocationUpdate(data, authToken, handleCallBack)
-      );
-    
+    //setOpen(false);
+    setLoading(true);
+    let data = {
+      containerNumber: containerNumber,
+      facility_id: facility,
+    };
+    if (block !== "none") {
+      data.blockNumber = block;
+    }
+    dispatch(
+      getContainerListForLocationUpdate(data, authToken, handleCallBack)
+    );
   };
   useEffect(getContainerList, []);
 
   const getBlockList = () => {
     //if (blockList.length === 0) {
-      dispatch(getBlockListApiCall(facility, authToken, handleCallbackBlock));
+    dispatch(getBlockListApiCall(facility, authToken, handleCallbackBlock));
     //}
-  }
+  };
   useEffect(getBlockList, []);
 
   const handleCallbackBlock = () => {};
 
   const handleCallBack = (response) => {
-    setLoading(false)
+    setLoading(false);
   };
   const handleGModal = (container) => {
     setGModal(true);
     setGType("location");
-    setSelectedContainer(container)
+    setSelectedContainer(container);
   };
 
-  const handleOpenModal = (type,item) => {
+  const handleOpenModal = (type, item) => {
     setModal(true);
-    if(type==="container"){
+    if (type === "container") {
       setData(item.containerNumber);
-      setModalData("container")
-    }else{
-      setData(item.location)
-      setModalData("location")
+      setModalData("container");
+    } else {
+      setData(item.location);
+      setModalData("location");
     }
   };
 
   const handleModalClose = (status) => {
     setGModal(false);
-    if(status){
-      getContainerList()
+    if (status) {
+      getContainerList();
     }
   };
 
-  const handleRefresh = ()=>{
+  const handleRefresh = () => {
     setLoading(true);
     let data = {
       facility_id: facility,
-      
     };
-    dispatch(getRefreshLocationUpdateContainer(data, authToken, handleCallbackRefresh));
-    
-  }
+    dispatch(
+      getRefreshLocationUpdateContainer(data, authToken, handleCallbackRefresh)
+    );
+  };
   const handleCallbackRefresh = (response) => {
     const {
       data: { status },
@@ -249,11 +254,10 @@ export default function PositionUpdate(props) {
         setLoading(false);
       }, 1000);
     }
-    
-  }
+  };
 
   return (
-    <>
+    <div className={classes.scroobar} ref={scrollRef}>
       <TitleHeader
         open={open}
         setOpen={setOpen}
@@ -262,119 +266,138 @@ export default function PositionUpdate(props) {
       />
       {open && (
         <div className={classes.filterSearch}>
-        <Card className={classes.filterPadding}>
-          <Grid container spacing={1} alignItems="center">
-            <Grid item xs={6}>
-              <Typography className={classes.searchTitle}>
-                Search Here
-              </Typography>
-            </Grid>
-            <Grid item xs={6}>
-              <FormControl fullWidth>
-                <Select
-                  selectedValue={block === "" ? "none" : block}
-                  handleChange={setBlock}
-                  options={blockList}
-                  placeholder={constants.formPlaceHolder.block}
-                  inputStyle={<BootstrapInput />}
+          <Card className={classes.filterPadding}>
+            <Grid container spacing={1} alignItems="center">
+              <Grid item xs={6}>
+                <Typography className={classes.searchTitle}>
+                  Search Here
+                </Typography>
+              </Grid>
+              <Grid item xs={6}>
+                <FormControl fullWidth>
+                  <Select
+                    selectedValue={block === "" ? "none" : block}
+                    handleChange={setBlock}
+                    options={blockList}
+                    placeholder={constants.formPlaceHolder.block}
+                    inputStyle={<BootstrapInput />}
+                  />
+                </FormControl>
+              </Grid>
+              <Grid item xs={8}>
+                <TextField
+                  className={classes.searchInput}
+                  id="outlined-basic"
+                  placeholder="Enter Container No."
+                  label=""
+                  variant="outlined"
+                  value={containerNumber}
+                  onChange={(e) => setContainerNumber(e.target.value)}
                 />
-              </FormControl>
+              </Grid>
+              <Grid item xs={4}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  className={classes.searchBtn}
+                  onClick={() => getContainerList()}
+                >
+                  Search
+                </Button>
+              </Grid>
             </Grid>
-            <Grid item xs={8}>
-              <TextField
-                className={classes.searchInput}
-                id="outlined-basic"
-                placeholder="Enter Container No."
-                label=""
-                variant="outlined"
-                value={containerNumber}
-                onChange={(e) => setContainerNumber(e.target.value)}
-              />
-            </Grid>
-            <Grid item xs={4}>
-              <Button
-                variant="contained"
-                color="primary"
-                className={classes.searchBtn}
-                onClick={() => getContainerList()}
-              >
-                Search
-              </Button>
-            </Grid>
-          </Grid>
-        </Card>
+          </Card>
         </div>
       )}
       <div
         className={clsx({
-          [classes.filterOpen] : open //only when open === true
+          [classes.filterOpen]: open, //only when open === true
         })}
         // style={open ? { marginTop: "105px" } : { marginTop: "0px" }}
       >
-        <div style={{position:'relative'}}>
-        <Typography className={classes.yardTitle}>Work Order</Typography>
-        <RefreshIcon onClick={()=> handleRefresh()} fontSize="small" className={classes.refreshStyle} />
+        <div style={{ position: "relative" }}>
+          <Typography className={classes.yardTitle}>Work Order</Typography>
+          <RefreshIcon
+            onClick={() => handleRefresh()}
+            fontSize="small"
+            className={classes.refreshStyle}
+          />
         </div>
         <Divider style={{ marginBottom: "7px" }} />
         {loading && <Loader />}
         {!loading && containerList && containerList.length === 0 && (
           <Typography className={classes.yardNoData}>No Data Found</Typography>
         )}
-        {!loading && containerList && containerList.length > 0 && containerList.map((container,index) => (
-          <Card key={index} className={classes.yardCard} style={{ border: "1px solid #929eaa",margin:"3px" }}>
-          <Box
-            display="flex"
-            alignItems="center"
-            justifyContent="space-between"
-          >
-            <Box className={classes.chipMain}>
-              <div style={{ position: "relative" }}>
-                <Chip
-                  label={(container.containerNumber !== null) ? container.containerNumber.substring(
-                    container.containerNumber.length - 4
-                  ) : ''}
-                  // size="small"
-                  style={{ width: "59px" ,color:  "#000000" }}
-                  className={classes.chip}
-                  onClick={() => handleOpenModal("container",container)}
-                  
-                />
-                <img
-                  src={ContainerIcon}
-                  alt="container"
-                  style={{
-                    position: "absolute",
-                    top: "-5.5px",
-                    left: "3px",
-                    width: 13,
-                  }}
-                ></img>
-              </div>
-              <div style={{ position: "relative" }}>
-                <Chip label={container.location}
-                 style={{ width: "120px",color: "#000000"  }} 
-                 className={classes.chip}
-                 onClick={() => handleOpenModal("location",container)}/>
-                <LocationOnOutlinedIcon
-                  style={{
-                    position: "absolute",
-                    top: "-10px",
-                    left: "0px",
-                    width: 13,
-                    color:"#0000004d"
-                    // backgroundColor: "#ffffff"
-                  }}
-                  />
-                </div>
-              <Button className={classes.confirmBtn} onClick={() => handleGModal(container)}>
-                <EditIcon fontSize="small" />
-              </Button>
-            </Box>
-          </Box>
-        </Card>
-        )) }
+        {!loading &&
+          containerList &&
+          containerList.length > 0 &&
+          containerList.map((container, index) => (
+            <Card
+              key={index}
+              className={classes.yardCard}
+              style={{ border: "1px solid #929eaa", margin: "3px" }}
+            >
+              <Box
+                display="flex"
+                alignItems="center"
+                justifyContent="space-between"
+              >
+                <Box className={classes.chipMain}>
+                  <div style={{ position: "relative" }}>
+                    <Chip
+                      label={
+                        container.containerNumber !== null
+                          ? container.containerNumber.substring(
+                              container.containerNumber.length - 4
+                            )
+                          : ""
+                      }
+                      // size="small"
+                      style={{ width: "59px", color: "#000000" }}
+                      className={classes.chip}
+                      onClick={() => handleOpenModal("container", container)}
+                    />
+                    <img
+                      src={ContainerIcon}
+                      alt="container"
+                      style={{
+                        position: "absolute",
+                        top: "-5.5px",
+                        left: "3px",
+                        width: 13,
+                      }}
+                    ></img>
+                  </div>
+                  <div style={{ position: "relative" }}>
+                    <Chip
+                      label={container.location}
+                      style={{ width: "120px", color: "#000000" }}
+                      className={classes.chip}
+                      onClick={() => handleOpenModal("location", container)}
+                    />
+                    <LocationOnOutlinedIcon
+                      style={{
+                        position: "absolute",
+                        top: "-10px",
+                        left: "0px",
+                        width: 13,
+                        color: "#0000004d",
+                        // backgroundColor: "#ffffff"
+                      }}
+                    />
+                  </div>
+                  <Button
+                    className={classes.confirmBtn}
+                    onClick={() => handleGModal(container)}
+                  >
+                    <EditIcon fontSize="small" />
+                  </Button>
+                </Box>
+              </Box>
+            </Card>
+          ))}
       </div>
-      <ScrollToTop />
+      <ScrollToTop   refClass={scrollRef}/>
       {gModal && (
         <GroundingModal
           open={gModal}
@@ -394,6 +417,6 @@ export default function PositionUpdate(props) {
           data={data}
         />
       )}
-    </>
+    </div>
   );
 }

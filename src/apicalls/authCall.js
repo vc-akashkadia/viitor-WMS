@@ -7,7 +7,6 @@ export const LoginApi = (userData, remember_me, callback) => {
   return (dispatch) => {
     post(url, userData, {})
       .then((response) => {
-        
         const {
           data: { status, data },
         } = response;

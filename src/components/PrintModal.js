@@ -7,17 +7,20 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import { makeStyles } from "@material-ui/core/styles";
 import LocationSlip from "./print/LocationPrint";
 import EIRSlip from "./print/EIRPrint";
-import { LocationSlipApi, EIRPrintApi ,updateContainerPrintStatus} from "./../apicalls/GateApiCalls";
+import {
+  LocationSlipApi,
+  EIRPrintApi,
+  updateContainerPrintStatus,
+} from "./../apicalls/GateApiCalls";
 import Loader from "./Loader";
 import Toaster from "./Toaster";
-import  Divider  from "@material-ui/core/Divider";
-import useGlobalStyle from "@common-style"
-import {constants} from "@config/constant";
+import Divider from "@material-ui/core/Divider";
+import useGlobalStyle from "@common-style";
+import { constants } from "@config/constant";
 let toasterOption = {
   varient: "success",
   message: "",
 };
-
 
 const useStyles = makeStyles((theme) => ({
   // title: {
@@ -114,7 +117,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function PrintModal(props) {
-  const classes = {...useGlobalStyle(),...useStyles()};
+  const classes = { ...useGlobalStyle(), ...useStyles() };
   const [loading, setLoading] = useState(false);
   const { open, setOpen, modalData, container, gateType } = props;
   const [printType, setPrintType] = useState("");
@@ -124,7 +127,7 @@ export default function PrintModal(props) {
   const facility = useSelector(({ base }) => base.facility);
   const locationSlipData = useSelector(({ base }) => base.locationSlip);
   const handlePrintType = (printType) => {
-    setLoading(true)
+    setLoading(true);
     if (printType === "LOCATION") {
       let data = {
         shipmentId: container.shipmentId,
@@ -132,7 +135,7 @@ export default function PrintModal(props) {
         operationStatus: container.operationCode,
         facilityId: facility,
         containerNumber: container.containerNumber,
-        printType:printType
+        printType: printType,
       };
       dispatch(LocationSlipApi(data, authToken, handleCallback));
     } else {
@@ -140,49 +143,50 @@ export default function PrintModal(props) {
         containerNumber: container.containerNumber,
         operationCode: container.operationCode,
         facility_id: facility,
-        printType:printType
+        printType: printType,
       };
       dispatch(EIRPrintApi(data, authToken, handleCallback));
     }
   };
-  const handleCallback = (response,printType) => {
-    const { data : {status}} = response
-   if(status){
-    setPrintType(printType);
-    setTimeout(() => {
-      const anchor = document.querySelector(".ticket");
-      if (anchor) {
-        anchor.scrollIntoView({ behavior: "smooth" });
-      }
-      setLoading(false)
-    }, 100);
-  }else{
-    toasterOption = {
-      varient: "error",
-      message: constants.apiError.error,
-    };
-    setToaster(true);
-    setPrintType('');
-    setLoading(false)
-  }
+  const handleCallback = (response, printType) => {
+    const {
+      data: { status },
+    } = response;
+    if (status) {
+      setPrintType(printType);
+      setTimeout(() => {
+        const anchor = document.querySelector(".ticket");
+        if (anchor) {
+          anchor.scrollIntoView({ behavior: "smooth" });
+        }
+        setLoading(false);
+      }, 100);
+    } else {
+      toasterOption = {
+        varient: "error",
+        message: constants.apiError.error,
+      };
+      setToaster(true);
+      setPrintType("");
+      setLoading(false);
+    }
   };
   const handleClose = (status = false) => {
     setOpen(status);
   };
 
   const handlePrint = () => {
-    let data ={
-      printType:printType,
-      containerNumber:container.containerNumber,
-      operationStatus:container.operationCode,
-      
-    }
+    let data = {
+      printType: printType,
+      containerNumber: container.containerNumber,
+      operationStatus: container.operationCode,
+    };
     dispatch(updateContainerPrintStatus(data, authToken, handleCallbackPrint));
   };
 
-  const handleCallbackPrint =(response) => {
+  const handleCallbackPrint = (response) => {
     window.print();
-  }
+  };
 
   return (
     <div>
@@ -195,11 +199,13 @@ export default function PrintModal(props) {
           className={classes.muiDialog}
           fullScreen={printType === "LOCATION" || printType === "EIR"}
         >
-          {printType === "LOCATION" && (container.operationCode === 'GATE_IN_INBOUND' || container.operationCode === 'GATE_IN_OUTBOUND') && (
-            <>
-              <LocationSlip data={locationSlipData} />
-            </>
-          )}
+          {printType === "LOCATION" &&
+            (container.operationCode === "GATE_IN_INBOUND" ||
+              container.operationCode === "GATE_IN_OUTBOUND") && (
+              <>
+                <LocationSlip data={locationSlipData} />
+              </>
+            )}
           {printType === "EIR" && (
             <>
               <EIRSlip data={locationSlipData} gateType={gateType} />
@@ -215,7 +221,6 @@ export default function PrintModal(props) {
                   color="secondary"
                   autoFocus
                   className={classes.button + " " + classes.hiddenPrint}
-                  
                 >
                   Close
                 </Button>
@@ -241,7 +246,8 @@ export default function PrintModal(props) {
               {loading && <Loader />}
               {!loading && (
                 <>
-                  {(container.operationCode === 'GATE_IN_INBOUND' || container.operationCode === 'GATE_IN_OUTBOUND') && (
+                  {(container.operationCode === "GATE_IN_INBOUND" ||
+                    container.operationCode === "GATE_IN_OUTBOUND") && (
                     <Button
                       onClick={(e) => handlePrintType("LOCATION")}
                       variant="contained"
@@ -286,14 +292,12 @@ export default function PrintModal(props) {
           )}
         </Dialog>
       )}
-      <Toaster 
+      <Toaster
         open={toaster}
         handleClose={setToaster}
         option={toasterOption.varient}
         message={toasterOption.message}
-        />
-      
-      
+      />
     </div>
   );
 }

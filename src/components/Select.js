@@ -37,7 +37,7 @@ const BootstrapInput = withStyles((theme) => ({
   input: {
     borderRadius: 3,
     position: "relative",
-    color:"#1f1f21",
+    color: "#1f1f21",
     backgroundColor: "#f6f6f6",
     border: "1px solid #ced4da",
     fontSize: 14,
@@ -57,7 +57,14 @@ const BootstrapInput = withStyles((theme) => ({
   },
 }))(InputBase);
 export default function SelectDropdown(props) {
-  const {selectedValue, handleChange, options, placeholder,inputStyle,customeStyle} = props 
+  const {
+    selectedValue,
+    handleChange,
+    options,
+    placeholder,
+    inputStyle,
+    customeStyle,
+  } = props;
   return (
     <>
       <Select
@@ -67,14 +74,16 @@ export default function SelectDropdown(props) {
         onChange={(e) => handleChange(e.target.value)}
         input={inputStyle !== undefined ? inputStyle : <BootstrapInput />}
         placeholder={placeholder}
-        style={customeStyle=== undefined ? { width: "100%" } : customeStyle}
-        defaultValue='none'
+        style={customeStyle === undefined ? { width: "100%" } : customeStyle}
+        defaultValue="none"
       >
-        {placeholder && <MenuItem value="none" disabled>
+        {placeholder && (
+          <MenuItem value="none" disabled>
             {placeholder}
-        </MenuItem>}
-        {options.map((item,key) => (
-          <MenuItem key={item.value+'_'+key} value={item.value}>
+          </MenuItem>
+        )}
+        {options.map((item, key) => (
+          <MenuItem key={item.value + "_" + key} value={item.value}>
             {item.label}
           </MenuItem>
         ))}

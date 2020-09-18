@@ -23,8 +23,8 @@ export const constants = {
   gateMove: {
     title: "Operation",
   },
-  reprint:{
-    title:"Reprint"
+  reprint: {
+    title: "Reprint",
   },
   yardOperation: {
     title: "Yard Operation",

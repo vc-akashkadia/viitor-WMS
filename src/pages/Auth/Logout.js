@@ -5,13 +5,12 @@ import { Redirect } from "react-router-dom";
 import { logout } from "../../actions/authActions";
 
 export default function Logout(props) {
-    const dispatch = useDispatch()
-    
-    const logoutAction = () => {
-        dispatch(logout());
-    }
-    useEffect(logoutAction, [])
-        
-    return <Redirect to="/login" />;
-        
+  const dispatch = useDispatch();
+
+  const logoutAction = () => {
+    dispatch(logout());
+  };
+  useEffect(logoutAction, []);
+
+  return <Redirect to="/login" />;
 }

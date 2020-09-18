@@ -3,8 +3,8 @@ import { Redirect, Switch, Route } from "react-router-dom";
 import { shallowEqual, useSelector } from "react-redux";
 import Login from "../pages/Auth/Login";
 import Logout from "../pages/Auth/Logout";
-import BasePage from "../pages"
-import ErrorsPage from "../pages/error/index"
+import BasePage from "../pages";
+import ErrorsPage from "../pages/error/index";
 export function Routes() {
   const { isAuthorized } = useSelector(
     ({ auth }) => ({
@@ -28,14 +28,11 @@ export function Routes() {
       <Route path="/error" component={ErrorsPage} />
       {isAuthorized ? (
         <>
-        <BasePage />
+          <BasePage />
         </>
       ) : (
         <Redirect to="/login" />
       )}
-
-      
-      
     </Switch>
   );
 }

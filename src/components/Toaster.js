@@ -3,7 +3,7 @@ import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
 
 export default function Toaster(props) {
-  const {open,handleClose,option,message} = props 
+  const { open, handleClose, option, message } = props;
   return (
     <>
       <Snackbar
@@ -21,7 +21,6 @@ export default function Toaster(props) {
           {message}
         </MuiAlert>
       </Snackbar>
-      
     </>
   );
 }

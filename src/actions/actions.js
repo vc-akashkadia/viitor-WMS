@@ -84,7 +84,6 @@ export const userRoleList = (data) => ({
   data: data,
 });
 
-
 export const userRoles = (data) => ({
   type: actionTypes.USER_ROLE,
   data: data,

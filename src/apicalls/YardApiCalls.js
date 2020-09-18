@@ -7,40 +7,42 @@ import {
   YardContainerList,
   selectLocationcrane,
 } from "../actions/actions";
-import {logout} from '../actions/authActions'
+import { logout } from "../actions/authActions";
 export const GetYardCraneList = (facility, authToken, callback) => {
   let url = getUrl("craneList") + `?facility_id=${facility}`;
   return (dispatch) => {
-    get(url, authToken).then((response) => {
-      const {
-        data: { status, data },
-      } = response;
-      if (status) {
-        let yardCraneListObject = data.craneNumberList.map((code) => ({
-          value: code.craneNumber,
-          label: code.craneNumber,
-        }));
-        dispatch(yardCraneList(yardCraneListObject));
-      }
-      callback(response);
-    }).catch((err) => {
-      console.log("error", err);
-      let responseNew = {
-        data: {
-          status: false,
-          // code: err.response.status,
-        },
-      };
-      if(err.response !== undefined){
+    get(url, authToken)
+      .then((response) => {
         const {
-          data: { code },
-        } = err.response;
-        if(code === 'UNAUTHORIZED'){
-          dispatch(logout());
+          data: { status, data },
+        } = response;
+        if (status) {
+          let yardCraneListObject = data.craneNumberList.map((code) => ({
+            value: code.craneNumber,
+            label: code.craneNumber,
+          }));
+          dispatch(yardCraneList(yardCraneListObject));
         }
-      }
-      callback(responseNew);
-    });
+        callback(response);
+      })
+      .catch((err) => {
+        console.log("error", err);
+        let responseNew = {
+          data: {
+            status: false,
+            // code: err.response.status,
+          },
+        };
+        if (err.response !== undefined) {
+          const {
+            data: { code },
+          } = err.response;
+          if (code === "UNAUTHORIZED") {
+            dispatch(logout());
+          }
+        }
+        callback(responseNew);
+      });
   };
 };
 
@@ -59,36 +61,38 @@ export const selectLocationCraneApi = (yardCrane) => {
 export const getBlockListApiCall = (facility, authToken, callback) => {
   let url = getUrl("yardBlockList") + `?facility_id=${facility}`;
   return (dispatch) => {
-    get(url, authToken).then((response) => {
-      const {
-        data: { status, data },
-      } = response;
-      if (status) {
-        let yardCraneListObject = data.yardBlockList.map((code) => ({
-          value: code.area,
-          label: code.area,
-        }));
-        dispatch(blockList(yardCraneListObject));
-      }
-      callback(response);
-    }).catch((err) => {
-      console.log("error", err);
-      let responseNew = {
-        data: {
-          status: false,
-          // code: err.response.status,
-        },
-      };
-      if(err.response !== undefined){
+    get(url, authToken)
+      .then((response) => {
         const {
-          data: { code },
-        } = err.response;
-        if(code === 'UNAUTHORIZED'){
-          dispatch(logout());
+          data: { status, data },
+        } = response;
+        if (status) {
+          let yardCraneListObject = data.yardBlockList.map((code) => ({
+            value: code.area,
+            label: code.area,
+          }));
+          dispatch(blockList(yardCraneListObject));
         }
-      }
-      callback(responseNew);
-    });
+        callback(response);
+      })
+      .catch((err) => {
+        console.log("error", err);
+        let responseNew = {
+          data: {
+            status: false,
+            // code: err.response.status,
+          },
+        };
+        if (err.response !== undefined) {
+          const {
+            data: { code },
+          } = err.response;
+          if (code === "UNAUTHORIZED") {
+            dispatch(logout());
+          }
+        }
+        callback(responseNew);
+      });
   };
 };
 
@@ -113,85 +117,91 @@ export const getYardOperationApiCall = (data, authToken, callback) => {
   }
   url = url + querystring;
   return (dispatch) => {
-    get(url, authToken).then((response) => {
-      const {
-        data: { status, data },
-      } = response;
-      if (status) {
-        let yardList = data !== null ? data.yardContainerList : []
-        dispatch(YardContainerList(yardList));
-      }
-      callback(response);
-    }).catch((err) => {
-      console.log("error", err);
-      let responseNew = {
-        data: {
-          status: false,
-          // code: err.response.status,
-        },
-      };
-      if(err.response !== undefined){
+    get(url, authToken)
+      .then((response) => {
         const {
-          data: { code },
-        } = err.response;
-        if(code === 'UNAUTHORIZED'){
-          dispatch(logout());
+          data: { status, data },
+        } = response;
+        if (status) {
+          let yardList = data !== null ? data.yardContainerList : [];
+          dispatch(YardContainerList(yardList));
         }
-      }
-      callback(responseNew);
-    });;
+        callback(response);
+      })
+      .catch((err) => {
+        console.log("error", err);
+        let responseNew = {
+          data: {
+            status: false,
+            // code: err.response.status,
+          },
+        };
+        if (err.response !== undefined) {
+          const {
+            data: { code },
+          } = err.response;
+          if (code === "UNAUTHORIZED") {
+            dispatch(logout());
+          }
+        }
+        callback(responseNew);
+      });
   };
 };
 
 export const AddPickUpApiCall = (data, authToken, callback) => {
   let url = getUrl("pickupConfirm");
   return (dispatch) => {
-    post(url, data, authToken).then((response) => {
-      callback(response);
-    }).catch((err) => {
-      console.log("error", err);
-      let responseNew = {
-        data: {
-          status: false,
-          // code: err.response.status,
-        },
-      };
-      if(err.response !== undefined){
-        const {
-          data: { code },
-        } = err.response;
-        if(code === 'UNAUTHORIZED'){
-          dispatch(logout());
+    post(url, data, authToken)
+      .then((response) => {
+        callback(response);
+      })
+      .catch((err) => {
+        console.log("error", err);
+        let responseNew = {
+          data: {
+            status: false,
+            // code: err.response.status,
+          },
+        };
+        if (err.response !== undefined) {
+          const {
+            data: { code },
+          } = err.response;
+          if (code === "UNAUTHORIZED") {
+            dispatch(logout());
+          }
         }
-      }
-      callback(responseNew);
-    });;
+        callback(responseNew);
+      });
   };
 };
 
 export const GroundingContianerApiCall = (data, authToken, callback) => {
   let url = getUrl("groundingAddapi");
   return (dispatch) => {
-    post(url, data, authToken).then((response) => {
-      callback(response);
-    }).catch((err) => {
-      console.log("error", err);
-      let responseNew = {
-        data: {
-          status: false,
-          // code: err.response.status,
-        },
-      };
-      if(err.response !== undefined){
-        const {
-          data: { code },
-        } = err.response;
-        if(code === 'UNAUTHORIZED'){
-          dispatch(logout());
+    post(url, data, authToken)
+      .then((response) => {
+        callback(response);
+      })
+      .catch((err) => {
+        console.log("error", err);
+        let responseNew = {
+          data: {
+            status: false,
+            // code: err.response.status,
+          },
+        };
+        if (err.response !== undefined) {
+          const {
+            data: { code },
+          } = err.response;
+          if (code === "UNAUTHORIZED") {
+            dispatch(logout());
+          }
         }
-      }
-      callback(responseNew);
-    });
+        callback(responseNew);
+      });
   };
 };
 
@@ -216,11 +226,11 @@ export const getRefreshYardContainer = (data, authToken, callback) => {
             // code: err.response.status,
           },
         };
-        if(err.response !== undefined){
+        if (err.response !== undefined) {
           const {
             data: { code },
           } = err.response;
-          if(code === 'UNAUTHORIZED'){
+          if (code === "UNAUTHORIZED") {
             dispatch(logout());
           }
         }

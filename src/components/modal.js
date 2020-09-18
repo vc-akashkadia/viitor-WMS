@@ -144,7 +144,7 @@ const access = {
     title: "Yard Operation",
     roleName: "ROLE_YARD",
     icon: <YardIcon />,
-    startIcon: <YardIcon style={{ width: "25px" }} />,
+    startIcon: <YardIcon style={{ width: "25px",marginLeft: "3px"  }} />,
   },
   ROLE_GATE: {
     title: "Gate Operation",
@@ -383,8 +383,8 @@ export default function AlertDialog(props) {
                             primary={
                               <Typography
                                 style={{
-                                  fontSize: "20px",
-                                  fontWeight: "900",
+                                  fontSize: "16px",
+                                  fontWeight: "500",
                                   color: "#1f1f21",
                                 }}
                               >

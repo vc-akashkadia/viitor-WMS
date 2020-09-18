@@ -8,34 +8,36 @@ import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
-import Alert from '@material-ui/lab/Alert';
+import Alert from "@material-ui/lab/Alert";
 // import Checkbox from "@material-ui/core/Checkbox";
 // import Typography from "@material-ui/core/Typography";
 import InputLabel from "@material-ui/core/InputLabel";
 import { LoginApi } from "../../apicalls/authCall";
 import { useDispatch } from "react-redux";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import {constants} from "@config/constant";
-import Toaster from '../../components/Toaster'
+import { constants } from "@config/constant";
+import Toaster from "../../components/Toaster";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: "500px",
     margin: "0 10px",
-    height: "calc(100vh - 75px)",
+    // height: "calc(100vh - 75px)",
     // margin: "auto",
     position: "relative",
     // paddingBottom: 125,
     "@media (min-width:241px)": {
       // paddingBottom: 40,
-      margin: '0 15px',
+      margin: '0 15px 10px',
+      minHeight: 'calc(100vh - 100px)',
       maxWidth: '100%'
     },
-    "@media (min-width:768px)": {
-      paddingBottom: 100,
+    "@media (min-width:490px)": {
+      // paddingBottom: 100,
       margin: 'auto',
-      height: 'fit-content',
-      maxWidth: "500px"
+      minHeight: 'fit-content',
+      maxWidth: "500px",
+      paddingBottom: "30px"
     }
   },
   logo: {
@@ -81,15 +83,15 @@ const useStyles = makeStyles((theme) => ({
   },
   card: {
     // padding: 20,
-    minHeight: '250px'
+    minHeight: "250px",
   },
   label: {
     fontSize: 16,
     color: "#777777",
     fontWeight: 500,
     fontFamily: "Roboto",
-    lineHeight: '16px',
-    marginBottom: 5
+    lineHeight: "16px",
+    marginBottom: 5,
   },
   rememberText: {
     fontSize: 12,
@@ -112,22 +114,26 @@ const useStyles = makeStyles((theme) => ({
     bottom: 0,
     width: "100%",
     left: 0,
-    display: 'block',
-    padding: "0 10px"
+    display: "block",
+    padding: "0 10px",
   },
-  loginForm:{
+  loginForm: {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
-    minHeight: 195
-  },
-  loginField:{
-    '&$MuiOutlinedInput':{
-      '&$input':{
-        height: 30
-      }
+    // minHeight: 210
+    minHeight: "calc(100vh - 120px)",
+    "@media (min-width: 600px)": {
+      minHeight: 'inherit',
     }
-  }
+  },
+  loginField: {
+    "&$MuiOutlinedInput": {
+      "&$input": {
+        height: 30,
+      },
+    },
+  },
 }));
 // let errors = {
 //   email: "",
@@ -179,7 +185,7 @@ export default function Login() {
       //   option: "success",
       //   message: "Login Successfull",
       // };
-    }else{
+    } else {
       setAlert(true);
       setLoading(false);
     }
@@ -197,28 +203,28 @@ export default function Login() {
 
       <Card className={classes.root}>
         <CardContent className={classes.card}>
-        {/* {alert && (
+          {/* {alert && (
             <Alert severity={toasterOption.option}>
               {toasterOption.message}
             </Alert>
           )} */}
           <Toaster
-        open={alert}
-        handleClose={setAlert}
-        option={toasterOption.option}
-        message={toasterOption.message}
-      />
+            open={alert}
+            handleClose={setAlert}
+            option={toasterOption.option}
+            message={toasterOption.message}
+          />
           <form onSubmit={handleSubmit} className={classes.loginForm}>
             <Grid item xs={12} className={classes.listItemsChild}>
               {/* <FormControl className={classes.field}> */}
-                <InputLabel
-                  shrink
-                  htmlFor="bootstrap-input"
-                  className={classes.label}
-                >
-                  User Name
-                </InputLabel>
-                {/* <BootstrapInput
+              <InputLabel
+                shrink
+                htmlFor="bootstrap-input"
+                className={classes.label}
+              >
+                User Name
+              </InputLabel>
+              {/* <BootstrapInput
                   error
                   id="username"
                   placeholder="Enter User Name"
@@ -226,41 +232,41 @@ export default function Login() {
                   value={email}
                   onInput={(e) => setEmail(e.target.value)}
                 /> */}
-                <TextField 
+              <TextField
                 error={errors.email !== ""}
-                  id="username" 
-                  label=""
-                  variant="outlined"
-                  placeholder="Enter User Name"
-                  helperText={errors.email}
-                  value={email}
-                  onInput={(e) => setEmail(e.target.value)}
-                  // style={{width: '100%'}}
-                  fullWidth
-                  size="small"
-                  // className={classes.loginField}
-                  />
+                id="username"
+                label=""
+                variant="outlined"
+                placeholder="Enter User Name"
+                helperText={errors.email}
+                value={email}
+                onInput={(e) => setEmail(e.target.value)}
+                // style={{width: '100%'}}
+                fullWidth
+                size="small"
+                // className={classes.loginField}
+              />
               {/* </FormControl> */}
             </Grid>
             <Grid item xs={12} className={classes.listItemsChild}>
-                <InputLabel
-                  shrink
-                  htmlFor="bootstrap-input"
-                  className={classes.label}
-                >
-                  Password
-                </InputLabel>
-                 <TextField 
-                  error={errors.password !== ""}
-                  type="password"
-                  variant="outlined"
-                  id="password"
-                  helperText={errors.password}
-                  onInput={(e) => setPassword(e.target.value)}
-                  placeholder="Enter Password"
-                  fullWidth
-                  size="small"
-                  />
+              <InputLabel
+                shrink
+                htmlFor="bootstrap-input"
+                className={classes.label}
+              >
+                Password
+              </InputLabel>
+              <TextField
+                error={errors.password !== ""}
+                type="password"
+                variant="outlined"
+                id="password"
+                helperText={errors.password}
+                onInput={(e) => setPassword(e.target.value)}
+                placeholder="Enter Password"
+                fullWidth
+                size="small"
+              />
             </Grid>
 
             {/* <Grid item xs={12} className={classes.listItemsChild}>
@@ -293,11 +299,7 @@ export default function Login() {
               </Button>
             </Grid>
           </form>
-          <img
-            src={bottomImage}
-            alt="bottom"
-            className={classes.bottomImage}
-          />
+          <img src={bottomImage} alt="bottom" className={classes.bottomImage} />
         </CardContent>
       </Card>
     </>

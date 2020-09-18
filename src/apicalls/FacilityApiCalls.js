@@ -1,6 +1,6 @@
 import { getUrl } from "../services/network/urls";
 import { get } from "../services/network/requests";
-import { FacilityList, selectFacility,userRoles } from "../actions/actions";
+import { FacilityList, selectFacility, userRoles } from "../actions/actions";
 import { logout } from "../actions/authActions";
 
 export const facilityListApiCall = (authToken, callback) => {
@@ -26,11 +26,11 @@ export const facilityListApiCall = (authToken, callback) => {
           status: false,
           code: err.response !== undefined ? err.response.status : "OK",
         };
-        if(err.response !== undefined){
+        if (err.response !== undefined) {
           const {
             data: { code },
           } = err.response;
-          if(code === 'UNAUTHORIZED'){
+          if (code === "UNAUTHORIZED") {
             dispatch(logout());
           }
         }
@@ -42,28 +42,27 @@ export const facilityListApiCall = (authToken, callback) => {
 export const selectedFacility = (facility, authToken, callback) => {
   let url = getUrl("facilityCheck");
   let querystring = `?facility_id=${facility}`;
-  url = url + querystring
+  url = url + querystring;
   return (dispatch) => {
     get(url, authToken)
       .then((response) => {
         const {
-          data: { code,status, data },
+          data: { code, status, data },
         } = response;
-        console.log(code)
-        console.log(status)
-        console.log(data)
-        if(status){
+        console.log(code);
+        console.log(status);
+        console.log(data);
+        if (status) {
           dispatch(selectFacility(facility));
-          dispatch(userRoles(data))
+          dispatch(userRoles(data));
           callback(response);
-        }else{
-          if(code === 'UNAUTHORIZED'){
+        } else {
+          if (code === "UNAUTHORIZED") {
             dispatch(logout());
-          }else{
+          } else {
             callback(response);
           }
         }
-        
       })
       .catch((err) => {
         console.log("error", err.response);
@@ -73,11 +72,11 @@ export const selectedFacility = (facility, authToken, callback) => {
             // code: err.response.status,
           },
         };
-        if(err.response !== undefined){
+        if (err.response !== undefined) {
           const {
             data: { code },
           } = err.response;
-          if(code === 'UNAUTHORIZED'){
+          if (code === "UNAUTHORIZED") {
             dispatch(logout());
           }
         }
