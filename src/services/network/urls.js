@@ -40,8 +40,6 @@ export const getUrl = (type) => {
       return `${baseUrl}/gateoperation/printeir`;
     case "updateContainerStatus":
       return `${baseUrl}/gateoperation/printConfirmation`;
-    case "updateContainerReprintStatus":
-      return `${baseUrl}/gateoperation/printConfirmation`;
     case "userlist":
       return `${baseUrl}/userlist`;
     case "userRolelist":

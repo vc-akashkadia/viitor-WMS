@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
     "& > *": {
       margin: "2px 1px",
     },
-    "@media (min-width:360px)": {
+    "@media (min-width:600px)": {
       flexWrap: "nowrap",
       "& > *": {
         margin: "2px 2px",
@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
   chip: {
     height: 26,
     color: "#000000",
-    "@media (min-width:360px)": {
+    "@media (min-width:600px)": {
       height: 52,
     },
   },
@@ -61,17 +61,6 @@ const useStyles = makeStyles((theme) => ({
     lineHeight: "20px",
     textTransform: "uppercase",
   },
-  // filterSearch: {
-  //   margin: "1px 1px",
-  //   padding: 10,
-  //   position: "fixed",
-  //   backgroundColor: "#ffff",
-  //   zIndex: "2",
-  // },
-  // searchTitle: {
-  //   fontSize: 15,
-  //   color: "#5c5c5c",
-  // },
   scroobar:{
     ...theme.layout.scrollbarStyles,
     height: theme.layout.mainDivHeight
@@ -141,6 +130,7 @@ export default function UserList(props) {
       getUserListApi();
     }
   };
+
   return (
     <div className={classes.scroobar} ref={scrollRef}>
       <TitleHeader

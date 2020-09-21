@@ -30,7 +30,6 @@ const BootstrapInput = withStyles((theme) => ({
     transition: theme.transitions.create(["border-color", "box-shadow"]),
     width: "100%",
     height: 26,
-
     alignItems: "center",
     whiteSpace: "nowrap",
     overflow: "hidden",
@@ -98,7 +97,6 @@ const useStyles = makeStyles({
     fontWeight: 500,
     lineHeight: "20px",
     textTransform: "uppercase",
-    // marginLeft: "5px",
   },
   rightBoxArrow: {
     backgroundColor: "#2991d6",
@@ -283,7 +281,7 @@ export default function CardGrid(props) {
                 }
                 input={<BootstrapInput />}
                 placeholder="Block"
-                style={{ width: "70%" }}
+                style={{ width: "116px" }}
               >
                 {selectOption.map((selectItem, key) => {
                   return (

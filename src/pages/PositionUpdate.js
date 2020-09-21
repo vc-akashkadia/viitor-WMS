@@ -162,7 +162,7 @@ export default function PositionUpdate(props) {
   const [loading, setLoading] = useState(false);
   const blockList = useSelector(({ base }) => base.blockList);
   const [modalData, setModalData] = useState();
-
+  const locationCrane = useSelector(({ base }) => base.locationCrane);
   let containerList = useSelector(({ base }) => base.containerListForLocation);
   const dispatch = useDispatch();
 
@@ -296,7 +296,7 @@ export default function PositionUpdate(props) {
         })}
       >
         <div style={{ position: "relative" }}>
-          <Typography className={classes.yardTitle}>Work Order</Typography>
+          <Typography className={classes.yardTitle}>Work Order <small>({locationCrane})</small></Typography>
           <RefreshIcon
             onClick={() => handleRefresh()}
             fontSize="small"

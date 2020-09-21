@@ -32,7 +32,6 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: "Roboto",
     paddingLeft: 10,
     paddingRight: 10,
-    // backgroundColor: "white",
     backgroundColor: "#f6f6f6",
     paddingBottom: 0,
   },
@@ -327,9 +326,10 @@ export default function DamageCapture(props) {
             {!loading &&
               showAdd &&
               damageList &&
-              damageList.map((damage) => (
-                <>
+              damageList.map((damage,index) => (
+                <React.Fragment key={index}>
                   <CardGrid
+
                     index={damage.id}
                     item={damage}
                     key={damage.id}
@@ -338,7 +338,7 @@ export default function DamageCapture(props) {
                     cardFor={"damageCapture"}
                     handleRemove={handleRemove}
                   />
-                </>
+                </React.Fragment>
               ))}
           </Box>
         </DialogContent>
@@ -368,7 +368,7 @@ export default function DamageCapture(props) {
         <Toaster
           open={error}
           handleClose={handleErrorClose}
-          option={error}
+          option={"error"}
           message={"Please Fill the Damage Code"}
         />
       )}

@@ -11,7 +11,7 @@ import {
   LocationSlipApi,
   EIRPrintApi,
   updateContainerPrintStatus,
-  updateContainerRePrintStatus,
+  
 } from "./../apicalls/GateApiCalls";
 import Loader from "./Loader";
 import Toaster from "./Toaster";
@@ -108,7 +108,7 @@ export default function PrintModal(props) {
     modalData,
     container,
     gateType,
-    checkingPageType,
+    
   } = props;
   const [printType, setPrintType] = useState("");
   const dispatch = useDispatch();
@@ -169,25 +169,15 @@ export default function PrintModal(props) {
   };
 
   const handlePrint = () => {
-    if (checkingPageType !== "reprint") {
-      let data = {
-        printType: printType,
-        containerNumber: container.containerNumber,
-        operationStatus: container.operationCode,
-        facility_id: facility,
-        shipmentId: container.shipmentId,
-        gate_type: `GATE_${gateType}`.toUpperCase(),
-      };
-      dispatch(
-        updateContainerPrintStatus(data, authToken, handleCallbackPrint)
-      );
-    } else {
-      let data = {};
-
-      dispatch(
-        updateContainerRePrintStatus(data, authToken, handleCallbackPrint)
-      );
-    }
+    let data = {
+      printType: printType,
+      containerNumber: container.containerNumber,
+      operationStatus: container.operationCode,
+      facility_id: facility,
+      shipmentId: container.shipmentId,
+      gate_type: "", //`GATE_${gateType}`.toUpperCase(),
+    };
+    dispatch(updateContainerPrintStatus(data, authToken, handleCallbackPrint));
   };
 
   const handleCallbackPrint = (response) => {

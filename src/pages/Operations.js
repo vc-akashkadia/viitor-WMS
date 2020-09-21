@@ -56,11 +56,14 @@ const BootstrapInput = withStyles((theme) => ({
   },
 }))(InputBase);
 
-const useStyles = makeStyles(theme=>({
+const useStyles = makeStyles((theme) => ({
   mainContainer: {
     padding: "20px 10px 10px 10px",
     ...theme.layout.scrollbarStyles,
-    height: theme.layout.mainDivHeight
+    height: theme.layout.mainDivHeight,
+  },
+  mainContainerSpacing: {
+    padding: "20px 10px 10px 10px",
   },
   mainTitle: {
     paddingLeft: 14,
@@ -146,6 +149,8 @@ const content = [
 export default function Dashboard() {
   const classes = useStyles();
   const history = useHistory();
+  const dispatch = useDispatch();
+  const [showScroll, setShowScroll] = useState(true);
   const [errors, setErrors] = useState({
     [`${constants.operation.location}`]: "",
     [`${constants.operation.yardOperation}`]: "",
@@ -159,7 +164,6 @@ export default function Dashboard() {
   const userRoles = useSelector(({ auth }) => auth.userRole);
   const facility = useSelector(({ base }) => base.facility);
   let yardCraneList = useSelector(({ base }) => base.yardCraneList);
-  const dispatch = useDispatch();
 
   const handleSubmit = (event, item) => {
     event.preventDefault();
@@ -216,9 +220,24 @@ export default function Dashboard() {
     setLoading(true);
   };
   useEffect(getCraneList, []);
+  const scrollRef = React.createRef();
+
+  useEffect(() => {
+    console.log("ref f---------------0,",scrollRef.current.scrollHeight > scrollRef.current.clientHeight)
+    if (scrollRef.current.scrollHeight > scrollRef.current.clientHeight) {
+      setShowScroll(true);
+    } else {
+      setShowScroll(false);
+    }
+  }, []);
 
   return (
-    <div className={classes.mainContainer}>
+    <div
+      className={
+        showScroll ? classes.mainContainer : classes.mainContainerSpacing
+      }
+      ref={scrollRef}
+    >
       {/* <Header /> */}
       <TitleHeader
         key="operation-header"
@@ -226,8 +245,7 @@ export default function Dashboard() {
         backPath={"/facility"}
         isSearch={false}
       />
-
-      <div >
+      <div>
         {content &&
           content.map((item, index) => (
             <React.Fragment key={index}>

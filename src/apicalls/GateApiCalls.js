@@ -306,33 +306,3 @@ export const getReprintContainerListApi = (data, authToken, callback) => {
       });
   };
 };
-
-export const updateContainerRePrintStatus = (callData, authToken, callback) => {
-  let url = getUrl("updateContainerReprintStatus");
-  let querystring = `?containerNumber=${callData.containerNumber}&operationStatus=${callData.operationStatus}&printType=${callData.printType}&facility_id=${callData.facility_id}&gate_type=${callData.gate_type}&shipment_id=${callData.shipmentId}`;
-  url = url + querystring;
-  return (dispatch) => {
-    post(url, {}, authToken)
-      .then((response) => {
-        callback(response);
-      })
-      .catch((err) => {
-        console.log("error", err);
-        let responseNew = {
-          data: {
-            status: false,
-            code: err.response !== undefined ? err.response.status : "OK",
-          },
-        };
-        if (err.response !== undefined) {
-          const {
-            data: { code },
-          } = err.response;
-          if (code === "UNAUTHORIZED") {
-            dispatch(logout());
-          }
-        }
-        callback(responseNew);
-      });
-  };
-};

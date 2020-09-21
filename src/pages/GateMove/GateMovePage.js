@@ -457,6 +457,9 @@ export default function GateMovePage(props) {
       getContainerList();
     }
   };
+
+ 
+
   return (
     <div className={classes.scroobar} ref={scrollRef}>
       <TitleHeader
@@ -573,7 +576,7 @@ export default function GateMovePage(props) {
                       <img
                         src={GateInIcon}
                         alt="Gate In"
-                        style={{ paddingLeft: "5px" }}
+                        style={{ paddingLeft: "2px" }}
                       />
                     </Button>
                   ) : (
@@ -584,7 +587,7 @@ export default function GateMovePage(props) {
                       <img
                         src={GateOutIcon}
                         alt="Gate Out"
-                        style={{ paddingLeft: "5px" }}
+                        style={{ paddingLeft: "1px" }}
                       />
                     </Button>
                   )}

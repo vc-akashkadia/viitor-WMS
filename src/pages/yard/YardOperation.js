@@ -25,7 +25,6 @@ import {
   getYardOperationApiCall,
   getRefreshYardContainer,
 } from "../../apicalls/YardApiCalls";
-
 import TitleHeader from "../../components/TitleHeader";
 import ScrollToTop from "../../components/ScrollToTop";
 import Loader from "../../components/Loader";
@@ -33,7 +32,7 @@ import Divider from "@material-ui/core/Divider";
 import GroundingModal from "../../components/GroundingContainer";
 import RefreshIcon from "@material-ui/icons/Refresh";
 import useGlobalStyle from "@common-style";
-import { constants } from "@config/constant";
+import { constants } from "@config/constant"
 import clsx from "clsx";
 
 let toasterOption = {
@@ -77,6 +76,10 @@ const BootstrapInput = withStyles((theme) => ({
 const useStyles = makeStyles((theme) => ({
   backIcon: {
     color: "#173a64",
+  },
+  scroobar:{
+    ...theme.layout.scrollbarStyles,
+    height: theme.layout.mainDivHeight
   },
   backText: {
     color: "#173a64",
@@ -159,6 +162,7 @@ export default function YardOperation(props) {
   const facility = useSelector(({ base }) => base.facility);
   const blockList = useSelector(({ base }) => base.blockList);
   const yardContainerList = useSelector(({ base }) => base.yardContainerList);
+  const yardCrane = useSelector(({ base }) => base.yardCrane);
   const getBlockList = () => {
     //if (blockList.length === 0) {
     dispatch(getBlockListApiCall(facility, authToken, handleCallbackBlock));
@@ -363,7 +367,7 @@ export default function YardOperation(props) {
         })}
       >
         <div style={{ position: "relative" }}>
-          <Typography className={classes.yardTitle}>Work Order</Typography>
+          <Typography className={classes.yardTitle}>Work Order <small>({yardCrane})</small></Typography>
           <RefreshIcon
             onClick={handleRefresh}
             fontSize="small"

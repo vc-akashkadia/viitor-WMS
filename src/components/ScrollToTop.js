@@ -6,8 +6,6 @@ const useStyles = makeStyles((theme) => ({
   root: {
     position: "fixed",
     bottom: 0,
-    // left: 100,
-    // display: "flex",
     justifyContent: "center",
     width: "100%",
   },
@@ -34,7 +32,6 @@ export default function ScrollToTop(props) {
       },
       false
     );
-    console.log("refClass", refClass);
   }, []);
   return (
     <div

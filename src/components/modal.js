@@ -74,14 +74,11 @@ const useStyles = makeStyles((theme) => ({
     width: "80%",
     height: "50%",
     overflow: "hidden",
-    // textAlign: "center",
     display: "flex",
     backgroundColor: "white",
-    // paddingLeft: "15px",
     padding: "0 5px",
     justifyContent: "center",
     alignItems: "center",
-    // whiteSpace: "nowrap",
   },
 
   LocationLabel: {
@@ -140,7 +137,7 @@ const access = {
     startIcon: (
       <LocationOnOutlinedIcon
         fontSize="large"
-        style={{ width: "26px", marginLeft: "3px" }}
+        style={{ width: "26px", marginLeft: "1px" }}
       />
     ),
   },
@@ -327,16 +324,16 @@ export default function AlertDialog(props) {
                     return null;
                   }
                   return (
-                    <List style={{ paddingTop: "0px", paddingBottom: "0px" }}>
+                    <List style={{ paddingTop: "0px", paddingBottom: "0px" }} key={key}>
                       <React.Fragment
                         key={key}
-                        style={{
-                          "&:last-child": {
-                            divider: {
-                              display: "none",
-                            },
-                          },
-                        }}
+                        // style={{
+                        //   "&:last-child": {
+                        //     divider: {
+                        //       display: "none",
+                        //     },
+                        //   },
+                        // }}
                       >
                         <ListItem
                           key={key}
@@ -389,7 +386,7 @@ export default function AlertDialog(props) {
             <Button
               onClick={() => handleClose(false)}
               variant="contained"
-              size="s mall"
+              size="small"
               color="primary"
               autoFocus
               className={classes.button}
